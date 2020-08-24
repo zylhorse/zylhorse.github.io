@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>TCP-握手和挥手 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="TCP-握手和挥手">
+<meta itemprop="description" content="tcp 状态 tcp连接FLAGS字段表示当前连接状态，FLAGS包含一下几个标识：
+ SYN表示建立连接 FIN表示关闭连接 ACK表示响应 PSH表示有 DATA数据传输 RST表示连接重置  三次握手 tcp建立连接的过程，需要三次握手；
+ 客户端打开连接，主动结束CLOSED阶段； 服务器连接，被动结束CLOSED阶段， 进入LISTEN阶段； 开始握手：  1. 客户端向服务器发送tcp报文1.1 标记位为SYN， 表示请求建立连接1.2 序号seq=x (x一般为0)1.3 客户端进入SYN-SENT 阶段2. 服务器接收来自客户端的tcp报文，结束LISTEN阶段，并发送一段tcp报文2.1 标志位为SYN和ACK， 表示确认客户端报文seq有效，同意创建连接2.2 序号seq=y（y一般为0）， 确认号ack=x&#43;1, 表示收到客户端序号seq并将其值加1作为自己的确认号ack的值2.3 服务端进入SYN-RECVD阶段3. 客户端接收来自服务器的确认报文后， 结束SYN-SENT阶段，并返回一段tcp报文3.1 标志位为ACK， 表示确认收到服务器同意连接的信号；3.2 序号seq=x&#43;1， 表示收到服务器的确认号ack， 并将其作为自己的序号3.3 确认号ack=y&#43;1， 表示收到服务器的序号seq并将其值加1作为自己的确认号ack的值3.4 客户端进入ESTABLISHED阶段4. 服务器接收到来自客户端的确认报文后， 明确从服务器到客户端的数据传输时正常的4.1 服务器结束SYN-RECVD阶段， 进入ESTABLISHED阶段为什么三次握手  防止服务器开启无用连接，增加服务器开销； 防止失效的请求连接报文传输到服务端， 产生错误；  四次挥手 tcp释放连接，需要四次挥手">
+<meta itemprop="datePublished" content="2014-12-03T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2014-12-03T00:00:00+00:00" />
+<meta itemprop="wordCount" content="172">
+
+
+
+<meta itemprop="keywords" content="TCP," />
+<meta property="og:title" content="TCP-握手和挥手" />
+<meta property="og:description" content="tcp 状态 tcp连接FLAGS字段表示当前连接状态，FLAGS包含一下几个标识：
+ SYN表示建立连接 FIN表示关闭连接 ACK表示响应 PSH表示有 DATA数据传输 RST表示连接重置  三次握手 tcp建立连接的过程，需要三次握手；
+ 客户端打开连接，主动结束CLOSED阶段； 服务器连接，被动结束CLOSED阶段， 进入LISTEN阶段； 开始握手：  1. 客户端向服务器发送tcp报文1.1 标记位为SYN， 表示请求建立连接1.2 序号seq=x (x一般为0)1.3 客户端进入SYN-SENT 阶段2. 服务器接收来自客户端的tcp报文，结束LISTEN阶段，并发送一段tcp报文2.1 标志位为SYN和ACK， 表示确认客户端报文seq有效，同意创建连接2.2 序号seq=y（y一般为0）， 确认号ack=x&#43;1, 表示收到客户端序号seq并将其值加1作为自己的确认号ack的值2.3 服务端进入SYN-RECVD阶段3. 客户端接收来自服务器的确认报文后， 结束SYN-SENT阶段，并返回一段tcp报文3.1 标志位为ACK， 表示确认收到服务器同意连接的信号；3.2 序号seq=x&#43;1， 表示收到服务器的确认号ack， 并将其作为自己的序号3.3 确认号ack=y&#43;1， 表示收到服务器的序号seq并将其值加1作为自己的确认号ack的值3.4 客户端进入ESTABLISHED阶段4. 服务器接收到来自客户端的确认报文后， 明确从服务器到客户端的数据传输时正常的4.1 服务器结束SYN-RECVD阶段， 进入ESTABLISHED阶段为什么三次握手  防止服务器开启无用连接，增加服务器开销； 防止失效的请求连接报文传输到服务端， 产生错误；  四次挥手 tcp释放连接，需要四次挥手" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/network/tcp/tcp%E8%BF%9E%E6%8E%A5/" />
+<meta property="article:published_time" content="2014-12-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2014-12-03T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TCP-握手和挥手"/>
+<meta name="twitter:description" content="tcp 状态 tcp连接FLAGS字段表示当前连接状态，FLAGS包含一下几个标识：
+ SYN表示建立连接 FIN表示关闭连接 ACK表示响应 PSH表示有 DATA数据传输 RST表示连接重置  三次握手 tcp建立连接的过程，需要三次握手；
+ 客户端打开连接，主动结束CLOSED阶段； 服务器连接，被动结束CLOSED阶段， 进入LISTEN阶段； 开始握手：  1. 客户端向服务器发送tcp报文1.1 标记位为SYN， 表示请求建立连接1.2 序号seq=x (x一般为0)1.3 客户端进入SYN-SENT 阶段2. 服务器接收来自客户端的tcp报文，结束LISTEN阶段，并发送一段tcp报文2.1 标志位为SYN和ACK， 表示确认客户端报文seq有效，同意创建连接2.2 序号seq=y（y一般为0）， 确认号ack=x&#43;1, 表示收到客户端序号seq并将其值加1作为自己的确认号ack的值2.3 服务端进入SYN-RECVD阶段3. 客户端接收来自服务器的确认报文后， 结束SYN-SENT阶段，并返回一段tcp报文3.1 标志位为ACK， 表示确认收到服务器同意连接的信号；3.2 序号seq=x&#43;1， 表示收到服务器的确认号ack， 并将其作为自己的序号3.3 确认号ack=y&#43;1， 表示收到服务器的序号seq并将其值加1作为自己的确认号ack的值3.4 客户端进入ESTABLISHED阶段4. 服务器接收到来自客户端的确认报文后， 明确从服务器到客户端的数据传输时正常的4.1 服务器结束SYN-RECVD阶段， 进入ESTABLISHED阶段为什么三次握手  防止服务器开启无用连接，增加服务器开销； 防止失效的请求连接报文传输到服务端， 产生错误；  四次挥手 tcp释放连接，需要四次挥手"/>
+<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <header>
+    <h1>张勇良</h1>
+  </header>
+  <main>
+    <p>不念过往，不负当下</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/network/tcp/tcp%E8%BF%9E%E6%8E%A5/">TCP-握手和挥手</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2014-12-03 00:00:00 &#43;0000 UTC">2014-12-03</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="tcp-状态">tcp 状态</h2>
+<p>tcp连接FLAGS字段表示当前连接状态，FLAGS包含一下几个标识：</p>
+<ol>
+<li>SYN表示建立连接</li>
+<li>FIN表示关闭连接</li>
+<li>ACK表示响应</li>
+<li>PSH表示有 DATA数据传输</li>
+<li>RST表示连接重置</li>
+</ol>
+<h2 id="三次握手">三次握手</h2>
+<p>tcp建立连接的过程，需要三次握手；</p>
+<ol>
+<li>客户端打开连接，主动结束CLOSED阶段；</li>
+<li>服务器连接，被动结束CLOSED阶段， 进入LISTEN阶段；</li>
+<li>开始握手：</li>
+</ol>
+<pre><code>1. 客户端向服务器发送tcp报文
+1.1 标记位为SYN， 表示请求建立连接
+1.2 序号seq=x (x一般为0)
+1.3 客户端进入SYN-SENT 阶段
+
+2. 服务器接收来自客户端的tcp报文，结束LISTEN阶段，并发送一段tcp报文
+2.1 标志位为SYN和ACK， 表示确认客户端报文seq有效，同意创建连接
+2.2 序号seq=y（y一般为0）， 确认号ack=x+1, 表示收到客户端序号seq并将其值加1作为自己的确认号ack的值
+2.3 服务端进入SYN-RECVD阶段
+
+3. 客户端接收来自服务器的确认报文后， 结束SYN-SENT阶段，并返回一段tcp报文
+3.1 标志位为ACK， 表示确认收到服务器同意连接的信号；
+3.2 序号seq=x+1， 表示收到服务器的确认号ack， 并将其作为自己的序号
+3.3 确认号ack=y+1， 表示收到服务器的序号seq并将其值加1作为自己的确认号ack的值
+3.4 客户端进入ESTABLISHED阶段
+
+4. 服务器接收到来自客户端的确认报文后， 明确从服务器到客户端的数据传输时正常的
+4.1 服务器结束SYN-RECVD阶段， 进入ESTABLISHED阶段
+</code></pre><h3 id="为什么三次握手">为什么三次握手</h3>
+<ol>
+<li>防止服务器开启无用连接，增加服务器开销；</li>
+<li>防止失效的请求连接报文传输到服务端， 产生错误；</li>
+</ol>
+<h2 id="四次挥手">四次挥手</h2>
+<p>tcp释放连接，需要四次挥手</p>
+<pre><code>1. 客户端释放连接， 向服务器发送tcp报文
+1.1 标记位为FIN， 表示请求释放连接
+1.2 序号seq=u
+1.3 客户端结束ESTABLISHED阶段，进入FIN-WAIT-1阶段， 即半关闭状态。
+1.4 停止客户端向服务器发送数据， 但是可以接收服务器数据
+
+2. 服务器接收到来自客户端的报文后， 确认客户端要释放连接。服务器结束ESTABLISHED阶段，进入CLOSE-WAIT阶段，即半关闭状态， 并返回一段tcp报文
+2.1 标记位为ACK， 表示接收到客户端发送的释放连接请求
+2.2 序号seq=v
+2.3 确认号ack=u+1， 表示收到客户端的序号seq并将其值加1作为自己的确认号ack的值
+2.4 服务器准备释放服务器到客户端的连接
+
+3. 客户端接收到服务器发送的确认报文后， 客户端结束  FIN-WAIT-1阶段， 进入FIN-WAIT-2阶段
+
+4. 服务器发完ACK的确认报文后， 经过CLOSE-WAIT阶段， 做好释放连接的准备， 再次向客户端发送tcp报文
+4.1 标记位为FIN,ACK ， 表示已经准备好释放连接；
+4.2 序号seq=w
+4.3 确认号为u+1，表示收到客户端的序号seq并将其值加1作为自己的确认号ack的值
+4.4 服务器结束CLOSE-WAIT阶段，进入LAST-ACK阶段
+4.5 服务器停止向客户端发送数据，但是服务器能收到客户端传来的数据
+
+5. 客户端收到从服务器发送的tcp报文后，确认服务器做好释放连接的准备， 结束FIN-WAIT-2阶段， 进入TIME-WAIT阶段，并向服务器发送一段tcp报文
+5.1 标记位为ACK，表示收到服务器准备好释放连接的信号
+5.2 序号seq=u+1,表示收到服务器的确认号ack， 并将其作为自己的序号
+5.3 确认号ack=w+1， 表示收到服务器准备好释放连接的seq， 并将其之加1作为自己的确认号ack的值
+
+6. 服务器接收到客户端的tcp报文后，结束LAST-ACK阶段， 进入CLOSED阶段
+
+7. 客户端再等待2MSL后， 结束TIME-WAIT阶段，进入CLOSED阶段
+</code></pre><h3 id="挥手问题">挥手问题</h3>
+<pre><code>1. TIME-WAIT为什么等2MSL
+1.1 防止服务器发送FIN/ACK指令失败后重发， 这样客户端就能接收到服务器的重传
+1.2 防止客户端未不发送ACK,影响服务器的下一个连接
+
+2. CLOSE-WAIT过多，因为服务器没有发送FIN/ACK报文；解决办法： 
+2.1 socket用完要close
+2.2 socket读取长度为0时， 立刻close
+2.3 socket读取报错是， 检查错误类型； 1. INTR（被中断，可继续读取）；2. WOULDBLOCK（当前socket由阻塞变为非阻塞）； 3. AGAIN（现在还没数据，稍后重新读取）。 如果不是AGAIN， 其他立刻close
+</code></pre><h2 id="rst-重置连接">RST 重置连接</h2>
+<ol>
+<li>用于复位某种原因引起的错误连接， 也用来拒绝非法数据和请求</li>
+<li>发送RST关闭连接时，不必等待缓冲区的包都发送完成，会直接清空缓冲区，并发送RST包</li>
+<li>接收到RST包后， 也不必发送ACK包进行响应</li>
+<li>RST表示不在发送数据，也不接受数据</li>
+</ol>
+<h3 id="rst-场景">RST 场景</h3>
+<ol>
+<li>关闭socket连接（socket.close())，会发送RST报文</li>
+<li>connect 一个没有被监听的端口</li>
+<li>向已经关闭的连接发送数据，会收到RST报文</li>
+</ol>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/network/">Network</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/tcp/">TCP</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    
+
+  
+  <div class="pagination">
+    
+      <a href="/blog/network/tcp/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" class="button left"><span>TCP-数据传输可靠性</span></a>
+    
+    
+      <a href="/blog/database/mysql/sql%E8%AF%AD%E5%8F%A5/" class="button right"><span>MySQL常用sql语句</span></a>
+    
+  </div>
+
+      </main>
+      <section id="site-sidebar">
+  
+
+  
+    <section id="categories">
+      <header>
+        <h1><a href="/categories">分类</a></h1>
+      </header>
+      <ul>
+        
+        
+        <li>
+          <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/cache/">cache<span class="count">23</span></a>
+          
+        <li>
+          <a href="/categories/compilation/">compilation<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/concurrence/">concurrence<span class="count">4</span></a>
+          
+        <li>
+          <a href="/categories/data-structure/">data-structure<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/database/">database<span class="count">9</span></a>
+          
+        <li>
+          <a href="/categories/distribution-system/">distribution-system<span class="count">10</span></a>
+          
+        <li>
+          <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
+          
+        </li>
+      </ul>
+      
+        <footer class="see-more">
+          <a href="/categories" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+        </footer>
+      
+    </section>
+  
+
+  
+      <section id="tags">
+        <header>
+          <h1><a href="/tags">标签</a></h1>
+        </header>
+        <ul>
+          
+          
+          <li>
+            <a href="/tags/algorithm/">algorithm<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/audio/">audio<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/cdn/">cdn<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/certificate/">certificate<span class="count">4</span></a>
+            
+          <li>
+            <a href="/tags/http/">http<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/i/o/">i/o<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/ide/">ide<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/kafka/">kafka<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/lock/">lock<span class="count">3</span></a>
+            
+          </li>
+        </ul>
+        
+          <footer class="see-more">
+            <a href="/tags" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+          </footer>
+        
+      </section>
+  
+
+  
+</section>
+      <footer id="site-footer">
+  
+  <p class="copyright">
+      
+      <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
+      <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
+      <br/>© 2019 zylhorse
+      <br>
+    由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.7e8b85fb814aa446375b535c9ecd0857b9de7637062ea359390ae8675c7761d8.js" integrity="sha256-fouF&#43;4FKpEY3W1Ncns0IV7nedjcGLqNZOQroZ1x3Ydg="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </div>
+  </body>
+</html>

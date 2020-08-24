@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>讲诉互联网的概念，区分广义互联网和侠义互联网 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="讲诉互联网的概念，区分广义互联网和侠义互联网">
+<meta itemprop="description" content="广义互联网 大家所说的互联网一般指广义互联网，由两层组成
+ 核心层： TCP/IP网络传输层(侠义互联网) 上层： 万维网WWW为代表的应用层  这一层包含多种类型的流量和应用：邮件、软件、在线影视、游戏、电子商务、移动应用 所有的SP(service provider, 服务提供商)提供的都是用户看的见的应用    互联网拥堵问题 关键字：
+ ISDN： 综合业务数字网（Integrated Services Digital Network，ISDN）是一个数字电话网络国际标准 ADSL：非对称数字用户线路（ADSL，Asymmetric Digital Subscriber Line）是数字用户线路（xDSL，Digital Subscriber Line）服务中最流行的一种 IDC：互联网数据中心（Internet Data Center，简称IDC）是指一种拥有完善的设备（包括高速互联网接入带宽、高性能局域网络、安全可靠的机房环境等）、专业化的管理、完善的应用的服务平台 收敛比： 就是N对应到M的一个过程,当N&gt;M时被称作收敛.鉴于排队论的原理,当有N个顾客按其概率到达要求服务时,如果在一定的服务质量(收敛条件)被约定,则本系统仅需要有M(M&lt;N)个服务员就够了. 相当于输入的比输出的多   &ldquo;第一公里&rdquo;  万维网流量向用户传送的第一个出口，即网站服务器接入互联网的链路所能提供的带宽。 这个带宽决定了网站能为用户提供的访问速度和并发访问量 一个网站，其服务的用户越多，对其出口带宽要求越大   &ldquo;最后一公里&rdquo;  万维网流量向用户传输的最后一段接入链路，即用户接入带宽 用户的平均接入带宽，是影响互联网上层应用发展的决定性因素之一 互联网初期  主要上网方式为拨号上网和ISDN()等，网络接入速度低。 主要内容是占用带宽非常小的文字为主，主流应用是Telnet、BBS等   万维网出现  多媒体内容开始在互联网上传播 用户接入带宽成为制约用户使用互联网的主要瓶颈 2001年开始，各大电信运营商发展ADSL等带宽服务，随着带宽提升和接入手段丰富(光纤入户、wifi，4G等)，&ldquo;最后一公里&quot;问题得以解决     对等互联关口  不同基础运营商之间的互联互通 一般运营商之间只有两三个互联互通点， 可以想象这两三个点上会产生多大流量 如：  当某个网站部署在运营商A的IDC机房中 运营商B的用户要访问该网站，就必须经过A，B之间的互联互通点进行跨网访问。   不同网络间的互联互通带宽，对于任何一个运营商网络流量来水，占比都比较小，收敛比高，因此这里通常是互联网传输中的拥堵点   长途骨干传输  长距离传输时延问题 从网站服务器到用户之间要经过网站所在的IDC、骨干网、用户所在的城域网、用户所在的接入网等 距离非常遥远，因此不可避免的带来较长的传输时延 由于互联网上的绝大部分流量需要经过骨干网进行传输，所以需要骨干网络的承载能力必须与互联网的应用同步发展  实际两者并不同步，当骨干网络升级和扩容滞后于互联网上应用的发展，就会阶段性的使得大型骨干网的承载能力成为影响互联网性能的瓶颈      8秒定律  当用户访问一个网站时， 如果网页打开等待时间超过8秒，就会由30%用户放弃等待 一个网站10秒后网页打不开，会有40% 的用户跳出该页面。 大部分手机用户愿意等待时间为6-10秒 一秒延迟会导致转化率下降7%  ">
+<meta itemprop="datePublished" content="2017-01-01T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2017-01-01T00:00:00+00:00" />
+<meta itemprop="wordCount" content="64">
+
+
+
+<meta itemprop="keywords" content="," />
+<meta property="og:title" content="讲诉互联网的概念，区分广义互联网和侠义互联网" />
+<meta property="og:description" content="广义互联网 大家所说的互联网一般指广义互联网，由两层组成
+ 核心层： TCP/IP网络传输层(侠义互联网) 上层： 万维网WWW为代表的应用层  这一层包含多种类型的流量和应用：邮件、软件、在线影视、游戏、电子商务、移动应用 所有的SP(service provider, 服务提供商)提供的都是用户看的见的应用    互联网拥堵问题 关键字：
+ ISDN： 综合业务数字网（Integrated Services Digital Network，ISDN）是一个数字电话网络国际标准 ADSL：非对称数字用户线路（ADSL，Asymmetric Digital Subscriber Line）是数字用户线路（xDSL，Digital Subscriber Line）服务中最流行的一种 IDC：互联网数据中心（Internet Data Center，简称IDC）是指一种拥有完善的设备（包括高速互联网接入带宽、高性能局域网络、安全可靠的机房环境等）、专业化的管理、完善的应用的服务平台 收敛比： 就是N对应到M的一个过程,当N&gt;M时被称作收敛.鉴于排队论的原理,当有N个顾客按其概率到达要求服务时,如果在一定的服务质量(收敛条件)被约定,则本系统仅需要有M(M&lt;N)个服务员就够了. 相当于输入的比输出的多   &ldquo;第一公里&rdquo;  万维网流量向用户传送的第一个出口，即网站服务器接入互联网的链路所能提供的带宽。 这个带宽决定了网站能为用户提供的访问速度和并发访问量 一个网站，其服务的用户越多，对其出口带宽要求越大   &ldquo;最后一公里&rdquo;  万维网流量向用户传输的最后一段接入链路，即用户接入带宽 用户的平均接入带宽，是影响互联网上层应用发展的决定性因素之一 互联网初期  主要上网方式为拨号上网和ISDN()等，网络接入速度低。 主要内容是占用带宽非常小的文字为主，主流应用是Telnet、BBS等   万维网出现  多媒体内容开始在互联网上传播 用户接入带宽成为制约用户使用互联网的主要瓶颈 2001年开始，各大电信运营商发展ADSL等带宽服务，随着带宽提升和接入手段丰富(光纤入户、wifi，4G等)，&ldquo;最后一公里&quot;问题得以解决     对等互联关口  不同基础运营商之间的互联互通 一般运营商之间只有两三个互联互通点， 可以想象这两三个点上会产生多大流量 如：  当某个网站部署在运营商A的IDC机房中 运营商B的用户要访问该网站，就必须经过A，B之间的互联互通点进行跨网访问。   不同网络间的互联互通带宽，对于任何一个运营商网络流量来水，占比都比较小，收敛比高，因此这里通常是互联网传输中的拥堵点   长途骨干传输  长距离传输时延问题 从网站服务器到用户之间要经过网站所在的IDC、骨干网、用户所在的城域网、用户所在的接入网等 距离非常遥远，因此不可避免的带来较长的传输时延 由于互联网上的绝大部分流量需要经过骨干网进行传输，所以需要骨干网络的承载能力必须与互联网的应用同步发展  实际两者并不同步，当骨干网络升级和扩容滞后于互联网上应用的发展，就会阶段性的使得大型骨干网的承载能力成为影响互联网性能的瓶颈      8秒定律  当用户访问一个网站时， 如果网页打开等待时间超过8秒，就会由30%用户放弃等待 一个网站10秒后网页打不开，会有40% 的用户跳出该页面。 大部分手机用户愿意等待时间为6-10秒 一秒延迟会导致转化率下降7%  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/network/%E4%BA%92%E8%81%94%E7%BD%91/" />
+<meta property="article:published_time" content="2017-01-01T00:00:00+00:00" />
+<meta property="article:modified_time" content="2017-01-01T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="讲诉互联网的概念，区分广义互联网和侠义互联网"/>
+<meta name="twitter:description" content="广义互联网 大家所说的互联网一般指广义互联网，由两层组成
+ 核心层： TCP/IP网络传输层(侠义互联网) 上层： 万维网WWW为代表的应用层  这一层包含多种类型的流量和应用：邮件、软件、在线影视、游戏、电子商务、移动应用 所有的SP(service provider, 服务提供商)提供的都是用户看的见的应用    互联网拥堵问题 关键字：
+ ISDN： 综合业务数字网（Integrated Services Digital Network，ISDN）是一个数字电话网络国际标准 ADSL：非对称数字用户线路（ADSL，Asymmetric Digital Subscriber Line）是数字用户线路（xDSL，Digital Subscriber Line）服务中最流行的一种 IDC：互联网数据中心（Internet Data Center，简称IDC）是指一种拥有完善的设备（包括高速互联网接入带宽、高性能局域网络、安全可靠的机房环境等）、专业化的管理、完善的应用的服务平台 收敛比： 就是N对应到M的一个过程,当N&gt;M时被称作收敛.鉴于排队论的原理,当有N个顾客按其概率到达要求服务时,如果在一定的服务质量(收敛条件)被约定,则本系统仅需要有M(M&lt;N)个服务员就够了. 相当于输入的比输出的多   &ldquo;第一公里&rdquo;  万维网流量向用户传送的第一个出口，即网站服务器接入互联网的链路所能提供的带宽。 这个带宽决定了网站能为用户提供的访问速度和并发访问量 一个网站，其服务的用户越多，对其出口带宽要求越大   &ldquo;最后一公里&rdquo;  万维网流量向用户传输的最后一段接入链路，即用户接入带宽 用户的平均接入带宽，是影响互联网上层应用发展的决定性因素之一 互联网初期  主要上网方式为拨号上网和ISDN()等，网络接入速度低。 主要内容是占用带宽非常小的文字为主，主流应用是Telnet、BBS等   万维网出现  多媒体内容开始在互联网上传播 用户接入带宽成为制约用户使用互联网的主要瓶颈 2001年开始，各大电信运营商发展ADSL等带宽服务，随着带宽提升和接入手段丰富(光纤入户、wifi，4G等)，&ldquo;最后一公里&quot;问题得以解决     对等互联关口  不同基础运营商之间的互联互通 一般运营商之间只有两三个互联互通点， 可以想象这两三个点上会产生多大流量 如：  当某个网站部署在运营商A的IDC机房中 运营商B的用户要访问该网站，就必须经过A，B之间的互联互通点进行跨网访问。   不同网络间的互联互通带宽，对于任何一个运营商网络流量来水，占比都比较小，收敛比高，因此这里通常是互联网传输中的拥堵点   长途骨干传输  长距离传输时延问题 从网站服务器到用户之间要经过网站所在的IDC、骨干网、用户所在的城域网、用户所在的接入网等 距离非常遥远，因此不可避免的带来较长的传输时延 由于互联网上的绝大部分流量需要经过骨干网进行传输，所以需要骨干网络的承载能力必须与互联网的应用同步发展  实际两者并不同步，当骨干网络升级和扩容滞后于互联网上应用的发展，就会阶段性的使得大型骨干网的承载能力成为影响互联网性能的瓶颈      8秒定律  当用户访问一个网站时， 如果网页打开等待时间超过8秒，就会由30%用户放弃等待 一个网站10秒后网页打不开，会有40% 的用户跳出该页面。 大部分手机用户愿意等待时间为6-10秒 一秒延迟会导致转化率下降7%  "/>
+<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <header>
+    <h1>张勇良</h1>
+  </header>
+  <main>
+    <p>不念过往，不负当下</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/network/%E4%BA%92%E8%81%94%E7%BD%91/">讲诉互联网的概念，区分广义互联网和侠义互联网</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2017-01-01 00:00:00 &#43;0000 UTC">2017-01-01</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="广义互联网">广义互联网</h2>
+<p>大家所说的互联网一般指广义互联网，由两层组成</p>
+<ul>
+<li>核心层： TCP/IP网络传输层(侠义互联网)</li>
+<li>上层： 万维网WWW为代表的应用层
+<ul>
+<li>这一层包含多种类型的流量和应用：邮件、软件、在线影视、游戏、电子商务、移动应用</li>
+<li>所有的SP(service provider, 服务提供商)提供的都是用户看的见的应用</li>
+</ul>
+</li>
+</ul>
+<h2 id="互联网拥堵问题">互联网拥堵问题</h2>
+<p>关键字：</p>
+<ol>
+<li>ISDN： 综合业务数字网（Integrated Services Digital Network，ISDN）是一个数字电话网络国际标准</li>
+<li>ADSL：非对称数字用户线路（ADSL，Asymmetric Digital Subscriber Line）是数字用户线路（xDSL，Digital Subscriber Line）服务中最流行的一种</li>
+<li>IDC：互联网数据中心（Internet Data Center，简称IDC）是指一种拥有完善的设备（包括高速互联网接入带宽、高性能局域网络、安全可靠的机房环境等）、专业化的管理、完善的应用的服务平台</li>
+<li>收敛比： 就是N对应到M的一个过程,当N&gt;M时被称作收敛.鉴于排队论的原理,当有N个顾客按其概率到达要求服务时,如果在一定的服务质量(收敛条件)被约定,则本系统仅需要有M(M&lt;N)个服务员就够了. 相当于输入的比输出的多</li>
+</ol>
+<ul>
+<li>&ldquo;第一公里&rdquo;
+<ul>
+<li>万维网流量向用户传送的第一个出口，即网站服务器接入互联网的链路所能提供的带宽。</li>
+<li>这个带宽决定了网站能为用户提供的访问速度和并发访问量</li>
+<li>一个网站，其服务的用户越多，对其出口带宽要求越大</li>
+</ul>
+</li>
+<li>&ldquo;最后一公里&rdquo;
+<ul>
+<li>万维网流量向用户传输的最后一段接入链路，即用户接入带宽</li>
+<li>用户的平均接入带宽，是影响互联网上层应用发展的决定性因素之一</li>
+<li>互联网初期
+<ul>
+<li>主要上网方式为拨号上网和ISDN()等，网络接入速度低。</li>
+<li>主要内容是占用带宽非常小的文字为主，主流应用是Telnet、BBS等</li>
+</ul>
+</li>
+<li>万维网出现
+<ul>
+<li>多媒体内容开始在互联网上传播</li>
+<li>用户接入带宽成为制约用户使用互联网的主要瓶颈</li>
+<li>2001年开始，各大电信运营商发展ADSL等带宽服务，随着带宽提升和接入手段丰富(光纤入户、wifi，4G等)，&ldquo;最后一公里&quot;问题得以解决</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>对等互联关口
+<ul>
+<li>不同基础运营商之间的互联互通</li>
+<li>一般运营商之间只有两三个互联互通点， 可以想象这两三个点上会产生多大流量</li>
+<li>如：
+<ul>
+<li>当某个网站部署在运营商A的IDC机房中</li>
+<li>运营商B的用户要访问该网站，就必须经过A，B之间的互联互通点进行跨网访问。</li>
+</ul>
+</li>
+<li>不同网络间的互联互通带宽，对于任何一个运营商网络流量来水，占比都比较小，收敛比高，因此这里通常是互联网传输中的拥堵点</li>
+</ul>
+</li>
+<li>长途骨干传输
+<ul>
+<li>长距离传输时延问题</li>
+<li>从网站服务器到用户之间要经过网站所在的IDC、骨干网、用户所在的城域网、用户所在的接入网等</li>
+<li>距离非常遥远，因此不可避免的带来较长的传输时延</li>
+<li>由于互联网上的绝大部分流量需要经过骨干网进行传输，所以需要骨干网络的承载能力必须与互联网的应用同步发展
+<ul>
+<li>实际两者并不同步，当骨干网络升级和扩容滞后于互联网上应用的发展，就会阶段性的使得大型骨干网的承载能力成为影响互联网性能的瓶颈</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="8秒定律">8秒定律</h3>
+<ol>
+<li>当用户访问一个网站时， 如果网页打开等待时间超过8秒，就会由30%用户放弃等待</li>
+<li>一个网站10秒后网页打不开，会有40% 的用户跳出该页面。</li>
+<li>大部分手机用户愿意等待时间为6-10秒</li>
+<li>一秒延迟会导致转化率下降7%</li>
+</ol>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/network/">Network</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    
+
+  
+  <div class="pagination">
+    
+      <a href="/blog/software-programming/%E8%99%9A%E6%8B%9F%E6%9C%BA/" class="button left"><span>不同类型代码执行引擎</span></a>
+    
+    
+      <a href="/blog/cache/redis/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="button right"><span>Redis的主从同步方式</span></a>
+    
+  </div>
+
+      </main>
+      <section id="site-sidebar">
+  
+
+  
+    <section id="categories">
+      <header>
+        <h1><a href="/categories">分类</a></h1>
+      </header>
+      <ul>
+        
+        
+        <li>
+          <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/cache/">cache<span class="count">23</span></a>
+          
+        <li>
+          <a href="/categories/compilation/">compilation<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/concurrence/">concurrence<span class="count">4</span></a>
+          
+        <li>
+          <a href="/categories/data-structure/">data-structure<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/database/">database<span class="count">9</span></a>
+          
+        <li>
+          <a href="/categories/distribution-system/">distribution-system<span class="count">10</span></a>
+          
+        <li>
+          <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
+          
+        </li>
+      </ul>
+      
+        <footer class="see-more">
+          <a href="/categories" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+        </footer>
+      
+    </section>
+  
+
+  
+      <section id="tags">
+        <header>
+          <h1><a href="/tags">标签</a></h1>
+        </header>
+        <ul>
+          
+          
+          <li>
+            <a href="/tags/algorithm/">algorithm<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/audio/">audio<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/cdn/">cdn<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/certificate/">certificate<span class="count">4</span></a>
+            
+          <li>
+            <a href="/tags/http/">http<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/i/o/">i/o<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/ide/">ide<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/kafka/">kafka<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/lock/">lock<span class="count">3</span></a>
+            
+          </li>
+        </ul>
+        
+          <footer class="see-more">
+            <a href="/tags" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+          </footer>
+        
+      </section>
+  
+
+  
+</section>
+      <footer id="site-footer">
+  
+  <p class="copyright">
+      
+      <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
+      <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
+      <br/>© 2019 zylhorse
+      <br>
+    由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.7e8b85fb814aa446375b535c9ecd0857b9de7637062ea359390ae8675c7761d8.js" integrity="sha256-fouF&#43;4FKpEY3W1Ncns0IV7nedjcGLqNZOQroZ1x3Ydg="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </div>
+  </body>
+</html>

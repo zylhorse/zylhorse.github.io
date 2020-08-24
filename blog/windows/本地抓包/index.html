@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Windows下Wireshark抓包问题 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Windows下Wireshark抓包问题">
+<meta itemprop="description" content="windows 本地抓包 在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。但是wireshark此时是无法抓取到数据包的，需要通过简单的设置才可以。
+具体方法如下：
+方法一：
+ 1.以管理员身份运行cmd2.route add 本机ip mask 255.255.255.255 网关ip如：route add 172.16.51.115 mask 255.255.255.255 172.16.1.1使用完毕后用route delete 172.16.51.115 mask 255.255.255.255 172.16.1.1删除，否则所有本机报文都经过网卡出去走一圈回来很耗性能。此时再利用wireshark进行抓包便可以抓到本机自己同自己的通信包，这样配置的原因是将发往本机的包发送到网关，而此时wireshark可以捕获到网卡驱动的报文实现抓包。但这样有一个缺点，那就是本地请求的URL的IP只能写本地的IP地址，不能写localhost或127.0.0.1，写localhost或127.0.0.1还是抓不到包。 方法二：
+ windows系统没有提供本地回环网络的接口，用wireshark监控网络的话只能看到经过网卡的流量，看不到访问localhost的流量，因为wireshark在windows系统上默认使用的是WinPcap来抓包的，现在可以用Npcap来替换掉WinPcap，Npcap是基于WinPcap 4.1.3开发的，api兼容WinPcap。 1.下载安装包
+ Npcap项目主页，它采用的是MIT开源协议，Npcap下载 2.安装
+ 安装时要勾选 Use DLT_NULL protocol sa Loopback ... 和 install npcap in winpcap api-compat mode，如下所示。 方法三：
+ RawCap ">
+<meta itemprop="datePublished" content="2014-09-03T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2014-09-03T00:00:00+00:00" />
+<meta itemprop="wordCount" content="48">
+
+
+
+<meta itemprop="keywords" content="," />
+<meta property="og:title" content="Windows下Wireshark抓包问题" />
+<meta property="og:description" content="windows 本地抓包 在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。但是wireshark此时是无法抓取到数据包的，需要通过简单的设置才可以。
+具体方法如下：
+方法一：
+ 1.以管理员身份运行cmd2.route add 本机ip mask 255.255.255.255 网关ip如：route add 172.16.51.115 mask 255.255.255.255 172.16.1.1使用完毕后用route delete 172.16.51.115 mask 255.255.255.255 172.16.1.1删除，否则所有本机报文都经过网卡出去走一圈回来很耗性能。此时再利用wireshark进行抓包便可以抓到本机自己同自己的通信包，这样配置的原因是将发往本机的包发送到网关，而此时wireshark可以捕获到网卡驱动的报文实现抓包。但这样有一个缺点，那就是本地请求的URL的IP只能写本地的IP地址，不能写localhost或127.0.0.1，写localhost或127.0.0.1还是抓不到包。 方法二：
+ windows系统没有提供本地回环网络的接口，用wireshark监控网络的话只能看到经过网卡的流量，看不到访问localhost的流量，因为wireshark在windows系统上默认使用的是WinPcap来抓包的，现在可以用Npcap来替换掉WinPcap，Npcap是基于WinPcap 4.1.3开发的，api兼容WinPcap。 1.下载安装包
+ Npcap项目主页，它采用的是MIT开源协议，Npcap下载 2.安装
+ 安装时要勾选 Use DLT_NULL protocol sa Loopback ... 和 install npcap in winpcap api-compat mode，如下所示。 方法三：
+ RawCap " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/windows/%E6%9C%AC%E5%9C%B0%E6%8A%93%E5%8C%85/" />
+<meta property="article:published_time" content="2014-09-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2014-09-03T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Windows下Wireshark抓包问题"/>
+<meta name="twitter:description" content="windows 本地抓包 在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。但是wireshark此时是无法抓取到数据包的，需要通过简单的设置才可以。
+具体方法如下：
+方法一：
+ 1.以管理员身份运行cmd2.route add 本机ip mask 255.255.255.255 网关ip如：route add 172.16.51.115 mask 255.255.255.255 172.16.1.1使用完毕后用route delete 172.16.51.115 mask 255.255.255.255 172.16.1.1删除，否则所有本机报文都经过网卡出去走一圈回来很耗性能。此时再利用wireshark进行抓包便可以抓到本机自己同自己的通信包，这样配置的原因是将发往本机的包发送到网关，而此时wireshark可以捕获到网卡驱动的报文实现抓包。但这样有一个缺点，那就是本地请求的URL的IP只能写本地的IP地址，不能写localhost或127.0.0.1，写localhost或127.0.0.1还是抓不到包。 方法二：
+ windows系统没有提供本地回环网络的接口，用wireshark监控网络的话只能看到经过网卡的流量，看不到访问localhost的流量，因为wireshark在windows系统上默认使用的是WinPcap来抓包的，现在可以用Npcap来替换掉WinPcap，Npcap是基于WinPcap 4.1.3开发的，api兼容WinPcap。 1.下载安装包
+ Npcap项目主页，它采用的是MIT开源协议，Npcap下载 2.安装
+ 安装时要勾选 Use DLT_NULL protocol sa Loopback ... 和 install npcap in winpcap api-compat mode，如下所示。 方法三：
+ RawCap "/>
+<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <header>
+    <h1>张勇良</h1>
+  </header>
+  <main>
+    <p>不念过往，不负当下</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/windows/%E6%9C%AC%E5%9C%B0%E6%8A%93%E5%8C%85/">Windows下Wireshark抓包问题</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2014-09-03 00:00:00 &#43;0000 UTC">2014-09-03</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h1 id="windows-本地抓包">windows 本地抓包</h1>
+<p>在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。但是wireshark此时是无法抓取到数据包的，需要通过简单的设置才可以。</p>
+<p>具体方法如下：</p>
+<p>方法一：</p>
+<pre><code>    1.以管理员身份运行cmd
+
+    2.route add 本机ip mask 255.255.255.255 网关ip
+
+    如：route add 172.16.51.115 mask 255.255.255.255 172.16.1.1
+
+    使用完毕后用route delete 172.16.51.115 mask 255.255.255.255 172.16.1.1删除，否则所有本机报文都经过网卡出去走一圈回来很耗性能。
+
+    此时再利用wireshark进行抓包便可以抓到本机自己同自己的通信包，这样配置的原因是将发往本机的包发送到网关，而此时wireshark可以捕获到网卡驱动的报文实现抓包。
+
+    但这样有一个缺点，那就是本地请求的URL的IP只能写本地的IP地址，不能写localhost或127.0.0.1，写localhost或127.0.0.1还是抓不到包。
+</code></pre>
+<p>方法二：</p>
+<pre><code>    windows系统没有提供本地回环网络的接口，用wireshark监控网络的话只能看到经过网卡的流量，看不到访问localhost的流量，因为wireshark在windows系统上默认使用的是WinPcap来抓包的，现在可以用Npcap来替换掉WinPcap，Npcap是基于WinPcap 4.1.3开发的，api兼容WinPcap。
+</code></pre>
+<p>1.下载安装包</p>
+<pre><code>    Npcap项目主页，它采用的是MIT开源协议，Npcap下载
+</code></pre>
+<p>2.安装</p>
+<pre><code>    安装时要勾选 Use DLT_NULL protocol sa Loopback ... 和 install npcap in winpcap api-compat mode，如下所示。
+</code></pre>
+<p>方法三：</p>
+<pre><code>    RawCap</code></pre>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/windows/">Windows</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    
+
+  
+  <div class="pagination">
+    
+      <a href="/blog/windows/proxy/" class="button left"><span>Windows系统配置CMD网络代理</span></a>
+    
+    
+      <a href="/blog/linux/ubuntu-shadowsocks/" class="button right"><span>Ubuntu安装配置shadowsocks</span></a>
+    
+  </div>
+
+      </main>
+      <section id="site-sidebar">
+  
+
+  
+    <section id="categories">
+      <header>
+        <h1><a href="/categories">分类</a></h1>
+      </header>
+      <ul>
+        
+        
+        <li>
+          <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/cache/">cache<span class="count">23</span></a>
+          
+        <li>
+          <a href="/categories/compilation/">compilation<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/concurrence/">concurrence<span class="count">4</span></a>
+          
+        <li>
+          <a href="/categories/data-structure/">data-structure<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/database/">database<span class="count">9</span></a>
+          
+        <li>
+          <a href="/categories/distribution-system/">distribution-system<span class="count">10</span></a>
+          
+        <li>
+          <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
+          
+        </li>
+      </ul>
+      
+        <footer class="see-more">
+          <a href="/categories" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+        </footer>
+      
+    </section>
+  
+
+  
+      <section id="tags">
+        <header>
+          <h1><a href="/tags">标签</a></h1>
+        </header>
+        <ul>
+          
+          
+          <li>
+            <a href="/tags/algorithm/">algorithm<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/audio/">audio<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/cdn/">cdn<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/certificate/">certificate<span class="count">4</span></a>
+            
+          <li>
+            <a href="/tags/http/">http<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/i/o/">i/o<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/ide/">ide<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/kafka/">kafka<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/lock/">lock<span class="count">3</span></a>
+            
+          </li>
+        </ul>
+        
+          <footer class="see-more">
+            <a href="/tags" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+          </footer>
+        
+      </section>
+  
+
+  
+</section>
+      <footer id="site-footer">
+  
+  <p class="copyright">
+      
+      <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
+      <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
+      <br/>© 2019 zylhorse
+      <br>
+    由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.7e8b85fb814aa446375b535c9ecd0857b9de7637062ea359390ae8675c7761d8.js" integrity="sha256-fouF&#43;4FKpEY3W1Ncns0IV7nedjcGLqNZOQroZ1x3Ydg="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </div>
+  </body>
+</html>

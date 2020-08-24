@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Oracle数据库安装配置 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Oracle数据库安装配置">
+<meta itemprop="description" content="docker安装 sudo docker pull deepdiver/docker-oracle-xe-11gsudo docker run -d -p 1522:22 -p 1521:1521 --name oracle deepdiver/docker-oracle-xe-11gclient https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html
+ basic sdk sqlplus  链接动态库 #!/bin/bashln /opt/instantclient_11_2/libclntsh.so.11.1 /usr/lib/libclntsh.soln /optinstantclient_11_2/libnnz11.so /usr/lib/libnnz11.soln /opt/instantclient_11_2/libocci.so.11.1 /usr/lib/libocci.soln /opt/instantclient_11_2/libociei.so /usr/lib/libociei.soln /opt/instantclient_11_2/libocijdbc11.so /usr/lib/libocijdbc11.soln /opt/instantclient_11_2/libsqlplusic.so /usr/lib/libsqlplusic.soln /opt/instantclient_11_2/libsqlplus.so /usr/lib/libsqlplus.so添加动态库到系统 echo /opt/instantclient_11_2 &gt;&gt; /etc/ld.so.confldconfig安装 oracle client 下载地址： https://www.oracle.com/database/technologies/112010-win64soft.html
+错误提示  不满足安装条件, oracle 没有配置当前系统的支持   修改stage/cvu/cvu_prereq.xml添加
+  &lt;OPERATING_SYSTEM RELEASE=&quot;6.2&quot;&gt;&lt;VERSION VALUE=&quot;3&quot;/&gt;&lt;ARCHITECTURE VALUE=&quot;64-bit&quot;/&gt;&lt;NAME VALUE=&quot;Windows 10&quot;/&gt;&lt;ENV_VAR_LIST&gt;&lt;ENV_VAR NAME=&quot;PATH&quot; MAX_LENGTH=&quot;1023&quot; /&gt;&lt;/ENV_VAR_LIST&gt;&lt;/OPERATING_SYSTEM&gt;安装plsql developer 软件 下载地址： https://www.">
+<meta itemprop="datePublished" content="2019-07-15T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-07-15T00:00:00+00:00" />
+<meta itemprop="wordCount" content="81">
+
+
+
+<meta itemprop="keywords" content="Oracle," />
+<meta property="og:title" content="Oracle数据库安装配置" />
+<meta property="og:description" content="docker安装 sudo docker pull deepdiver/docker-oracle-xe-11gsudo docker run -d -p 1522:22 -p 1521:1521 --name oracle deepdiver/docker-oracle-xe-11gclient https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html
+ basic sdk sqlplus  链接动态库 #!/bin/bashln /opt/instantclient_11_2/libclntsh.so.11.1 /usr/lib/libclntsh.soln /optinstantclient_11_2/libnnz11.so /usr/lib/libnnz11.soln /opt/instantclient_11_2/libocci.so.11.1 /usr/lib/libocci.soln /opt/instantclient_11_2/libociei.so /usr/lib/libociei.soln /opt/instantclient_11_2/libocijdbc11.so /usr/lib/libocijdbc11.soln /opt/instantclient_11_2/libsqlplusic.so /usr/lib/libsqlplusic.soln /opt/instantclient_11_2/libsqlplus.so /usr/lib/libsqlplus.so添加动态库到系统 echo /opt/instantclient_11_2 &gt;&gt; /etc/ld.so.confldconfig安装 oracle client 下载地址： https://www.oracle.com/database/technologies/112010-win64soft.html
+错误提示  不满足安装条件, oracle 没有配置当前系统的支持   修改stage/cvu/cvu_prereq.xml添加
+  &lt;OPERATING_SYSTEM RELEASE=&quot;6.2&quot;&gt;&lt;VERSION VALUE=&quot;3&quot;/&gt;&lt;ARCHITECTURE VALUE=&quot;64-bit&quot;/&gt;&lt;NAME VALUE=&quot;Windows 10&quot;/&gt;&lt;ENV_VAR_LIST&gt;&lt;ENV_VAR NAME=&quot;PATH&quot; MAX_LENGTH=&quot;1023&quot; /&gt;&lt;/ENV_VAR_LIST&gt;&lt;/OPERATING_SYSTEM&gt;安装plsql developer 软件 下载地址： https://www." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/database/oracle/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" />
+<meta property="article:published_time" content="2019-07-15T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-07-15T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Oracle数据库安装配置"/>
+<meta name="twitter:description" content="docker安装 sudo docker pull deepdiver/docker-oracle-xe-11gsudo docker run -d -p 1522:22 -p 1521:1521 --name oracle deepdiver/docker-oracle-xe-11gclient https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html
+ basic sdk sqlplus  链接动态库 #!/bin/bashln /opt/instantclient_11_2/libclntsh.so.11.1 /usr/lib/libclntsh.soln /optinstantclient_11_2/libnnz11.so /usr/lib/libnnz11.soln /opt/instantclient_11_2/libocci.so.11.1 /usr/lib/libocci.soln /opt/instantclient_11_2/libociei.so /usr/lib/libociei.soln /opt/instantclient_11_2/libocijdbc11.so /usr/lib/libocijdbc11.soln /opt/instantclient_11_2/libsqlplusic.so /usr/lib/libsqlplusic.soln /opt/instantclient_11_2/libsqlplus.so /usr/lib/libsqlplus.so添加动态库到系统 echo /opt/instantclient_11_2 &gt;&gt; /etc/ld.so.confldconfig安装 oracle client 下载地址： https://www.oracle.com/database/technologies/112010-win64soft.html
+错误提示  不满足安装条件, oracle 没有配置当前系统的支持   修改stage/cvu/cvu_prereq.xml添加
+  &lt;OPERATING_SYSTEM RELEASE=&quot;6.2&quot;&gt;&lt;VERSION VALUE=&quot;3&quot;/&gt;&lt;ARCHITECTURE VALUE=&quot;64-bit&quot;/&gt;&lt;NAME VALUE=&quot;Windows 10&quot;/&gt;&lt;ENV_VAR_LIST&gt;&lt;ENV_VAR NAME=&quot;PATH&quot; MAX_LENGTH=&quot;1023&quot; /&gt;&lt;/ENV_VAR_LIST&gt;&lt;/OPERATING_SYSTEM&gt;安装plsql developer 软件 下载地址： https://www."/>
+<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <header>
+    <h1>张勇良</h1>
+  </header>
+  <main>
+    <p>不念过往，不负当下</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/database/oracle/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">Oracle数据库安装配置</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-07-15 00:00:00 &#43;0000 UTC">2019-07-15</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="docker安装">docker安装</h2>
+<pre><code>sudo docker pull deepdiver/docker-oracle-xe-11g
+sudo docker run -d -p 1522:22 -p 1521:1521 --name oracle deepdiver/docker-oracle-xe-11g
+</code></pre><h2 id="client">client</h2>
+<p><a href="https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html">https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html</a></p>
+<ol>
+<li>basic</li>
+<li>sdk</li>
+<li>sqlplus</li>
+</ol>
+<h3 id="链接动态库">链接动态库</h3>
+<pre><code>#!/bin/bash
+
+ln /opt/instantclient_11_2/libclntsh.so.11.1 /usr/lib/libclntsh.so
+ln /optinstantclient_11_2/libnnz11.so /usr/lib/libnnz11.so
+ln /opt/instantclient_11_2/libocci.so.11.1 /usr/lib/libocci.so
+ln /opt/instantclient_11_2/libociei.so /usr/lib/libociei.so
+ln /opt/instantclient_11_2/libocijdbc11.so /usr/lib/libocijdbc11.so
+
+ln /opt/instantclient_11_2/libsqlplusic.so /usr/lib/libsqlplusic.so
+ln /opt/instantclient_11_2/libsqlplus.so /usr/lib/libsqlplus.so
+
+</code></pre><h3 id="添加动态库到系统">添加动态库到系统</h3>
+<pre><code>echo /opt/instantclient_11_2 &gt;&gt; /etc/ld.so.conf
+ldconfig
+</code></pre><h2 id="安装-oracle-client">安装 oracle client</h2>
+<p>下载地址： 
+<a href="https://www.oracle.com/database/technologies/112010-win64soft.html">https://www.oracle.com/database/technologies/112010-win64soft.html</a></p>
+<h3 id="错误提示">错误提示</h3>
+<ol>
+<li>不满足安装条件, oracle 没有配置当前系统的支持</li>
+</ol>
+<blockquote>
+<p>修改stage/cvu/cvu_prereq.xml添加</p>
+</blockquote>
+<pre><code> &lt;OPERATING_SYSTEM RELEASE=&quot;6.2&quot;&gt;
+             &lt;VERSION VALUE=&quot;3&quot;/&gt;
+             &lt;ARCHITECTURE VALUE=&quot;64-bit&quot;/&gt;
+             &lt;NAME VALUE=&quot;Windows 10&quot;/&gt;
+             &lt;ENV_VAR_LIST&gt;
+                 &lt;ENV_VAR NAME=&quot;PATH&quot; MAX_LENGTH=&quot;1023&quot; /&gt;
+             &lt;/ENV_VAR_LIST&gt;
+         &lt;/OPERATING_SYSTEM&gt;
+</code></pre><h2 id="安装plsql-developer-软件">安装plsql developer 软件</h2>
+<p>下载地址： <a href="https://www.allroundautomations.com/registered/plsqldev.html">https://www.allroundautomations.com/registered/plsqldev.html</a></p>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/oracle/">Oracle</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    
+
+  
+  <div class="pagination">
+    
+      <a href="/blog/jenkins/jenkins%E5%AE%89%E8%A3%85/" class="button left"><span>Jenkins部署配置</span></a>
+    
+    
+      <a href="/blog/web/ldap/" class="button right"><span>LDAP协议简介</span></a>
+    
+  </div>
+
+      </main>
+      <section id="site-sidebar">
+  
+
+  
+    <section id="categories">
+      <header>
+        <h1><a href="/categories">分类</a></h1>
+      </header>
+      <ul>
+        
+        
+        <li>
+          <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/cache/">cache<span class="count">23</span></a>
+          
+        <li>
+          <a href="/categories/compilation/">compilation<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/concurrence/">concurrence<span class="count">4</span></a>
+          
+        <li>
+          <a href="/categories/data-structure/">data-structure<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/database/">database<span class="count">9</span></a>
+          
+        <li>
+          <a href="/categories/distribution-system/">distribution-system<span class="count">10</span></a>
+          
+        <li>
+          <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
+          
+        </li>
+      </ul>
+      
+        <footer class="see-more">
+          <a href="/categories" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+        </footer>
+      
+    </section>
+  
+
+  
+      <section id="tags">
+        <header>
+          <h1><a href="/tags">标签</a></h1>
+        </header>
+        <ul>
+          
+          
+          <li>
+            <a href="/tags/algorithm/">algorithm<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/audio/">audio<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/cdn/">cdn<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/certificate/">certificate<span class="count">4</span></a>
+            
+          <li>
+            <a href="/tags/http/">http<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/i/o/">i/o<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/ide/">ide<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/kafka/">kafka<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/lock/">lock<span class="count">3</span></a>
+            
+          </li>
+        </ul>
+        
+          <footer class="see-more">
+            <a href="/tags" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+          </footer>
+        
+      </section>
+  
+
+  
+</section>
+      <footer id="site-footer">
+  
+  <p class="copyright">
+      
+      <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
+      <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
+      <br/>© 2019 zylhorse
+      <br>
+    由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.7e8b85fb814aa446375b535c9ecd0857b9de7637062ea359390ae8675c7761d8.js" integrity="sha256-fouF&#43;4FKpEY3W1Ncns0IV7nedjcGLqNZOQroZ1x3Ydg="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </div>
+  </body>
+</html>

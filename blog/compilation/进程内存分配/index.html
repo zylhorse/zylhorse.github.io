@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>进程启动后怎样申请和分配内存空间 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="进程启动后怎样申请和分配内存空间">
+<meta itemprop="description" content="栈区 stack 由编译器自动分配和释放， 存放程序运行时函数分配的局部变量、函数参数、返回数据等。操作类似数据结构中的栈。
+堆区 heap 由程序分配和手动释放。 如果程序没有主动释放，程序结束后OS回收。 分配类似于数据结构中的链表
+全局区 存放全局变量、静态数据。程序结束由OS回收。 分为已初始化全局区（data）和未初始化全局区（bss）
+常量区 存放常量字符串。程序结束后由OS回收
+代码区 存放函数体的二进制代码
+堆栈区别 申请  栈： 只要系统栈内存空间大于申请空间， 系统将为程序提供内存，否则报异常提示栈溢出； 堆： 操作系统会记录空闲内存地址的链表， 系统收到程序的申请时遍历该链表，找到大于申请空间的堆节点，将其从量表删除并分配给程序同时在该内存空间的首地址标记大小用于delete。 另外由于分配的空间不一定正好等于申请的空间大小， 系统会自动将多余的空间重新放入空闲内存地址列表；  大小限制  栈： 是向低地址扩展的数据结构， 是一块连续的内存区域。栈顶地址和栈的容量由系统预先设定。 堆： 是向高地址扩展的数据结构， 是不连续的内存区域。堆大小受限于计算机系统中有效的虚拟内存。  申请效率  栈： 由系统自动分配， 速度快。程序无法控制 堆： 由new 等分配， 速度慢，且内存不连续容易产生碎片。但是容易管理。  ">
+<meta itemprop="datePublished" content="2013-09-02T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2013-09-02T00:00:00+00:00" />
+<meta itemprop="wordCount" content="41">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta property="og:title" content="进程启动后怎样申请和分配内存空间" />
+<meta property="og:description" content="栈区 stack 由编译器自动分配和释放， 存放程序运行时函数分配的局部变量、函数参数、返回数据等。操作类似数据结构中的栈。
+堆区 heap 由程序分配和手动释放。 如果程序没有主动释放，程序结束后OS回收。 分配类似于数据结构中的链表
+全局区 存放全局变量、静态数据。程序结束由OS回收。 分为已初始化全局区（data）和未初始化全局区（bss）
+常量区 存放常量字符串。程序结束后由OS回收
+代码区 存放函数体的二进制代码
+堆栈区别 申请  栈： 只要系统栈内存空间大于申请空间， 系统将为程序提供内存，否则报异常提示栈溢出； 堆： 操作系统会记录空闲内存地址的链表， 系统收到程序的申请时遍历该链表，找到大于申请空间的堆节点，将其从量表删除并分配给程序同时在该内存空间的首地址标记大小用于delete。 另外由于分配的空间不一定正好等于申请的空间大小， 系统会自动将多余的空间重新放入空闲内存地址列表；  大小限制  栈： 是向低地址扩展的数据结构， 是一块连续的内存区域。栈顶地址和栈的容量由系统预先设定。 堆： 是向高地址扩展的数据结构， 是不连续的内存区域。堆大小受限于计算机系统中有效的虚拟内存。  申请效率  栈： 由系统自动分配， 速度快。程序无法控制 堆： 由new 等分配， 速度慢，且内存不连续容易产生碎片。但是容易管理。  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/compilation/%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" />
+<meta property="article:published_time" content="2013-09-02T00:00:00+00:00" />
+<meta property="article:modified_time" content="2013-09-02T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="进程启动后怎样申请和分配内存空间"/>
+<meta name="twitter:description" content="栈区 stack 由编译器自动分配和释放， 存放程序运行时函数分配的局部变量、函数参数、返回数据等。操作类似数据结构中的栈。
+堆区 heap 由程序分配和手动释放。 如果程序没有主动释放，程序结束后OS回收。 分配类似于数据结构中的链表
+全局区 存放全局变量、静态数据。程序结束由OS回收。 分为已初始化全局区（data）和未初始化全局区（bss）
+常量区 存放常量字符串。程序结束后由OS回收
+代码区 存放函数体的二进制代码
+堆栈区别 申请  栈： 只要系统栈内存空间大于申请空间， 系统将为程序提供内存，否则报异常提示栈溢出； 堆： 操作系统会记录空闲内存地址的链表， 系统收到程序的申请时遍历该链表，找到大于申请空间的堆节点，将其从量表删除并分配给程序同时在该内存空间的首地址标记大小用于delete。 另外由于分配的空间不一定正好等于申请的空间大小， 系统会自动将多余的空间重新放入空闲内存地址列表；  大小限制  栈： 是向低地址扩展的数据结构， 是一块连续的内存区域。栈顶地址和栈的容量由系统预先设定。 堆： 是向高地址扩展的数据结构， 是不连续的内存区域。堆大小受限于计算机系统中有效的虚拟内存。  申请效率  栈： 由系统自动分配， 速度快。程序无法控制 堆： 由new 等分配， 速度慢，且内存不连续容易产生碎片。但是容易管理。  "/>
+<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <header>
+    <h1>张勇良</h1>
+  </header>
+  <main>
+    <p>不念过往，不负当下</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/compilation/%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/">进程启动后怎样申请和分配内存空间</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2013-09-02 00:00:00 &#43;0000 UTC">2013-09-02</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h3 id="栈区-stack">栈区 stack</h3>
+<p>由编译器自动分配和释放， 存放程序运行时函数分配的局部变量、函数参数、返回数据等。操作类似数据结构中的栈。</p>
+<h3 id="堆区-heap">堆区 heap</h3>
+<p>由程序分配和手动释放。 如果程序没有主动释放，程序结束后OS回收。 分配类似于数据结构中的链表</p>
+<h3 id="全局区">全局区</h3>
+<p>存放全局变量、静态数据。程序结束由OS回收。 分为已初始化全局区（data）和未初始化全局区（bss）</p>
+<h3 id="常量区">常量区</h3>
+<p>存放常量字符串。程序结束后由OS回收</p>
+<h3 id="代码区">代码区</h3>
+<p>存放函数体的二进制代码</p>
+<h3 id="堆栈区别">堆栈区别</h3>
+<h4 id="申请">申请</h4>
+<ol>
+<li>栈： 只要系统栈内存空间大于申请空间， 系统将为程序提供内存，否则报异常提示栈溢出；</li>
+<li>堆： 操作系统会记录空闲内存地址的链表， 系统收到程序的申请时遍历该链表，找到大于申请空间的堆节点，将其从量表删除并分配给程序同时在该内存空间的首地址标记大小用于delete。 另外由于分配的空间不一定正好等于申请的空间大小， 系统会自动将多余的空间重新放入空闲内存地址列表；</li>
+</ol>
+<h4 id="大小限制">大小限制</h4>
+<ol>
+<li>栈： 是向低地址扩展的数据结构， 是一块连续的内存区域。栈顶地址和栈的容量由系统预先设定。</li>
+<li>堆： 是向高地址扩展的数据结构， 是不连续的内存区域。堆大小受限于计算机系统中有效的虚拟内存。</li>
+</ol>
+<h4 id="申请效率">申请效率</h4>
+<ol>
+<li>栈： 由系统自动分配， 速度快。程序无法控制</li>
+<li>堆： 由new 等分配， 速度慢，且内存不连续容易产生碎片。但是容易管理。</li>
+</ol>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/compilation/">Compilation</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      <li>None</li>
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    
+
+  
+  <div class="pagination">
+    
+      <a href="/blog/linux/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E5%8F%B7/" class="button left"><span>linux系统信号</span></a>
+    
+    
+      <a href="/blog/software-programming/%E8%AF%AD%E8%A8%80%E7%B1%BB%E5%9E%8B/" class="button right"><span>编程语言分类</span></a>
+    
+  </div>
+
+      </main>
+      <section id="site-sidebar">
+  
+
+  
+    <section id="categories">
+      <header>
+        <h1><a href="/categories">分类</a></h1>
+      </header>
+      <ul>
+        
+        
+        <li>
+          <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/cache/">cache<span class="count">23</span></a>
+          
+        <li>
+          <a href="/categories/compilation/">compilation<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/concurrence/">concurrence<span class="count">4</span></a>
+          
+        <li>
+          <a href="/categories/data-structure/">data-structure<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/database/">database<span class="count">9</span></a>
+          
+        <li>
+          <a href="/categories/distribution-system/">distribution-system<span class="count">10</span></a>
+          
+        <li>
+          <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
+          
+        </li>
+      </ul>
+      
+        <footer class="see-more">
+          <a href="/categories" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+        </footer>
+      
+    </section>
+  
+
+  
+      <section id="tags">
+        <header>
+          <h1><a href="/tags">标签</a></h1>
+        </header>
+        <ul>
+          
+          
+          <li>
+            <a href="/tags/algorithm/">algorithm<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/audio/">audio<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/cdn/">cdn<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/certificate/">certificate<span class="count">4</span></a>
+            
+          <li>
+            <a href="/tags/http/">http<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/i/o/">i/o<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/ide/">ide<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/kafka/">kafka<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/lock/">lock<span class="count">3</span></a>
+            
+          </li>
+        </ul>
+        
+          <footer class="see-more">
+            <a href="/tags" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+          </footer>
+        
+      </section>
+  
+
+  
+</section>
+      <footer id="site-footer">
+  
+  <p class="copyright">
+      
+      <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
+      <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
+      <br/>© 2019 zylhorse
+      <br>
+    由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.7e8b85fb814aa446375b535c9ecd0857b9de7637062ea359390ae8675c7761d8.js" integrity="sha256-fouF&#43;4FKpEY3W1Ncns0IV7nedjcGLqNZOQroZ1x3Ydg="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </div>
+  </body>
+</html>

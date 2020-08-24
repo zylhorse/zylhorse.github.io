@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MySQL on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/mysql/</link>
+    <description>Recent content in MySQL on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 15 May 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://zylhorse.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>MySQL数据库有哪些日志</title>
+      <link>https://zylhorse.github.io/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A5%E5%BF%97/</link>
+      <pubDate>Fri, 15 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A5%E5%BF%97/</guid>
+      <description>事务日志 undo log 事务中在操作任何数据之前，首先将原数据备份到undo log。
+redo log 事务提交前会把新数据备份到redo log并持久化。
+binlog </description>
+    </item>
+    
+    <item>
+      <title>MySQL数据库锁</title>
+      <link>https://zylhorse.github.io/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%94%81/</link>
+      <pubDate>Mon, 16 Mar 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%94%81/</guid>
+      <description>按操作分  共享锁（读锁）： 针对同一块数据， 多个读操作可以同时进行且不会互相影响。 只能读不能写 排他锁（写锁）： 对当前数据的排他锁操作， 没有解锁前， 阻断其他共享锁和排他锁  按粒度分  行锁： 锁定某一行，开销大， 加锁慢， 会出现死锁， 锁定力度最小， 发生锁冲突概率最低， 并发力度高 表锁： 锁定一张表， 开销小， 加锁快， 不会死锁， 锁定力度最大， 发生锁冲突概率最高， 并大力度低 页面锁： 开销和加锁时间介于行锁和表锁之间， 会出现死锁， 锁定力度介于行锁和表锁之间， 并发力度一般  </description>
+    </item>
+    
+    <item>
+      <title>MySQL数据库事务原理</title>
+      <link>https://zylhorse.github.io/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1/</link>
+      <pubDate>Tue, 10 Mar 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1/</guid>
+      <description>概念 事务处理用于维护数据库操作的完整性， 保证批量操作要么完全执行， 要么完全不执行。
+事务特性acid  原子性（automicity）： 事务中的所有操作， 要么全部完成， 要么不做； 一致性（consistency）：事务执行前和执行后都必须处于一致性状态。 如果成功则处于有效状态， 如果失败则返回到原始状态。 隔离性（isolation）：不同事务并发的操作相同数据时， 每个事务都有各自完整的数据空间；并发事务间的数据修改是隔离的， 当事务查看数据时， 数据的状态要么是其他事务修改前的状态， 要么是其他事务修改后的状态， 不会查看到中间状态； 持久性（durability）： 事务成功结束后， 对数据库的修改必须永久保存。 即使系统崩溃， 重启数据库后， 系统还是恢复到事务成功结束的状态。  原子性原理 通过数据库undo log实现。 事务中操作数据前， 首先将原数据被分到undo log， 然后进行数据修改。 如果事务发生异常或用户调用rollback语句， 数据库会使用undo log 将数据恢复到事务执行前的状态。
+一致性原理 通过数据库undo log 实现
+持久性原理 通过数据库redo log实现。事务提交前会把新数据备份到redo log中并持久化。 当系统崩溃时，虽然数据没有持久化到数据库， 但是redo log已经持久化。 系统可以根据redo log将数据恢复到最新的。
+隔离性原理  隔离性通过数据库锁机制实现 分为四个级别： 读未提交， 读已提交， 可重复读， 可序列化 mysql 默认为可重复读 oracle 默认为读已提  读未提交（read uncommitted）  事务在读数据的时候并未对数据进行加锁。 事务在发生更新数据的瞬间，必须先对其加行级共享锁，直到事务结束释放。  读已提交（read committed）  事务对当前读取的数据加行级共享锁， 一旦读取完成立即释放该锁。 事务在发生更新数据的瞬间，必须先对其加行级排他锁，直到事务结束释放。  可重复读（repeatable reads）  事务对当前读取的数据加行级共享锁， 直到事务结束才释放。 事务在发生更新数据的瞬间，必须先对其加行级排他锁，直到事务结束释放  可序列化（serializable）  事务在读取数据时，必须先对其加 表级共享锁 ，直到事务结束才释放； 事务在更新数据时，必须先对其加 表级排他锁 ，直到事务结束才释放。  并行事务问题  脏读： 事务A 读取 事务B未提交的修改。 不可重复读： 事务A连续读的过程，事务B写入一次， 导致A前后读取不一致 丢失更新： 事务AB都写入数据，导致A写入数据被B覆盖 幻读： 事务A修改表内数据时，事务B向表内插入一条数据，　A修改完发现表内数据并没有全部被修改。  mvcc　多版本并发控制  mvcc 处理并发能力强，但是系统开销大 mvcc存储的基本row包含一些额外的存储信息： DATA_TRX_ID(事务id)， DATA_ROLL_PTR（undo log记录的原数据指针）, DB_ROW_ID（行索引id）, DELETE BIT（标记是否被删除）  </description>
+    </item>
+    
+    <item>
+      <title>MySQL常用sql语句</title>
+      <link>https://zylhorse.github.io/blog/database/mysql/sql%E8%AF%AD%E5%8F%A5/</link>
+      <pubDate>Thu, 20 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/database/mysql/sql%E8%AF%AD%E5%8F%A5/</guid>
+      <description>创建数据库 create database &amp;ldquo;dbname&amp;rdquo;;
+创建用户 create user &amp;ldquo;username&amp;rdquo;@&amp;ldquo;host&amp;rdquo; identified by &amp;ldquo;password&amp;rdquo;;
+赋予用户权限 grant all privileges on dbname.* to &amp;ldquo;dbuser&amp;rdquo;@&amp;ldquo;host&amp;rdquo; with grant option;
+查看权限 show grants for &amp;ldquo;username&amp;rdquo;@&amp;ldquo;host&amp;rdquo;;
+删除权限 revoke all on dbname.table from &amp;lsquo;user&amp;rsquo;@&#39;%&#39;;
+备份还原 -d 备份表结构 -t 备份数据
+备份数据库 mysqldump -hys1.51asj.com -P3306 -uroot -p &amp;ndash;databases dbname &amp;gt; /tmp/dbname.sql
+备份数据库单表 mysqldump -hys1.51asj.com -P3306 -uroot -p dbname tablename &amp;gt; /tmp/tablename.sql
+还原数据 mysql&amp;gt; source /tmp/dbname.sql</description>
+    </item>
+    
+    <item>
+      <title>MySQL数据库安装配置</title>
+      <link>https://zylhorse.github.io/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Thu, 20 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</guid>
+      <description>ubuntu 安装 sudo rm /var/lib/mysql/ -Rsudo rm /etc/mysql/ -Rsudo apt-get autoremove mysql-server mysql-common --purgesudo apt-get remove apparmor // 输入Y回车sudo apt-get install mysql-server mysql-common //重新安装windows 安装  下载地址 解压缩配置my.ini  [mysql]# 设置mysql客户端默认字符集default-character-set=utf8[mysqld]# 设置3306端口port = 3306# 设置mysql的安装目录basedir=G:\mysql-8.0.15-winx64# 设置mysql的data目录datadir=G:\mysql-8.0.15-winx64\data# 允许最大连接数max_connections=20# 服务端使用的字符集默认为8比特编码的latin1字符集character-set-server=utf8# 创建新表时将使用的默认存储引擎default-storage-engine=INNODB安装  # 用管理员权限启动命令行，最后会提示root密码mysqld --initialize --console安装mysql服务  mysqld install启动mysql服务  net start mysql 修改root密码  初始化修改  alter user &amp;quot;root&amp;quot;@&amp;quot;localhost&amp;quot; identified by &amp;quot;zylhorse@126.</description>
+    </item>
+    
+    <item>
+      <title>MySQL数据库问题集锦</title>
+      <link>https://zylhorse.github.io/blog/database/mysql/%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Thu, 20 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/database/mysql/%E9%97%AE%E9%A2%98/</guid>
+      <description>登录 问题：&#39;Access denied for user &#39;root&#39;@&#39;localhost&#39; (using password: YES)&#39;解决办法：$ /etc/init.d/mysql stop$ mkdir /var/run/mysqld/$ chown -R mysql:mysql /var/run/mysqld$ mysqld_safe --user=mysql --skip-grant-tables --skip-networking &amp;amp;$ mysql -u root mysql&amp;gt; update user set password=PASSWORD(&amp;quot;newpassword&amp;quot;) where user=&amp;quot;root&amp;quot;&amp;gt; flush privileges;&amp;gt; exit$ /etc/init.d/mysql restart</description>
+    </item>
+    
+  </channel>
+</rss>

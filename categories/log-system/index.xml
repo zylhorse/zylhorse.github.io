@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Log System on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/log-system/</link>
+    <description>Recent content in Log System on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 03 Dec 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://zylhorse.github.io/categories/log-system/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Docker部署和配置nsqbeat</title>
+      <link>https://zylhorse.github.io/blog/log-system/docker%E5%AE%89%E8%A3%85nsqbeat/</link>
+      <pubDate>Mon, 03 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/log-system/docker%E5%AE%89%E8%A3%85nsqbeat/</guid>
+      <description>############################# Nsqbeat ######################################nsqbeat:# A list of NSQ Lookup Daemons to connect tolookupdhttpaddrs: [&amp;quot;192.168.20.99:4161&amp;quot;]# a Topic to sucscribe totopic: &amp;quot;logic.log&amp;quot;# The channel name to joinchannel: &amp;quot;nsqbeat&amp;quot;# How many in Flightsmaxinflight: 200# If data in the topic is Json then use the decoder, if not set to something else like plaincodec: &amp;quot;text&amp;quot;# use Golang time format layout to define if @timestamp exists and has a different formattimelayout: &amp;quot;2006-01-02T15:04:05.</description>
+    </item>
+    
+    <item>
+      <title>日志业务系统架构设计</title>
+      <link>https://zylhorse.github.io/blog/log-system/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/</link>
+      <pubDate>Sat, 27 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/log-system/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/</guid>
+      <description>日志业务 两种日志收集架构
+ 应用产生日志-&amp;gt; 根据大小/时间 写入文件-&amp;gt; rotation 日志文件 -&amp;gt; 定期查看/定期删除 应用产生日志-&amp;gt; 传输 -&amp;gt; 过滤/转换 -&amp;gt; 存储-&amp;gt; 分析/查看  日志业务结构 采集-&amp;gt;缓存-&amp;gt;转换/过滤-&amp;gt;存储-&amp;gt;可视化
+日志技术架构 filebeat/logstash -&amp;gt; kafka -&amp;gt; fluentd -&amp;gt; es -&amp;gt; kibana
+日志平台优化  由于日志低频次， 将历史数据存入廉价存储， 普通用户需要时再导入es 日志存储的时间越长，意义越小。 根据实际情况制定留存数据策略 顺序写入磁盘，区别随机写入磁盘，我们采用顺序写数据模式  </description>
+    </item>
+    
+  </channel>
+</rss>

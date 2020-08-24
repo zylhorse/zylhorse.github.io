@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Sandboxie（沙箱）网络编程虚拟执行环境 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Sandboxie（沙箱）网络编程虚拟执行环境">
+<meta itemprop="description" content="关键字 Sandboxie（沙箱）网络编程虚拟执行环境
+概念 沙箱是一个虚拟系统程序， 允许程序在沙箱环境中独立运行， 限制沙箱中程序对宿主系统的修改和影响。
+有哪些限制 在沙箱中运行的程序，
+ 不能运行本地的可执行程序 不能从本地计算机文件系统中读取任何文件， 也不能往本地计算机系统中写入任何信息 不能查看本地计算机信息，特别是用户名，E-mail地址等  技术迭代  GreenBorder 为IE和Firefox构建安全的虚拟执行环境，用户对浏览器所作的任何写磁盘操作， 都将重定向到一个临时的文件中 Forcefield由ZoneAlarm开发， 功能雷士GreenBorder;  原理 Sandboxie 通过重定向技术，将程序生成和修改的文件重定向到自身的临时文件中（修改包括注册表和系统的核心数据）。通过加载自身的驱动来保护底层数据， 属于驱动级别保护。">
+<meta itemprop="datePublished" content="2015-03-22T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2015-03-22T00:00:00+00:00" />
+<meta itemprop="wordCount" content="22">
+
+
+
+<meta itemprop="keywords" content="," />
+<meta property="og:title" content="Sandboxie（沙箱）网络编程虚拟执行环境" />
+<meta property="og:description" content="关键字 Sandboxie（沙箱）网络编程虚拟执行环境
+概念 沙箱是一个虚拟系统程序， 允许程序在沙箱环境中独立运行， 限制沙箱中程序对宿主系统的修改和影响。
+有哪些限制 在沙箱中运行的程序，
+ 不能运行本地的可执行程序 不能从本地计算机文件系统中读取任何文件， 也不能往本地计算机系统中写入任何信息 不能查看本地计算机信息，特别是用户名，E-mail地址等  技术迭代  GreenBorder 为IE和Firefox构建安全的虚拟执行环境，用户对浏览器所作的任何写磁盘操作， 都将重定向到一个临时的文件中 Forcefield由ZoneAlarm开发， 功能雷士GreenBorder;  原理 Sandboxie 通过重定向技术，将程序生成和修改的文件重定向到自身的临时文件中（修改包括注册表和系统的核心数据）。通过加载自身的驱动来保护底层数据， 属于驱动级别保护。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/software-programming/%E6%B2%99%E7%AE%B1/" />
+<meta property="article:published_time" content="2015-03-22T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-03-22T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Sandboxie（沙箱）网络编程虚拟执行环境"/>
+<meta name="twitter:description" content="关键字 Sandboxie（沙箱）网络编程虚拟执行环境
+概念 沙箱是一个虚拟系统程序， 允许程序在沙箱环境中独立运行， 限制沙箱中程序对宿主系统的修改和影响。
+有哪些限制 在沙箱中运行的程序，
+ 不能运行本地的可执行程序 不能从本地计算机文件系统中读取任何文件， 也不能往本地计算机系统中写入任何信息 不能查看本地计算机信息，特别是用户名，E-mail地址等  技术迭代  GreenBorder 为IE和Firefox构建安全的虚拟执行环境，用户对浏览器所作的任何写磁盘操作， 都将重定向到一个临时的文件中 Forcefield由ZoneAlarm开发， 功能雷士GreenBorder;  原理 Sandboxie 通过重定向技术，将程序生成和修改的文件重定向到自身的临时文件中（修改包括注册表和系统的核心数据）。通过加载自身的驱动来保护底层数据， 属于驱动级别保护。"/>
+<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <header>
+    <h1>张勇良</h1>
+  </header>
+  <main>
+    <p>不念过往，不负当下</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/software-programming/%E6%B2%99%E7%AE%B1/">Sandboxie（沙箱）网络编程虚拟执行环境</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-03-22 00:00:00 &#43;0000 UTC">2015-03-22</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="关键字">关键字</h2>
+<p>Sandboxie（沙箱）网络编程虚拟执行环境</p>
+<h2 id="概念">概念</h2>
+<p>沙箱是一个虚拟系统程序， 允许程序在沙箱环境中独立运行， 限制沙箱中程序对宿主系统的修改和影响。</p>
+<h3 id="有哪些限制">有哪些限制</h3>
+<p>在沙箱中运行的程序，</p>
+<ol>
+<li>不能运行本地的可执行程序</li>
+<li>不能从本地计算机文件系统中读取任何文件， 也不能往本地计算机系统中写入任何信息</li>
+<li>不能查看本地计算机信息，特别是用户名，E-mail地址等</li>
+</ol>
+<h2 id="技术迭代">技术迭代</h2>
+<ol>
+<li>GreenBorder 为IE和Firefox构建安全的虚拟执行环境，用户对浏览器所作的任何写磁盘操作， 都将重定向到一个临时的文件中</li>
+<li>Forcefield由ZoneAlarm开发， 功能雷士GreenBorder;</li>
+</ol>
+<h2 id="原理">原理</h2>
+<p>Sandboxie 通过重定向技术，将程序生成和修改的文件重定向到自身的临时文件中（修改包括注册表和系统的核心数据）。通过加载自身的驱动来保护底层数据， 属于驱动级别保护。</p>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/software-programming/">Software Programming</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    
+
+  
+  <div class="pagination">
+    
+      <a href="/blog/browser/download/" class="button left"><span>不同平台常用浏览器的离线下载地址</span></a>
+    
+    
+      <a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%94%81/" class="button right"><span>MySQL数据库锁</span></a>
+    
+  </div>
+
+      </main>
+      <section id="site-sidebar">
+  
+
+  
+    <section id="categories">
+      <header>
+        <h1><a href="/categories">分类</a></h1>
+      </header>
+      <ul>
+        
+        
+        <li>
+          <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/cache/">cache<span class="count">23</span></a>
+          
+        <li>
+          <a href="/categories/compilation/">compilation<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/concurrence/">concurrence<span class="count">4</span></a>
+          
+        <li>
+          <a href="/categories/data-structure/">data-structure<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/database/">database<span class="count">9</span></a>
+          
+        <li>
+          <a href="/categories/distribution-system/">distribution-system<span class="count">10</span></a>
+          
+        <li>
+          <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
+          
+        </li>
+      </ul>
+      
+        <footer class="see-more">
+          <a href="/categories" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+        </footer>
+      
+    </section>
+  
+
+  
+      <section id="tags">
+        <header>
+          <h1><a href="/tags">标签</a></h1>
+        </header>
+        <ul>
+          
+          
+          <li>
+            <a href="/tags/algorithm/">algorithm<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/audio/">audio<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/cdn/">cdn<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/certificate/">certificate<span class="count">4</span></a>
+            
+          <li>
+            <a href="/tags/http/">http<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/i/o/">i/o<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/ide/">ide<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/kafka/">kafka<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/lock/">lock<span class="count">3</span></a>
+            
+          </li>
+        </ul>
+        
+          <footer class="see-more">
+            <a href="/tags" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+          </footer>
+        
+      </section>
+  
+
+  
+</section>
+      <footer id="site-footer">
+  
+  <p class="copyright">
+      
+      <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
+      <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
+      <br/>© 2019 zylhorse
+      <br>
+    由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.7e8b85fb814aa446375b535c9ecd0857b9de7637062ea359390ae8675c7761d8.js" integrity="sha256-fouF&#43;4FKpEY3W1Ncns0IV7nedjcGLqNZOQroZ1x3Ydg="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </div>
+  </body>
+</html>

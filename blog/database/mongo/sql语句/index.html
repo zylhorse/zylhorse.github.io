@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>MongoDB数据库常用sql语句 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="MongoDB数据库常用sql语句">
+<meta itemprop="description" content="备份数据库 mongodump -h dbhost -d dbname -o dumpdir
+备份数据库表 mongoexport -d dbname -c collectionname -o file --type json/csv -f field参数说明：-d ：数据库名-c ：collection名-o ：输出的文件名--type ： 输出的格式，默认为json-f ：输出的字段，如果-type为csv，则需要加上-f &quot;字段名&quot;还原数据库 mongorestore -h dbhost -d dbname dumppath
+还原数据库表 mongoimport -d dbname -c collectionname --file filename --headerline --type json/csv -f field参数说明：-d ：数据库名-c ：collection名--type ：导入的格式默认json-f ：导入的字段名--headerline ：如果导入的格式是csv，则可以使用第一行的标题作为导入的字段--file ：要导入的文件还原数据库表json mongoimport &ndash;db meteor &ndash;collection meetings &ndash;type json &ndash;file /asj/meteor-batch/meetings.">
+<meta itemprop="datePublished" content="2018-08-02T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2018-08-02T00:00:00+00:00" />
+<meta itemprop="wordCount" content="79">
+
+
+
+<meta itemprop="keywords" content="MongoDB," />
+<meta property="og:title" content="MongoDB数据库常用sql语句" />
+<meta property="og:description" content="备份数据库 mongodump -h dbhost -d dbname -o dumpdir
+备份数据库表 mongoexport -d dbname -c collectionname -o file --type json/csv -f field参数说明：-d ：数据库名-c ：collection名-o ：输出的文件名--type ： 输出的格式，默认为json-f ：输出的字段，如果-type为csv，则需要加上-f &quot;字段名&quot;还原数据库 mongorestore -h dbhost -d dbname dumppath
+还原数据库表 mongoimport -d dbname -c collectionname --file filename --headerline --type json/csv -f field参数说明：-d ：数据库名-c ：collection名--type ：导入的格式默认json-f ：导入的字段名--headerline ：如果导入的格式是csv，则可以使用第一行的标题作为导入的字段--file ：要导入的文件还原数据库表json mongoimport &ndash;db meteor &ndash;collection meetings &ndash;type json &ndash;file /asj/meteor-batch/meetings." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/database/mongo/sql%E8%AF%AD%E5%8F%A5/" />
+<meta property="article:published_time" content="2018-08-02T00:00:00+00:00" />
+<meta property="article:modified_time" content="2018-08-02T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="MongoDB数据库常用sql语句"/>
+<meta name="twitter:description" content="备份数据库 mongodump -h dbhost -d dbname -o dumpdir
+备份数据库表 mongoexport -d dbname -c collectionname -o file --type json/csv -f field参数说明：-d ：数据库名-c ：collection名-o ：输出的文件名--type ： 输出的格式，默认为json-f ：输出的字段，如果-type为csv，则需要加上-f &quot;字段名&quot;还原数据库 mongorestore -h dbhost -d dbname dumppath
+还原数据库表 mongoimport -d dbname -c collectionname --file filename --headerline --type json/csv -f field参数说明：-d ：数据库名-c ：collection名--type ：导入的格式默认json-f ：导入的字段名--headerline ：如果导入的格式是csv，则可以使用第一行的标题作为导入的字段--file ：要导入的文件还原数据库表json mongoimport &ndash;db meteor &ndash;collection meetings &ndash;type json &ndash;file /asj/meteor-batch/meetings."/>
+<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <header>
+    <h1>张勇良</h1>
+  </header>
+  <main>
+    <p>不念过往，不负当下</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/database/mongo/sql%E8%AF%AD%E5%8F%A5/">MongoDB数据库常用sql语句</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2018-08-02 00:00:00 &#43;0000 UTC">2018-08-02</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="备份数据库">备份数据库</h2>
+<p>mongodump -h dbhost -d dbname -o dumpdir</p>
+<h2 id="备份数据库表">备份数据库表</h2>
+<pre><code>mongoexport -d dbname -c collectionname -o file --type json/csv -f field
+参数说明：
+    -d ：数据库名
+    -c ：collection名
+    -o ：输出的文件名
+    --type ： 输出的格式，默认为json
+    -f ：输出的字段，如果-type为csv，则需要加上-f &quot;字段名&quot;
+</code></pre><h2 id="还原数据库">还原数据库</h2>
+<p>mongorestore -h dbhost -d dbname dumppath</p>
+<h2 id="还原数据库表">还原数据库表</h2>
+<pre><code>mongoimport -d dbname -c collectionname --file filename --headerline --type json/csv -f field
+参数说明：
+    -d ：数据库名
+    -c ：collection名
+    --type ：导入的格式默认json
+    -f ：导入的字段名
+    --headerline ：如果导入的格式是csv，则可以使用第一行的标题作为导入的字段
+    --file ：要导入的文件
+</code></pre><h2 id="还原数据库表json">还原数据库表json</h2>
+<p>mongoimport &ndash;db meteor &ndash;collection meetings &ndash;type json &ndash;file /asj/meteor-batch/meetings.json &ndash;jsonArray -h 127.0.1.1</p>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/mongodb/">MongoDB</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    
+
+  
+  <div class="pagination">
+    
+      <a href="/blog/database/mongo/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="button left"><span>MongoDB数据库安装配置</span></a>
+    
+    
+      <a href="/blog/network/websocket/" class="button right"><span>从GW和IM实战描述websocket协议</span></a>
+    
+  </div>
+
+      </main>
+      <section id="site-sidebar">
+  
+
+  
+    <section id="categories">
+      <header>
+        <h1><a href="/categories">分类</a></h1>
+      </header>
+      <ul>
+        
+        
+        <li>
+          <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/cache/">cache<span class="count">23</span></a>
+          
+        <li>
+          <a href="/categories/compilation/">compilation<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/concurrence/">concurrence<span class="count">4</span></a>
+          
+        <li>
+          <a href="/categories/data-structure/">data-structure<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/database/">database<span class="count">9</span></a>
+          
+        <li>
+          <a href="/categories/distribution-system/">distribution-system<span class="count">10</span></a>
+          
+        <li>
+          <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
+          
+        </li>
+      </ul>
+      
+        <footer class="see-more">
+          <a href="/categories" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+        </footer>
+      
+    </section>
+  
+
+  
+      <section id="tags">
+        <header>
+          <h1><a href="/tags">标签</a></h1>
+        </header>
+        <ul>
+          
+          
+          <li>
+            <a href="/tags/algorithm/">algorithm<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/audio/">audio<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/cdn/">cdn<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/certificate/">certificate<span class="count">4</span></a>
+            
+          <li>
+            <a href="/tags/http/">http<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/i/o/">i/o<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/ide/">ide<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/kafka/">kafka<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/lock/">lock<span class="count">3</span></a>
+            
+          </li>
+        </ul>
+        
+          <footer class="see-more">
+            <a href="/tags" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+          </footer>
+        
+      </section>
+  
+
+  
+</section>
+      <footer id="site-footer">
+  
+  <p class="copyright">
+      
+      <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
+      <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
+      <br/>© 2019 zylhorse
+      <br>
+    由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.7e8b85fb814aa446375b535c9ecd0857b9de7637062ea359390ae8675c7761d8.js" integrity="sha256-fouF&#43;4FKpEY3W1Ncns0IV7nedjcGLqNZOQroZ1x3Ydg="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>缓存穿透、缓存雪崩、缓存击穿的区别和解决方案 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="缓存穿透、缓存雪崩、缓存击穿的区别和解决方案">
+<meta itemprop="description" content="缓存穿透 描述： 请求不存在的数据， 使得大量请求发送到DB， 增加DB压力；解决方案：　1. 对落在数据库上的请求进行限流， 降低DB压力2. 接口层过滤非法参数；3. 缓存空查询结果。4. 使用布隆过滤器， 将所有可能数据hash到一个足够大的bitmap中， 一个一定不存在的数据会被bitmap拦截掉缓存击穿 描述： 高频访问热点数据，在缓存失效的瞬时，大量请求发送到DB， 来更新缓存， 增加DB压力；解决方案： 1. 设置热点数据永不过期；2. 加分布式全局锁，只允许单线程访问该数据；锁竞争较大。缓存雪崩 描述： 给大量缓存设置同样过期时间， 在某一刻，大量缓存数据过期，导致大量请求发送到DB，增加DB压力；解决方案： 1. 给数据过期时间添加随机数，避免同时过期；2. 将热点数据分不到不同的缓存数据库中3. 设置热点数据永不过期；5. hystrix 限制每秒请求数量， 超出请求引导到降级页面 6. 提高缓存中间件的高可用性">
+<meta itemprop="datePublished" content="2017-04-21T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2017-04-21T00:00:00+00:00" />
+<meta itemprop="wordCount" content="44">
+
+
+
+<meta itemprop="keywords" content="," />
+<meta property="og:title" content="缓存穿透、缓存雪崩、缓存击穿的区别和解决方案" />
+<meta property="og:description" content="缓存穿透 描述： 请求不存在的数据， 使得大量请求发送到DB， 增加DB压力；解决方案：　1. 对落在数据库上的请求进行限流， 降低DB压力2. 接口层过滤非法参数；3. 缓存空查询结果。4. 使用布隆过滤器， 将所有可能数据hash到一个足够大的bitmap中， 一个一定不存在的数据会被bitmap拦截掉缓存击穿 描述： 高频访问热点数据，在缓存失效的瞬时，大量请求发送到DB， 来更新缓存， 增加DB压力；解决方案： 1. 设置热点数据永不过期；2. 加分布式全局锁，只允许单线程访问该数据；锁竞争较大。缓存雪崩 描述： 给大量缓存设置同样过期时间， 在某一刻，大量缓存数据过期，导致大量请求发送到DB，增加DB压力；解决方案： 1. 给数据过期时间添加随机数，避免同时过期；2. 将热点数据分不到不同的缓存数据库中3. 设置热点数据永不过期；5. hystrix 限制每秒请求数量， 超出请求引导到降级页面 6. 提高缓存中间件的高可用性" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/cache/%E7%BC%93%E5%AD%98/" />
+<meta property="article:published_time" content="2017-04-21T00:00:00+00:00" />
+<meta property="article:modified_time" content="2017-04-21T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="缓存穿透、缓存雪崩、缓存击穿的区别和解决方案"/>
+<meta name="twitter:description" content="缓存穿透 描述： 请求不存在的数据， 使得大量请求发送到DB， 增加DB压力；解决方案：　1. 对落在数据库上的请求进行限流， 降低DB压力2. 接口层过滤非法参数；3. 缓存空查询结果。4. 使用布隆过滤器， 将所有可能数据hash到一个足够大的bitmap中， 一个一定不存在的数据会被bitmap拦截掉缓存击穿 描述： 高频访问热点数据，在缓存失效的瞬时，大量请求发送到DB， 来更新缓存， 增加DB压力；解决方案： 1. 设置热点数据永不过期；2. 加分布式全局锁，只允许单线程访问该数据；锁竞争较大。缓存雪崩 描述： 给大量缓存设置同样过期时间， 在某一刻，大量缓存数据过期，导致大量请求发送到DB，增加DB压力；解决方案： 1. 给数据过期时间添加随机数，避免同时过期；2. 将热点数据分不到不同的缓存数据库中3. 设置热点数据永不过期；5. hystrix 限制每秒请求数量， 超出请求引导到降级页面 6. 提高缓存中间件的高可用性"/>
+<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <header>
+    <h1>张勇良</h1>
+  </header>
+  <main>
+    <p>不念过往，不负当下</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/cache/%E7%BC%93%E5%AD%98/">缓存穿透、缓存雪崩、缓存击穿的区别和解决方案</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2017-04-21 00:00:00 &#43;0000 UTC">2017-04-21</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h4 id="缓存穿透">缓存穿透</h4>
+<pre><code>描述： 请求不存在的数据， 使得大量请求发送到DB， 增加DB压力；
+解决方案：　
+1. 对落在数据库上的请求进行限流， 降低DB压力
+2. 接口层过滤非法参数；
+3. 缓存空查询结果。
+4. 使用布隆过滤器， 将所有可能数据hash到一个足够大的bitmap中， 一个一定不存在的数据会被bitmap拦截掉
+</code></pre><h4 id="缓存击穿">缓存击穿</h4>
+<pre><code>描述： 高频访问热点数据，在缓存失效的瞬时，大量请求发送到DB， 来更新缓存， 增加DB压力；
+解决方案： 
+1. 设置热点数据永不过期；
+2. 加分布式全局锁，只允许单线程访问该数据；锁竞争较大。
+</code></pre><h4 id="缓存雪崩">缓存雪崩</h4>
+<pre><code>描述： 给大量缓存设置同样过期时间， 在某一刻，大量缓存数据过期，导致大量请求发送到DB，增加DB压力；
+解决方案： 
+1. 给数据过期时间添加随机数，避免同时过期；
+2. 将热点数据分不到不同的缓存数据库中
+3. 设置热点数据永不过期；
+5. hystrix 限制每秒请求数量， 超出请求引导到降级页面 
+6. 提高缓存中间件的高可用性
+</code></pre>
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    
+
+  
+  <div class="pagination">
+    
+      <a href="/blog/stories/%E5%8D%83%E8%A8%80%E4%B8%87%E8%AF%AD/" class="button left"><span>千言万语-说给自己听的话</span></a>
+    
+    
+      <a href="/blog/cache/%E7%BC%93%E5%AD%98%E4%B8%8D%E4%B8%80%E8%87%B4/" class="button right"><span>缓存数据不一致和解决方案</span></a>
+    
+  </div>
+
+      </main>
+      <section id="site-sidebar">
+  
+
+  
+    <section id="categories">
+      <header>
+        <h1><a href="/categories">分类</a></h1>
+      </header>
+      <ul>
+        
+        
+        <li>
+          <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/cache/">cache<span class="count">23</span></a>
+          
+        <li>
+          <a href="/categories/compilation/">compilation<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/concurrence/">concurrence<span class="count">4</span></a>
+          
+        <li>
+          <a href="/categories/data-structure/">data-structure<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/database/">database<span class="count">9</span></a>
+          
+        <li>
+          <a href="/categories/distribution-system/">distribution-system<span class="count">10</span></a>
+          
+        <li>
+          <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
+          
+        </li>
+      </ul>
+      
+        <footer class="see-more">
+          <a href="/categories" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+        </footer>
+      
+    </section>
+  
+
+  
+      <section id="tags">
+        <header>
+          <h1><a href="/tags">标签</a></h1>
+        </header>
+        <ul>
+          
+          
+          <li>
+            <a href="/tags/algorithm/">algorithm<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/audio/">audio<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/cdn/">cdn<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/certificate/">certificate<span class="count">4</span></a>
+            
+          <li>
+            <a href="/tags/http/">http<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/i/o/">i/o<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/ide/">ide<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/kafka/">kafka<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/lock/">lock<span class="count">3</span></a>
+            
+          </li>
+        </ul>
+        
+          <footer class="see-more">
+            <a href="/tags" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+          </footer>
+        
+      </section>
+  
+
+  
+</section>
+      <footer id="site-footer">
+  
+  <p class="copyright">
+      
+      <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
+      <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
+      <br/>© 2019 zylhorse
+      <br>
+    由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.7e8b85fb814aa446375b535c9ecd0857b9de7637062ea359390ae8675c7761d8.js" integrity="sha256-fouF&#43;4FKpEY3W1Ncns0IV7nedjcGLqNZOQroZ1x3Ydg="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </div>
+  </body>
+</html>
