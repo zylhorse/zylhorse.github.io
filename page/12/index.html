@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,6 +179,120 @@
   <header>
   <div class="title">
     
+      <h2><a href="/blog/data-structure/ringbuffer/">数据结构-RingBuffer</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2018-03-23 00:00:00 &#43;0000 UTC">2018-03-23</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    
+  </div>
+  <footer>
+    <a href="/blog/data-structure/ringbuffer/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/data-structure/">Data Structure</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4/">Golang源码阅读-编译指令</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2018-02-05 00:00:00 &#43;0000 UTC">2018-02-05</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="定义">定义</h2>
+<ol>
+<li>告诉编译器可以根据表达式的值或者某个特定的宏来确定编译条件，以决定编译哪些代码，不编译哪些</li>
+<li>如C++ 中的#define #undef #pragma等</li>
+<li>golang中也有编译指令， 它的实现&hellip;</li></ol>
+  </div>
+  <footer>
+    <a href="/blog/golang/%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
       <h2><a href="/blog/golang/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">Golang跨平台之交叉编译</a></h2>
     
     
@@ -208,19 +324,7 @@
 <li>CGO_ENABLED: 开启cgo</li>
 </ol>
 <h2 id="支持的编译平台">支持的编译平台</h2>
-<p>查看命令：<code>go tool dist list</code>
-GOOS(目标系统) | GOARCH(目标架构)
-&ndash;|&ndash;
-aix | ppc64
-android | 386
-android | amd64
-android | arm
-android | arm64
-darwin | 386
-darwin | amd64
-darwin | arm
-darwin | arm64
-dragonfly |&hellip;</p>
+<p>查看命令：&hellip;</p>
   </div>
   <footer>
     <a href="/blog/golang/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/" class="button big">阅读全文</a>
@@ -279,16 +383,7 @@ dragonfly |&hellip;</p>
 <ol>
 <li>communicating sequential process: 通讯顺序进程；
 描述多个并发的实体通过共享channel进行通信的并发模型；</li>
-<li>channel是重要对象，不用关注发送消息的实体，只需要关心实体发送消息时使用的channel；</li>
-<li>利用channel 实现两个实体之间的松耦合；</li>
-<li>go 使用goroutine和chan实现CSP模型</li>
-</ol>
-<h2 id="内核线程">内核线程</h2>
-<p>内核调度实体（KSE，Kernel Scheduling Entity）即内核线程</p>
-<ol>
-<li>内核线程为操作系统内核最小调度单元；</li>
-<li>内核线程创建内存消耗较大，不适合创建太多内核线程；</li>
-<li>内核线程调度： 线程挂起前会保存线程上下文到栈空间，&hellip;</li></ol>
+<li>channel是重要对象，不用关注发送消&hellip;</li></ol>
   </div>
   <footer>
     <a href="/blog/golang/%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%BC%8F/" class="button big">阅读全文</a>
@@ -348,152 +443,10 @@ dragonfly |&hellip;</p>
 <p>保证共享内存的可见性、有序性、原子性，内存模型定义了共享内存系统中多线程读写操作的规范。</p>
 <h2 id="happens-before">happens before</h2>
 <ol>
-<li>go中也定义了happens before以及各种发生happens before关系的操作。</li>
-<li>在单个goroutine中，读取和写入必须按照程序指定的顺序执行</li>
-<li>在单goroutine的程序中，Happens-Before的顺序就是程序中表达的顺序</li>
-<li>当多个goroutine同时访问变量v时，我们必须使用同步事件(synchronization events)来满足Happends-Before条件以确保读操作(r)观察到期望的写操作(w)的值。&hellip;</li></ol>
+<li>go中也定义了happens before以及各种发&hellip;</li></ol>
   </div>
   <footer>
     <a href="/blog/golang/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/golang/context%E6%9C%BA%E5%88%B6/">Golang源码阅读-Context</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2017-12-16 00:00:00 &#43;0000 UTC">2017-12-16</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h1 id="context-数据结构">context 数据结构</h1>
-<pre><code>type Context interface {
-    // Done return a channel that is closed when this context is canceld or timeout
-    Done() &lt;- chan struct{}
-    // Err indicates why this context is canceled, after the done channel is closed
-    Err() error 
-    // Deadline returns the time when&hellip;</code></pre>
-  </div>
-  <footer>
-    <a href="/blog/golang/context%E6%9C%BA%E5%88%B6/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/golang/sync.map/">Golang源码阅读-sync.map</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2017-11-29 00:00:00 &#43;0000 UTC">2017-11-29</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="syncmap">sync.map</h2>
-<ol>
-<li>runtime中go的基本类型 map 不支持并发的读写， 会报错：fatal error: concurrent map writes</li>
-<li>为了支持并发， 我们直接对整个map加读写锁，相当低效， 因此官方实现了sync.map</li>
-</ol>
-<h2 id="高效的原理和思路">高效的原理和思路</h2>
-<ul>
-<li>用空间换时间，降低锁的区域</li>
-<li>用两个map来存储数据
-<ul>
-<li>虽然两个map存储有冗余，但是底层数据类型都是指针，所以冗余的空间还是有限的。</li>
-</ul>
-</li>
-</ul>
-<h2 id="总结">总结</h2>
-<ol>
-<li>如果对map的读操作大于写操作， 则sync.map能大大提升性能；</li>
-<li>写操作需要加锁， 且操作两个map</li>
-<li>写操作也会触发， 两个map之间的切换。</li>
-</ol>
-<h2 id="源码解析">源码解析</h2>
-<h3 id="基础结构">基础结构</h3>
-<ul>
-<li><code>Map&hellip;</code></li></ul></ul></li></ul>
-  </div>
-  <footer>
-    <a href="/blog/golang/sync.map/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -545,7 +498,7 @@ dragonfly |&hellip;</p>
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -602,6 +555,9 @@ dragonfly |&hellip;</p>
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -615,9 +571,6 @@ dragonfly |&hellip;</p>
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -637,7 +590,7 @@ dragonfly |&hellip;</p>
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

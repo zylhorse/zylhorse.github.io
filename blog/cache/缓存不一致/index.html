@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="缓存数据不一致和解决方案">
 <meta itemprop="description" content="缓存数据不一致  使用缓存来存储热点数据是高并发的常用手段， 通过缓存大大减轻了数据库的压力， 同时减少了响应请求实际时间； 但是引入缓存后，就会导致缓存和db中数据不一致。这个时候就要更新缓存或淘汰缓存；  问题： 如果引入了db读写分离， 还需要考虑到db主从同步时的延迟。 可以监听binlog来异步更新缓存；（阿里canel）
 方案一： 先读db后写缓存  请求来了，先读缓存， 为空则访问数据库， 并将数据放入缓存 更新的时候，先删除缓存，在更新数据库  问题：
@@ -33,7 +35,7 @@
 方案一： 先读db后写缓存  请求来了，先读缓存， 为空则访问数据库， 并将数据放入缓存 更新的时候，先删除缓存，在更新数据库  问题：
  更新时， 先删除缓存，导致db还没有写入成功，另一个请求到来会将旧的db数据 更新到缓存中； 造成只有下次更新数据库时，才会更新缓存；造成缓存和数据库数据不一致；  方案二  请求来了，先读缓存， 为空则访问数据库， 并将数据放入缓存 更新的时候，先更新数据库，在删除缓存  问题：
  更新数据库成功， 而删除缓存失败， 造成脏数据； 引入消息队列和binlog监听， 尝试重复删除；  "/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -90,12 +92,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -209,6 +211,7 @@
 <li>引入消息队列和binlog监听， 尝试重复删除；</li>
 </ol>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -235,8 +238,18 @@
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -246,6 +259,22 @@
       <a href="/blog/cache/redis/dict/" class="button right"><span>Redis源码解读-dict</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Cache]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -263,7 +292,7 @@
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -320,6 +349,9 @@
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -333,9 +365,6 @@
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -355,7 +384,7 @@
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

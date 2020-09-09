@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Golang线程调度模型">
 <meta itemprop="description" content="CSP模型  communicating sequential process: 通讯顺序进程； 描述多个并发的实体通过共享channel进行通信的并发模型； channel是重要对象，不用关注发送消息的实体，只需要关心实体发送消息时使用的channel； 利用channel 实现两个实体之间的松耦合； go 使用goroutine和chan实现CSP模型  内核线程 内核调度实体（KSE，Kernel Scheduling Entity）即内核线程
  内核线程为操作系统内核最小调度单元； 内核线程创建内存消耗较大，不适合创建太多内核线程； 内核线程调度： 线程挂起前会保存线程上下文到栈空间，再切换到其他可执行线程；线程上下文切换导致cpu开销变大； 内核线程都有固定的内存块（2MB）做栈，用来存储正在被调用或挂起的函数内部变量。  线程调度  线程池： 线程池实现线程复用，避免频繁创建新线程和线程切换，控制了线程数量和内存消耗；但是在资源共享时会发生竞争，降低了并发效率； 异步回调： 在线程阻塞时注册回调方法，不在阻塞当前线程，去处理新的请求。当处理完成后，把结果传给回调方法。回调方法不是在发起请求的线程里。异步回调会造成callback hell， 回调中嵌套回调； 协程： 在协程处理阻塞时， 协程让出cpu执行权，让其他协程执行。 等阻塞结束，在调度等待的协程继续执行；  线程模型  内核级线程模型：用户线程与内核线程KSE是一对一的映射模型；进程创建出来的用户线程与内核线程KSE一一静态绑定； 用户级线程模型： 用户线程与内核线程是多对一的映射模型； 一个进程创建的线程都只和同一个内核线程KSE在运行时动态绑定；线程的调度是在用户层面完成，相较于内核调度不需要让cpu在内核态和用户态切换；缺点： 假设某用户进程上的用户线程因为阻塞调用被cpu中断， 那么进程会被挂起。 混合型线程模型：用户线程与内核线程KSE是多对多的映射模型，一个进程与多个内核线程KSE关联，于是进程中的多个线程可以绑定不同的内核线程KSE。与内核级线程模型不同的是混合型线程模型与内核线程KSE是动态绑定的。当某个KSE绑定的线程阻塞被内核调度出cpu时， 其关联的进程中其余用户线程可以重新与其他KSE绑定运行。实现用户调度器实现用户线程到KSE的调度，内核调度器实现KSE到cpu的调度；  goroutine和Go Scheduler  golang中 goroutine是独立的执行单元。goroutine栈采用动态扩容，初始仅为2KB（最大1GB-64位机器，256M-32位机器）。 goroutine完全由golang自己的调度器 Go Scheduler调度。GC还会定期的将不使用的内存回收，收缩栈空间。  MPG  G: 表示Goroutine， 每个Goroutine对应一个G结构体。G存储goroutine的运行堆栈、状态及函数。G并非执行体，每个G绑定到P才能执行。 P：表示Processer，逻辑处理器。对于G来说P相当于CPU。G只有绑定到P上才会被调度。对M来说P提供了相关的执行环境（context）、内存分配（memcache)、任务队列（G）。P的数量决定最大可并行G的数量。　P的数量由用户设置的GOMAXPROCS决定。最大位256. M:表示Machine，内核线程抽象，代表真正执行计算的资源。在绑定有效的P后，进入schedule循环。schedule 循环机制大致从Global队列、P的local队列以及wait队列中获取G，切换到G的执行堆栈上并执行G，调用goexit做清理工作并回到M，如此反复。M并不保留G状态，这是G可以跨M调度的基础。M数量不确定，由GO RunTime调整， 防止创建太多系统线程，最大为10000.  MPG调用流程 当goroutine 被关键字go创建时，优先加入到P的Local队列。为了运行goroutine，P需要绑定一个M，然后M启动一个内核线程，循环的从P的local队列中取goroutine去执行。当M执行完当前P的local队列中所有的G后，P会优先将Global队列中的G加入到自己的Local队列来执行，如果Gloabl队列中的G也为空，P会随机挑选其他P的任务队列中的一半G加入到自己的local队列来执行。">
@@ -27,7 +29,7 @@
 <meta name="twitter:title" content="Golang线程调度模型"/>
 <meta name="twitter:description" content="CSP模型  communicating sequential process: 通讯顺序进程； 描述多个并发的实体通过共享channel进行通信的并发模型； channel是重要对象，不用关注发送消息的实体，只需要关心实体发送消息时使用的channel； 利用channel 实现两个实体之间的松耦合； go 使用goroutine和chan实现CSP模型  内核线程 内核调度实体（KSE，Kernel Scheduling Entity）即内核线程
  内核线程为操作系统内核最小调度单元； 内核线程创建内存消耗较大，不适合创建太多内核线程； 内核线程调度： 线程挂起前会保存线程上下文到栈空间，再切换到其他可执行线程；线程上下文切换导致cpu开销变大； 内核线程都有固定的内存块（2MB）做栈，用来存储正在被调用或挂起的函数内部变量。  线程调度  线程池： 线程池实现线程复用，避免频繁创建新线程和线程切换，控制了线程数量和内存消耗；但是在资源共享时会发生竞争，降低了并发效率； 异步回调： 在线程阻塞时注册回调方法，不在阻塞当前线程，去处理新的请求。当处理完成后，把结果传给回调方法。回调方法不是在发起请求的线程里。异步回调会造成callback hell， 回调中嵌套回调； 协程： 在协程处理阻塞时， 协程让出cpu执行权，让其他协程执行。 等阻塞结束，在调度等待的协程继续执行；  线程模型  内核级线程模型：用户线程与内核线程KSE是一对一的映射模型；进程创建出来的用户线程与内核线程KSE一一静态绑定； 用户级线程模型： 用户线程与内核线程是多对一的映射模型； 一个进程创建的线程都只和同一个内核线程KSE在运行时动态绑定；线程的调度是在用户层面完成，相较于内核调度不需要让cpu在内核态和用户态切换；缺点： 假设某用户进程上的用户线程因为阻塞调用被cpu中断， 那么进程会被挂起。 混合型线程模型：用户线程与内核线程KSE是多对多的映射模型，一个进程与多个内核线程KSE关联，于是进程中的多个线程可以绑定不同的内核线程KSE。与内核级线程模型不同的是混合型线程模型与内核线程KSE是动态绑定的。当某个KSE绑定的线程阻塞被内核调度出cpu时， 其关联的进程中其余用户线程可以重新与其他KSE绑定运行。实现用户调度器实现用户线程到KSE的调度，内核调度器实现KSE到cpu的调度；  goroutine和Go Scheduler  golang中 goroutine是独立的执行单元。goroutine栈采用动态扩容，初始仅为2KB（最大1GB-64位机器，256M-32位机器）。 goroutine完全由golang自己的调度器 Go Scheduler调度。GC还会定期的将不使用的内存回收，收缩栈空间。  MPG  G: 表示Goroutine， 每个Goroutine对应一个G结构体。G存储goroutine的运行堆栈、状态及函数。G并非执行体，每个G绑定到P才能执行。 P：表示Processer，逻辑处理器。对于G来说P相当于CPU。G只有绑定到P上才会被调度。对M来说P提供了相关的执行环境（context）、内存分配（memcache)、任务队列（G）。P的数量决定最大可并行G的数量。　P的数量由用户设置的GOMAXPROCS决定。最大位256. M:表示Machine，内核线程抽象，代表真正执行计算的资源。在绑定有效的P后，进入schedule循环。schedule 循环机制大致从Global队列、P的local队列以及wait队列中获取G，切换到G的执行堆栈上并执行G，调用goexit做清理工作并回到M，如此反复。M并不保留G状态，这是G可以跨M调度的基础。M数量不确定，由GO RunTime调整， 防止创建太多系统线程，最大为10000.  MPG调用流程 当goroutine 被关键字go创建时，优先加入到P的Local队列。为了运行goroutine，P需要绑定一个M，然后M启动一个内核线程，循环的从P的local队列中取goroutine去执行。当M执行完当前P的local队列中所有的G后，P会优先将Global队列中的G加入到自己的Local队列来执行，如果Gloabl队列中的G也为空，P会随机挑选其他P的任务队列中的一半G加入到自己的local队列来执行。"/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -84,12 +86,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -229,6 +231,7 @@ GC会挂起用户程序直到垃圾回收完。</p>
 <h2 id="goroutine-池化">goroutine 池化</h2>
 <p>类似于多路复用，使用空闲routine处理任务队列；</p>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -255,8 +258,30 @@ GC会挂起用户程序直到垃圾回收完。</p>
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#csp模型">CSP模型</a></li>
+    <li><a href="#内核线程">内核线程</a>
+      <ul>
+        <li><a href="#线程调度">线程调度</a></li>
+      </ul>
+    </li>
+    <li><a href="#线程模型">线程模型</a></li>
+    <li><a href="#goroutine和go-scheduler">goroutine和Go Scheduler</a></li>
+    <li><a href="#mpg">MPG</a>
+      <ul>
+        <li><a href="#mpg调用流程">MPG调用流程</a></li>
+        <li><a href="#用户态阻塞唤醒">用户态阻塞/唤醒</a></li>
+        <li><a href="#系统调用阻塞">系统调用阻塞</a></li>
+        <li><a href="#golang-gc">golang gc</a></li>
+      </ul>
+    </li>
+    <li><a href="#goroutine-池化">goroutine 池化</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -266,6 +291,22 @@ GC会挂起用户程序直到垃圾回收完。</p>
       <a href="/blog/golang/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="button right"><span>Golang源码阅读-内存管理</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Golang]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -283,7 +324,7 @@ GC会挂起用户程序直到垃圾回收完。</p>
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -340,6 +381,9 @@ GC会挂起用户程序直到垃圾回收完。</p>
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -353,9 +397,6 @@ GC会挂起用户程序直到垃圾回收完。</p>
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -375,7 +416,7 @@ GC会挂起用户程序直到垃圾回收完。</p>
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

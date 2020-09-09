@@ -6,40 +6,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="linux依赖包的离线打包和安装">
-<meta itemprop="description" content="联网系统步骤 清理apt 缓冲区 sudo rm -rf /var/cache/apt/archives/*
-下载所需组件 sudo apt-get -d install &lt;包名&gt;
-创建目录，并拷贝 mkdir &lt;your-path&gt;cp -r /var/cache/apt/archives &lt;your-path&gt;修改名目权限 chmod 777 -R 
-建立依赖关系 sudo touch &lt;your-path&gt;/Packages.gzcd &lt;your-path&gt;sudo dpkg-scanpackages ./ /dev/null | gzip &gt; &lt;your-path&gt;/Packages.gz拷贝Packages.gz 到 deb 同目录下 cp /Packages.gz /archives/Packages.gz
-拷贝目录到离线系统 scp -r  &lt;离线系统&gt;
-离线系统步骤 修改apt源 vi /etc/apt/sources.list清空并添加deb file:///&lt;your-path&gt; archives/安装指定组件 apt-get update apt-get install &lt;包名&gt;">
+<meta itemprop="description" content="离线安装步骤 清理apt 缓冲区 $ sudo rm -rf /var/cache/apt/archives/*
+下载所需组件 $ sudo apt-get -d install &lt;包名&gt;
+创建目录，并拷贝 $ mkdir &lt;your-path&gt;$ cp -r /var/cache/apt/archives &lt;your-path&gt;修改名目权限 $ chmod 777 -R &lt;your-path&gt;
+建立依赖关系 $ sudo touch &lt;your-path&gt;/Packages.gz$ cd &lt;your-path&gt;$ sudo dpkg-scanpackages ./ /dev/null | gzip &gt; &lt;your-path&gt;/Packages.gz拷贝Packages.gz 到 deb 同目录下 $ cp &lt;your-path&gt;/Packages.gz &lt;your-path&gt;/archives/Packages.gz
+拷贝目录到离线系统 $ scp -r &lt;your-path&gt; &lt;离线系统&gt;
+离线系统步骤 修改apt源 $ vi /etc/apt/sources.list清空并添加deb file:///&lt;your-path&gt; archives/安装指定组件 $ apt-get update $ apt-get install &lt;包名&gt;">
 <meta itemprop="datePublished" content="2015-02-02T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2015-02-02T00:00:00+00:00" />
-<meta itemprop="wordCount" content="63">
+<meta itemprop="wordCount" content="78">
 
 
 
 <meta itemprop="keywords" content="," />
 <meta property="og:title" content="linux依赖包的离线打包和安装" />
-<meta property="og:description" content="联网系统步骤 清理apt 缓冲区 sudo rm -rf /var/cache/apt/archives/*
-下载所需组件 sudo apt-get -d install &lt;包名&gt;
-创建目录，并拷贝 mkdir &lt;your-path&gt;cp -r /var/cache/apt/archives &lt;your-path&gt;修改名目权限 chmod 777 -R 
-建立依赖关系 sudo touch &lt;your-path&gt;/Packages.gzcd &lt;your-path&gt;sudo dpkg-scanpackages ./ /dev/null | gzip &gt; &lt;your-path&gt;/Packages.gz拷贝Packages.gz 到 deb 同目录下 cp /Packages.gz /archives/Packages.gz
-拷贝目录到离线系统 scp -r  &lt;离线系统&gt;
-离线系统步骤 修改apt源 vi /etc/apt/sources.list清空并添加deb file:///&lt;your-path&gt; archives/安装指定组件 apt-get update apt-get install &lt;包名&gt;" />
+<meta property="og:description" content="离线安装步骤 清理apt 缓冲区 $ sudo rm -rf /var/cache/apt/archives/*
+下载所需组件 $ sudo apt-get -d install &lt;包名&gt;
+创建目录，并拷贝 $ mkdir &lt;your-path&gt;$ cp -r /var/cache/apt/archives &lt;your-path&gt;修改名目权限 $ chmod 777 -R &lt;your-path&gt;
+建立依赖关系 $ sudo touch &lt;your-path&gt;/Packages.gz$ cd &lt;your-path&gt;$ sudo dpkg-scanpackages ./ /dev/null | gzip &gt; &lt;your-path&gt;/Packages.gz拷贝Packages.gz 到 deb 同目录下 $ cp &lt;your-path&gt;/Packages.gz &lt;your-path&gt;/archives/Packages.gz
+拷贝目录到离线系统 $ scp -r &lt;your-path&gt; &lt;离线系统&gt;
+离线系统步骤 修改apt源 $ vi /etc/apt/sources.list清空并添加deb file:///&lt;your-path&gt; archives/安装指定组件 $ apt-get update $ apt-get install &lt;包名&gt;" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://zylhorse.github.io/blog/linux/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BA%90/" />
 <meta property="article:published_time" content="2015-02-02T00:00:00+00:00" />
 <meta property="article:modified_time" content="2015-02-02T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="linux依赖包的离线打包和安装"/>
-<meta name="twitter:description" content="联网系统步骤 清理apt 缓冲区 sudo rm -rf /var/cache/apt/archives/*
-下载所需组件 sudo apt-get -d install &lt;包名&gt;
-创建目录，并拷贝 mkdir &lt;your-path&gt;cp -r /var/cache/apt/archives &lt;your-path&gt;修改名目权限 chmod 777 -R 
-建立依赖关系 sudo touch &lt;your-path&gt;/Packages.gzcd &lt;your-path&gt;sudo dpkg-scanpackages ./ /dev/null | gzip &gt; &lt;your-path&gt;/Packages.gz拷贝Packages.gz 到 deb 同目录下 cp /Packages.gz /archives/Packages.gz
-拷贝目录到离线系统 scp -r  &lt;离线系统&gt;
-离线系统步骤 修改apt源 vi /etc/apt/sources.list清空并添加deb file:///&lt;your-path&gt; archives/安装指定组件 apt-get update apt-get install &lt;包名&gt;"/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<meta name="twitter:description" content="离线安装步骤 清理apt 缓冲区 $ sudo rm -rf /var/cache/apt/archives/*
+下载所需组件 $ sudo apt-get -d install &lt;包名&gt;
+创建目录，并拷贝 $ mkdir &lt;your-path&gt;$ cp -r /var/cache/apt/archives &lt;your-path&gt;修改名目权限 $ chmod 777 -R &lt;your-path&gt;
+建立依赖关系 $ sudo touch &lt;your-path&gt;/Packages.gz$ cd &lt;your-path&gt;$ sudo dpkg-scanpackages ./ /dev/null | gzip &gt; &lt;your-path&gt;/Packages.gz拷贝Packages.gz 到 deb 同目录下 $ cp &lt;your-path&gt;/Packages.gz &lt;your-path&gt;/archives/Packages.gz
+拷贝目录到离线系统 $ scp -r &lt;your-path&gt; &lt;离线系统&gt;
+离线系统步骤 修改apt源 $ vi /etc/apt/sources.list清空并添加deb file:///&lt;your-path&gt; archives/安装指定组件 $ apt-get update $ apt-get install &lt;包名&gt;"/>
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -96,12 +98,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -188,35 +190,35 @@
 </div>
     <div class="content">
       
-      <h1 id="联网系统步骤">联网系统步骤</h1>
+      <h1 id="离线安装步骤">离线安装步骤</h1>
 <h2 id="清理apt-缓冲区">清理apt 缓冲区</h2>
-<p>sudo rm -rf /var/cache/apt/archives/*</p>
+<p><code>$ sudo rm -rf /var/cache/apt/archives/*</code></p>
 <h2 id="下载所需组件">下载所需组件</h2>
-<p>sudo apt-get -d install &lt;包名&gt;</p>
+<p><code>$ sudo apt-get -d install &lt;包名&gt;</code></p>
 <h2 id="创建目录并拷贝">创建目录，并拷贝</h2>
-<pre><code>mkdir &lt;your-path&gt;
-cp -r /var/cache/apt/archives &lt;your-path&gt;
+<pre><code>$ mkdir &lt;your-path&gt;
+$ cp -r /var/cache/apt/archives &lt;your-path&gt;
 </code></pre><h2 id="修改名目权限">修改名目权限</h2>
-<p>chmod 777 -R <your-path></p>
+<p><code>$ chmod 777 -R &lt;your-path&gt;</code></p>
 <h2 id="建立依赖关系">建立依赖关系</h2>
-<pre><code>sudo touch &lt;your-path&gt;/Packages.gz
-cd &lt;your-path&gt;
-sudo dpkg-scanpackages ./ /dev/null  | gzip &gt; &lt;your-path&gt;/Packages.gz
+<pre><code>$ sudo touch &lt;your-path&gt;/Packages.gz
+$ cd &lt;your-path&gt;
+$ sudo dpkg-scanpackages ./ /dev/null  | gzip &gt; &lt;your-path&gt;/Packages.gz
 
 </code></pre><h2 id="拷贝packagesgz-到-deb-同目录下">拷贝Packages.gz 到 deb 同目录下</h2>
-<p>cp <your-path>/Packages.gz <your-path>/archives/Packages.gz</p>
+<p><code>$ cp &lt;your-path&gt;/Packages.gz &lt;your-path&gt;/archives/Packages.gz</code></p>
 <h2 id="拷贝目录到离线系统">拷贝目录到离线系统</h2>
-<p>scp -r <your-path> &lt;离线系统&gt;</p>
+<p><code>$ scp -r &lt;your-path&gt; &lt;离线系统&gt;</code></p>
 <h1 id="离线系统步骤">离线系统步骤</h1>
 <h2 id="修改apt源">修改apt源</h2>
-<pre><code>vi /etc/apt/sources.list
+<pre><code>$ vi /etc/apt/sources.list
 清空并添加
 deb file:///&lt;your-path&gt; archives/
-
 </code></pre><h2 id="安装指定组件">安装指定组件</h2>
-<pre><code>apt-get update 
-apt-get install &lt;包名&gt;
+<pre><code>$ apt-get update 
+$ apt-get install &lt;包名&gt;
 </code></pre>
+      
     </div>
     <footer>
       <div class="stats">
@@ -243,8 +245,25 @@ apt-get install &lt;包名&gt;
     </footer>
   </article>
   
-    
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#清理apt-缓冲区">清理apt 缓冲区</a></li>
+    <li><a href="#下载所需组件">下载所需组件</a></li>
+    <li><a href="#创建目录并拷贝">创建目录，并拷贝</a></li>
+    <li><a href="#修改名目权限">修改名目权限</a></li>
+    <li><a href="#建立依赖关系">建立依赖关系</a></li>
+    <li><a href="#拷贝packagesgz-到-deb-同目录下">拷贝Packages.gz 到 deb 同目录下</a></li>
+    <li><a href="#拷贝目录到离线系统">拷贝目录到离线系统</a></li>
+  </ul>
 
+  <ul>
+    <li><a href="#修改apt源">修改apt源</a></li>
+    <li><a href="#安装指定组件">安装指定组件</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -254,6 +273,22 @@ apt-get install &lt;包名&gt;
       <a href="/blog/concurrence/%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81/" class="button right"><span>并发编程-乐观锁和悲观锁</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[linux]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -271,7 +306,7 @@ apt-get install &lt;包名&gt;
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -328,6 +363,9 @@ apt-get install &lt;包名&gt;
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -341,9 +379,6 @@ apt-get install &lt;包名&gt;
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -363,7 +398,7 @@ apt-get install &lt;包名&gt;
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

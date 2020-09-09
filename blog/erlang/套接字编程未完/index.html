@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Erlang套接字编程">
 <meta itemprop="description" content="客户端  gen_tcp:connect(Host, Port, [Options]) -&gt; {ok, Socket} | {error, Reason}  与指定域名、端口号的服务器建立连接。  gen_tcp: send(Socket, Msg) -&gt; ok | {error, Reason}
 向Socket发送消息（二进制字节流）
@@ -39,7 +41,7 @@
   receive{tcp,Socket, Bin} -&gt; ...;{tcp_closed, Socket} -&gt;...end. gen_tcp:close(Socket) -&gt; ok
 关闭Socket  服务器  gen_tcp:listen(Port, [Options]) -&gt; {ok, Listen} | {error, Reason} 监听端口Port。 gen_tcp:accept(Listen) -&gt; {ok, Socket} | {error, Reason}
 接受监听的Socket连接，返回当前连接Socket。 gen_tcp:close(Listen) -&gt; ok 关闭监听，不再接受新的连接。  并发套接字编程 注意："/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -96,12 +98,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -283,6 +285,7 @@ end
 <p>UDP是一种无连接协议，客户端向服务器发送消息之前不必建立连接。这意味着UDP非常适合大量客户端向服务器发送简短消息。<br>
 用Erlang编写UDP客户端和服务器，要比编写TCP程序简单,无需担心服务器连接的维护工作。</p>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -309,8 +312,23 @@ end
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#客户端">客户端</a></li>
+    <li><a href="#服务器">服务器</a></li>
+    <li><a href="#并发套接字编程">并发套接字编程</a></li>
+    <li><a href="#主动和被动套接字">主动和被动套接字</a></li>
+    <li><a href="#主动消息接收非阻塞">主动消息接收（非阻塞）</a></li>
+    <li><a href="#被动消息接收阻塞式">被动消息接收（阻塞式）</a></li>
+    <li><a href="#混合消息接收部分阻塞式">混合消息接收（部分阻塞式）</a></li>
+    <li><a href="#找出连接的来源">找出连接的来源</a></li>
+    <li><a href="#套接字错误处理">套接字错误处理</a></li>
+    <li><a href="#udp">UDP</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -320,6 +338,22 @@ end
       <a href="/blog/cache/redis/%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/" class="button right"><span>Redis安装和配置</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Erlang]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -337,7 +371,7 @@ end
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -394,6 +428,9 @@ end
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -407,9 +444,6 @@ end
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -429,7 +463,7 @@ end
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

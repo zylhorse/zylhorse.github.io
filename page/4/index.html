@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,6 +179,64 @@
   <header>
   <div class="title">
     
+      <h2><a href="/blog/security/%E7%94%B3%E8%AF%B7%E5%85%8D%E8%B4%B9%E8%AF%81%E4%B9%A6/">申请免费SSL证书</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-05-22 00:00:00 &#43;0000 UTC">2019-05-22</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="证书申请">证书申请</h2>
+<p>【ssl证书申请的3个主要步骤】</p>
+<p>　　1、制作CSR文件
+所谓CSR就是由申请人制作的Certificate Secure Request证书请求文件。制作过程中，系统会产生2个密钥，一个是&hellip;</p>
+  </div>
+  <footer>
+    <a href="/blog/security/%E7%94%B3%E8%AF%B7%E5%85%8D%E8%B4%B9%E8%AF%81%E4%B9%A6/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/security/">Security</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/certificate/">Certificate</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
       <h2><a href="/blog/distribution-system/%E4%B8%80%E8%87%B4%E6%80%A7%E5%93%88%E5%B8%8C/">一致性哈希特性和使用场景</a></h2>
     
     
@@ -207,17 +267,7 @@
 <li>简单说： 移除和添加一台服务器是， 此算法能够尽可能小的改变已存在的服务请求和处理请求服务器之间的映射关系；</li>
 </ol>
 <h3 id="特性">特性</h3>
-<p>考虑到分布式系统每个节点都可能失效， 且新的节点有可能加入进来。 一致性哈希需要保证以下特性</p>
-<h4 id="平衡性">平衡性</h4>
-<p>hash的结果尽可能的分配到所有的节点去，是的所有节点都能得到利用</p>
-<h4 id="分散性">分散性</h4>
-<ol>
-<li>分散性： 客户端请求可能不知道所有的节点存在， 部分客户端将部分节点作为一个完整的hash环；导致同一请求不能映射到同一个节点；</li>
-<li>一致性哈希 应降低分散性；</li>
-</ol>
-<h4 id="单调性">单调性</h4>
-<ol>
-<li>增加或删除节点，原有的请求应该被映射到原有的节点或新的节点中去；&hellip;</li></ol>
+<p>考虑到分布式系统每个节点都可能失效， 且新的节点有可能加&hellip;</p>
   </div>
   <footer>
     <a href="/blog/distribution-system/%E4%B8%80%E8%87%B4%E6%80%A7%E5%93%88%E5%B8%8C/" class="button big">阅读全文</a>
@@ -277,9 +327,7 @@
 <h2 id="配置环境变量">配置环境变量</h2>
 <pre><code># Enable the go modules feature
 export GO111MODULE=on
-# Set the GOPROXY environment variable
-export GOPROXY=https://goproxy.io
-</code></pre>
+# Set&hellip;</code></pre>
   </div>
   <footer>
     <a href="/blog/golang/gomodule/" class="button big">阅读全文</a>
@@ -337,14 +385,7 @@ export GOPROXY=https://goproxy.io
     <ol>
 <li>添加nginx apt-key
 <pre><code>$ wget http://nginx.org/keys/nginx_signing.key 
-$ sudo apt-key add nginx_signing.key
-</code></pre></li>
-<li>将下面内容中codename替换为 Ubuntu版本号(<a href="http://nginx.org/en/linux_packages.html#stable">点击查看</a>)，并将以下代码附加到<code>/etc/apt/sources.list</code>文件末尾：
-<pre><code>deb http://nginx.org/packages/ubuntu/ codename nginx 
-deb-src http://nginx.org/packages/ubuntu/ codename nginx
-</code></pre></li>
-<li>安装和升级
-<pre><code>$&hellip;</code></pre></li></ol>
+$ sudo apt-key add&hellip;</code></pre></li></ol>
   </div>
   <footer>
     <a href="/blog/nginx/%E5%8D%87%E7%BA%A7/" class="button big">阅读全文</a>
@@ -401,35 +442,7 @@ deb-src http://nginx.org/packages/ubuntu/ codename nginx
     
     <p>参考: <a href="https://github.com/golang/go/wiki/cgo">https://github.com/golang/go/wiki/cgo</a></p>
 <h2 id="概述">概述</h2>
-<p>CGO模块提供了golang和c语言互相调用的机制。某些第三方库只有c/c++实现且自己实现成本较高。</p>
-<h2 id="window--额外配置">window  额外配置</h2>
-<ol>
-<li>安装mingw-get， 配置环境变量</li>
-<li>安装gcc： mingw-get install gcc</li>
-</ol>
-<h2 id="golang与c基本类型转换">golang与c基本类型转换</h2>
-<p>golang 调用c函数，需要将golang数据类型通过cgo进行转换</p>
-<table>
-<thead>
-<tr>
-<th>C语言类型</th>
-<th>CGO类型</th>
-<th>Go语言类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>char</td>
-<td>C.char</td>
-<td>byte</td>
-</tr>
-<tr>
-<td>singed char</td>
-<td>C.schar</td>
-<td>int8</td>
-</tr>
-<tr>
-<td>unsigned char&hellip;</td></tr></tbody></table>
+<p>CGO模块提供了golang和c语言互相调用的机制。某些第三方库只有c/c++实现且自己实现成本较高。&hellip;</p>
   </div>
   <footer>
     <a href="/blog/golang/cgo/" class="button big">阅读全文</a>
@@ -439,72 +452,6 @@ deb-src http://nginx.org/packages/ubuntu/ codename nginx
       
         
           <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/security/%E9%AB%98%E9%98%B2ip/">高防IP服务工作原理和配置</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2019-02-13 00:00:00 &#43;0000 UTC">2019-02-13</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="概念">概念</h2>
-<p>高防IP是针对互联网服务器遭受大流量的DDos攻击后， 导致服务不可用的情况下。 用户通过配置高防IP， 将攻击流量引流到高防IP， 并配置一定的转发规则， 将合法的请求转发到源站；</p>
-<h2 id="高防ip包含">高防IP包含</h2>
-<ol>
-<li>SYN Flood</li>
-<li>UDP Flood</li>
-<li>ICMP Flood</li>
-<li>IGMP Flood</li>
-<li>ACK Flood</li>
-<li>Ping Sweep</li>
-</ol>
-
-  </div>
-  <footer>
-    <a href="/blog/security/%E9%AB%98%E9%98%B2ip/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/security/">Security</a></li>
         
       
     </ul>
@@ -550,7 +497,7 @@ deb-src http://nginx.org/packages/ubuntu/ codename nginx
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -607,6 +554,9 @@ deb-src http://nginx.org/packages/ubuntu/ codename nginx
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -620,9 +570,6 @@ deb-src http://nginx.org/packages/ubuntu/ codename nginx
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -642,7 +589,7 @@ deb-src http://nginx.org/packages/ubuntu/ codename nginx
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

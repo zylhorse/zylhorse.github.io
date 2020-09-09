@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/cache/redis/%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/">Redis高可用方案-哨兵模式</a></h2>
+      <h2><a href="/blog/data-structure/bitmap/">数据结构-Bitmap</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-11-12 00:00:00 &#43;0000 UTC">2016-11-12</time>
+        <time datetime="2017-02-03 00:00:00 &#43;0000 UTC">2017-02-03</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -199,24 +201,16 @@
   <div class="content">
     
     
-    <h3 id="哨兵模式">哨兵模式</h3>
-<p>哨兵是一个独立的进程， 通过和redis各个节点的通信，监听各节点的状态；并互相监控；
-备注： 
-sentinel节点需要2n+1(n&gt;=1)个</p>
-<h4 id="sentinel监听">sentinel监听</h4>
-<ol>
-<li>每10秒 sentinel 对 master和slave 进行info； 发现slave节点，确认主从关系</li>
-<li>每2秒 sentinel 通过master（pub/sub） 交换信息， 所有的sentinel都订阅master的一个channel， 并每隔2秒向该channel发送信息； 感知新的sentinel， 协商master是否通信失败；</li>
-<li>每1秒 sentinel 向其&hellip;</li></ol>
+    
   </div>
   <footer>
-    <a href="/blog/cache/redis/%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/" class="button big">阅读全文</a>
+    <a href="/blog/data-structure/bitmap/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
+          <li><a class="article-terms-link" href="/categories/data-structure/">Data Structure</a></li>
         
       
     </ul>
@@ -225,7 +219,7 @@ sentinel节点需要2n+1(n&gt;=1)个</p>
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
+          <li><a class="article-terms-link" href="/tags/"></a></li>
         
       
     </ul>
@@ -240,14 +234,14 @@ sentinel节点需要2n+1(n&gt;=1)个</p>
   <header>
   <div class="title">
     
-      <h2><a href="/blog/cache/redis/%E9%AB%98%E5%8F%AF%E7%94%A8ha-high-available/">Redis高可用解决方案</a></h2>
+      <h2><a href="/blog/software-programming/%E8%99%9A%E6%8B%9F%E6%9C%BA/">不同类型代码执行引擎</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-11-08 00:00:00 &#43;0000 UTC">2016-11-08</time>
+        <time datetime="2017-01-23 00:00:00 &#43;0000 UTC">2017-01-23</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -262,36 +256,21 @@ sentinel节点需要2n+1(n&gt;=1)个</p>
   <div class="content">
     
     
-    <h3 id="高可用扩容">高可用扩容</h3>
+    <h2 id="概述">概述</h2>
+<p>代码在物理机器上执行过程：</p>
 <ol>
-<li>垂直扩容： 提升机器内存配置， 不需要应用程序支持；</li>
-<li>水平扩容： 增加节点，需要应用程序支持；</li>
-</ol>
-<h3 id="哨兵模式sentinel">哨兵模式（sentinel）</h3>
-<p>故障转移后redis客户端将无法感知redis节点的变化；导致无法正常使用；</p>
-<h4 id="哨兵模式高可用客户端流程">哨兵模式高可用客户端流程</h4>
-<ol>
-<li>客户端获取 sentinel 集合；</li>
-<li>客户端获取master 信息；</li>
-<li>客户端验证获取的master 为真正的master， 防止故障转移期间主节点的变化；</li>
-<li>客户端订阅sentinel节点 相关频道， 时刻获取节点去读写；</li>
-</ol>
-<h4 id="问题">问题</h4>
-<ol>
-<li>不能解决读写分离；</li>
-</ol>
-<h3 id="集群模式cluster">集群模式（cluster）</h3>
-<ol>
-<li>数据异步复制，不能保证强一致性。复制结构只支持一层，从节点只能复制主&hellip;</li></ol>
+<li>代码被编译成二进制文件</li>
+<li>二进制文件运行， 加载程序到内存中</li>
+<li>CPU通过总线将内存中指令取出并放入指令流水线， 对指令进行 译码、执行、缓冲、回写（参考arm7 三级&hellip;</li></ol>
   </div>
   <footer>
-    <a href="/blog/cache/redis/%E9%AB%98%E5%8F%AF%E7%94%A8ha-high-available/" class="button big">阅读全文</a>
+    <a href="/blog/software-programming/%E8%99%9A%E6%8B%9F%E6%9C%BA/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
+          <li><a class="article-terms-link" href="/categories/software-programming/">Software Programming</a></li>
         
       
     </ul>
@@ -300,7 +279,7 @@ sentinel节点需要2n+1(n&gt;=1)个</p>
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
+          <li><a class="article-terms-link" href="/tags/"></a></li>
         
       
     </ul>
@@ -315,14 +294,14 @@ sentinel节点需要2n+1(n&gt;=1)个</p>
   <header>
   <div class="title">
     
-      <h2><a href="/blog/cache/redis/hotkeybigkey/">Redis的hotkey和bigkey监控和处理</a></h2>
+      <h2><a href="/blog/stories/%E6%9A%96%E4%B8%8E%E5%87%89/">暖与凉</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-10-23 00:00:00 &#43;0000 UTC">2016-10-23</time>
+        <time datetime="2017-01-12 00:00:00 &#43;0000 UTC">2017-01-12</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -330,47 +309,24 @@ sentinel节点需要2n+1(n&gt;=1)个</p>
     
     
         <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
+            10000分钟
         </p>
     
 </div>
   <div class="content">
     
     
-    <h2 id="bigkey">bigkey</h2>
-<ol>
-<li>单个key 存储value很大</li>
-<li>hash set list zset 等存储元素过多</li>
-</ol>
-<h3 id="如何发现">如何发现</h3>
-<ol>
-<li>redis-cli &ndash;bigkeys</li>
-<li>rdbtools 分析rdb 文件</li>
-<li>redis-rdb-cli 第三方工具</li>
-</ol>
-<h3 id="怎么解决">怎么解决</h3>
-<ol>
-<li>减少list hash set zset 成员， 对成员过多的数据进行取模分片</li>
-<li>string类型的big value 不建议存入 redis， 可以用文档型数据库mongodb或cdn等方式优化。</li>
-</ol>
-<h2 id="hotkey">hotkey</h2>
-<ol>
-<li>并发访问量很大的热点key</li>
-</ol>
-<h3 id="如何发现-1">如何发现</h3>
-<p>收集所有redis请求，统计分析</p>
-<ol>
-<li>redis-cli &ndash;hotkeys</li>
-<li>&hellip;</li></ol>
+    <p>谢谢陌生人的关心</p>
+
   </div>
   <footer>
-    <a href="/blog/cache/redis/hotkeybigkey/" class="button big">阅读全文</a>
+    <a href="/blog/stories/%E6%9A%96%E4%B8%8E%E5%87%89/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
+          <li><a class="article-terms-link" href="/categories/stories/">Stories</a></li>
         
       
     </ul>
@@ -379,7 +335,7 @@ sentinel节点需要2n+1(n&gt;=1)个</p>
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
+          <li><a class="article-terms-link" href="/tags/"></a></li>
         
       
     </ul>
@@ -394,14 +350,14 @@ sentinel节点需要2n+1(n&gt;=1)个</p>
   <header>
   <div class="title">
     
-      <h2><a href="/blog/cache/redis/ziplist/">Redis源码阅读-ziplist</a></h2>
+      <h2><a href="/blog/stories/%E5%86%AC%E9%A3%8E/">冬风</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-10-10 00:00:00 &#43;0000 UTC">2016-10-10</time>
+        <time datetime="2017-01-09 00:00:00 &#43;0000 UTC">2017-01-09</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -409,34 +365,24 @@ sentinel节点需要2n+1(n&gt;=1)个</p>
     
     
         <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
+            10000分钟
         </p>
     
 </div>
   <div class="content">
     
     
-    <h2 id="定义">定义</h2>
-<p>ziplist由一系列特殊编码的连续内存块组成的顺序存储结构，类似数组， 但是ziplist每个元素占用内存大小不同。</p>
-<h2 id="数据结构">数据结构</h2>
-<pre><code>type ziplist struct {
-    zlbytes: ziplist的长度（单位: 字节)，是一个32位无符号整数
-    zltail: ziplist最后一个节点的偏移量，反向遍历ziplist或者pop尾部节点的时候有用。
-    zllen: ziplist的节点（entry）个数
-    entry: 节点
-    zlend: 值为0xFF，用于标记ziplist的结尾 
-}
+    <p>当风再来，冬已悄至。</p>
 
-type entry struct {&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/cache/redis/ziplist/" class="button big">阅读全文</a>
+    <a href="/blog/stories/%E5%86%AC%E9%A3%8E/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
+          <li><a class="article-terms-link" href="/categories/stories/">Stories</a></li>
         
       
     </ul>
@@ -445,7 +391,7 @@ type entry struct {&hellip;</code></pre>
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
+          <li><a class="article-terms-link" href="/tags/"></a></li>
         
       
     </ul>
@@ -460,14 +406,14 @@ type entry struct {&hellip;</code></pre>
   <header>
   <div class="title">
     
-      <h2><a href="/blog/cache/redis/skiplist/">Redis源码阅读-skiplist</a></h2>
+      <h2><a href="/blog/network/%E4%BA%92%E8%81%94%E7%BD%91/">讲诉互联网的概念，区分广义互联网和侠义互联网</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-09-20 00:00:00 &#43;0000 UTC">2016-09-20</time>
+        <time datetime="2017-01-01 00:00:00 &#43;0000 UTC">2017-01-01</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -482,16 +428,22 @@ type entry struct {&hellip;</code></pre>
   <div class="content">
     
     
-    
+    <h2 id="广义互联网">广义互联网</h2>
+<p>大家所说的互联网一般指广义互联网，由两层组成</p>
+<ul>
+<li>核心层： TCP/IP网络传输层(侠义互联网)</li>
+<li>上层： 万维网WWW为代表的应用层
+<ul>
+<li>这一层包含多种类型的流量和应用：邮件、软件、在线影视、&hellip;</li></ul></li></ul>
   </div>
   <footer>
-    <a href="/blog/cache/redis/skiplist/" class="button big">阅读全文</a>
+    <a href="/blog/network/%E4%BA%92%E8%81%94%E7%BD%91/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
+          <li><a class="article-terms-link" href="/categories/network/">Network</a></li>
         
       
     </ul>
@@ -500,7 +452,7 @@ type entry struct {&hellip;</code></pre>
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
+          <li><a class="article-terms-link" href="/tags/"></a></li>
         
       
     </ul>
@@ -537,7 +489,7 @@ type entry struct {&hellip;</code></pre>
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -594,6 +546,9 @@ type entry struct {&hellip;</code></pre>
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -607,9 +562,6 @@ type entry struct {&hellip;</code></pre>
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -629,7 +581,7 @@ type entry struct {&hellip;</code></pre>
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

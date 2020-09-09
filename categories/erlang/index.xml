@@ -120,8 +120,8 @@ DETS(Disk ETS) DETS驻留在硬盘，DETS要比ETS慢，但是比ETS更省内存
       
       <guid>https://zylhorse.github.io/blog/erlang/%E7%B1%BB%E5%9E%8B/</guid>
       <description>类型 Erlang有一种类型表示法，可以用来定义新的数据类型并给代码添加类型注解。类型注解让代码更容易理解和维护，还可以在编译时检测错误。
-指定数据和函数类型 -module(...).-export([plan_route/2]).-spec play_route(point(), point()) -&amp;gt; route().-type direction() :: north | south | east | west.-type point() :: {integer(), integer()}.-type route() :: [{go, direction(), integer()}]. 这个模块导出一个名为plan_route/2的函数。该函数的输入和返回数据类型由类型声明(type)定义了三个新数据类型。该函数由类型规范(spec)指定输入和返回数据类型。 为了增加类型的表达能力，可以添加类型注解：   -spec plan_route(From::point(), To::point()) -&amp;gt; &amp;hellip;.
- 类型语法  类型定义可以使用一下的非正式语法： T1 :: A | B | C   它的意思是T1被定义为A、B或C其中之一。
+指定数据和函数类型 -module(...).-export([plan_route/2]).-spec play_route(point(), point()) -&amp;gt; route().-type direction() :: north | south | east | west.-type point() :: {integer(), integer()}.-type route() :: [{go, direction(), integer()}]. 这个模块导出一个名为plan_route/2的函数。该函数的输入和返回数据类型由类型声明(type)定义了三个新数据类型。该函数由类型规范(spec)指定输入和返回数据类型。 为了增加类型的表达能力，可以添加类型注解： -spec plan_route(From::point(), To::point()) -&amp;gt; ....  类型语法   类型定义可以使用一下的非正式语法： T1 :: A | B | C
+ 它的意思是T1被定义为A、B或C其中之一。
  用这些表示法，可以定义一些Erlang类型如下：Type :: any() | none() | pid() | port() | reference() | [] | Atom |binary() | float() | Fun | Integer | [Type] | Tuple | Union | UserDefinedUnion :: Type1 | Type2 | .</description>
     </item>
     

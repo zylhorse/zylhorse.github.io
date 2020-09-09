@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="流媒体学习-Flv视频封装格式">
 <meta itemprop="description" content="简介 FLV(Flash Video) 是Adobe公司开发的一种流媒体格式，由其封装的视频文件体积小、封装简单。FLV可以使用Flash Player播放。FLV封装的视频文件后缀通常为.flv。
  FLV包含两部分，文件头(file header)和文件体(file body)。文件体由一系列Tag组成。
@@ -33,7 +35,7 @@
  FLV包含两部分，文件头(file header)和文件体(file body)。文件体由一系列Tag组成。
  FLV Header    字段名 字段大小 字段描述     Signature 3Byte 文件标识(FLV)   Version 1Byte 版本号（0x01)   Flags 1Byte 前5位保留为0，第6位表示是否有音频Tag，第7位保留为0，第8位表示是否有视频Tag。   HeaderSize 4Byte 表示从file header开始到file body开始的字节数，版本1总为9。    FLV Body  间隔包含Previous Tag Size字段，标识前一个Tag大小。
     Previous Tag Size Tag1 &hellip; Previous Tag Size Tagn    Tag    Tag Header Tag Data    Tag Header    字段 字段大小 字段描述     Type 1Byte 标识Tag类型，音频(0x08)、视频(0x09)、script data(0x12),其他值保留   Datasize 3Byte 标识Tag Data数据大小   Timestamp 3Byte 标识Tag时间戳   Timestamp_ex 1Byte 时间戳扩展字节，24字节数值不够时，该字节最高位将时间戳扩展为32位数。   StreamID 3Byte stream id 总是0    Tag Data 不同类型Tag的data部分结构不同；"/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -90,12 +92,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -407,6 +409,7 @@
 </table>
 <h4 id="视频编码类型">视频编码类型</h4>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -433,8 +436,21 @@
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#flv-header">FLV Header</a></li>
+    <li><a href="#flv-body">FLV Body</a>
+      <ul>
+        <li><a href="#tag">Tag</a></li>
+        <li><a href="#audio-tag-data">Audio Tag Data</a></li>
+        <li><a href="#video-tag-data">Video Tag Data</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -444,6 +460,22 @@
       <a href="/blog/mediastream/h264%E8%A7%86%E9%A2%91%E7%A0%81%E6%B5%81%E8%A7%A3%E6%9E%90/" class="button right"><span>流媒体学习-H264视频编解码</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[MediaStream]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -461,7 +493,7 @@
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -518,6 +550,9 @@
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -531,9 +566,6 @@
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -553,7 +585,7 @@
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

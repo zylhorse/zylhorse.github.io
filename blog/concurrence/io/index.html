@@ -6,20 +6,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="多类型I/O操作流程">
 <meta itemprop="description" content="I/O IO分为两个阶段：
- 数据准备阶段 内核空间复制数据到用户进程缓冲区（用户空间）阶段  IO类型  阻塞IO  用户线程进行IO读写操作时发生阻塞，等待数据准备就绪非阻塞IO  用户线程进行IO读写操作时不阻塞，但是循环询问内核数据是否就绪多路复用IO  1. 轮询多个IO连接， 只有当真正的事件发生时，采取调用实际的IO操作；2. 轮询多个IO状态，发生在内核空间；信号驱动IO  1. 用户线程发起sigaction 系统调用， 给socket注册信号函数后， 继续执行2. 内核数据准备就绪后，发送信号给用户线程3. 用户线程收到信号，再发起recvfrom系统调用，将数据复制到用户空间；4. 用户下线程操作数据；异步IO  1. 用户线程发起aio_read 系统调用后继续执行2. 内核处理完IO操作，发送信号给用户线程 IO操作完成；3. 用户线程直接操作数据；阻塞IO和非阻塞IO 区别在于第一步数据准备阶段是否阻塞；即IO请求是否阻塞；
+ 数据准备阶段 内核空间复制数据到用户进程缓冲区（用户空间）阶段  IO类型   阻塞IO 用户线程进行IO读写操作时发生阻塞，等待数据准备就绪
+  非阻塞IO 用户线程进行IO读写操作时不阻塞，但是循环询问内核数据是否就绪
+  多路复用IO
+ 轮询多个IO连接， 只有当真正的事件发生时，采取调用实际的IO操作； 轮询多个IO状态，发生在内核空间；    信号驱动IO
+ 用户线程发起sigaction 系统调用， 给socket注册信号函数后， 继续执行 内核数据准备就绪后，发送信号给用户线程 用户线程收到信号，再发起recvfrom系统调用，将数据复制到用户空间； 用户下线程操作数据；    异步IO
+ 用户线程发起aio_read 系统调用后继续执行 内核处理完IO操作，发送信号给用户线程 IO操作完成； 用户线程直接操作数据；    阻塞IO和非阻塞IO 区别在于第一步数据准备阶段是否阻塞；即IO请求是否阻塞；
 同步IO和异步IO 区别在于第二部内核空间到用户空间进行数据拷贝都会阻塞用户线程；">
 <meta itemprop="datePublished" content="2014-10-03T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2014-10-03T00:00:00+00:00" />
-<meta itemprop="wordCount" content="40">
+<meta itemprop="wordCount" content="31">
 
 
 
 <meta itemprop="keywords" content="I/O," />
 <meta property="og:title" content="多类型I/O操作流程" />
 <meta property="og:description" content="I/O IO分为两个阶段：
- 数据准备阶段 内核空间复制数据到用户进程缓冲区（用户空间）阶段  IO类型  阻塞IO  用户线程进行IO读写操作时发生阻塞，等待数据准备就绪非阻塞IO  用户线程进行IO读写操作时不阻塞，但是循环询问内核数据是否就绪多路复用IO  1. 轮询多个IO连接， 只有当真正的事件发生时，采取调用实际的IO操作；2. 轮询多个IO状态，发生在内核空间；信号驱动IO  1. 用户线程发起sigaction 系统调用， 给socket注册信号函数后， 继续执行2. 内核数据准备就绪后，发送信号给用户线程3. 用户线程收到信号，再发起recvfrom系统调用，将数据复制到用户空间；4. 用户下线程操作数据；异步IO  1. 用户线程发起aio_read 系统调用后继续执行2. 内核处理完IO操作，发送信号给用户线程 IO操作完成；3. 用户线程直接操作数据；阻塞IO和非阻塞IO 区别在于第一步数据准备阶段是否阻塞；即IO请求是否阻塞；
+ 数据准备阶段 内核空间复制数据到用户进程缓冲区（用户空间）阶段  IO类型   阻塞IO 用户线程进行IO读写操作时发生阻塞，等待数据准备就绪
+  非阻塞IO 用户线程进行IO读写操作时不阻塞，但是循环询问内核数据是否就绪
+  多路复用IO
+ 轮询多个IO连接， 只有当真正的事件发生时，采取调用实际的IO操作； 轮询多个IO状态，发生在内核空间；    信号驱动IO
+ 用户线程发起sigaction 系统调用， 给socket注册信号函数后， 继续执行 内核数据准备就绪后，发送信号给用户线程 用户线程收到信号，再发起recvfrom系统调用，将数据复制到用户空间； 用户下线程操作数据；    异步IO
+ 用户线程发起aio_read 系统调用后继续执行 内核处理完IO操作，发送信号给用户线程 IO操作完成； 用户线程直接操作数据；    阻塞IO和非阻塞IO 区别在于第一步数据准备阶段是否阻塞；即IO请求是否阻塞；
 同步IO和异步IO 区别在于第二部内核空间到用户空间进行数据拷贝都会阻塞用户线程；" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://zylhorse.github.io/blog/concurrence/io/" />
@@ -28,9 +40,14 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="多类型I/O操作流程"/>
 <meta name="twitter:description" content="I/O IO分为两个阶段：
- 数据准备阶段 内核空间复制数据到用户进程缓冲区（用户空间）阶段  IO类型  阻塞IO  用户线程进行IO读写操作时发生阻塞，等待数据准备就绪非阻塞IO  用户线程进行IO读写操作时不阻塞，但是循环询问内核数据是否就绪多路复用IO  1. 轮询多个IO连接， 只有当真正的事件发生时，采取调用实际的IO操作；2. 轮询多个IO状态，发生在内核空间；信号驱动IO  1. 用户线程发起sigaction 系统调用， 给socket注册信号函数后， 继续执行2. 内核数据准备就绪后，发送信号给用户线程3. 用户线程收到信号，再发起recvfrom系统调用，将数据复制到用户空间；4. 用户下线程操作数据；异步IO  1. 用户线程发起aio_read 系统调用后继续执行2. 内核处理完IO操作，发送信号给用户线程 IO操作完成；3. 用户线程直接操作数据；阻塞IO和非阻塞IO 区别在于第一步数据准备阶段是否阻塞；即IO请求是否阻塞；
+ 数据准备阶段 内核空间复制数据到用户进程缓冲区（用户空间）阶段  IO类型   阻塞IO 用户线程进行IO读写操作时发生阻塞，等待数据准备就绪
+  非阻塞IO 用户线程进行IO读写操作时不阻塞，但是循环询问内核数据是否就绪
+  多路复用IO
+ 轮询多个IO连接， 只有当真正的事件发生时，采取调用实际的IO操作； 轮询多个IO状态，发生在内核空间；    信号驱动IO
+ 用户线程发起sigaction 系统调用， 给socket注册信号函数后， 继续执行 内核数据准备就绪后，发送信号给用户线程 用户线程收到信号，再发起recvfrom系统调用，将数据复制到用户空间； 用户下线程操作数据；    异步IO
+ 用户线程发起aio_read 系统调用后继续执行 内核处理完IO操作，发送信号给用户线程 IO操作完成； 用户线程直接操作数据；    阻塞IO和非阻塞IO 区别在于第一步数据准备阶段是否阻塞；即IO请求是否阻塞；
 同步IO和异步IO 区别在于第二部内核空间到用户空间进行数据拷贝都会阻塞用户线程；"/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -87,12 +104,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -180,43 +197,52 @@
     <div class="content">
       
       <h3 id="io">I/O</h3>
-<p>IO分为两个阶段：</p>
+<p><code>IO</code>分为两个阶段：</p>
 <ol>
 <li>数据准备阶段</li>
 <li>内核空间复制数据到用户进程缓冲区（用户空间）阶段</li>
 </ol>
 <h4 id="io类型">IO类型</h4>
-<ol>
-<li>阻塞IO</li>
-</ol>
-<pre><code>用户线程进行IO读写操作时发生阻塞，等待数据准备就绪
-</code></pre><ol start="2">
-<li>非阻塞IO</li>
-</ol>
-<pre><code>用户线程进行IO读写操作时不阻塞，但是循环询问内核数据是否就绪
-</code></pre><ol start="3">
-<li>多路复用IO</li>
-</ol>
-<pre><code>1. 轮询多个IO连接， 只有当真正的事件发生时，采取调用实际的IO操作；
-2. 轮询多个IO状态，发生在内核空间；
-</code></pre><ol start="4">
-<li>信号驱动IO</li>
-</ol>
-<pre><code>1. 用户线程发起sigaction 系统调用， 给socket注册信号函数后， 继续执行
-2. 内核数据准备就绪后，发送信号给用户线程
-3. 用户线程收到信号，再发起recvfrom系统调用，将数据复制到用户空间；
-4. 用户下线程操作数据；
-</code></pre><ol start="5">
-<li>异步IO</li>
-</ol>
-<pre><code>1. 用户线程发起aio_read 系统调用后继续执行
-2. 内核处理完IO操作，发送信号给用户线程 IO操作完成；
-3. 用户线程直接操作数据；
-</code></pre><h4 id="阻塞io和非阻塞io">阻塞IO和非阻塞IO</h4>
+<ul>
+<li>
+<p>阻塞IO
+用户线程进行IO读写操作时发生阻塞，等待数据准备就绪</p>
+</li>
+<li>
+<p>非阻塞IO
+用户线程进行IO读写操作时不阻塞，但是循环询问内核数据是否就绪</p>
+</li>
+<li>
+<p>多路复用IO</p>
+<ul>
+<li>轮询多个<code>IO</code>连接， 只有当真正的事件发生时，采取调用实际的IO操作；</li>
+<li>轮询多个<code>IO</code>状态，发生在内核空间；</li>
+</ul>
+</li>
+<li>
+<p>信号驱动IO</p>
+<ul>
+<li>用户线程发起<code>sigaction</code> 系统调用， 给<code>socket</code>注册信号函数后， 继续执行</li>
+<li>内核数据准备就绪后，发送信号给用户线程</li>
+<li>用户线程收到信号，再发起<code>recvfrom</code>系统调用，将数据复制到用户空间；</li>
+<li>用户下线程操作数据；</li>
+</ul>
+</li>
+<li>
+<p>异步IO</p>
+<ul>
+<li>用户线程发起<code>aio_read</code> 系统调用后继续执行</li>
+<li>内核处理完IO操作，发送信号给用户线程 IO操作完成；</li>
+<li>用户线程直接操作数据；</li>
+</ul>
+</li>
+</ul>
+<h4 id="阻塞io和非阻塞io">阻塞IO和非阻塞IO</h4>
 <p>区别在于第一步数据准备阶段是否阻塞；即IO请求是否阻塞；</p>
 <h4 id="同步io和异步io">同步IO和异步IO</h4>
 <p>区别在于第二部内核空间到用户空间进行数据拷贝都会阻塞用户线程；</p>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -243,8 +269,18 @@
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#io">I/O</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -254,6 +290,22 @@
       <a href="/blog/windows/visual-studio/" class="button right"><span>下载安装Visual Studio历史版本</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Concurrence]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -271,7 +323,7 @@
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -328,6 +380,9 @@
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -341,9 +396,6 @@
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -363,7 +415,7 @@
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

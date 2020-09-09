@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/browser/download/">不同平台常用浏览器的离线下载地址</a></h2>
+      <h2><a href="/blog/erlang/erlang%E6%A8%A1%E5%9D%97%E5%92%8C%E5%87%BD%E6%95%B0/">Erlang模块和函数</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-04-02 00:00:00 &#43;0000 UTC">2015-04-02</time>
+        <time datetime="2015-08-20 00:00:00 &#43;0000 UTC">2015-08-20</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -199,92 +201,22 @@
   <div class="content">
     
     
-    <ul>
-<li>
-<p><a href="https://www.microsoftedgeinsider.com/en-us/download">edge</a></p>
-</li>
-<li>
-<p><a href="https://www.google.cn/chrome/thank-you.html?platform=mac&standalone=1">chrome-mac</a></p>
-</li>
-<li>
-<p><a href="https://www.google.cn/chrome/thank-you.html?platform=win64&standalone=1">chrome-win64</a></p>
-</li>
+    <h1 id="模块">模块</h1>
+<ul>
+<li>模块是Erlang中代码的基本单元，我们编写的所有函数都存放在模块中，模块文件的扩展名通常为.erl。</li>
+<li>编译后的文件扩展名为.beam,</li>
 </ul>
-
+<blockquote>
+<p>注： beam 是 Erlang虚拟&hellip;</p></blockquote>
   </div>
   <footer>
-    <a href="/blog/browser/download/" class="button big">阅读全文</a>
+    <a href="/blog/erlang/erlang%E6%A8%A1%E5%9D%97%E5%92%8C%E5%87%BD%E6%95%B0/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/browser/">Browser</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      <li>None</li>
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/software-programming/%E6%B2%99%E7%AE%B1/">Sandboxie（沙箱）网络编程虚拟执行环境</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-03-22 00:00:00 &#43;0000 UTC">2015-03-22</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="关键字">关键字</h2>
-<p>Sandboxie（沙箱）网络编程虚拟执行环境</p>
-<h2 id="概念">概念</h2>
-<p>沙箱是一个虚拟系统程序， 允许程序在沙箱环境中独立运行， 限制沙箱中程序对宿主系统的修改和影响。</p>
-<h3 id="有哪些限制">有哪些限制</h3>
-<p>在沙箱中运行的程序，</p>
-<ol>
-<li>不能运行本地的可执行程序</li>
-<li>不能从本地计算机文件系统中读取任何文件， 也不能往本地计算机系统中写入任何信息</li>
-<li>不能查看本地计算机信息，特别是用户名，E-mail地址等</li>
-</ol>
-<h2 id="技术迭代">技术迭代</h2>
-<ol>
-<li>GreenBorder 为IE和Firefox构建安全的虚拟执行环境，用户对浏览器所作的任何写磁盘操作， 都将重定向到一个临时的文件中</li>
-<li>Forcefield由ZoneAlarm开发， 功能雷士GreenBorder;&hellip;</li></ol>
-  </div>
-  <footer>
-    <a href="/blog/software-programming/%E6%B2%99%E7%AE%B1/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/software-programming/">Software Programming</a></li>
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
         
       
     </ul>
@@ -308,14 +240,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%94%81/">MySQL数据库锁</a></h2>
+      <h2><a href="/blog/erlang/%E8%AE%B0%E5%BD%95%E5%92%8C%E6%98%A0%E5%B0%84%E7%BB%84/">Erlang记录和映射组</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-03-16 00:00:00 &#43;0000 UTC">2015-03-16</time>
+        <time datetime="2015-08-15 00:00:00 &#43;0000 UTC">2015-08-15</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -330,27 +262,20 @@
   <div class="content">
     
     
-    <h2 id="按操作分">按操作分</h2>
-<ol>
-<li>共享锁（读锁）： 针对同一块数据， 多个读操作可以同时进行且不会互相影响。 只能读不能写</li>
-<li>排他锁（写锁）： 对当前数据的排他锁操作， 没有解锁前， 阻断其他共享锁和排他锁</li>
-</ol>
-<h2 id="按粒度分">按粒度分</h2>
-<ol>
-<li>行锁： 锁定某一行，开销大， 加锁慢， 会出现死锁， 锁定力度最小， 发生锁冲突概率最低， 并发力度高</li>
-<li>表锁： 锁定一张表， 开销小， 加锁快， 不会死锁， 锁定力度最大， 发生锁冲突概率最高， 并大力度低</li>
-<li>页面锁： 开销和加锁时间介于行锁和表锁之间， 会出现死锁， 锁定力度介于行锁和表锁之间， 并发力度一般</li>
-</ol>
-
+    <h1 id="数据容器">数据容器</h1>
+<pre><code>元组（tuple）：保存固定数量的元素
+列表（list）：保存可变数量的元素
+记录（record）：是元组的另一种形式，通过记录给元组里面的各个元素关联一个名字，
+映射组（map）：是&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%94%81/" class="button big">阅读全文</a>
+    <a href="/blog/erlang/%E8%AE%B0%E5%BD%95%E5%92%8C%E6%98%A0%E5%B0%84%E7%BB%84/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
         
       
     </ul>
@@ -359,7 +284,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/mysql/">MySQL</a></li>
+          <li><a class="article-terms-link" href="/tags/"></a></li>
         
       
     </ul>
@@ -374,14 +299,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1/">MySQL数据库事务原理</a></h2>
+      <h2><a href="/blog/erlang/erlang%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">Erlang基本数据结构</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-03-10 00:00:00 &#43;0000 UTC">2015-03-10</time>
+        <time datetime="2015-07-19 00:00:00 &#43;0000 UTC">2015-07-19</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -396,23 +321,18 @@
   <div class="content">
     
     
-    <h2 id="概念">概念</h2>
-<p>事务处理用于维护数据库操作的完整性， 保证批量操作要么完全执行， 要么完全不执行。</p>
-<h2 id="事务特性acid">事务特性acid</h2>
-<ol>
-<li>原子性（automicity）： 事务中的所有操作， 要么全部完成， 要么不做；</li>
-<li>一致性（consistency）：事务执行前和执行后都必须处于一致性状态。 如果成功则处于有效状态， 如果失败则返回到原始状态。</li>
-<li>隔离性（isolation）：不同事务并发的操作相同数据时， 每个事务都有各自完整的数据空间；并发事务间的数据修改是隔离的， 当事务查看数据时， 数据的状态要么是其他事务修改前的状态， 要么是其他事务修改后的状态， 不会查看到中间状态；</li>
-<li>持久性（durability）： 事务成&hellip;</li></ol>
+    <h1 id="erlang">Erlang</h1>
+<pre><code>Erlang 创始人Joe Armstrong，基于Prolog开发。
+Erlang 是通用的面向并发的编程语言，由瑞典电信设备制造商爱立信所辖CS-Lab开发。于1987年开&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1/" class="button big">阅读全文</a>
+    <a href="/blog/erlang/erlang%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
         
       
     </ul>
@@ -421,7 +341,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/mysql/">MySQL</a></li>
+          <li><a class="article-terms-link" href="/tags/"></a></li>
         
       
     </ul>
@@ -436,14 +356,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/linux/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BA%90/">linux依赖包的离线打包和安装</a></h2>
+      <h2><a href="/blog/erlang/%E7%BC%96%E8%AF%91%E5%92%8C%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F/">Erlang编译和运行</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-02-02 00:00:00 &#43;0000 UTC">2015-02-02</time>
+        <time datetime="2015-07-16 00:00:00 &#43;0000 UTC">2015-07-16</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -458,29 +378,78 @@
   <div class="content">
     
     
-    <h1 id="联网系统步骤">联网系统步骤</h1>
-<h2 id="清理apt-缓冲区">清理apt 缓冲区</h2>
-<p>sudo rm -rf /var/cache/apt/archives/*</p>
-<h2 id="下载所需组件">下载所需组件</h2>
-<p>sudo apt-get -d install &lt;包名&gt;</p>
-<h2 id="创建目录并拷贝">创建目录，并拷贝</h2>
-<pre><code>mkdir &lt;your-path&gt;
-cp -r /var/cache/apt/archives &lt;your-path&gt;
-</code></pre><h2 id="修改名目权限">修改名目权限</h2>
-<p>chmod 777 -R <your-path></p>
-<h2 id="建立依赖关系">建立依赖关系</h2>
-<pre><code>sudo touch &lt;your-path&gt;/Packages.gz
-cd &lt;your-path&gt;
-sudo dpkg-scanpackages ./&hellip;</code></pre>
+    <h1 id="代码搜索路径">代码搜索路径</h1>
+<ul>
+<li>Erlang运行时系统使用一种代码自动载入机制，要让它正确工作，必须设置一些搜索路径来找到正确版本代码。</li>
+<li>代码的载入是按需进行的，当系统尝试调用的函数属于一个尚未加载的模块时，就会出现&hellip;</li></ul>
   </div>
   <footer>
-    <a href="/blog/linux/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BA%90/" class="button big">阅读全文</a>
+    <a href="/blog/erlang/%E7%BC%96%E8%AF%91%E5%92%8C%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/linux/">linux</a></li>
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/security/ssl-tls/">详解安全传输协议SSL TLS</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-07-03 00:00:00 &#43;0000 UTC">2015-07-03</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="tls-传输层安全协议">tls 传输层安全协议</h2>
+<p>包含两部分：</p>
+<ol>
+<li>握手协议（<code>handshake protocol</code>）： 客户端和服务端进行协商，确定一组用于数据传输加密的密钥串</li>
+<li>记录协议（<code>record protocol</code>）： 通过&hellip;</li></ol>
+  </div>
+  <footer>
+    <a href="/blog/security/ssl-tls/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/security/">Security</a></li>
         
       
     </ul>
@@ -526,7 +495,7 @@ sudo dpkg-scanpackages ./&hellip;</code></pre>
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -583,6 +552,9 @@ sudo dpkg-scanpackages ./&hellip;</code></pre>
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -596,9 +568,6 @@ sudo dpkg-scanpackages ./&hellip;</code></pre>
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -618,7 +587,7 @@ sudo dpkg-scanpackages ./&hellip;</code></pre>
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

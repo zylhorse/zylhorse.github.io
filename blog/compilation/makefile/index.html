@@ -6,13 +6,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Makefile是怎样让make工作的">
 <meta itemprop="description" content="make版本 GNU make 3.8.1
 Makefile文件告诉make命令怎样去编译和链接程序
 Makefile的规则 target ... : prerequisites ...command... target就是一个目标文件，可以是中间文件，也可以时目标文件。 prerequisites就是生成target所依赖的文件 command就是make需要执行的命令  一个例子 edit : main.o kbd.o command.o display.o \insert.o search.o files.o utils.occ -o edit main.o kbd.o command.o display.o \insert.o search.o files.o utils.omain.o : main.c defs.hcc -c main.ckbd.o : kbd.c defs.h command.hcc -c kbd.ccommand.o : command.c defs.h command.hcc -c command.cdisplay.o : display.c defs.h buffer.hcc -c display.">
 <meta itemprop="datePublished" content="2014-04-26T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2014-04-26T00:00:00+00:00" />
-<meta itemprop="wordCount" content="409">
+<meta itemprop="wordCount" content="410">
 
 
 
@@ -30,7 +32,7 @@ Makefile的规则 target ... : prerequisites ...command... target就是一个
 <meta name="twitter:description" content="make版本 GNU make 3.8.1
 Makefile文件告诉make命令怎样去编译和链接程序
 Makefile的规则 target ... : prerequisites ...command... target就是一个目标文件，可以是中间文件，也可以时目标文件。 prerequisites就是生成target所依赖的文件 command就是make需要执行的命令  一个例子 edit : main.o kbd.o command.o display.o \insert.o search.o files.o utils.occ -o edit main.o kbd.o command.o display.o \insert.o search.o files.o utils.omain.o : main.c defs.hcc -c main.ckbd.o : kbd.c defs.h command.hcc -c kbd.ccommand.o : command.c defs.h command.hcc -c command.cdisplay.o : display.c defs.h buffer.hcc -c display."/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -87,12 +89,12 @@ Makefile的规则 target ... : prerequisites ...command... target就是一个
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -179,19 +181,19 @@ Makefile的规则 target ... : prerequisites ...command... target就是一个
 </div>
     <div class="content">
       
-      <h1 id="make版本">make版本</h1>
-<p>GNU make 3.8.1</p>
-<p>Makefile文件告诉make命令怎样去编译和链接程序</p>
-<h1 id="makefile的规则">Makefile的规则</h1>
+      <h2 id="make版本">make版本</h2>
+<p><code>GNU make 3.8.1</code><br>
+<code>Makefile</code>文件告诉<code>make</code>命令怎样去编译和链接程序</p>
+<h2 id="makefile的规则">Makefile的规则</h2>
 <pre><code>target ... : prerequisites ...
     command
     ...
 </code></pre><ul>
-<li>target就是一个目标文件，可以是中间文件，也可以时目标文件。</li>
-<li>prerequisites就是生成target所依赖的文件</li>
-<li>command就是make需要执行的命令</li>
+<li><code>target</code>就是一个目标文件，可以是中间文件，也可以时目标文件。</li>
+<li><code>prerequisites</code>就是生成<code>target</code>所依赖的文件</li>
+<li><code>command</code>就是<code>make</code>需要执行的命令</li>
 </ul>
-<h1 id="一个例子">一个例子</h1>
+<h2 id="一个例子">一个例子</h2>
 <pre><code>edit : main.o kbd.o command.o display.o \
       insert.o search.o files.o utils.o
        cc -o edit main.o kbd.o command.o display.o \
@@ -216,35 +218,27 @@ utils.o : utils.c defs.h
 clean :
        rm edit main.o kbd.o command.o display.o \
           insert.o search.o files.o utils.o
-</code></pre><h2 id="clean">clean</h2>
-<blockquote>
-<p>clean不是一个文件，它只是一个动作，其冒号后面什么也没有，make执行的时候就不会去自动找文件依赖，也不会自动执行其后面的命令。要执行其后的命令，就需要在make命令后面明确的指出clean的名字(make clean)。</p>
-</blockquote>
-<h1 id="make如何工作">make如何工作</h1>
-<ul>
-<li>默认情况下，只要我们输入make：</li>
-</ul>
+</code></pre><h3 id="clean">clean</h3>
+<p>clean不是一个文件，它只是一个动作，其冒号后面什么也没有，<code>make</code>执行的时候就不会去自动找文件依赖，也不会自动执行其后面的命令。要执行其后的命令，就需要在<code>make</code>命令后面明确的指出<code>clean</code>的名字(make clean)。</p>
+<h2 id="make如何工作">make如何工作</h2>
+<p>默认情况下，只要我们输入<code>make</code></p>
 <ol>
-<li>make会在当前目录下找”Makefile&quot;或&quot;makefile&quot;文件</li>
-<li>找到后，它会找文件中的第一个目标(target),在上面的例子它会找到edit，并把它作为最终的目标文件</li>
-<li>如果edit不存在或者edit后面依赖的文件修改时间比edit新，那么就会执行后面的命令来更新edit</li>
-<li>如果edit所依赖的.o文件存在，那么make会在文件中找.o文件的依赖，并根据其规则生成.o</li>
-<li>make会一层层的找文件的依赖关系，直到编译出第一个目标文件</li>
+<li><code>make</code>会在当前目录下找<code>Makefile</code>或<code>makefile</code>文件</li>
+<li>找到后，它会找文件中的第一个目标(<code>target</code>),在上面的例子它会找到<code>edit</code>，并把它作为最终的目标文件</li>
+<li>如果<code>edit</code>不存在或者<code>edit</code>后面依赖的文件修改时间比<code>edit</code>新，那么就会执行后面的命令来更新<code>edit</code></li>
+<li>如果<code>edit</code>所依赖的<code>.o</code>文件存在，那么<code>make</code>会在文件中找<code>.o</code>文件的依赖，并根据其规则生成<code>.o</code></li>
+<li><code>make</code>会一层层的找文件的依赖关系，直到编译出第一个目标文件</li>
 </ol>
-<h1 id="makefile中变量的使用">Makefile中变量的使用</h1>
-<p>在例子中我们可以看到：</p>
+<h2 id="makefile中变量的使用">Makefile中变量的使用</h2>
+<p>在例子中我们可以看到</p>
 <pre><code>edit : main.o kbd.o command.o display.o \
       insert.o search.o files.o utils.o
-       cc -o edit main.o kbd.o command.o display.o \
-                  insert.o search.o files.o utils.o
-</code></pre><ul>
-<li>.o文件的字符串被重复使用两次，为了makefile简单并且易维护，我们可以使用变量，例如：</li>
-</ul>
+      cc -o edit main.o kbd.o command.o display.o \
+                 insert.o search.o files.o utils.o
+</code></pre><p><code>.o</code>文件的字符串被重复使用两次，为了<code>makefile</code>简单并且易维护，我们可以使用变量，例如：</p>
 <pre><code>objects = main.o kbd.o command.o display.o \
-      insert.o search.o files.o utils.o
-</code></pre><ul>
-<li>于是我们可以在makefile中以$(objects)的方式使用这个变量了，如果有新的.o文件加入，我们只需要简单的修改objects变量即可。改良版的Makefile是：</li>
-</ul>
+    insert.o search.o files.o utils.o
+</code></pre><p>于是我们可以在<code>makefile</code>中以<code>$(objects)</code>的方式使用这个变量了，如果有新的<code>.o</code>文件加入，我们只需要简单的修改<code>objects</code>变量即可。改良版的<code>Makefile</code>是：</p>
 <pre><code>objects = main.o kbd.o command.o display.o \
          insert.osearch.o files.o utils.o 
 edit : $(objects)
@@ -256,7 +250,7 @@ kbd.o : kbd.c defs.h command.h
 command.o : command.c defs.h command.h
        cc -c command.c
 display.o : display.c defs.h buffer.h
-       cc -c display.c
+   cc -c display.c
 insert.o : insert.c defs.h buffer.h
        cc -c insert.c
 search.o : search.c defs.h buffer.h
@@ -267,11 +261,9 @@ utils.o : utils.c defs.h
        cc -c utils.c
 clean :
        rm edit $(objects)
-</code></pre><h1 id="让make自动推导">让make自动推导</h1>
-<ul>
-<li>GNU的make 很强大，他可以自己推导文件及文件依赖关系后面的命令。于是我们没有必要去在每一个.o文件后面都写上类似的命令，因为make会自动识别和推导。</li>
-<li>只要make看到.o文件，就会自动把.c文件加在依赖关系中。如果make找到一个whatever.o,那么whatever.c就会是whatever.o的依赖文件，并且cc -c whatever.c也会被推导出来。新的Makefile出炉了：</li>
-</ul>
+</code></pre><h2 id="让make自动推导">让make自动推导</h2>
+<p>GNU的<code>make</code>很强大，他可以自己推导文件及文件依赖关系后面的命令。于是我们没有必要去在每一个<code>.o</code>文件后面都写上类似的命令，因为<code>make</code>会自动识别和推导。
+只要<code>make</code>看到<code>.o</code>文件，就会自动把<code>.c</code>文件加在依赖关系中。如果<code>make</code>找到一个<code>whatever.o</code>,那么<code>whatever.c</code>就会是<code>whatever.o</code>的依赖文件，并且<code>cc -c whatever.c</code>也会被推导出来。新的<code>Makefile</code>出炉了：</p>
 <pre><code>objects = main.o kbd.o command.o display.o \
    insert.o search.o files.o utils.o
 edit : $(objects)
@@ -288,8 +280,8 @@ utils.o : defs.h
 clean : 
     rm edit $(objects) 
 注：.PHONY　表示clean是个伪目标文件
-</code></pre><h1 id="另类风格的makefile">另类风格的Makefile</h1>
-<p>既然make可以自动推导，我们可以修改成以下风格：</p>
+</code></pre><h2 id="另类风格的makefile">另类风格的Makefile</h2>
+<p>既然<code>make</code>可以自动推导，我们可以修改成以下风格</p>
 <pre><code>objects = main.o kbd.o command.o display.o \   
     insert.o search.o files.o utils.o
 edit : $(objects)
@@ -300,68 +292,57 @@ display.o insert.o search.o files.o : buffer.h
 .PHONY : clean
 clean : 
    rm edit $(objects)
-</code></pre><ul>
-<li>这种风格让我们的Makefile简化，但是文件的依赖关系混乱，后续有新的.o文件时，依赖关系更混乱，不推荐使用。</li>
-</ul>
-<h1 id="清空目标文件的规则">清空目标文件的规则</h1>
-<p>每个Makefile都应该写一个清空目标文件的规则，这不仅便于编译，也有利于保持文件的清洁。</p>
-<ul>
-<li>一般的风格是：
+</code></pre><p>这种风格让我们的<code>Makefile</code>简化，但是文件的依赖关系混乱，后续有新的<code>.o</code>文件时，依赖关系更混乱，不推荐使用。</p>
+<h2 id="清空目标文件的规则">清空目标文件的规则</h2>
+<p>每个<code>Makefile</code>都应该写一个清空目标文件的规则，这不仅便于编译，也有利于保持文件的清洁。<br>
+一般的风格是：</p>
+<pre><code>clean : 
+    rm edit $(objects)
+</code></pre><p>更为稳健的做法是：</p>
+<pre><code>.PHONY : clean
 clean : 
-rm edit $(objects)</li>
-<li>更为稳健的做法是：
-.PHONY : clean
-clean : 
--rm edit $(objects)</li>
-</ul>
-<blockquote>
+    -rm edit $(objects)
+</code></pre><blockquote>
 <p>在rm前面添加一个减号的意思是，也许某些文件除了问题，但是不要管，继续做后面的事。</p>
 </blockquote>
-<h1 id="makefile里有什么">Makefile里有什么</h1>
+<h2 id="makefile里有什么">Makefile里有什么</h2>
 <p>主要包含五个东西：</p>
 <ol>
 <li>显示规则：显示规则说明如何生成一个或者多个目标文件</li>
-<li>隐晦规则：由于make的自动推导，我们可以比较粗糙简略的书写Makefile</li>
-<li>变量定义：Makefile中定义一系列的变量，变量一般是字符串，当Makefile被执行时，定义的变量会被扩展成响应的引用</li>
+<li>隐晦规则：由于<code>make</code>的自动推导，我们可以比较粗糙简略的书写<code>Makefile</code></li>
+<li>变量定义：<code>Makefile</code>中定义一系列的变量，变量一般是字符串，当<code>Makefile</code>被执行时，定义的变量会被扩展成响应的引用</li>
 <li>文件指示：包含３部分
 <ol>
-<li>Makefile中引用另外一个Makefile</li>
-<li>条件定义Makefile中的有效部分，例如：c语言里面的宏#if</li>
+<li><code>Makefile</code>中引用另外一个<code>Makefile</code></li>
+<li>条件定义<code>Makefile</code>中的有效部分，例如：c语言里面的宏<code>#if</code></li>
 <li>定义多行命令</li>
 </ol>
 </li>
-<li>注释：Makefile中只有行注释，注释符用#。Makefile中的&rdquo;#&ldquo;字符可以使用&rdquo;#&ldquo;进行转义。</li>
-<li>格式：在Makefile中的命令需要以[Tab]键开始。</li>
+<li>注释：<code>Makefile</code>中只有行注释，注释符用<code>#</code>。<code>Makefile</code>中的<code>#</code>字符可以使用<code>\#</code>进行转义。</li>
+<li>格式：在<code>Makefile</code>中的命令需要以<code>[Tab]</code>键开始。</li>
 </ol>
-<h1 id="makefile文件名">Makefile文件名</h1>
-<p>默认情况下在目录中按顺序找寻文件&quot;GNUmakefile&rdquo;、&ldquo;makefile&rdquo;、&ldquo;Makefile&rdquo;。如果要指定特定的文件，可以使用&quot;make -f&rdquo; 或者“make &ndash;file&rdquo;。</p>
-<h1 id="引用其它makefile">引用其它Makefile</h1>
+<h2 id="makefile文件名">Makefile文件名</h2>
+<p>默认情况下在目录中按顺序找寻文件<code>GNUmakefile</code>、<code>makefile</code>、<code>Makefile</code>。如果要指定特定的文件，可以使用<code>make -f</code> 或者<code>make --file</code>。</p>
+<h2 id="引用其它makefile">引用其它Makefile</h2>
+<p>在Makefile中使用include关键字可以把别的Makefile包含进来，include的语法是：</p>
+<pre><code>include filename //filename可以是当前操作系统shell的文件模式（可以包含路径和通配符）
+</code></pre><p>make命令开始会寻找include指出的其它Makefile，并把内容安置在当前位置。如果没有指定相对、绝对路径，make会在当前目录下寻找，如果当前目录没有找到，就会在以下目录查找：</p>
 <ul>
-<li>在Makefile中使用include关键字可以把别的Makefile包含进来，include的语法是：</li>
-</ul>
-<blockquote>
-<p>include filename：filename可以是当前操作系统shell的文件模式（可以包含路径和通配符）</p>
-</blockquote>
-<ul>
-<li>make命令开始会寻找include指出的其它Makefile，并把内容安置在当前位置。如果没有指定相对、绝对路径，make会在当前目录下寻找，如果当前目录没有找到，就会在以下目录查找：</li>
-</ul>
-<ol>
 <li>如果make执行时，有&rdquo;-I&quot;或者&rdquo;&ndash;include-dir&quot;参数，那么make会在这些参数指定的目录下查找。</li>
 <li>如果目录/include(一般是:/usr/local/bin或者/usr/include)存在的化，make也会去找。</li>
-</ol>
-<ul>
-<li>如果文件没有找到，make会生成警告，但不会马上出现致命错误。会继续载入文件，一旦完成Makefile的读取，make会再重试这些没有找到或不能读取的文件，如果还是不行，则产生致命错误。如果让make不理会那些无法读取的文件继续执行，则可以在include前面加一个减号(&quot;-&quot;)。一般我们不添加减号，直接报错。</li>
 </ul>
-<h1 id="环境变量makefiles">环境变量MAKEFILES</h1>
+<p>如果文件没有找到，make会生成警告，但不会马上出现致命错误。会继续载入文件，一旦完成Makefile的读取，make会再重试这些没有找到或不能读取的文件，如果还是不行，则产生致命错误。</p>
+<p>如果让make不理会那些无法读取的文件继续执行，则可以在include前面加一个减号<code>-</code>。一般我们不添加减号，直接报错。</p>
+<h2 id="环境变量makefiles">环境变量MAKEFILES</h2>
 <ul>
-<li>如果当前环境中定义了环境变量MAKEFILES，那么make会把这个变量中的值做一个类似include的动作。这个变量中的值是其它的Makefile文件，用空格分开。只是和include不同的是从环境变量中引入的Makefile不会起作用，如果环境变量中定义的文件发现错误，make也不会处理。</li>
-<li>建议不要使用环境变量，一旦定义所有的Makefile都会受到影响，如果你的Makefile出现怪事，请查看是否定义了MAKEFILES环境变量。</li>
+<li>如果当前环境中定义了环境变量<code>MAKEFILES</code>，那么<code>make</code>会把这个变量中的值做一个类似<code>include</code>的动作。这个变量中的值是其它的<code>Makefile</code>文件，用空格分开。只是和<code>include</code>不同的是从环境变量中引入的<code>Makefile</code>不会起作用，如果环境变量中定义的文件发现错误，<code>make</code>也不会处理。</li>
+<li>建议不要使用环境变量，一旦定义所有的<code>Makefile</code>都会受到影响，如果你的<code>Makefile</code>出现怪事，请查看是否定义了<code>MAKEFILES</code>环境变量。</li>
 </ul>
-<h1 id="make的工作方式">make的工作方式</h1>
-<p>make工作时的执行步奏：</p>
+<h2 id="make的工作方式">make的工作方式</h2>
+<p><code>make</code>工作时的执行步奏</p>
 <ol>
-<li>读入所有的Makefile。</li>
-<li>读入被include的其它Makefile。</li>
+<li>读入所有的<code>Makefile</code>。</li>
+<li>读入被<code>include</code>的其它<code>Makefile</code>。</li>
 <li>初始化文件中的变量。</li>
 <li>推导隐晦规则并分析所有规则。</li>
 <li>为所有目标文件创建依赖关系链。</li>
@@ -369,6 +350,7 @@ clean :
 <li>执行生成命令。</li>
 </ol>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -395,8 +377,30 @@ clean :
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#make版本">make版本</a></li>
+    <li><a href="#makefile的规则">Makefile的规则</a></li>
+    <li><a href="#一个例子">一个例子</a>
+      <ul>
+        <li><a href="#clean">clean</a></li>
+      </ul>
+    </li>
+    <li><a href="#make如何工作">make如何工作</a></li>
+    <li><a href="#makefile中变量的使用">Makefile中变量的使用</a></li>
+    <li><a href="#让make自动推导">让make自动推导</a></li>
+    <li><a href="#另类风格的makefile">另类风格的Makefile</a></li>
+    <li><a href="#清空目标文件的规则">清空目标文件的规则</a></li>
+    <li><a href="#makefile里有什么">Makefile里有什么</a></li>
+    <li><a href="#makefile文件名">Makefile文件名</a></li>
+    <li><a href="#引用其它makefile">引用其它Makefile</a></li>
+    <li><a href="#环境变量makefiles">环境变量MAKEFILES</a></li>
+    <li><a href="#make的工作方式">make的工作方式</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -406,6 +410,22 @@ clean :
       <a href="/blog/software-programming/%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE/" class="button right"><span>常见的开源许可协议和注意事项</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Compilation]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -423,7 +443,7 @@ clean :
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -480,6 +500,9 @@ clean :
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -493,9 +516,6 @@ clean :
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -515,7 +535,7 @@ clean :
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

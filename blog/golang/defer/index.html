@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Golang源码阅读-defer">
 <meta itemprop="description" content="defer 逻辑  defer代码块会在函数调用链表中增加一个函数调用，该函数调用是在return之后； defer的执行顺序是先进后出； defer表达式中变量的值在defer表达式被定义时就已经明确； defer可以获取有名返回值； goroutine 控制结构中，有张表记录所有defer；  defer 作用 defer表达式通常用来清理和释放资源
 defer 性能  defer 性能不高，每次defer耗时20ns； defer 会涉及到内存、缓存、多次调用，所以有一定性能问题； 使用注意： 除了需要异常捕获，必须使用defer；其他资源回收，可以在判断失败后，使用goto跳转到资源回收的代码； 对于竞争资源，在使用完成后立刻进行释放，这样才可以最优的使用竞争资源。  defer原理 每一个defer在编译的时候就会转换成deferproc，编译器会在函数return之前插入deferreturn。
@@ -33,7 +35,7 @@ defer 源码 type _defer struct {siz int32 //参数大小started bool // defer
 defer 性能  defer 性能不高，每次defer耗时20ns； defer 会涉及到内存、缓存、多次调用，所以有一定性能问题； 使用注意： 除了需要异常捕获，必须使用defer；其他资源回收，可以在判断失败后，使用goto跳转到资源回收的代码； 对于竞争资源，在使用完成后立刻进行释放，这样才可以最优的使用竞争资源。  defer原理 每一个defer在编译的时候就会转换成deferproc，编译器会在函数return之前插入deferreturn。
  调用deferproc，这里会进行参数拷贝； 执行deferreturn，这里会提取信息；  defer goroutine defer 会被添加到G _defer链表的首部，所以defer时一个后进先出的链表； G 退出时会遍历G上的defer 链表。
 defer 源码 type _defer struct {siz int32 //参数大小started bool // defer是否被调用过的标识sp uintptr // sp at time of deferpc uintptrfn *funcval // defer 后面跟的function_panic *_panic // panic that is running deferlink *_defer // 链表结构}"/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -90,12 +92,12 @@ defer 源码 type _defer struct {siz int32 //参数大小started bool // defer
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -219,6 +221,7 @@ G 退出时会遍历G上的defer 链表。</p>
     link    *_defer  // 链表结构
 }
 </code></pre>
+      
     </div>
     <footer>
       <div class="stats">
@@ -245,8 +248,22 @@ G 退出时会遍历G上的defer 链表。</p>
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#defer-逻辑">defer 逻辑</a></li>
+    <li><a href="#defer-作用">defer 作用</a></li>
+    <li><a href="#defer-性能">defer 性能</a></li>
+    <li><a href="#defer原理">defer原理</a>
+      <ul>
+        <li><a href="#defer-goroutine">defer goroutine</a></li>
+      </ul>
+    </li>
+    <li><a href="#defer-源码">defer 源码</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -256,6 +273,22 @@ G 退出时会遍历G上的defer 链表。</p>
       <a href="/blog/golang/select/" class="button right"><span>Golang源码阅读-select</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Golang]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -273,7 +306,7 @@ G 退出时会遍历G上的defer 链表。</p>
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -330,6 +363,9 @@ G 退出时会遍历G上的defer 链表。</p>
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -343,9 +379,6 @@ G 退出时会遍历G上的defer 链表。</p>
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -365,7 +398,7 @@ G 退出时会遍历G上的defer 链表。</p>
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

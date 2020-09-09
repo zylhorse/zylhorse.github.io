@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="缓存穿透、缓存雪崩、缓存击穿的区别和解决方案">
 <meta itemprop="description" content="缓存穿透 描述： 请求不存在的数据， 使得大量请求发送到DB， 增加DB压力；解决方案：　1. 对落在数据库上的请求进行限流， 降低DB压力2. 接口层过滤非法参数；3. 缓存空查询结果。4. 使用布隆过滤器， 将所有可能数据hash到一个足够大的bitmap中， 一个一定不存在的数据会被bitmap拦截掉缓存击穿 描述： 高频访问热点数据，在缓存失效的瞬时，大量请求发送到DB， 来更新缓存， 增加DB压力；解决方案： 1. 设置热点数据永不过期；2. 加分布式全局锁，只允许单线程访问该数据；锁竞争较大。缓存雪崩 描述： 给大量缓存设置同样过期时间， 在某一刻，大量缓存数据过期，导致大量请求发送到DB，增加DB压力；解决方案： 1. 给数据过期时间添加随机数，避免同时过期；2. 将热点数据分不到不同的缓存数据库中3. 设置热点数据永不过期；5. hystrix 限制每秒请求数量， 超出请求引导到降级页面 6. 提高缓存中间件的高可用性">
 <meta itemprop="datePublished" content="2017-04-21T00:00:00+00:00" />
@@ -24,7 +26,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="缓存穿透、缓存雪崩、缓存击穿的区别和解决方案"/>
 <meta name="twitter:description" content="缓存穿透 描述： 请求不存在的数据， 使得大量请求发送到DB， 增加DB压力；解决方案：　1. 对落在数据库上的请求进行限流， 降低DB压力2. 接口层过滤非法参数；3. 缓存空查询结果。4. 使用布隆过滤器， 将所有可能数据hash到一个足够大的bitmap中， 一个一定不存在的数据会被bitmap拦截掉缓存击穿 描述： 高频访问热点数据，在缓存失效的瞬时，大量请求发送到DB， 来更新缓存， 增加DB压力；解决方案： 1. 设置热点数据永不过期；2. 加分布式全局锁，只允许单线程访问该数据；锁竞争较大。缓存雪崩 描述： 给大量缓存设置同样过期时间， 在某一刻，大量缓存数据过期，导致大量请求发送到DB，增加DB压力；解决方案： 1. 给数据过期时间添加随机数，避免同时过期；2. 将热点数据分不到不同的缓存数据库中3. 设置热点数据永不过期；5. hystrix 限制每秒请求数量， 超出请求引导到降级页面 6. 提高缓存中间件的高可用性"/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -81,12 +83,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -194,6 +196,7 @@
 5. hystrix 限制每秒请求数量， 超出请求引导到降级页面 
 6. 提高缓存中间件的高可用性
 </code></pre>
+      
     </div>
     <footer>
       <div class="stats">
@@ -220,17 +223,43 @@
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
-      <a href="/blog/stories/%E5%8D%83%E8%A8%80%E4%B8%87%E8%AF%AD/" class="button left"><span>千言万语-说给自己听的话</span></a>
+      <a href="/blog/cache/redis/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85/" class="button left"><span>Redis发布订阅模式和事件通知</span></a>
     
     
       <a href="/blog/cache/%E7%BC%93%E5%AD%98%E4%B8%8D%E4%B8%80%E8%87%B4/" class="button right"><span>缓存数据不一致和解决方案</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Cache]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -248,7 +277,7 @@
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -305,6 +334,9 @@
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -318,9 +350,6 @@
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -340,7 +369,7 @@
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

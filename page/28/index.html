@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/concurrence/%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81/">并发编程-乐观锁和悲观锁</a></h2>
+      <h2><a href="/blog/security/%E7%94%9F%E6%88%90%E8%AF%81%E4%B9%A6/">生成自签名SSL证书</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-01-16 00:00:00 &#43;0000 UTC">2015-01-16</time>
+        <time datetime="2015-06-22 00:00:00 &#43;0000 UTC">2015-06-22</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -199,28 +201,21 @@
   <div class="content">
     
     
-    <h2 id="乐观锁">乐观锁</h2>
-<p>乐观锁假设数据一般不会修改， 所以在数据提交修改的时候， 才会对数据冲突进行检查；如果冲突则交给用户决定如何去做；对数据竞争持乐观态度</p>
-<h3 id="乐观锁实现">乐观锁实现</h3>
-<h4 id="cascompare-and-swap">cas（compare and swap）</h4>
-<ol>
-<li>CAS机制当中使用了3个基本操作数：内存地址V，旧的预期值A，要修改的新值B。</li>
-<li>更新一个变量的时候，只有当变量的预期值A和内存地址V当中的实际值相同时，才会将内存地址V对应的值修改为B。</li>
-<li>cas 一般需要加for循环，实现类似自旋乐观锁。</li>
-</ol>
-<h4 id="mvccmulti-version-concurrency-control">mvcc（Multi-Version Concurrency Control）</h4>
-<ol>
-<li>每行数据都增加两个隐藏字段，一个记录创建的版本号，一个记录删除的版本号</li>
-<li>在&hellip;</li></ol>
+    <pre><code>#!/bin/sh
+
+# create self-signed server certificate:
+
+SSLDIR=$PWD/ssl
+SERVERDIR=$SSLDIR/server&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/concurrence/%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81/" class="button big">阅读全文</a>
+    <a href="/blog/security/%E7%94%9F%E6%88%90%E8%AF%81%E4%B9%A6/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/concurrence/">Concurrence</a></li>
+          <li><a class="article-terms-link" href="/categories/security/">Security</a></li>
         
       
     </ul>
@@ -229,7 +224,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/lock/">Lock</a></li>
+          <li><a class="article-terms-link" href="/tags/certificate/">Certificate</a></li>
         
       
     </ul>
@@ -244,14 +239,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/concurrence/%E7%BA%BF%E7%A8%8B%E9%94%81/">并发编程-线程锁和死锁</a></h2>
+      <h2><a href="/blog/security/%E7%94%9F%E6%88%90%E5%85%8D%E5%AF%86%E8%AF%81%E4%B9%A6/">生成自签名SSL免密证书</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-01-16 00:00:00 &#43;0000 UTC">2015-01-16</time>
+        <time datetime="2015-06-13 00:00:00 &#43;0000 UTC">2015-06-13</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -266,34 +261,21 @@
   <div class="content">
     
     
-    <h2 id="锁">锁</h2>
-<p>在多线程编程中， 对共享资源竞争的保护机制；</p>
-<h2 id="锁缺点">锁缺点</h2>
-<ol>
-<li>引起线程阻塞</li>
-<li>申请和释放锁， 增加线程的调度切换， 影响系统性能</li>
-<li>容易造成死锁和活锁等问题</li>
-<li>优先级反转</li>
-<li>不公平</li>
-<li>效率低</li>
-</ol>
-<h2 id="公平锁">公平锁</h2>
-<p>在锁上等待时间最长的线程优先获取锁的使用权</p>
-<h2 id="非公平锁">非公平锁</h2>
-<p>线程获取锁的使用权是随机的， cpu时间片轮到哪个线程， 哪个线程就获取到锁；</p>
-<h2 id="锁类型">锁类型</h2>
-<ol>
-<li>自旋锁（spin lock） ： 自旋锁如果已经被其他线程获取，则调用者就一直循环等待；自旋锁时非阻塞锁， 循环等待时会不断消耗cpu， 不会使线程挂起；</li>
-<li>互斥锁（mutex lock）： 互斥锁被其他线程获取， 则调用者会阻塞线程， 线程被挂起， 不会消耗cpu；&hellip;</li></ol>
+    <pre><code>#!/bin/sh
+  
+# create self-signed server certificate:
+
+SSLDIR=$PWD/ssl
+SERVERDIR=$SSLDIR/server&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/concurrence/%E7%BA%BF%E7%A8%8B%E9%94%81/" class="button big">阅读全文</a>
+    <a href="/blog/security/%E7%94%9F%E6%88%90%E5%85%8D%E5%AF%86%E8%AF%81%E4%B9%A6/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/concurrence/">Concurrence</a></li>
+          <li><a class="article-terms-link" href="/categories/security/">Security</a></li>
         
       
     </ul>
@@ -302,7 +284,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/lock/">Lock</a></li>
+          <li><a class="article-terms-link" href="/tags/certificate/">Certificate</a></li>
         
       
     </ul>
@@ -317,87 +299,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/concurrence/epoll/">I/O多路复用-select/poll/epoll</a></h2>
+      <h2><a href="/blog/lua/ide/">lua编译环境搭建和IDE配置</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-01-09 00:00:00 &#43;0000 UTC">2015-01-09</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            10分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h3 id="概述">概述</h3>
-<p>i/o 多路复用:在单线程中通过记录跟踪多个sock 状态， 来同时管理多路I/O 流。用以提高服务器的吞吐能力</p>
-<h3 id="select">select</h3>
-<ol>
-<li>select会修改传入的参数数组</li>
-<li>任何sock状态改变，select只返回并不告诉是哪个sock状态改变，需要手动遍历</li>
-<li>最高监听1024个sock连接；</li>
-<li>线程不安全，如果在其他线程关闭sock会导致未知错误</li>
-</ol>
-<h3 id="poll">poll</h3>
-<ol>
-<li>poll 修复很多select 问题， 不在修改参数数组；不在限制sock连接数量；</li>
-<li>poll 仍然线程不安全</li>
-</ol>
-<h3 id="epoll">epoll</h3>
-<ol>
-<li>epoll 修复大多数select和poll问题， 线程安全， 并通知哪个sock状态改变；</li>
-</ol>
-<h4 id="epoll工作过程">epoll&hellip;</h4>
-  </div>
-  <footer>
-    <a href="/blog/concurrence/epoll/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/concurrence/">Concurrence</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/i/o/">I/O</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/linux/ubuntu-%E6%9C%8D%E5%8A%A1/">制作linux系统服务</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-01-08 00:00:00 &#43;0000 UTC">2015-01-08</time>
+        <time datetime="2015-06-05 00:00:00 &#43;0000 UTC">2015-06-05</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -412,27 +321,86 @@
   <div class="content">
     
     
-    <h1 id="服务制作">服务制作</h1>
-<p>1、在/etc/init.d/ 下以管理员权限新建文件，在本例中为location_server.</p>
-<p>2、使用以下模板修改启动脚本的内容</p>
-<pre><code>#!/bin/bash
-### BEGIN INIT INFO
-#
-# Provides:  location_server
-# Required-Start:   $local_fs  $remote_fs
-# Required-Stop:    $local_fs  $remote_fs
-# Default-Start:    2 3 4 5
-# Default-Stop:     0 1 6
-#&hellip;</code></pre>
+    <h2 id="lua-编译环境安装">lua 编译环境安装</h2>
+<ul>
+<li>
+<p>linux:</p>
+<pre><code>$ curl -R -O http://www.lua.org/ftp/lua-5.3.0.tar.gz
+$ tar zxf lua-5.3.0.tar.gz&hellip;</code></pre></li></ul>
   </div>
   <footer>
-    <a href="/blog/linux/ubuntu-%E6%9C%8D%E5%8A%A1/" class="button big">阅读全文</a>
+    <a href="/blog/lua/ide/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
+          <li><a class="article-terms-link" href="/categories/lua/">Lua</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/ide/">IDE</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/lua/lua/">Lua语言简介</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-06-04 00:00:00 &#43;0000 UTC">2015-06-04</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="概念">概念</h2>
+<ol>
+<li>轻量小巧的脚本语言</li>
+<li>标准c语言编写，且开源</li>
+<li>目的： 嵌入宿主语言，并提供灵活的扩展和定制</li>
+</ol>
+<h2 id="编程模型">编程模型</h2>
+<ol>
+<li>面向过程编程和函数式编程</li>
+<li>自动内存管理：值提供一种通用类型的表（<code>table</code>)</li>
+<li>内置模式匹&hellip;</li></ol>
+  </div>
+  <footer>
+    <a href="/blog/lua/lua/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/lua/">Lua</a></li>
         
       
     </ul>
@@ -456,14 +424,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/network/tcp/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">TCP-数据传输可靠性</a></h2>
+      <h2><a href="/blog/security/%E7%94%9F%E6%88%90%E5%85%AC%E7%A7%81%E9%92%A5/">生成公私钥</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-12-06 00:00:00 &#43;0000 UTC">2014-12-06</time>
+        <time datetime="2015-06-03 00:00:00 &#43;0000 UTC">2015-06-03</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -478,35 +446,17 @@
   <div class="content">
     
     
-    <h2 id="tcp数据传输">TCP数据传输</h2>
-<p>面向字节流， 传输可靠， 面向连接</p>
-<h3 id="问题">问题</h3>
-<ol>
-<li>网络数据不可靠， 丢包， 错包， 重复包， 乱序包；</li>
-</ol>
-<h3 id="滑动窗口">滑动窗口</h3>
-<p>提高数据吞吐量， 传输数据块（包含多组数据）</p>
-<pre><code>滑动窗口本身可以看做是一个协议，适合于数据传输过程中要求有严格顺序处理的场景
-滑动窗口将时间轴上的数据分成了4个部分：
-A：数据发送且被确认
-B: 数据发送但未被确认
-C: 数据能够被发送
-D： 数据不能发送，等待滑动窗口右移；
-</code></pre><h4 id="tcp报文字段-win">TCP报文字段 win</h4>
-<ol>
-<li>报文中win用来描述窗口大小。</li>
-<li>接收方窗口大小由接收方控制, 默认4096字节</li>
-<li>如果窗口中有未来得及读取的数据， 则响应报文中的win就会减少</li>
-<li>如果窗口中的数据&hellip;</li></ol>
+    <pre><code>$ openssl genrsa -out privatekey.pem 1024
+$ openssl pkcs8 -topk8 -inform PEM -in privatekey.pem&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/network/tcp/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" class="button big">阅读全文</a>
+    <a href="/blog/security/%E7%94%9F%E6%88%90%E5%85%AC%E7%A7%81%E9%92%A5/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/network/">Network</a></li>
+          <li><a class="article-terms-link" href="/categories/security/">Security</a></li>
         
       
     </ul>
@@ -515,7 +465,7 @@ D： 数据不能发送，等待滑动窗口右移；
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/tcp/">TCP</a></li>
+          <li><a class="article-terms-link" href="/tags/"></a></li>
         
       
     </ul>
@@ -552,7 +502,7 @@ D： 数据不能发送，等待滑动窗口右移；
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -609,6 +559,9 @@ D： 数据不能发送，等待滑动窗口右移；
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -622,9 +575,6 @@ D： 数据不能发送，等待滑动窗口右移；
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -644,7 +594,7 @@ D： 数据不能发送，等待滑动窗口右移；
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

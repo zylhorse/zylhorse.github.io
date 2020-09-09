@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/network/tcp/tcp%E8%BF%9E%E6%8E%A5/">TCP-握手和挥手</a></h2>
+      <h2><a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A5%E5%BF%97/">MySQL数据库有哪些日志</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-12-03 00:00:00 &#43;0000 UTC">2014-12-03</time>
+        <time datetime="2015-05-15 00:00:00 &#43;0000 UTC">2015-05-15</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -199,93 +201,16 @@
   <div class="content">
     
     
-    <h2 id="tcp-状态">tcp 状态</h2>
-<p>tcp连接FLAGS字段表示当前连接状态，FLAGS包含一下几个标识：</p>
-<ol>
-<li>SYN表示建立连接</li>
-<li>FIN表示关闭连接</li>
-<li>ACK表示响应</li>
-<li>PSH表示有 DATA数据传输</li>
-<li>RST表示连接重置</li>
-</ol>
-<h2 id="三次握手">三次握手</h2>
-<p>tcp建立连接的过程，需要三次握手；</p>
-<ol>
-<li>客户端打开连接，主动结束CLOSED阶段；</li>
-<li>服务器连接，被动结束CLOSED阶段， 进入LISTEN阶段；</li>
-<li>开始握手：</li>
-</ol>
-<pre><code>1. 客户端向服务器发送tcp报文
-1.1 标记位为SYN， 表示请求建立连接
-1.2 序号seq=x (x一般为0)
-1.3 客户端进入SYN-SENT 阶段
+    <h2 id="事务日志">事务日志</h2>
+<h3 id="undo-log">undo log</h3>
+<p>事务中在操作任何数据之前，首先将原数据备份到<code>undo log</code>。</p>
+<h3 id="redo-log">redo log</h3>
+<p>事务提交前会把新数据备份到<code>redo log</code>并持久化。</p>
+<h2 id="binlog">binlog</h2>
 
-2. 服务器接收来自客户端的tcp报文，结束LISTEN&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/network/tcp/tcp%E8%BF%9E%E6%8E%A5/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/network/">Network</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/tcp/">TCP</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/database/mysql/sql%E8%AF%AD%E5%8F%A5/">MySQL常用sql语句</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-11-20 00:00:00 &#43;0000 UTC">2014-11-20</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="创建数据库">创建数据库</h2>
-<p>create database &ldquo;dbname&rdquo;;</p>
-<h2 id="创建用户">创建用户</h2>
-<p>create user &ldquo;username&rdquo;@&ldquo;host&rdquo; identified by &ldquo;password&rdquo;;</p>
-<h2 id="赋予用户权限">赋予用户权限</h2>
-<p>grant all privileges on dbname.* to &ldquo;dbuser&rdquo;@&ldquo;host&rdquo; with grant option;</p>
-<h2 id="查看权限">查看权限</h2>
-<p>show grants for&hellip;</p>
-  </div>
-  <footer>
-    <a href="/blog/database/mysql/sql%E8%AF%AD%E5%8F%A5/" class="button big">阅读全文</a>
+    <a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A5%E5%BF%97/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -315,14 +240,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">MySQL数据库安装配置</a></h2>
+      <h2><a href="/blog/browser/download/">不同平台常用浏览器的离线下载地址</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-11-20 00:00:00 &#43;0000 UTC">2014-11-20</time>
+        <time datetime="2015-04-02 00:00:00 &#43;0000 UTC">2015-04-02</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -337,40 +262,34 @@
   <div class="content">
     
     
-    <h2 id="ubuntu-安装">ubuntu 安装</h2>
-<pre><code>sudo rm /var/lib/mysql/ -R
-sudo rm /etc/mysql/ -R
-sudo apt-get autoremove mysql-server mysql-common --purge
-sudo apt-get remove apparmor // 输入Y回车
-sudo apt-get install mysql-server mysql-common //重新安装
-</code></pre><h2 id="windows-安装">windows 安装</h2>
-<ol>
-<li><a href="https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.11-winx64.zip">下载地址</a></li>
-<li>解压缩配置my.ini</li>
-</ol>
-<pre><code>[mysql]
-# 设置mysql客户端默认字符集
-default-character-set=utf8&hellip;</code></pre>
+    <ul>
+<li>
+<p><a href="https://www.microsoftedgeinsider.com/en-us/download">edge</a></p>
+</li>
+<li>
+<p><a href="https://www.google.cn/chrome/thank-you.html?platform=mac&standalone=1">chrome-mac</a></p>
+</li>
+<li>
+<p><a href="https://www.google.cn/chrome/thank-you.html?platform=win64&standalone=1">chrome-win64</a></p>
+</li>
+</ul>
+
   </div>
   <footer>
-    <a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="button big">阅读全文</a>
+    <a href="/blog/browser/download/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
+          <li><a class="article-terms-link" href="/categories/browser/">Browser</a></li>
         
       
     </ul>
   
   
     <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/mysql/">MySQL</a></li>
-        
-      
+      <li>None</li>
     </ul>
   
 </div>
@@ -383,14 +302,14 @@ default-character-set=utf8&hellip;</code></pre>
   <header>
   <div class="title">
     
-      <h2><a href="/blog/database/mysql/%E9%97%AE%E9%A2%98/">MySQL数据库问题集锦</a></h2>
+      <h2><a href="/blog/software-programming/%E6%B2%99%E7%AE%B1/">Sandboxie（沙箱）网络编程虚拟执行环境</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-11-20 00:00:00 &#43;0000 UTC">2014-11-20</time>
+        <time datetime="2015-03-22 00:00:00 &#43;0000 UTC">2015-03-22</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -405,97 +324,23 @@ default-character-set=utf8&hellip;</code></pre>
   <div class="content">
     
     
-    <h2 id="登录">登录</h2>
-<pre><code>问题：
-
-'Access denied for user 'root'@'localhost' (using password: YES)'
-
-解决办法：
-
-$ /etc/init.d/mysql stop
-$ mkdir /var/run/mysqld/
-$ chown -R mysql:mysql /var/run/mysqld
-$ mysqld_safe --user=mysql --skip-grant-tables --skip-networking &
-$ mysql -u root mysql
-&gt; update user set&hellip;</code></pre>
-  </div>
-  <footer>
-    <a href="/blog/database/mysql/%E9%97%AE%E9%A2%98/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/mysql/">MySQL</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/jmeter/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">Jmeter部署和配置</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-11-11 00:00:00 &#43;0000 UTC">2014-11-11</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="下载">下载</h2>
-<p><a href="http://jmeter.apache.org/download_jmeter.cgi">http://jmeter.apache.org/download_jmeter.cgi</a></p>
-<h2 id="汉化">汉化</h2>
-<p>jmeter.properties =&gt; language=zh_CN</p>
-<h2 id="websocket配置">websocket配置</h2>
-<p>下载jar包</p>
+    <h2 id="关键字">关键字</h2>
+<p><code>Sandboxie</code>（沙箱）网络编程虚拟执行环境</p>
+<h2 id="概念">概念</h2>
+<p>沙箱是一个虚拟系统程序， 允许程序在沙箱环境中独立运行， 限制沙箱中程序对宿主系统的修改和影响。</p>
+<h3 id="有哪些限制">有哪些限制</h3>
+<p>在沙箱中运行的程序，</p>
 <ol>
-<li>jetty-http</li>
-<li>jetty-io</li>
-<li>jetty-util</li>
-<li>websocket-api</li>
-<li>websocket-client</li>
-<li>websocket-common</li>
-</ol>
-
+<li>不能&hellip;</li></ol>
   </div>
   <footer>
-    <a href="/blog/jmeter/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="button big">阅读全文</a>
+    <a href="/blog/software-programming/%E6%B2%99%E7%AE%B1/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/jmeter/">Jmeter</a></li>
+          <li><a class="article-terms-link" href="/categories/software-programming/">Software Programming</a></li>
         
       
     </ul>
@@ -505,6 +350,128 @@ $ mysql -u root mysql
       
         
           <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%94%81/">MySQL数据库锁</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-03-16 00:00:00 &#43;0000 UTC">2015-03-16</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="按操作分">按操作分</h2>
+<ol>
+<li>共享锁（读锁）： 针对同一块数据， 多个读操作可以同时进行且不会互相影响。 只能读不能写</li>
+<li>排他锁（写锁）： 对当前数据的排他锁操作， 没有解锁前， 阻断其他共享锁和排他锁</li>
+</ol>
+<h2 id="按粒度分">按粒度分</h2>
+<ol>
+<li>行&hellip;</li></ol>
+  </div>
+  <footer>
+    <a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%94%81/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/mysql/">MySQL</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1/">MySQL数据库事务原理</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-03-10 00:00:00 &#43;0000 UTC">2015-03-10</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="概念">概念</h2>
+<p>事务处理用于维护数据库操作的完整性， 保证批量操作要么完全执行， 要么完全不执行。</p>
+<h2 id="事务特性acid">事务特性acid</h2>
+<ol>
+<li>原子性（<code>automicity</code>）： 事务中的所有操作， 要么全部完成， 要么不做；</li>
+<li>一致性（&hellip;</li></ol>
+  </div>
+  <footer>
+    <a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/mysql/">MySQL</a></li>
         
       
     </ul>
@@ -541,7 +508,7 @@ $ mysql -u root mysql
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -598,6 +565,9 @@ $ mysql -u root mysql
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -611,9 +581,6 @@ $ mysql -u root mysql
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -633,7 +600,7 @@ $ mysql -u root mysql
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

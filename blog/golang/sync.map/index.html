@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Golang源码阅读-sync.map">
 <meta itemprop="description" content="sync.map  runtime中go的基本类型 map 不支持并发的读写， 会报错：fatal error: concurrent map writes 为了支持并发， 我们直接对整个map加读写锁，相当低效， 因此官方实现了sync.map  高效的原理和思路  用空间换时间，降低锁的区域 用两个map来存储数据  虽然两个map存储有冗余，但是底层数据类型都是指针，所以冗余的空间还是有限的。    总结  如果对map的读操作大于写操作， 则sync.map能大大提升性能； 写操作需要加锁， 且操作两个map 写操作也会触发， 两个map之间的切换。  源码解析 基础结构  Map type Map struct {mu Mutex // 互斥锁，用于锁定dirty map， 写锁read atomic.Value // 优先读， 支持原子操作。相当于dirty的缓存dirty map[interface{}]*entry // dirty保存最新写入数据， 允许读写misses int // 记录在read中读取不到数据，去dirty中查询的次数} readonly type readOnly struct {m map[interface{}]*entryamended bool // 当key不在read中而在dirty中时， 为true} entry type entry struct {//可见value是个指针类型，虽然read和dirty存在冗余情况（amended=false），但是由于是指针类型，存储的空间应该不是问题p unsafe.">
 <meta itemprop="datePublished" content="2017-11-29T00:00:00+00:00" />
@@ -24,7 +26,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Golang源码阅读-sync.map"/>
 <meta name="twitter:description" content="sync.map  runtime中go的基本类型 map 不支持并发的读写， 会报错：fatal error: concurrent map writes 为了支持并发， 我们直接对整个map加读写锁，相当低效， 因此官方实现了sync.map  高效的原理和思路  用空间换时间，降低锁的区域 用两个map来存储数据  虽然两个map存储有冗余，但是底层数据类型都是指针，所以冗余的空间还是有限的。    总结  如果对map的读操作大于写操作， 则sync.map能大大提升性能； 写操作需要加锁， 且操作两个map 写操作也会触发， 两个map之间的切换。  源码解析 基础结构  Map type Map struct {mu Mutex // 互斥锁，用于锁定dirty map， 写锁read atomic.Value // 优先读， 支持原子操作。相当于dirty的缓存dirty map[interface{}]*entry // dirty保存最新写入数据， 允许读写misses int // 记录在read中读取不到数据，去dirty中查询的次数} readonly type readOnly struct {m map[interface{}]*entryamended bool // 当key不在read中而在dirty中时， 为true} entry type entry struct {//可见value是个指针类型，虽然read和dirty存在冗余情况（amended=false），但是由于是指针类型，存储的空间应该不是问题p unsafe."/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -81,12 +83,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -403,6 +405,7 @@ func (m *Map) missLocked() {
 </code></pre></li>
 </ul>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -429,17 +432,49 @@ func (m *Map) missLocked() {
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#syncmap">sync.map</a></li>
+    <li><a href="#高效的原理和思路">高效的原理和思路</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#源码解析">源码解析</a>
+      <ul>
+        <li><a href="#基础结构">基础结构</a></li>
+        <li><a href="#删除">删除</a></li>
+        <li><a href="#插入和更新">插入和更新</a></li>
+        <li><a href="#查询">查询</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
       <a href="/blog/golang/context%E6%9C%BA%E5%88%B6/" class="button left"><span>Golang源码阅读-Context</span></a>
     
     
-      <a href="/blog/data-structure/rbtree/" class="button right"><span>数据结构-RBTree</span></a>
+      <a href="/blog/golang/godoc/" class="button right"><span>Golang doc使用细则</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Golang]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -457,7 +492,7 @@ func (m *Map) missLocked() {
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -514,6 +549,9 @@ func (m *Map) missLocked() {
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -527,9 +565,6 @@ func (m *Map) missLocked() {
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -549,7 +584,7 @@ func (m *Map) missLocked() {
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

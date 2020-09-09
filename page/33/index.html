@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/github/git/">git工作原理、常用命令、常见问题及解决方案</a></h2>
+      <h2><a href="/blog/windows/%E6%9C%AC%E5%9C%B0%E6%8A%93%E5%8C%85/">Windows下Wireshark抓包问题</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-01-28 00:00:00 &#43;0000 UTC">2014-01-28</time>
+        <time datetime="2014-09-03 00:00:00 &#43;0000 UTC">2014-09-03</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -199,28 +201,18 @@
   <div class="content">
     
     
-    <h1 id="git">git</h1>
-<h2 id="使用方法">使用方法</h2>
-<h3 id="创建commit-tag">创建commit tag</h3>
-<pre><code>git tag -a &lt;tagname&gt; &lt;commitId&gt; -m &quot;&lt;备注信息&gt;&quot;
-git push origin &lt;tagname&gt;
-</code></pre><h3 id="创建commit-branch">创建commit branch</h3>
-<p>git branch <branchname> <commitId></p>
-<h3 id="创建tag-branch">创建tag branch</h3>
-<pre><code>tag名称和branch名称不能相同
-git checkout -b &lt;branchname&gt; &lt;tagname&gt;
-</code></pre><h3 id="删除tag">删除tag</h3>
-<pre><code>git tag -d &lt;tagname&gt;
-git push origin&hellip;</code></pre>
+    <h2 id="windows-本地抓包">windows 本地抓包</h2>
+<p>在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。
+但是<code>wireshark</code>此时是无法抓取到数据包的，需要通过简单的设置才可&hellip;</p>
   </div>
   <footer>
-    <a href="/blog/github/git/" class="button big">阅读全文</a>
+    <a href="/blog/windows/%E6%9C%AC%E5%9C%B0%E6%8A%93%E5%8C%85/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/git/">git</a></li>
+          <li><a class="article-terms-link" href="/categories/windows/">Windows</a></li>
         
       
     </ul>
@@ -244,14 +236,14 @@ git push origin&hellip;</code></pre>
   <header>
   <div class="title">
     
-      <h2><a href="/blog/network/%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/">从每层协议及物理设备了解网络模型</a></h2>
+      <h2><a href="/blog/linux/ubuntu-shadowsocks/">Ubuntu安装配置shadowsocks</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2013-12-16 00:00:00 &#43;0000 UTC">2013-12-16</time>
+        <time datetime="2014-07-12 00:00:00 &#43;0000 UTC">2014-07-12</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -266,29 +258,19 @@ git push origin&hellip;</code></pre>
   <div class="content">
     
     
-    <h2 id="osi七层模型">OSI七层模型</h2>
-<ol>
-<li>物理层Physical： IEEE 802.1A、IEEE 802.2、IEEE 802.11</li>
-<li>物理链路层Data Link: FDDI、Ethernet、Arpanet、PDN、SLP、PPP</li>
-<li>网络层Network：IP、ICMP、ARP、RARP、AKP、UUCP</li>
-<li>传输层Transport：TCP、UDP</li>
-<li>会话层Session：SMTP、DNS</li>
-<li>表示层Presentation：Telnet、rlogin、SNMP、Gopher</li>
-<li>应用层Application：TFTP、FTP、NFS、WAIS、HTTP</li>
-</ol>
-<h2 id="tcpip-五层模型">TCP/IP 五层模型</h2>
-<ol>
-<li>物理层：中继器，集线器</li>
-<li>数据链路层： 二层&hellip;</li></ol>
+    <h1 id="ubuntu-shadowsocks">ubuntu shadowsocks</h1>
+<p>描述 <code>ubuntu</code> 下 <code>shadowssocks</code> 安装</p>
+<h2 id="安装shadowsocks-libev">安装shadowsocks-libev</h2>
+<pre><code>$ sudo apt-get install&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/network/%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/" class="button big">阅读全文</a>
+    <a href="/blog/linux/ubuntu-shadowsocks/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/network/">Network</a></li>
+          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
         
       
     </ul>
@@ -312,16 +294,14 @@ git push origin&hellip;</code></pre>
   <header>
   <div class="title">
     
-      <h2><a href="/blog/software-programming/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">软件设计模式详解和代码示例</a></h2>
+      <h2><a href="/blog/vmware/vmware-ubuntu-%E6%89%A9%E5%AE%B9%E7%A3%81%E7%9B%98/">VMWare之Linux系统磁盘扩容</a></h2>
     
-    
-      <p>总结软件设计模式，逐渐补充代码示例</p>
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2013-12-01 00:00:00 &#43;0000 UTC">2013-12-01</time>
+        <time datetime="2014-07-11 00:00:00 &#43;0000 UTC">2014-07-11</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -336,37 +316,21 @@ git push origin&hellip;</code></pre>
   <div class="content">
     
     
-    <h2 id="概念">概念</h2>
-<p>设计模式是在面向对象开发设计中反复出现问题的解决方案的总结。</p>
-<h2 id="设计原则">设计原则</h2>
-<ol>
-<li>对接口编程而不是对实现编程</li>
-<li>优先使用对象编程而不是继承</li>
-</ol>
-<h2 id="设计模式原则">设计模式原则</h2>
-<ol>
-<li>针对接口编程而不是对实现编程</li>
-<li>优先使用对象组合而不是继承</li>
-</ol>
-<h3 id="开闭原则open-close-principle">开闭原则（Open Close Principle）</h3>
-<blockquote>
-<p>对扩展开放， 对修改关闭</p>
-</blockquote>
-<p>为使程序的扩展性好，易于维护和升级， 在程序需要进行扩展的时候，不去修改原有代码，使用接口和抽象类。</p>
-<h3 id="里氏代换原则liskov-substitution-principle">里氏代换原则（Liskov Substitution Principle）</h3>
-<blockquote>
-<p>任何基类可以出现的地方， 子类都可以出现。</p>
-</blockquote>
-<p>只有当派生类可以替换掉基类，且软件的功能不受影响时， 基类才是真正被复用，而&hellip;</p>
+    <h2 id="在vmware中扩容虚拟机磁盘大小">在VMWARE中扩容虚拟机磁盘大小</h2>
+<p>需要删除快照， 最好先克隆备份；</p>
+<h2 id="查看扩容磁盘">查看扩容磁盘</h2>
+<p>调整完后，重新打开虚拟机，使用<code>fdisk -l</code>查看，可以看到我们刚刚扩容的空间已经可以看到，但没有分区，还不能使用。&hellip;</p>
   </div>
   <footer>
-    <a href="/blog/software-programming/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="button big">阅读全文</a>
+    <a href="/blog/vmware/vmware-ubuntu-%E6%89%A9%E5%AE%B9%E7%A3%81%E7%9B%98/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/software-programming/">Software Programming</a></li>
+          <li><a class="article-terms-link" href="/categories/vmware/">VMWare</a></li>
+        
+          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
         
       
     </ul>
@@ -390,14 +354,14 @@ git push origin&hellip;</code></pre>
   <header>
   <div class="title">
     
-      <h2><a href="/blog/compilation/%E7%BC%96%E8%AF%91%E4%BC%98%E5%8C%96/">编译器为什么要对代码做自动优化</a></h2>
+      <h2><a href="/blog/linux/ubuntu-wlan/">Ubuntu安装配置无线网卡</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2013-11-07 00:00:00 &#43;0000 UTC">2013-11-07</time>
+        <time datetime="2014-06-11 00:00:00 &#43;0000 UTC">2014-06-11</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -412,23 +376,21 @@ git push origin&hellip;</code></pre>
   <div class="content">
     
     
-    <h1 id="概括">概括</h1>
-<ol>
-<li>高级编程语言提供的函数、条件语句、循环这样的抽象编程结构极大的提高了编程效率，然而，这也潜在的使性能显著下降。</li>
-<li>编译器尝试自动优化代码以提高性能，编译器可以转化循环、条件语句和递归函数、消除代码快和利用目标指令集的优势让代码变得高效而简洁。</li>
-<li>因此对于程序员来说写出可读性高的代码比手动优化后变得神秘而难以维护更加可贵。事实上手工优化的代码可能让编译器难以进行额外和更加有效的优化。</li>
-<li>比起手动优化代码，程序员更应该考虑程序设计的各个方面，比如使用更快算法，引入线程级并行机制和框架特性。</li>
-</ol>
-
+    <h2 id="查看所有网络">查看所有网络</h2>
+<p><code>$ ifconfig -a</code></p>
+<h2 id="打开无线网卡">打开无线网卡</h2>
+<p><code>$ ifconfig wlan0 up</code></p>
+<h2 id="wlan-工具">wlan 工具</h2>
+<p><code>$ apt-get install wpasupplicant&hellip;</code></p>
   </div>
   <footer>
-    <a href="/blog/compilation/%E7%BC%96%E8%AF%91%E4%BC%98%E5%8C%96/" class="button big">阅读全文</a>
+    <a href="/blog/linux/ubuntu-wlan/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/compilation/">Compilation</a></li>
+          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
         
       
     </ul>
@@ -452,14 +414,14 @@ git push origin&hellip;</code></pre>
   <header>
   <div class="title">
     
-      <h2><a href="/blog/memory/%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA/">内存溢出的场景及解决方案</a></h2>
+      <h2><a href="/blog/linux/%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/">记录linux常规问题和解决方案</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2013-11-03 00:00:00 &#43;0000 UTC">2013-11-03</time>
+        <time datetime="2014-06-08 00:00:00 &#43;0000 UTC">2014-06-08</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -474,50 +436,32 @@ git push origin&hellip;</code></pre>
   <div class="content">
     
     
-    <h2 id="栈溢出">栈溢出</h2>
-<p>压栈内存超出系统上限，导致溢出</p>
+    <h2 id="桌面版菜单栏消失">桌面版菜单栏消失</h2>
 <ol>
-<li>函数递归调用层次较深</li>
-<li>局部变量体积过大</li>
-</ol>
-<h3 id="解决办法">解决办法</h3>
-<ol>
-<li>将递归使用循环语句实现</li>
-<li>进行尾递归优化： 这样执行的递归函数指挥占用一个栈帧，不会引起栈溢出</li>
-<li>增加系统对进程栈分配大小</li>
-<li>使用堆内存， 使用全局变量</li>
-</ol>
-<h4 id="尾递归">尾递归</h4>
-<ol>
-<li>仅在函数的尾位置调用自身</li>
-<li>通过优化，使得计算仅占产量栈空间；</li>
-</ol>
-<pre><code>常规递归：
-function fact(n) {
-    if (n &lt;= 0) {
-        return 1;
-    } else {
-        return n * fact(n - 1);
-    }
-}
-展开： 
-6 *&hellip;</code></pre>
+<li>查看系统桌面环境
+<ul>
+<li><code>$ pgrep -l &quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&quot;</code></li>
+<li><code>$ ps -A | egrep -i&hellip;</code></li></ul></li></ol>
   </div>
   <footer>
-    <a href="/blog/memory/%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA/" class="button big">阅读全文</a>
+    <a href="/blog/linux/%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/memory/">Memory</a></li>
+          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
         
       
     </ul>
   
   
     <ul class="tags">
-      <li>None</li>
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
     </ul>
   
 </div>
@@ -552,7 +496,7 @@ function fact(n) {
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -609,6 +553,9 @@ function fact(n) {
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -622,9 +569,6 @@ function fact(n) {
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -644,7 +588,7 @@ function fact(n) {
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

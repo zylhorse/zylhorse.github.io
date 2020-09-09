@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Redis高可用方案-集群模式">
 <meta itemprop="description" content="概述  redis cluster 时redis的分布式解决方案， 在3.0 推出； 当遇到单机内存，并发流量等瓶颈时，可以采用cluster架构达到负载均衡的目的； cluster 将整个数据集，按照分区规则映射到多个节点上，每个节点负责整个数据集的一个子集； 节点之间会相互通信， meet操作时节点之间相互通信的基础， meet 操作有一定的频率和规则； 推荐节点小于1000， 因为节点之间meet操作会占用大量带宽；  原理  redis cluster采用哈希分区中的虚拟槽分区。 虚拟槽分区巧妙的使用哈希空间， 使用分散度良好的哈希函数把所有的数据映射到一个固定范围的整数集合（槽）； 槽的范围时0~16383， 槽是集群内数据管理和迁移的基本单位； 把16384槽按照节点数量进行平均分配，由节点进行管理 对每个key按照CRC16规则进行hash运算 把hash结果对16383进行取余 把余数发送给Redis节点 节点接收到数据，验证是否在自己管理的槽编号的范围 如果在自己管理的槽编号范围内，则把数据保存到数据槽中，然后返回执行结果 如果在自己管理的槽编号范围外，则会把数据发送给正确的节点进行moved重定向，由正确的节点来把数据保存在对应的槽中  增加主节点  redis-trib.rb add-node new-node-addr cluster-node-addr redis-trib.rb reshared cluster-node-addr  增加从节点  redis-trib.rb add-node new-node-addr cluster-node-addr cluster replicate new-node-Id  删除从节点  redis-trib.rb del-node cluster-node-addr del-node-id redis-trib.rb reshared cluster-node-addr redis-trib.rb del-node cluster-node-addr del-node-id  部署  至少需要6台机器， 3个master，3个slave； 每个master至少搭配一个slave；  hashtag  hashtag 解决让相关的key 划分到同一个节点上； 原理： 给相关key 使用{}添加同样的标记；  fail 状态必要条件  某个主节点和所有从节点全部挂掉，我们集群就进入faill状态。 如果集群超过半数以上master挂掉，无论是否有slave，集群进入fail状态.">
 <meta itemprop="datePublished" content="2016-11-27T00:00:00+00:00" />
@@ -24,7 +26,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Redis高可用方案-集群模式"/>
 <meta name="twitter:description" content="概述  redis cluster 时redis的分布式解决方案， 在3.0 推出； 当遇到单机内存，并发流量等瓶颈时，可以采用cluster架构达到负载均衡的目的； cluster 将整个数据集，按照分区规则映射到多个节点上，每个节点负责整个数据集的一个子集； 节点之间会相互通信， meet操作时节点之间相互通信的基础， meet 操作有一定的频率和规则； 推荐节点小于1000， 因为节点之间meet操作会占用大量带宽；  原理  redis cluster采用哈希分区中的虚拟槽分区。 虚拟槽分区巧妙的使用哈希空间， 使用分散度良好的哈希函数把所有的数据映射到一个固定范围的整数集合（槽）； 槽的范围时0~16383， 槽是集群内数据管理和迁移的基本单位； 把16384槽按照节点数量进行平均分配，由节点进行管理 对每个key按照CRC16规则进行hash运算 把hash结果对16383进行取余 把余数发送给Redis节点 节点接收到数据，验证是否在自己管理的槽编号的范围 如果在自己管理的槽编号范围内，则把数据保存到数据槽中，然后返回执行结果 如果在自己管理的槽编号范围外，则会把数据发送给正确的节点进行moved重定向，由正确的节点来把数据保存在对应的槽中  增加主节点  redis-trib.rb add-node new-node-addr cluster-node-addr redis-trib.rb reshared cluster-node-addr  增加从节点  redis-trib.rb add-node new-node-addr cluster-node-addr cluster replicate new-node-Id  删除从节点  redis-trib.rb del-node cluster-node-addr del-node-id redis-trib.rb reshared cluster-node-addr redis-trib.rb del-node cluster-node-addr del-node-id  部署  至少需要6台机器， 3个master，3个slave； 每个master至少搭配一个slave；  hashtag  hashtag 解决让相关的key 划分到同一个节点上； 原理： 给相关key 使用{}添加同样的标记；  fail 状态必要条件  某个主节点和所有从节点全部挂掉，我们集群就进入faill状态。 如果集群超过半数以上master挂掉，无论是否有slave，集群进入fail状态."/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -81,12 +83,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -226,6 +228,7 @@
 <li>如果集群任意master挂掉,且当前master没有slave.集群进入fail状态</li>
 </ol>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -252,8 +255,24 @@
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#概述">概述</a></li>
+    <li><a href="#原理">原理</a></li>
+    <li><a href="#增加主节点">增加主节点</a>
+      <ul>
+        <li><a href="#增加从节点">增加从节点</a></li>
+      </ul>
+    </li>
+    <li><a href="#删除从节点">删除从节点</a></li>
+    <li><a href="#部署">部署</a></li>
+    <li><a href="#hashtag">hashtag</a></li>
+    <li><a href="#fail-状态必要条件">fail 状态必要条件</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -263,6 +282,22 @@
       <a href="/blog/cache/redis/%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/" class="button right"><span>Redis高可用方案-哨兵模式</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Cache]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -280,7 +315,7 @@
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -337,6 +372,9 @@
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -350,9 +388,6 @@
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -372,7 +407,7 @@
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

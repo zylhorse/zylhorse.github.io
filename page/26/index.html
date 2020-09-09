@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/security/%E7%94%9F%E6%88%90%E5%85%8D%E5%AF%86%E8%AF%81%E4%B9%A6/">生成自签名SSL免密证书</a></h2>
+      <h2><a href="/blog/erlang/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95eunit/">Erlang单元测试</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-06-13 00:00:00 &#43;0000 UTC">2015-06-13</time>
+        <time datetime="2015-10-22 00:00:00 &#43;0000 UTC">2015-10-22</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -199,30 +201,18 @@
   <div class="content">
     
     
-    <pre><code>#!/bin/sh
-  
-# create self-signed server certificate:
-
-SSLDIR=$PWD/ssl
-SERVERDIR=$SSLDIR/server
-CLIENTDIR=$SSLDIR/client
-OPENSSLFILE=$PWD/openssl.cnf
-
-sudo rm -rf $SSLDIR
-sudo mkdir $SSLDIR
-sudo mkdir $SERVERDIR
-sudo mkdir $CLIENTDIR
-sudo mkdir $SSLDIR/demoCA
-sudo mkdir&hellip;</code></pre>
+    <h1 id="概述">概述</h1>
+<p>eunit是erlang的测试框架。
+eunit使用了很多预处理宏，这些宏被设计成非入侵式的，不会与现有代码冲突。给模块添加eunit的测试集，一般不需要修改现有代码。测试模块导出函数的测试，可&hellip;</p>
   </div>
   <footer>
-    <a href="/blog/security/%E7%94%9F%E6%88%90%E5%85%8D%E5%AF%86%E8%AF%81%E4%B9%A6/" class="button big">阅读全文</a>
+    <a href="/blog/erlang/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95eunit/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/security/">Security</a></li>
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
         
       
     </ul>
@@ -231,7 +221,7 @@ sudo mkdir&hellip;</code></pre>
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/certificate/">Certificate</a></li>
+          <li><a class="article-terms-link" href="/tags/"></a></li>
         
       
     </ul>
@@ -246,14 +236,14 @@ sudo mkdir&hellip;</code></pre>
   <header>
   <div class="title">
     
-      <h2><a href="/blog/lua/ide/">lua编译环境搭建和IDE配置</a></h2>
+      <h2><a href="/blog/erlang/%E6%96%87%E6%9C%AC%E7%BC%96%E7%A8%8B/">Erlang文本编程</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-06-05 00:00:00 &#43;0000 UTC">2015-06-05</time>
+        <time datetime="2015-10-07 00:00:00 &#43;0000 UTC">2015-10-07</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -268,103 +258,28 @@ sudo mkdir&hellip;</code></pre>
   <div class="content">
     
     
-    <h2 id="lua-编译环境安装">lua 编译环境安装</h2>
-<p>linux:</p>
-<pre><code>curl -R -O http://www.lua.org/ftp/lua-5.3.0.tar.gz
-tar zxf lua-5.3.0.tar.gz
-cd lua-5.3.0
-make linux test
-make install
-</code></pre><p>macos:</p>
-<pre><code>curl -R -O http://www.lua.org/ftp/lua-5.3.0.tar.gz
-tar zxf lua-5.3.0.tar.gz
-cd lua-5.3.0
-make macosx test
-make install
-</code></pre><p>windows:&hellip;</p>
-  </div>
-  <footer>
-    <a href="/blog/lua/ide/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/lua/">Lua</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/ide/">IDE</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/lua/lua/">Lua语言简介</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-06-04 00:00:00 &#43;0000 UTC">2015-06-04</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="概念">概念</h2>
-<ol>
-<li>轻量小巧的脚本语言</li>
-<li>标准c语言编写，且开源</li>
-<li>目的： 嵌入宿主语言，并提供灵活的扩展和定制</li>
-</ol>
-<h2 id="编程模型">编程模型</h2>
-<ol>
-<li>面向过程编程和函数式编程</li>
-<li>自动内存管理：值提供一种通用类型的表（table)</li>
-<li>内置模式匹配，函数也可以看作值</li>
-<li>提供多线程支持</li>
-<li>通过闭包和table可以方便的支持面向对象编程的一些机制</li>
-</ol>
-<hr>
-<h2 id="参考">参考</h2>
+    <h1 id="文本编程">文本编程</h1>
+<h2 id="操作文件的模块">操作文件的模块</h2>
 <ul>
-<li><a href="../../../book/The_Implementation_of_Lua5.0.pdf">The Implementation of Lua 5.0</a></li>
+<li>file</li>
 </ul>
-
+<blockquote>
+<p>包含打开、关闭、读写文件的方法。</p>
+</blockquote>
+<ul>
+<li>filename</li>
+</ul>
+<blockquote>
+<p>这个模块的方法能够跨平台的操作文件名，这样可以在不同的操作系统上运行相同的代码。&hellip;</p></blockquote>
   </div>
   <footer>
-    <a href="/blog/lua/lua/" class="button big">阅读全文</a>
+    <a href="/blog/erlang/%E6%96%87%E6%9C%AC%E7%BC%96%E7%A8%8B/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/lua/">Lua</a></li>
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
         
       
     </ul>
@@ -388,14 +303,14 @@ make install
   <header>
   <div class="title">
     
-      <h2><a href="/blog/security/%E7%94%9F%E6%88%90%E5%85%AC%E7%A7%81%E9%92%A5/">生成公私钥</a></h2>
+      <h2><a href="/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E8%A1%A5%E9%81%97/">Erlang顺序编程补遗</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-06-03 00:00:00 &#43;0000 UTC">2015-06-03</time>
+        <time datetime="2015-09-21 00:00:00 &#43;0000 UTC">2015-09-21</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -410,19 +325,18 @@ make install
   <div class="content">
     
     
-    <pre><code>openssl genrsa -out privatekey.pem 1024
-openssl pkcs8 -topk8 -inform PEM -in privatekey.pem -outform PEM -nocrypt
-openssl rsa -in privatekey.pem -pubout -out publickey.pem
-</code></pre>
+    <h1 id="apply">apply</h1>
+<ul>
+<li>内置函数apply(mod,func,[arg1,arg2,arg3,&hellip;,argn])。会将参数arg1,arg2,&hellip;,argn应用到模块mod里的函&hellip;</li></ul>
   </div>
   <footer>
-    <a href="/blog/security/%E7%94%9F%E6%88%90%E5%85%AC%E7%A7%81%E9%92%A5/" class="button big">阅读全文</a>
+    <a href="/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E8%A1%A5%E9%81%97/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/security/">Security</a></li>
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
         
       
     </ul>
@@ -446,14 +360,14 @@ openssl rsa -in privatekey.pem -pubout -out publickey.pem
   <header>
   <div class="title">
     
-      <h2><a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A5%E5%BF%97/">MySQL数据库有哪些日志</a></h2>
+      <h2><a href="/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/">Erlang顺序编程错误处理</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-05-15 00:00:00 &#43;0000 UTC">2015-05-15</time>
+        <time datetime="2015-09-11 00:00:00 &#43;0000 UTC">2015-09-11</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -468,22 +382,21 @@ openssl rsa -in privatekey.pem -pubout -out publickey.pem
   <div class="content">
     
     
-    <h2 id="事务日志">事务日志</h2>
-<h3 id="undo-log">undo log</h3>
-<p>事务中在操作任何数据之前，首先将原数据备份到undo log。</p>
-<h3 id="redo-log">redo log</h3>
-<p>事务提交前会把新数据备份到redo log并持久化。</p>
-<h2 id="binlog">binlog</h2>
-
+    <h1 id="概括">概括</h1>
+<ul>
+<li>Erlang中当错误出现时，需要发现并纠正，然后继续。</li>
+<li>构建真正容错的系统，需要不止一台计算机，毕竟可能整台机器崩溃。因此故障检测和别处重启计算的概念需要扩展到联网的计算机上。</li>
+</ul>
+<h1 id="顺序代码里面的错误处理">顺序代码里面&hellip;</h1>
   </div>
   <footer>
-    <a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A5%E5%BF%97/" class="button big">阅读全文</a>
+    <a href="/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
         
       
     </ul>
@@ -492,7 +405,65 @@ openssl rsa -in privatekey.pem -pubout -out publickey.pem
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/mysql/">MySQL</a></li>
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/software-programming/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">编程范式-函数式编程</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-09-01 00:00:00 &#43;0000 UTC">2015-09-01</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h1 id="函数式编程function-programming">函数式编程（Function Programming）</h1>
+<ul>
+<li>函数式编程将电脑运算看作是函数运算。 函数式编程的基础是λ 演算（ lambda caculus）。函数可以作为输入（参数）输出（返回值）。</li>
+<li>&hellip;</li></ul>
+  </div>
+  <footer>
+    <a href="/blog/software-programming/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/software-programming/">Software Programming</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
         
       
     </ul>
@@ -529,7 +500,7 @@ openssl rsa -in privatekey.pem -pubout -out publickey.pem
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -586,6 +557,9 @@ openssl rsa -in privatekey.pem -pubout -out publickey.pem
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -599,9 +573,6 @@ openssl rsa -in privatekey.pem -pubout -out publickey.pem
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -621,7 +592,7 @@ openssl rsa -in privatekey.pem -pubout -out publickey.pem
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

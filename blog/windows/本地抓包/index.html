@@ -6,46 +6,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Windows下Wireshark抓包问题">
-<meta itemprop="description" content="windows 本地抓包 在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。但是wireshark此时是无法抓取到数据包的，需要通过简单的设置才可以。
+<meta itemprop="description" content="windows 本地抓包 在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。 但是wireshark此时是无法抓取到数据包的，需要通过简单的设置才可以。
 具体方法如下：
-方法一：
- 1.以管理员身份运行cmd2.route add 本机ip mask 255.255.255.255 网关ip如：route add 172.16.51.115 mask 255.255.255.255 172.16.1.1使用完毕后用route delete 172.16.51.115 mask 255.255.255.255 172.16.1.1删除，否则所有本机报文都经过网卡出去走一圈回来很耗性能。此时再利用wireshark进行抓包便可以抓到本机自己同自己的通信包，这样配置的原因是将发往本机的包发送到网关，而此时wireshark可以捕获到网卡驱动的报文实现抓包。但这样有一个缺点，那就是本地请求的URL的IP只能写本地的IP地址，不能写localhost或127.0.0.1，写localhost或127.0.0.1还是抓不到包。 方法二：
- windows系统没有提供本地回环网络的接口，用wireshark监控网络的话只能看到经过网卡的流量，看不到访问localhost的流量，因为wireshark在windows系统上默认使用的是WinPcap来抓包的，现在可以用Npcap来替换掉WinPcap，Npcap是基于WinPcap 4.1.3开发的，api兼容WinPcap。 1.下载安装包
- Npcap项目主页，它采用的是MIT开源协议，Npcap下载 2.安装
- 安装时要勾选 Use DLT_NULL protocol sa Loopback ... 和 install npcap in winpcap api-compat mode，如下所示。 方法三：
- RawCap ">
+  方法一
+ 以管理员身份运行cmd route add 本机ip mask 255.255.255.255 网关ip 如：route add 172.16.51.115 mask 255.255.255.255 172.16.1.1 使用完毕后用route delete 172.16.51.115 mask 255.255.255.255 172.16.1.1删除，否则所有本机报文都经过网卡出去走一圈回来很耗性能。 此时再利用wireshark进行抓包便可以抓到本机自己同自己的通信包，这样配置的原因是将发往本机的包发送到网关，而此时wireshark可以捕获到网卡驱动的报文实现抓包。   但这样有一个缺点，那就是本地请求的URL的IP只能写本地的IP地址，不能写localhost或127.0.0.1，写localhost或127.0.0.1还是抓不到包。
+   方法二
+windows系统没有提供本地回环网络的接口，用wireshark监控网络的话只能看到经过网卡的流量，看不到访问localhost的流量， 因为wireshark在windows系统上默认使用的是WinPcap来抓包的，现在可以用Npcap来替换掉WinPcap， Npcap是基于WinPcap 4.1.3开发的，api兼容WinPcap。
+ 下载安装包 Npcap项目主页，它采用的是MIT开源协议，Npcap下载 安装 安装时要勾选 Use DLT_NULL protocol sa Loopback &hellip; 和 install npcap in winpcap api-compat mode，如下所示。    方法三
+RawCap
+  ">
 <meta itemprop="datePublished" content="2014-09-03T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2014-09-03T00:00:00+00:00" />
-<meta itemprop="wordCount" content="48">
+<meta itemprop="wordCount" content="51">
 
 
 
 <meta itemprop="keywords" content="," />
 <meta property="og:title" content="Windows下Wireshark抓包问题" />
-<meta property="og:description" content="windows 本地抓包 在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。但是wireshark此时是无法抓取到数据包的，需要通过简单的设置才可以。
+<meta property="og:description" content="windows 本地抓包 在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。 但是wireshark此时是无法抓取到数据包的，需要通过简单的设置才可以。
 具体方法如下：
-方法一：
- 1.以管理员身份运行cmd2.route add 本机ip mask 255.255.255.255 网关ip如：route add 172.16.51.115 mask 255.255.255.255 172.16.1.1使用完毕后用route delete 172.16.51.115 mask 255.255.255.255 172.16.1.1删除，否则所有本机报文都经过网卡出去走一圈回来很耗性能。此时再利用wireshark进行抓包便可以抓到本机自己同自己的通信包，这样配置的原因是将发往本机的包发送到网关，而此时wireshark可以捕获到网卡驱动的报文实现抓包。但这样有一个缺点，那就是本地请求的URL的IP只能写本地的IP地址，不能写localhost或127.0.0.1，写localhost或127.0.0.1还是抓不到包。 方法二：
- windows系统没有提供本地回环网络的接口，用wireshark监控网络的话只能看到经过网卡的流量，看不到访问localhost的流量，因为wireshark在windows系统上默认使用的是WinPcap来抓包的，现在可以用Npcap来替换掉WinPcap，Npcap是基于WinPcap 4.1.3开发的，api兼容WinPcap。 1.下载安装包
- Npcap项目主页，它采用的是MIT开源协议，Npcap下载 2.安装
- 安装时要勾选 Use DLT_NULL protocol sa Loopback ... 和 install npcap in winpcap api-compat mode，如下所示。 方法三：
- RawCap " />
+  方法一
+ 以管理员身份运行cmd route add 本机ip mask 255.255.255.255 网关ip 如：route add 172.16.51.115 mask 255.255.255.255 172.16.1.1 使用完毕后用route delete 172.16.51.115 mask 255.255.255.255 172.16.1.1删除，否则所有本机报文都经过网卡出去走一圈回来很耗性能。 此时再利用wireshark进行抓包便可以抓到本机自己同自己的通信包，这样配置的原因是将发往本机的包发送到网关，而此时wireshark可以捕获到网卡驱动的报文实现抓包。   但这样有一个缺点，那就是本地请求的URL的IP只能写本地的IP地址，不能写localhost或127.0.0.1，写localhost或127.0.0.1还是抓不到包。
+   方法二
+windows系统没有提供本地回环网络的接口，用wireshark监控网络的话只能看到经过网卡的流量，看不到访问localhost的流量， 因为wireshark在windows系统上默认使用的是WinPcap来抓包的，现在可以用Npcap来替换掉WinPcap， Npcap是基于WinPcap 4.1.3开发的，api兼容WinPcap。
+ 下载安装包 Npcap项目主页，它采用的是MIT开源协议，Npcap下载 安装 安装时要勾选 Use DLT_NULL protocol sa Loopback &hellip; 和 install npcap in winpcap api-compat mode，如下所示。    方法三
+RawCap
+  " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://zylhorse.github.io/blog/windows/%E6%9C%AC%E5%9C%B0%E6%8A%93%E5%8C%85/" />
 <meta property="article:published_time" content="2014-09-03T00:00:00+00:00" />
 <meta property="article:modified_time" content="2014-09-03T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Windows下Wireshark抓包问题"/>
-<meta name="twitter:description" content="windows 本地抓包 在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。但是wireshark此时是无法抓取到数据包的，需要通过简单的设置才可以。
+<meta name="twitter:description" content="windows 本地抓包 在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。 但是wireshark此时是无法抓取到数据包的，需要通过简单的设置才可以。
 具体方法如下：
-方法一：
- 1.以管理员身份运行cmd2.route add 本机ip mask 255.255.255.255 网关ip如：route add 172.16.51.115 mask 255.255.255.255 172.16.1.1使用完毕后用route delete 172.16.51.115 mask 255.255.255.255 172.16.1.1删除，否则所有本机报文都经过网卡出去走一圈回来很耗性能。此时再利用wireshark进行抓包便可以抓到本机自己同自己的通信包，这样配置的原因是将发往本机的包发送到网关，而此时wireshark可以捕获到网卡驱动的报文实现抓包。但这样有一个缺点，那就是本地请求的URL的IP只能写本地的IP地址，不能写localhost或127.0.0.1，写localhost或127.0.0.1还是抓不到包。 方法二：
- windows系统没有提供本地回环网络的接口，用wireshark监控网络的话只能看到经过网卡的流量，看不到访问localhost的流量，因为wireshark在windows系统上默认使用的是WinPcap来抓包的，现在可以用Npcap来替换掉WinPcap，Npcap是基于WinPcap 4.1.3开发的，api兼容WinPcap。 1.下载安装包
- Npcap项目主页，它采用的是MIT开源协议，Npcap下载 2.安装
- 安装时要勾选 Use DLT_NULL protocol sa Loopback ... 和 install npcap in winpcap api-compat mode，如下所示。 方法三：
- RawCap "/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+  方法一
+ 以管理员身份运行cmd route add 本机ip mask 255.255.255.255 网关ip 如：route add 172.16.51.115 mask 255.255.255.255 172.16.1.1 使用完毕后用route delete 172.16.51.115 mask 255.255.255.255 172.16.1.1删除，否则所有本机报文都经过网卡出去走一圈回来很耗性能。 此时再利用wireshark进行抓包便可以抓到本机自己同自己的通信包，这样配置的原因是将发往本机的包发送到网关，而此时wireshark可以捕获到网卡驱动的报文实现抓包。   但这样有一个缺点，那就是本地请求的URL的IP只能写本地的IP地址，不能写localhost或127.0.0.1，写localhost或127.0.0.1还是抓不到包。
+   方法二
+windows系统没有提供本地回环网络的接口，用wireshark监控网络的话只能看到经过网卡的流量，看不到访问localhost的流量， 因为wireshark在windows系统上默认使用的是WinPcap来抓包的，现在可以用Npcap来替换掉WinPcap， Npcap是基于WinPcap 4.1.3开发的，api兼容WinPcap。
+ 下载安装包 Npcap项目主页，它采用的是MIT开源协议，Npcap下载 安装 安装时要勾选 Use DLT_NULL protocol sa Loopback &hellip; 和 install npcap in winpcap api-compat mode，如下所示。    方法三
+RawCap
+  "/>
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -102,12 +107,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -194,34 +199,43 @@
 </div>
     <div class="content">
       
-      <h1 id="windows-本地抓包">windows 本地抓包</h1>
-<p>在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。但是wireshark此时是无法抓取到数据包的，需要通过简单的设置才可以。</p>
+      <h2 id="windows-本地抓包">windows 本地抓包</h2>
+<p>在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。
+但是<code>wireshark</code>此时是无法抓取到数据包的，需要通过简单的设置才可以。</p>
 <p>具体方法如下：</p>
-<p>方法一：</p>
-<pre><code>    1.以管理员身份运行cmd
+<ul>
+<li>
+<p>方法一</p>
+<ol>
+<li>以管理员身份运行<code>cmd</code></li>
+<li><code>route add 本机ip mask 255.255.255.255 网关ip</code>
+如：<code>route add 172.16.51.115 mask 255.255.255.255 172.16.1.1</code>
+使用完毕后用<code>route delete 172.16.51.115 mask 255.255.255.255 172.16.1.1</code>删除，否则所有本机报文都经过网卡出去走一圈回来很耗性能。</li>
+<li>此时再利用<code>wireshark</code>进行抓包便可以抓到本机自己同自己的通信包，这样配置的原因是将发往本机的包发送到网关，而此时<code>wireshark</code>可以捕获到网卡驱动的报文实现抓包。</li>
+</ol>
+<blockquote>
+<p>但这样有一个缺点，那就是本地请求的URL的IP只能写本地的IP地址，不能写localhost或127.0.0.1，写localhost或127.0.0.1还是抓不到包。</p>
+</blockquote>
+</li>
+<li>
+<p>方法二<br>
+<code>windows</code>系统没有提供本地回环网络的接口，用<code>wireshark</code>监控网络的话只能看到经过网卡的流量，看不到访问<code>localhost</code>的流量，
+因为<code>wireshark</code>在<code>windows</code>系统上默认使用的是<code>WinPcap</code>来抓包的，现在可以用<code>Npcap</code>来替换掉<code>WinPcap</code>，
+<code>Npcap</code>是基于<code>WinPcap 4.1.3</code>开发的，<code>api</code>兼容<code>WinPcap</code>。</p>
+<ol>
+<li>下载安装包
+Npcap项目主页，它采用的是MIT开源协议，Npcap下载</li>
+<li>安装
+安装时要勾选 Use DLT_NULL protocol sa Loopback &hellip; 和 install npcap in winpcap api-compat mode，如下所示。</li>
+</ol>
+</li>
+<li>
+<p>方法三<br>
+<code>RawCap</code></p>
+</li>
+</ul>
 
-    2.route add 本机ip mask 255.255.255.255 网关ip
-
-    如：route add 172.16.51.115 mask 255.255.255.255 172.16.1.1
-
-    使用完毕后用route delete 172.16.51.115 mask 255.255.255.255 172.16.1.1删除，否则所有本机报文都经过网卡出去走一圈回来很耗性能。
-
-    此时再利用wireshark进行抓包便可以抓到本机自己同自己的通信包，这样配置的原因是将发往本机的包发送到网关，而此时wireshark可以捕获到网卡驱动的报文实现抓包。
-
-    但这样有一个缺点，那就是本地请求的URL的IP只能写本地的IP地址，不能写localhost或127.0.0.1，写localhost或127.0.0.1还是抓不到包。
-</code></pre>
-<p>方法二：</p>
-<pre><code>    windows系统没有提供本地回环网络的接口，用wireshark监控网络的话只能看到经过网卡的流量，看不到访问localhost的流量，因为wireshark在windows系统上默认使用的是WinPcap来抓包的，现在可以用Npcap来替换掉WinPcap，Npcap是基于WinPcap 4.1.3开发的，api兼容WinPcap。
-</code></pre>
-<p>1.下载安装包</p>
-<pre><code>    Npcap项目主页，它采用的是MIT开源协议，Npcap下载
-</code></pre>
-<p>2.安装</p>
-<pre><code>    安装时要勾选 Use DLT_NULL protocol sa Loopback ... 和 install npcap in winpcap api-compat mode，如下所示。
-</code></pre>
-<p>方法三：</p>
-<pre><code>    RawCap</code></pre>
-
+      
     </div>
     <footer>
       <div class="stats">
@@ -248,8 +262,14 @@
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#windows-本地抓包">windows 本地抓包</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -259,6 +279,22 @@
       <a href="/blog/linux/ubuntu-shadowsocks/" class="button right"><span>Ubuntu安装配置shadowsocks</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Windows]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -276,7 +312,7 @@
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -333,6 +369,9 @@
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -346,9 +385,6 @@
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -368,7 +404,7 @@
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

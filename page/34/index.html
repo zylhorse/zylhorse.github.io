@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/compilation/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/">struct为什么会有字节对齐这个概念</a></h2>
+      <h2><a href="/blog/regexp/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">常用的正则表达式</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2013-10-13 00:00:00 &#43;0000 UTC">2013-10-13</time>
+        <time datetime="2014-05-03 00:00:00 &#43;0000 UTC">2014-05-03</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -199,38 +201,29 @@
   <div class="content">
     
     
-    <h2 id="结构体struct">结构体struct</h2>
-<ol>
-<li><code>struct</code> 是一种复合数据类型， 它是由基本数据类型组合而成(<code>char, int, float, ...</code>)</li>
-<li>编译器将<code>struct</code>中的成员按其<code>alignment</code>分配空间，各个成员在内存中顺序存储</li>
-<li><code>struct</code>中的第一个成员地址为<code>struct</code>的首地址</li>
-<li><code>struct</code>中的每个成员地址具有对齐的特性，如int32其起始地址应该为4的倍数</li>
-</ol>
-<h2 id="字节对齐">字节对齐</h2>
-<ol>
-<li>计算机内存空间按照byte划分</li>
-<li>各种类型数据按照规则在内存空间上排列，数据只能从特定的内存地址进行存取</li>
-</ol>
-<h3 id="为什么">为什么</h3>
-<ul>
-<li>某些cpu在访问没有进行对齐的变量时，会报错。比如<code>oracle sparc</code>系统</li>
-<li>比较常见的没有字节对齐，会损失数据的&hellip;</li></ul>
+    <h2 id="替换文件名中非法字符">替换文件名中非法字符</h2>
+<pre><code>#include &lt;regex&gt;
+string fname = regex_replace(filename,&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/compilation/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/" class="button big">阅读全文</a>
+    <a href="/blog/regexp/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/compilation/">Compilation</a></li>
+          <li><a class="article-terms-link" href="/categories/regexp/">RegExp</a></li>
         
       
     </ul>
   
   
     <ul class="tags">
-      <li>None</li>
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
     </ul>
   
 </div>
@@ -243,14 +236,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/compilation/%E7%BC%96%E8%AF%91%E7%B1%BB%E5%9E%8B/">高级语言编译类型</a></h2>
+      <h2><a href="/blog/compilation/makefile/">Makefile是怎样让make工作的</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2013-10-04 00:00:00 &#43;0000 UTC">2013-10-04</time>
+        <time datetime="2014-04-26 00:00:00 &#43;0000 UTC">2014-04-26</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -265,20 +258,14 @@
   <div class="content">
     
     
-    <h2 id="概述">概述</h2>
-<p>高级语言所编制的程序不能直接被计算机识别，必须经过转换才能被执行</p>
-<h2 id="静态编译static-compilation">静态编译（static compilation）</h2>
-<pre><code>静态编译的程序在执行前全部被翻译成机器码。
-</code></pre>
-<h2 id="解释型interpretation">解释型（interpretation）</h2>
-<pre><code>解释型的程序在执行时一句一句的解释执行。
-</code></pre>
-<h2 id="即时编译just-in-time-compilation">即时编译（Just-in-time compilation）</h2>
-<pre><code>又称动态翻译，混合static compilation 和 interpretation，运行时将中间码转换成机器码编译。
-JIT 首先是compilation，对代码有优化，某个函数或者任意代码第一次调用时进行编译并cache，再次遇到该函数时直接从cache中执行已经编译好的&hellip;</code></pre>
+    <h2 id="make版本">make版本</h2>
+<p><code>GNU make 3.8.1</code><br>
+<code>Makefile</code>文件告诉<code>make</code>命令怎样去编译和链接程序</p>
+<h2 id="makefile的规则">Makefile的规则</h2>
+<pre><code>target ... : prerequisites ...&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/compilation/%E7%BC%96%E8%AF%91%E7%B1%BB%E5%9E%8B/" class="button big">阅读全文</a>
+    <a href="/blog/compilation/makefile/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -308,14 +295,14 @@ JIT 首先是compilation，对代码有优化，某个函数或者任意代码�
   <header>
   <div class="title">
     
-      <h2><a href="/blog/linux/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E5%8F%B7/">linux系统信号</a></h2>
+      <h2><a href="/blog/software-programming/%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE/">常见的开源许可协议和注意事项</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2013-09-22 00:00:00 &#43;0000 UTC">2013-09-22</time>
+        <time datetime="2014-04-11 00:00:00 &#43;0000 UTC">2014-04-11</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -330,154 +317,139 @@ JIT 首先是compilation，对代码有优化，某个函数或者任意代码�
   <div class="content">
     
     
-    <h2 id="信号列表">信号列表</h2>
-<ol>
-<li>SIGHUP</li>
-</ol>
-<blockquote>
-<p>本信号在用户终端连接(正常或非正常)结束时发出, 通常是在终端的控制进程结束时, 通知同一 session 内的各个作业, 这时它们与控制终端不再关联。</p>
-</blockquote>
-<blockquote>
-<p>登录 Linux 时，系统会分配给登录用户一个终端( Session )。在这个终端运行的所有程序，包括前台进程组和后台进程组，一般都属于这个 Session 。当用户退出 Linux 登录时，前台进程组和后台有对终端输出的进程将会收到 SIGHUP 信号。这个信号的默认操作为终止进程，因此前台进程组和后台有终端输出的进程就会中止。不过可以捕获这个信号，比如 wget 能捕获 SIGHUP 信号，并忽略它，这&hellip;</p></blockquote>
+    <h2 id="gplgnu-general-public-license">GPL(GNU General Public License)</h2>
+<p>GPL 出发点是代码的开源/免费使用和引用/修改/衍生代码的开源/免费使用， 不允许修改/衍生后的代码作为比原的商业软件发布和销售。  &hellip;</p>
   </div>
   <footer>
-    <a href="/blog/linux/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E5%8F%B7/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/compilation/%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/">进程启动后怎样申请和分配内存空间</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2013-09-02 00:00:00 &#43;0000 UTC">2013-09-02</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h3 id="栈区-stack">栈区 stack</h3>
-<p>由编译器自动分配和释放， 存放程序运行时函数分配的局部变量、函数参数、返回数据等。操作类似数据结构中的栈。</p>
-<h3 id="堆区-heap">堆区 heap</h3>
-<p>由程序分配和手动释放。 如果程序没有主动释放，程序结束后OS回收。 分配类似于数据结构中的链表</p>
-<h3 id="全局区">全局区</h3>
-<p>存放全局变量、静态数据。程序结束由OS回收。 分为已初始化全局区（data）和未初始化全局区（bss）</p>
-<h3 id="常量区">常量区</h3>
-<p>存放常量字符串。程序结束后由OS回收</p>
-<h3 id="代码区">代码区</h3>
-<p>存放函数体的二进制代码</p>
-<h3 id="堆栈区别">堆栈区别</h3>
-<h4 id="申请">申请</h4>
-<ol>
-<li>栈： 只要系统栈内存空间大于申请空间， 系统将为程序提供内存，否则报异常提示栈溢出；</li>
-<li>堆： 操作系统会记录空闲内存地址的链表， 系统收到程序的申请时遍历该&hellip;</li></ol>
-  </div>
-  <footer>
-    <a href="/blog/compilation/%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/compilation/">Compilation</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      <li>None</li>
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/software-programming/%E8%AF%AD%E8%A8%80%E7%B1%BB%E5%9E%8B/">编程语言分类</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2013-08-27 00:00:00 &#43;0000 UTC">2013-08-27</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="program-errors">Program Errors</h2>
-<ul>
-<li>trapped errors：出错后程序终止执行，如：除0。</li>
-<li>untrapped errors：出错后程序继续执行，会出现任意行为，如：缓冲区溢出。</li>
-</ul>
-<h2 id="forbidden-behavious">Forbidden Behavious</h2>
-<p>语言设计时定义一组 Forbidden Behavious， 它必须包含所有的 untrapped errors，但可能包含 trapped errors。</p>
-<h2 id="well-behavedill-behaved">Well behaved,ill behaved</h2>
-<ul>
-<li>well behaved:如果程序执行不出现forbidden behavious，则为 well behaved</li>
-<li>ill behaved： 否则是ill&hellip;</li></ul>
-  </div>
-  <footer>
-    <a href="/blog/software-programming/%E8%AF%AD%E8%A8%80%E7%B1%BB%E5%9E%8B/" class="button big">阅读全文</a>
+    <a href="/blog/software-programming/%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
           <li><a class="article-terms-link" href="/categories/software-programming/">Software Programming</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/windows/%E6%B8%85%E7%90%86%E7%B3%BB%E7%BB%9F%E7%BC%93%E5%AD%98%E5%9B%BE%E6%A0%87/">Windows中文件的最新图标刷新不出来问题</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2014-03-15 00:00:00 &#43;0000 UTC">2014-03-15</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="磁盘上的图片被覆盖后文件预览还是旧的">磁盘上的图片被覆盖后文件预览还是旧的</h2>
+<p>reseticon.bat</p>
+<pre><code>//rem 关闭Windows外壳程序explorer
+ 
+taskkill /f /im explorer.exe&hellip;</code></pre>
+  </div>
+  <footer>
+    <a href="/blog/windows/%E6%B8%85%E7%90%86%E7%B3%BB%E7%BB%9F%E7%BC%93%E5%AD%98%E5%9B%BE%E6%A0%87/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/windows/">Windows</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/linux/%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/">linux磁盘管理和lvm磁盘扩容</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2014-03-11 00:00:00 &#43;0000 UTC">2014-03-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <p><a href="https://blog.51cto.com/12348890/2092339">reference</a></p>
+<h1 id="磁盘管理">磁盘管理</h1>
+<h2 id="硬盘分区--hard-disk-add-new-partition">硬盘分区 | Hard disk add new partition</h2>
+<ul>
+<li>
+<p>显示硬盘及所属分区情况。在终端窗口中输入如下命令：
+<code>$ sudo fdisk -l</code></p>
+<ul>
+<li>显示当前的&hellip;</li></ul></li></ul>
+  </div>
+  <footer>
+    <a href="/blog/linux/%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
         
       
     </ul>
@@ -523,7 +495,7 @@ JIT 首先是compilation，对代码有优化，某个函数或者任意代码�
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -580,6 +552,9 @@ JIT 首先是compilation，对代码有优化，某个函数或者任意代码�
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -593,9 +568,6 @@ JIT 首先是compilation，对代码有优化，某个函数或者任意代码�
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -615,7 +587,7 @@ JIT 首先是compilation，对代码有优化，某个函数或者任意代码�
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

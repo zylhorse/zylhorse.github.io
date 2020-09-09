@@ -6,18 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="记录linux常规问题和解决方案">
-<meta itemprop="description" content="常规问题 桌面版菜单栏消失  查看系统桌面环境  $ pgrep -l &quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&quot; $ ps -A | egrep -i &quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&quot; $ ls /usr/bin/*session* in GNOME returns /usr/bin/gnome-session (and more)in MATE returns /usr/bin/mate-session (and more)in LXDE returns /usr/bin/lxsession (and more)in JWM returns /usr/bin/icewm-session (should be jwm-session, not?!)   重置compiz后，重启Unity：$ setsid unity  Unity 是基于GNOME桌面环境的用户界面,由Canonical公司开发，主要用于Ubuntu操作系统
+<meta itemprop="description" content="桌面版菜单栏消失  查看系统桌面环境  $ pgrep -l &quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&quot; $ ps -A | egrep -i &quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&quot; $ ls /usr/bin/*session* in GNOME returns /usr/bin/gnome-session (and more)in MATE returns /usr/bin/mate-session (and more)in LXDE returns /usr/bin/lxsession (and more)in JWM returns /usr/bin/icewm-session (should be jwm-session, not?!)   重置compiz后，重启Unity：$ setsid unity  Unity 是基于GNOME桌面环境的用户界面,由Canonical公司开发，主要用于Ubuntu操作系统
    中文安装  查看当前语言: $ locale 查看系统语言包: $ locale -a 安装中文语言: $ apt-get install language-pack-zh-hans 添加中文支持: $ locale-gen zh_CN.">
 <meta itemprop="datePublished" content="2014-06-08T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2014-06-08T00:00:00+00:00" />
-<meta itemprop="wordCount" content="246">
+<meta itemprop="wordCount" content="249">
 
 
 
 <meta itemprop="keywords" content="," />
 <meta property="og:title" content="记录linux常规问题和解决方案" />
-<meta property="og:description" content="常规问题 桌面版菜单栏消失  查看系统桌面环境  $ pgrep -l &quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&quot; $ ps -A | egrep -i &quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&quot; $ ls /usr/bin/*session* in GNOME returns /usr/bin/gnome-session (and more)in MATE returns /usr/bin/mate-session (and more)in LXDE returns /usr/bin/lxsession (and more)in JWM returns /usr/bin/icewm-session (should be jwm-session, not?!)   重置compiz后，重启Unity：$ setsid unity  Unity 是基于GNOME桌面环境的用户界面,由Canonical公司开发，主要用于Ubuntu操作系统
+<meta property="og:description" content="桌面版菜单栏消失  查看系统桌面环境  $ pgrep -l &quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&quot; $ ps -A | egrep -i &quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&quot; $ ls /usr/bin/*session* in GNOME returns /usr/bin/gnome-session (and more)in MATE returns /usr/bin/mate-session (and more)in LXDE returns /usr/bin/lxsession (and more)in JWM returns /usr/bin/icewm-session (should be jwm-session, not?!)   重置compiz后，重启Unity：$ setsid unity  Unity 是基于GNOME桌面环境的用户界面,由Canonical公司开发，主要用于Ubuntu操作系统
    中文安装  查看当前语言: $ locale 查看系统语言包: $ locale -a 安装中文语言: $ apt-get install language-pack-zh-hans 添加中文支持: $ locale-gen zh_CN." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://zylhorse.github.io/blog/linux/%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/" />
@@ -25,9 +27,9 @@
 <meta property="article:modified_time" content="2014-06-08T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="记录linux常规问题和解决方案"/>
-<meta name="twitter:description" content="常规问题 桌面版菜单栏消失  查看系统桌面环境  $ pgrep -l &quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&quot; $ ps -A | egrep -i &quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&quot; $ ls /usr/bin/*session* in GNOME returns /usr/bin/gnome-session (and more)in MATE returns /usr/bin/mate-session (and more)in LXDE returns /usr/bin/lxsession (and more)in JWM returns /usr/bin/icewm-session (should be jwm-session, not?!)   重置compiz后，重启Unity：$ setsid unity  Unity 是基于GNOME桌面环境的用户界面,由Canonical公司开发，主要用于Ubuntu操作系统
+<meta name="twitter:description" content="桌面版菜单栏消失  查看系统桌面环境  $ pgrep -l &quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&quot; $ ps -A | egrep -i &quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&quot; $ ls /usr/bin/*session* in GNOME returns /usr/bin/gnome-session (and more)in MATE returns /usr/bin/mate-session (and more)in LXDE returns /usr/bin/lxsession (and more)in JWM returns /usr/bin/icewm-session (should be jwm-session, not?!)   重置compiz后，重启Unity：$ setsid unity  Unity 是基于GNOME桌面环境的用户界面,由Canonical公司开发，主要用于Ubuntu操作系统
    中文安装  查看当前语言: $ locale 查看系统语言包: $ locale -a 安装中文语言: $ apt-get install language-pack-zh-hans 添加中文支持: $ locale-gen zh_CN."/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -84,12 +86,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -176,8 +178,7 @@
 </div>
     <div class="content">
       
-      <h1 id="常规问题">常规问题</h1>
-<h2 id="桌面版菜单栏消失">桌面版菜单栏消失</h2>
+      <h2 id="桌面版菜单栏消失">桌面版菜单栏消失</h2>
 <ol>
 <li>查看系统桌面环境
 <ul>
@@ -191,7 +192,7 @@ in JWM returns /usr/bin/icewm-session (should be jwm-session, not?!)
 </code></pre></li>
 </ul>
 </li>
-<li>重置compiz后，重启Unity：<code>$ setsid unity</code>
+<li>重置<code>compiz</code>后，重启<code>Unity</code>：<code>$ setsid unity</code>
 <blockquote>
 <p>Unity 是基于GNOME桌面环境的用户界面,由Canonical公司开发，主要用于Ubuntu操作系统</p>
 </blockquote>
@@ -210,31 +211,24 @@ LANGUAGE=&quot;zh_CN.utf8&quot;
 </ol>
 <h3 id="中文乱码">中文乱码</h3>
 <ol>
-<li>
-<p>拷贝windows 字体: <code>$ cp windows/Fonts /usr/share/fonts/winfonts</code></p>
-</li>
-<li>
-<p>修改文件权限: <code>$ chmod u+rwx /usr/share/fonts/winfonts</code></p>
-</li>
-<li>
-<p>建立字体缓存</p>
+<li>拷贝<code>windows</code> 字体: <code>$ cp windows/Fonts /usr/share/fonts/winfonts</code></li>
+<li>修改文件权限: <code>$ chmod u+rwx /usr/share/fonts/winfonts</code></li>
+<li>建立字体缓存
 <pre><code>$ cd /usr/share/fonts/winfonts
 $ mkfontscale
 $ mkfontdir
 $ fc-cache -fv
 </code></pre></li>
-<li>
-<p>重启机器: <code>$ reboot</code></p>
-</li>
+<li>重启机器: <code>$ reboot</code></li>
 </ol>
 <h2 id="启动ssh">启动ssh</h2>
 <ol>
-<li>ssh server 安装：<code>$ sudo apt-get install openssh-server</code></li>
-<li>ssh server 启动: <code>$ sudo service ssh start</code></li>
+<li><code>ssh server</code> 安装：<code>$ sudo apt-get install openssh-server</code></li>
+<li><code>ssh server</code> 启动: <code>$ sudo service ssh start</code></li>
 </ol>
 <h2 id="修改apt-源">修改apt 源</h2>
 <ol>
-<li>打开apt 文件： <code>$ vim /etc/apt/sources.list</code></li>
+<li>打开<code>apt</code>文件： <code>$ vim /etc/apt/sources.list</code></li>
 <li>在文件尾部添加新的源：
 <pre><code>deb http://mirrors.163.com/ubuntu/ zesty main restricted universe multiverse
 deb http://mirrors.163.com/ubuntu/ zesty-security main restricted universe multiverse
@@ -253,13 +247,13 @@ deb-src http://mirrors.163.com/ubuntu/ zesty-backports main restricted universe 
 <pre><code>convert: not authorized `test.pdf' @ error/constitute.c/WriteImage/1028.
 </code></pre><p>修复方法</p>
 <ol>
-<li>修改文件： /etc/ImageMagick-6/policy.xml</li>
-<li>修改此行： <policy domain="coder" rights="read|write" pattern="PDF" /></li>
+<li>修改文件： <code>/etc/ImageMagick-6/policy.xml</code></li>
+<li>修改此行： <code>&lt;policy domain=&quot;coder&quot; rights=&quot;read|write&quot; pattern=&quot;PDF&quot; /&gt;</code></li>
 </ol>
 <h2 id="字符串hash">字符串hash</h2>
 <pre><code>$ echo -n 'love' | md5sum -
 </code></pre><h2 id="实时网络监控">实时网络监控</h2>
-<p>工具： iptraf</p>
+<p>工具： <code>iptraf</code></p>
 <h2 id="安装-chrome">安装 chrome</h2>
 <pre><code>$ sudo wget http://www.linuxidc.com/files/repo/google-chrome.list -P /etc/apt/sources.list.d/
 $ wget -q -O - https://dl.google.com/linux/linux_signing_key.pub  | sudo apt-key add -
@@ -268,6 +262,7 @@ $ sudo apt-get install google-chrome-stable
 </code></pre><h2 id="安装flash">安装flash</h2>
 <p><code>$ sudo apt install adobe-flashplugin</code></p>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -294,8 +289,26 @@ $ sudo apt-get install google-chrome-stable
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#桌面版菜单栏消失">桌面版菜单栏消失</a></li>
+    <li><a href="#中文安装">中文安装</a>
+      <ul>
+        <li><a href="#中文乱码">中文乱码</a></li>
+      </ul>
+    </li>
+    <li><a href="#启动ssh">启动ssh</a></li>
+    <li><a href="#修改apt-源">修改apt 源</a></li>
+    <li><a href="#imagemagick-jpg2pdf">ImageMagick jpg2pdf</a></li>
+    <li><a href="#字符串hash">字符串hash</a></li>
+    <li><a href="#实时网络监控">实时网络监控</a></li>
+    <li><a href="#安装-chrome">安装 chrome</a></li>
+    <li><a href="#安装flash">安装flash</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -305,6 +318,22 @@ $ sudo apt-get install google-chrome-stable
       <a href="/blog/regexp/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="button right"><span>常用的正则表达式</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Linux]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -322,7 +351,7 @@ $ sudo apt-get install google-chrome-stable
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -379,6 +408,9 @@ $ sudo apt-get install google-chrome-stable
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -392,9 +424,6 @@ $ sudo apt-get install google-chrome-stable
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -414,7 +443,7 @@ $ sudo apt-get install google-chrome-stable
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

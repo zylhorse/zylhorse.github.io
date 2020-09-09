@@ -6,10 +6,19 @@
     <description>Recent content in Categories on zylhorse blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 11 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 28 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zylhorse.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Browser</title>
+      <link>https://zylhorse.github.io/categories/browser/</link>
+      <pubDate>Fri, 28 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/browser/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Distribution System</title>
@@ -147,6 +156,15 @@
     </item>
     
     <item>
+      <title>Hugo</title>
+      <link>https://zylhorse.github.io/categories/hugo/</link>
+      <pubDate>Sat, 07 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/hugo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>MediaStream</title>
       <link>https://zylhorse.github.io/categories/mediastream/</link>
       <pubDate>Thu, 12 Apr 2018 00:00:00 +0000</pubDate>
@@ -192,6 +210,15 @@
     </item>
     
     <item>
+      <title>Plan</title>
+      <link>https://zylhorse.github.io/categories/plan/</link>
+      <pubDate>Tue, 23 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/plan/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Erlang</title>
       <link>https://zylhorse.github.io/categories/erlang/</link>
       <pubDate>Tue, 17 May 2016 00:00:00 +0000</pubDate>
@@ -206,15 +233,6 @@
       <pubDate>Fri, 05 Jun 2015 00:00:00 +0000</pubDate>
       
       <guid>https://zylhorse.github.io/categories/lua/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Browser</title>
-      <link>https://zylhorse.github.io/categories/browser/</link>
-      <pubDate>Thu, 02 Apr 2015 00:00:00 +0000</pubDate>
-      
-      <guid>https://zylhorse.github.io/categories/browser/</guid>
       <description></description>
     </item>
     

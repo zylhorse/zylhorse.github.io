@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Redis的主从同步方式">
 <meta itemprop="description" content="概述 为了分担redis读写压力， 支持主从复制； 分为全量同步和增量同步
 全量同步 全量同步一般发生在slave 初始化阶段， 这时slave需要将master上的所有数据复制一份，具体步骤：
@@ -33,7 +35,7 @@
 全量同步 全量同步一般发生在slave 初始化阶段， 这时slave需要将master上的所有数据复制一份，具体步骤：
  slave连接master， 发送SYNC命令 master接收到SYNC命令，开始执行BGSAVE命令生成RDB文件并在缓冲区记录此后执行的所有命令； master执行完BGSAVE命令后， 向所有slave发送快照，并在发送期间继续记录被执行的命令； slave收到快照文件后，丢弃所有数据，并载入新的快照； master快照发送完成后，开始向slave分发缓冲中记录的命令 slave载入快照完成后，开始接收master上缓冲的写命令；  增量同步 增量同步主要发生在slave初始化后，开始正常工作后， 将master上后续发生的写操作同步到slave上。具体过程：
  master每执行一个写命令， 就会向slave发送同样的写命令。  主从同步特点  异步同步，不阻塞master服务器 master要开启持久化，否则master重启很危险 repl-diskless-sync no 默认不使用diskless同步方式  "/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -90,12 +92,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -206,6 +208,7 @@
 <li>repl-diskless-sync no 默认不使用diskless同步方式</li>
 </ol>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -232,17 +235,43 @@
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#概述">概述</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
-      <a href="/blog/network/%E4%BA%92%E8%81%94%E7%BD%91/" class="button left"><span>讲诉互联网的概念，区分广义互联网和侠义互联网</span></a>
+      <a href="/blog/stories/%E4%B8%80%E6%AC%A1/" class="button left"><span>一次</span></a>
     
     
       <a href="/blog/cache/redis/%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F/" class="button right"><span>Redis高可用方案-集群模式</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Cache]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -260,7 +289,7 @@
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -317,6 +346,9 @@
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -330,9 +362,6 @@
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -352,7 +381,7 @@
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

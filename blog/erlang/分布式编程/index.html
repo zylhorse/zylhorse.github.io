@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Erlang分布式编程">
 <meta itemprop="description" content="分布式编程 分布式编程需求  性能   通过安排程序的不同部分在不同的机器上并行运行，让程序跑的更快。
  可靠性   通过让系统运行到数台机器上来实现容错系统，如果一台机器故障，可以在另一台机器上继续。
@@ -60,7 +62,7 @@
 创建名称服务器 同一局域网的不同机器上 erl -name NodeName -setcookie Cookie
  用-name参数启动Erlang。我们在同一台机器上运行两个节点时使用了&quot;短&rdquo;（short）名称（通过-sname标识体现）。但如果它们属于不同的网络，我们就要使用-name。   当两台机器位于同一个子网时我们也可以使用-sname，如果没有DNS服务，-sname是唯一的可行方式。
  确保两个节点拥有相同的cookie。这正是启动两个节点时都使用命令行参数-setcookie abc的原因。 确保相关节点的完全限定主机名可以被DNS解析。 确保两个系统相同版本的代码和相同版本的Erlang。  测试节点互联 net_adm:ping(Node)."/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -117,12 +119,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -409,6 +411,7 @@ erl -name &hellip; -setcookie &hellip; -kernel inet_dist_listen_min Min inet_dis
 <p>向pid发送信息。</p>
 </blockquote>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -435,8 +438,37 @@ erl -name &hellip; -setcookie &hellip; -kernel inet_dist_listen_min Min inet_dis
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#分布式编程需求">分布式编程需求</a></li>
+    <li><a href="#两种分布式模型">两种分布式模型</a></li>
+    <li><a href="#编写一个分布式程序">编写一个分布式程序</a>
+      <ul>
+        <li><a href="#步骤">步骤</a></li>
+      </ul>
+    </li>
+    <li><a href="#创建名称服务器">创建名称服务器</a>
+      <ul>
+        <li><a href="#同一局域网的不同机器上">同一局域网的不同机器上</a></li>
+        <li><a href="#跨互联网不同机器上的客户端和服务器">跨互联网不同机器上的客户端和服务器</a></li>
+      </ul>
+    </li>
+    <li><a href="#分布式编程的库和内置函数">分布式编程的库和内置函数</a>
+      <ul>
+        <li><a href="#分布式基本函数">分布式基本函数</a></li>
+      </ul>
+    </li>
+    <li><a href="#cookie保护系统">cookie保护系统</a></li>
+    <li><a href="#基于套接字的分布式模型">基于套接字的分布式模型</a>
+      <ul>
+        <li><a href="#用lib_chan控制进程">用lib_chan控制进程</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -446,6 +478,22 @@ erl -name &hellip; -setcookie &hellip; -kernel inet_dist_listen_min Min inet_dis
       <a href="/blog/erlang/%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF/" class="button right"><span>Erlang接口技术</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Erlang]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -463,7 +511,7 @@ erl -name &hellip; -setcookie &hellip; -kernel inet_dist_listen_min Min inet_dis
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -520,6 +568,9 @@ erl -name &hellip; -setcookie &hellip; -kernel inet_dist_listen_min Min inet_dis
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -533,9 +584,6 @@ erl -name &hellip; -setcookie &hellip; -kernel inet_dist_listen_min Min inet_dis
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -555,7 +603,7 @@ erl -name &hellip; -setcookie &hellip; -kernel inet_dist_listen_min Min inet_dis
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

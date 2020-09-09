@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Erlang并发编程">
 <meta itemprop="description" content="概述 Erlang的并发是基于进程的。进程是一些独立的小型虚拟机。 在Erlang里面：
  创建和销毁进程是非常迅速的 在进程之间发送消息是非常迅速的 进程在所有操作系统上都具有相同的行为方式 可以生成大量进程 进程不共享内存，完全独立 进程唯一交互方式是消息传递  基本并发函数  Pid = spawn(Mod, Func, Args)   创建一个新的并发进程来执行apply(Mod, Func, Args)。这个新进程和调用进程并列运行。spawn返回一个Pid，可以使用Pid给此进程发送消息。这里参数为Args的Func必须从Mod模块导出。
@@ -42,7 +44,7 @@
  receive &hellip; end   接受发送给某个进程的消息，阻塞等待。语法如下：
  receivePattern1 [when Guard1] -&gt;Expressions1;Pattern2 [when Guard2] -&gt;Expressions2;...end 当某个消息到达进程后，系统尝试将它与Pattern1进行匹配，如果成功则执行Expressions1。如果不成功则以此类推。如果没有匹配的模式，消息就会被保存起来供以后处理，进程则会开始等待下一条信息。
   当spawn命令被执行时，系统会创建一个新的进程，并给每个进程同步创建一个邮箱。给进程发送消息后，消息会被放入该进程的邮箱，只有程序执行接受语句时才会读取邮箱。"/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -99,12 +101,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -191,7 +193,7 @@
 </div>
     <div class="content">
       
-      <h1 id="概述">概述</h1>
+      <h2 id="概述">概述</h2>
 <p>Erlang的并发是基于进程的。进程是一些独立的小型虚拟机。
 在Erlang里面：</p>
 <ol>
@@ -202,7 +204,7 @@
 <li>进程不共享内存，完全独立</li>
 <li>进程唯一交互方式是消息传递</li>
 </ol>
-<h1 id="基本并发函数">基本并发函数</h1>
+<h2 id="基本并发函数">基本并发函数</h2>
 <ol>
 <li>Pid = spawn(Mod, Func, Args)</li>
 </ol>
@@ -241,16 +243,16 @@
 <blockquote>
 <p>当spawn命令被执行时，系统会创建一个新的进程，并给每个进程同步创建一个邮箱。给进程发送消息后，消息会被放入该进程的邮箱，只有程序执行接受语句时才会读取邮箱。</p>
 </blockquote>
-<h1 id="客户端服务器">客户端－服务器</h1>
+<h2 id="客户端服务器">客户端－服务器</h2>
 <p>客户端－服务器架构是Erlang的中心。Erlang里面客户但和服务器是不同的进程，他们之间的通信使用普通的Erlang消息传递机制。</p>
-<h1 id="进程很轻巧">进程很轻巧</h1>
+<h2 id="进程很轻巧">进程很轻巧</h2>
 <ul>
 <li>分裂20000个进程平均消耗3.0微妙的cpu时间和3.4微妙的实际运行时间。</li>
 <li>erlang:system_info(process_limit)　用于找出允许创建的最大进程数量。其中一些被系统保留，实际上能够创建的要比这个少。当超出限制的最大进程数量时，系统拒绝启动更多进程并返回错误报告。</li>
 <li>要超越这个限制可以在shell中使用:$erl +P 3000000</li>
 <li>随着进程数量的增加，进程分裂时间也会加长。超过一定限制后，物理内存会被耗尽，导致系统将物理内存交换到硬盘上，导致运行速度明显变慢。因此编写程序时应尽量确保进程运行在物理内存中。</li>
 </ul>
-<h1 id="带超时的接受">带超时的接受</h1>
+<h2 id="带超时的接受">带超时的接受</h2>
 <ul>
 <li>有时候一条接受语句因为消息迟迟不来而而一直等待。引起这种现象的原因有：程序逻辑错误；发送消息的进程在消息发送前崩溃等。</li>
 <li>可以给接受语句添加超时设置：</li>
@@ -267,14 +269,14 @@
 </code></pre><blockquote>
 <p>解释：如果在进入receive表达式的Time毫秒后还没有接受到消息，进程会停止等待，直接执行ExpressionTimeout。</p>
 </blockquote>
-<h1 id="只带超时部分的接收">只带超时部分的接收</h1>
+<h2 id="只带超时部分的接收">只带超时部分的接收</h2>
 <p>可以编写一个只有超时部分的receive，通过这个方法，可以实现sleep的效果，使当前进程挂起T毫秒:</p>
 <pre><code>sleep(T) -&gt;
         receive 
         after T -&gt;
             true
         end.
-</code></pre><h1 id="超时值为０的接收">超时值为０的接收</h1>
+</code></pre><h2 id="超时值为０的接收">超时值为０的接收</h2>
 <ul>
 <li>超时值为０时的after后的表达式会立刻执行，执行前系统会尝试对进程邮箱里面的消息进行匹配。我们可以用它来实现一个flush_buffer函数，用于清空进程邮箱里面的消息。</li>
 </ul>
@@ -301,9 +303,9 @@
 </code></pre><blockquote>
 <p>对大的邮箱使用优先接收是相当低效的。</p>
 </blockquote>
-<h1 id="超时值为无穷大">超时值为无穷大</h1>
+<h2 id="超时值为无穷大">超时值为无穷大</h2>
 <p>如果接收语句中的超时值是原子infinity（无穷大），就不会触发超时。</p>
-<h1 id="实现一个定时器">实现一个定时器</h1>
+<h2 id="实现一个定时器">实现一个定时器</h2>
 <pre><code>-module(stimer).
     -export([start/2,cancel/1]).
     start(Time, Fun) -&gt;
@@ -316,7 +318,7 @@
         after Time -&gt;
             Fun()
         end.
-</code></pre><h1 id="选择性接收">选择性接收</h1>
+</code></pre><h2 id="选择性接收">选择性接收</h2>
 <p>基本函数receive用来从进程邮箱里提取消息，它还会将未匹配的消息放到保存队列里面，以后处理，并管理超时。</p>
 <pre><code>receive
             Pattern1 [when Guard1] -&gt;
@@ -336,7 +338,7 @@
 <li>一旦某个消息匹配成功，保存队列里面的所有消息都会按照到达进程的顺序重新进入邮箱。如果设置了定时器，就会清除它。</li>
 <li>如果定时器在等待消息时到期了，系统会执行表达式ExpressionTimeout，并把保存队列中的消息按照它们到达进程的顺序放回邮箱。</li>
 </ol>
-<h1 id="注册进程">注册进程</h1>
+<h2 id="注册进程">注册进程</h2>
 <ul>
 <li>当进程创建时，只有父进程知道它的PID，其它进程无法知道。Erlang有一种公布进程标识符的方法，让系统中任何进程都能与该进程通信。这样的进程被称为注册进程。管理注册进程的行数有四个：</li>
 </ul>
@@ -364,7 +366,7 @@
 <blockquote>
 <p>返回系统中所有注册进程的列表。</p>
 </blockquote>
-<h1 id="尾递归说明">尾递归说明</h1>
+<h2 id="尾递归说明">尾递归说明</h2>
 <pre><code>-module(clock).
     -export([start/2, stop/0]).
     start(Timer, Fun) -&gt;
@@ -383,6 +385,7 @@
 <li>如果我们在timer(Timer,Fun)函数尾递归后面添加其它函数处理，当函数每次递归到timer(Timer,Fun)时，都会将其后面的函数压入堆栈，到时系统空间耗尽。</li>
 </ul>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -409,8 +412,25 @@
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#概述">概述</a></li>
+    <li><a href="#基本并发函数">基本并发函数</a></li>
+    <li><a href="#客户端服务器">客户端－服务器</a></li>
+    <li><a href="#进程很轻巧">进程很轻巧</a></li>
+    <li><a href="#带超时的接受">带超时的接受</a></li>
+    <li><a href="#只带超时部分的接收">只带超时部分的接收</a></li>
+    <li><a href="#超时值为０的接收">超时值为０的接收</a></li>
+    <li><a href="#超时值为无穷大">超时值为无穷大</a></li>
+    <li><a href="#实现一个定时器">实现一个定时器</a></li>
+    <li><a href="#选择性接收">选择性接收</a></li>
+    <li><a href="#注册进程">注册进程</a></li>
+    <li><a href="#尾递归说明">尾递归说明</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -420,6 +440,22 @@
       <a href="/blog/erlang/ets%E5%92%8Cdets%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/" class="button right"><span>Erlang大数据存储</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Erlang]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -437,7 +473,7 @@
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -494,6 +530,9 @@
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -507,9 +546,6 @@
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -529,7 +565,7 @@
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

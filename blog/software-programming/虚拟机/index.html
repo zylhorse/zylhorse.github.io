@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="不同类型代码执行引擎">
 <meta itemprop="description" content="概述 代码在物理机器上执行过程：
  代码被编译成二进制文件 二进制文件运行， 加载程序到内存中 CPU通过总线将内存中指令取出并放入指令流水线， 对指令进行 译码、执行、缓冲、回写（参考arm7 三级流水 和 arm9 五级流水）  类似于程序在物理机器上运行， 虚拟机上代码执行过程：
@@ -42,7 +44,7 @@
  不管任何操作都通过操作数栈进行， 可以无视具体的物理结构 指令紧凑，一两个字节即可存储 编译器实现简单 寄存器由硬件直接提供，不用进行寄存器分配 可移植性强  缺点：
  因为无论什么操作都要通过操作数栈， 所以速度慢  寄存器虚拟机 （register vm）  基于寄存器的虚拟机会分配虚拟寄存器，存放数据 进行运算时， 需要指定操作数的寄存器 虚拟机对寄存器进行解析，找出操作数的位置，然后取出操作数进行运算  寄存器虚拟机优缺点 优点：
  没有栈虚拟机在拷贝数据时进行大量的出入栈操作     栈式 VS 寄存器式 对比     指令条数 栈式 &gt; 寄存器式   代码尺寸 栈式 &lt; 寄存器式   移植性 栈式优于寄存器式   指令优化 栈式更不易优化   解释器执行速度 栈式解释器速度稍慢   代码生成难度 栈式简单   简易实现中的数据移动次数 栈式移动次数多    "/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -99,12 +101,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -283,6 +285,7 @@
 </tbody>
 </table>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -309,17 +312,48 @@
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#概述">概述</a></li>
+    <li><a href="#虚拟机实现概念">虚拟机实现概念</a></li>
+    <li><a href="#虚拟机分类">虚拟机分类</a>
+      <ul>
+        <li><a href="#栈虚拟机stack-vm">栈虚拟机（stack vm）</a></li>
+        <li><a href="#栈虚拟机优缺点">栈虚拟机优缺点</a></li>
+        <li><a href="#寄存器虚拟机-register-vm">寄存器虚拟机 （register vm）</a></li>
+        <li><a href="#寄存器虚拟机优缺点">寄存器虚拟机优缺点</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
       <a href="/blog/data-structure/bitmap/" class="button left"><span>数据结构-Bitmap</span></a>
     
     
-      <a href="/blog/network/%E4%BA%92%E8%81%94%E7%BD%91/" class="button right"><span>讲诉互联网的概念，区分广义互联网和侠义互联网</span></a>
+      <a href="/blog/stories/%E6%9A%96%E4%B8%8E%E5%87%89/" class="button right"><span>暖与凉</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Software&#32;Programming]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -337,7 +371,7 @@
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -394,6 +428,9 @@
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -407,9 +444,6 @@
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -429,7 +463,7 @@
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

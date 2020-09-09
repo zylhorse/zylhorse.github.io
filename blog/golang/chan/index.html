@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Golang源码阅读-chan">
 <meta itemprop="description" content="描述 channel 是golang实现CSP理念的重点。channel实现一个进程内不同协程之间的通信方式。
 结构体 channel 实际上是一个环形队列，实际的队列空间就是在这个channel结构体之后申请的空间。
@@ -30,7 +32,7 @@ type hchan struct {qcount uint // 缓冲队列中的元素计数器dataqsiz ui
 <meta name="twitter:description" content="描述 channel 是golang实现CSP理念的重点。channel实现一个进程内不同协程之间的通信方式。
 结构体 channel 实际上是一个环形队列，实际的队列空间就是在这个channel结构体之后申请的空间。
 type hchan struct {qcount uint // 缓冲队列中的元素计数器dataqsiz uint // 缓冲队列，=make(chan T, x)中的xbuf unsafe.Pointer // 缓冲队列，数组类型elemsize uint16 // 元素大小，单位为字节closed uint32 // chan关闭标记elemtype *_type // 元素类型sendx uint // 待发送元素在缓冲器中的索引recvx uint // 待接收元素在缓冲器中的索引recvq waitq // 阻塞等待读channel的G队列sendq waitq // 阻塞等待写channel的G队列lock mutex // 互斥锁} elem 大小不能超过65536个字节，超过会抛异常  特性  当chan缓冲中还有数据时，关闭chan后，接受者不会立刻接收到chan的关闭信号， 而是等缓冲中所有的数据被全部读取后接受者才会收到chan的关闭信号； 没有被初始化的chan在调用发送或者接收的时候会被阻塞 当chan被close之后不能被写入，但是可以被读取； chan不能被重复close，chan可以不被close；可以被系统自动回收；  make chan  新建channel时调用func makechan(t *chantype, size int) *hchan函数"/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -87,12 +89,12 @@ type hchan struct {qcount uint // 缓冲队列中的元素计数器dataqsiz ui
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -388,6 +390,7 @@ type hchan struct {qcount uint // 缓冲队列中的元素计数器dataqsiz ui
 <li>调用goready()函数，将释放链表中的所有goroutine设置为就绪状态， 等待调度</li>
 </ul>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -414,8 +417,23 @@ type hchan struct {qcount uint // 缓冲队列中的元素计数器dataqsiz ui
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#描述">描述</a></li>
+    <li><a href="#结构体">结构体</a></li>
+    <li><a href="#特性">特性</a>
+      <ul>
+        <li><a href="#make-chan">make chan</a></li>
+        <li><a href="#--chan">&lt;- chan</a></li>
+        <li><a href="#chan--">chan &lt;-</a></li>
+        <li><a href="#closechan">close(chan)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -425,6 +443,22 @@ type hchan struct {qcount uint // 缓冲队列中的元素计数器dataqsiz ui
       <a href="/blog/golang/slice/" class="button right"><span>Golang源码阅读-slice</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Golang]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -442,7 +476,7 @@ type hchan struct {qcount uint // 缓冲队列中的元素计数器dataqsiz ui
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -499,6 +533,9 @@ type hchan struct {qcount uint // 缓冲队列中的元素计数器dataqsiz ui
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -512,9 +549,6 @@ type hchan struct {qcount uint // 缓冲队列中的元素计数器dataqsiz ui
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -534,7 +568,7 @@ type hchan struct {qcount uint // 缓冲队列中的元素计数器dataqsiz ui
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

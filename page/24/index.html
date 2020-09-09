@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/erlang/%E6%96%87%E6%9C%AC%E7%BC%96%E7%A8%8B/">Erlang文本编程</a></h2>
+      <h2><a href="/blog/cache/redis/pipeline/">Redis怎么减少RRT-Pipeline</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-10-07 00:00:00 &#43;0000 UTC">2015-10-07</time>
+        <time datetime="2016-03-06 00:00:00 &#43;0000 UTC">2016-03-06</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -199,45 +201,127 @@
   <div class="content">
     
     
-    <h1 id="文本编程">文本编程</h1>
-<h2 id="操作文件的模块">操作文件的模块</h2>
-<ul>
-<li>file</li>
-</ul>
-<blockquote>
-<p>包含打开、关闭、读写文件的方法。</p>
-</blockquote>
-<ul>
-<li>filename</li>
-</ul>
-<blockquote>
-<p>这个模块的方法能够跨平台的操作文件名，这样可以在不同的操作系统上运行相同的代码。</p>
-</blockquote>
-<ul>
-<li>filelib</li>
-</ul>
-<blockquote>
-<p>此模块是file的扩展。它包含的许多工具函数能够列出文件、检查文件类型。其中大多数是由file里的函数编写。</p>
-</blockquote>
-<ul>
-<li>io</li>
-</ul>
-<blockquote>
-<p>这个模块有一些操作已打开文件的方法。它可以解析文件数据，也可以将数据格式化写入文件。</p>
-</blockquote>
-<h2 id="读取文件的几种方法">读取文件的几种方法</h2>
-<ul>
-<li>file:consult(FileName)</li>
-</ul>
-<blockquote>
-<p>读取erlang数据格式的文件数据。</p>
-</blockquote>
-<h2 id="codewhichmodule">code:which(Module)</h2>
-<p>查看已载入模块源码文件地址</p>
-<h2 id="格式命令">格&hellip;</h2>
+    <h3 id="概述">概述</h3>
+<p>redis client 与server 的每次通信，都会产生一次RTT（round time trip); 并且多次通信会频繁的进行网络IO；为此pipeline 可以将多条命令请求整合，一次&hellip;</p>
   </div>
   <footer>
-    <a href="/blog/erlang/%E6%96%87%E6%9C%AC%E7%BC%96%E7%A8%8B/" class="button big">阅读全文</a>
+    <a href="/blog/cache/redis/pipeline/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/cache/redis/%E6%95%B0%E6%8D%AE%E5%BA%93/">Redis有没有数据库的概念</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-03-01 00:00:00 &#43;0000 UTC">2016-03-01</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="概述">概述</h2>
+<ol>
+<li>redis单机支持16个数据库， 每个数据库的数据是隔离的不能共享；redis cluster 是没有数据库概念的</li>
+<li>redis 之所以分这么多数据库， 也是为了区分业务， 不同业务存放在不同的&hellip;</li></ol>
+  </div>
+  <footer>
+    <a href="/blog/cache/redis/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF/">Erlang并发编程错误</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-02-05 00:00:00 &#43;0000 UTC">2016-02-05</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h1 id="错误处理理念">错误处理理念</h1>
+<ul>
+<li>并发Erlang程序里的错误处理建立在远程检测和处理错误的概念上。我们选择让发生错误的进程崩溃，然后在其它进程里面进行纠错处理。</li>
+<li>在设计容错式的系统时就假设错误会发生，进程会崩溃。因此&hellip;</li></ul>
+  </div>
+  <footer>
+    <a href="/blog/erlang/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -267,14 +351,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E8%A1%A5%E9%81%97/">Erlang顺序编程补遗</a></h2>
+      <h2><a href="/blog/erlang/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">Erlang并发编程</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-09-21 00:00:00 &#43;0000 UTC">2015-09-21</time>
+        <time datetime="2016-02-03 00:00:00 &#43;0000 UTC">2016-02-03</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -289,20 +373,17 @@
   <div class="content">
     
     
-    <h1 id="apply">apply</h1>
-<ul>
-<li>内置函数apply(mod,func,[arg1,arg2,arg3,&hellip;,argn])。会将参数arg1,arg2,&hellip;,argn应用到模块mod里的函数func上。它等价于：mod:func(arg1,arg2,&hellip;,argn)。</li>
-<li>与直接调用函数的区别在于模块名和函数名可以动态的计算得出。</li>
-<li>应当尽量避免使用apply。如果使用apply对函数进行调用，许多分析工具就无法得知发生了什么，一些特定的编译器优化也不能进行。</li>
-</ul>
-<h1 id="算术表达式">算术表达式</h1>
-<pre><code> 操作符	描述	参数类型	优先级
-+X	正数	整数	1
--X	负数	整数	1
-X*Y	X乘以Y	整数	2&hellip;</code></pre>
+    <h2 id="概述">概述</h2>
+<p>Erlang的并发是基于进程的。进程是一些独立的小型虚拟机。
+在Erlang里面：</p>
+<ol>
+<li>创建和销毁进程是非常迅速的</li>
+<li>在进程之间发送消息是非常迅速的</li>
+<li>进程在所有操作系统上都具有相同的行为方式</li>
+<li>可以生&hellip;</li></ol>
   </div>
   <footer>
-    <a href="/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E8%A1%A5%E9%81%97/" class="button big">阅读全文</a>
+    <a href="/blog/erlang/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -332,14 +413,14 @@ X*Y	X乘以Y	整数	2&hellip;</code></pre>
   <header>
   <div class="title">
     
-      <h2><a href="/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/">Erlang顺序编程错误处理</a></h2>
+      <h2><a href="/blog/erlang/ets%E5%92%8Cdets%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/">Erlang大数据存储</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-09-11 00:00:00 &#43;0000 UTC">2015-09-11</time>
+        <time datetime="2016-01-22 00:00:00 &#43;0000 UTC">2016-01-22</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -354,19 +435,13 @@ X*Y	X乘以Y	整数	2&hellip;</code></pre>
   <div class="content">
     
     
-    <h1 id="概括">概括</h1>
-<ul>
-<li>Erlang中当错误出现时，需要发现并纠正，然后继续。</li>
-<li>构建真正容错的系统，需要不止一台计算机，毕竟可能整台机器崩溃。因此故障检测和别处重启计算的概念需要扩展到联网的计算机上。</li>
-</ul>
-<h1 id="顺序代码里面的错误处理">顺序代码里面的错误处理</h1>
-<ul>
-<li>异常错误发生时，可以显示调用throw(Exception),exit(Exception),error(Exception) 触发。</li>
-<li>永远不能让函数对非法的参数返回值，而是抛出一个异常错误。</li>
-<li>exit(Why):当你确实想要终止当前进程时就用它。如果此异常没有被捕获，信号{&lsquo;Exit&rsquo;,Pid,Why}就会被广播给当前进程链接的所有进程。&hellip;</li></ul>
+    <h1 id="概述">概述</h1>
+<p>ets和dets是Erlang用于高效存储大量Erlang数据条目的两个系统模块。提供大型的&quot;键-值&quot;搜索表。</p>
+<h2 id="etserlang-term-storage">ETS(Erlang Term Storage)</h2>
+<p>ETS驻留在&hellip;</p>
   </div>
   <footer>
-    <a href="/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/" class="button big">阅读全文</a>
+    <a href="/blog/erlang/ets%E5%92%8Cdets%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -379,140 +454,7 @@ X*Y	X乘以Y	整数	2&hellip;</code></pre>
   
   
     <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/software-programming/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">编程范式-函数式编程</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-09-01 00:00:00 &#43;0000 UTC">2015-09-01</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h1 id="函数式编程function-programming">函数式编程（Function Programming）</h1>
-<pre><code>函数式编程将电脑运算看作是函数运算。 函数式编程的基础是λ 演算（ lambda caculus）。函数可以作为输入（参数）输出（返回值）。
-函数式编程最古老的例子： 1958年创造出来的LISP。
-</code></pre>
-<p>#特性</p>
-<h2 id="函数是第一公民first-class">函数是&quot;第一公民&rdquo;（first class）</h2>
-<pre><code>函数可以作为变量
-</code></pre>
-<h2 id="表达式-not-语句">”表达式“ not ”语句“</h2>
-<pre><code>”表达式“（expression）是运算过程，总有返回值
-”语句“（statement）是操作，无返回值。
-函数式编程要求只使用表达式，不使用语句， 每一步运算都有返回值。
-</code></pre>
-<h2 id="无副作用side-effect">无”副作用“（side&hellip;</h2>
-  </div>
-  <footer>
-    <a href="/blog/software-programming/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/software-programming/">Software Programming</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/erlang/erlang%E6%A8%A1%E5%9D%97%E5%92%8C%E5%87%BD%E6%95%B0/">Erlang模块和函数</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-08-20 00:00:00 &#43;0000 UTC">2015-08-20</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h1 id="模块">模块</h1>
-<ul>
-<li>模块是Erlang中代码的基本单元，我们编写的所有函数都存放在模块中，模块文件的扩展名通常为.erl。</li>
-<li>编译后的文件扩展名为.beam,</li>
-</ul>
-<blockquote>
-<p>注： beam 是 Erlang虚拟机（Bogdan‘s Erlang Abstract Machine）的所写。Erlang虚拟机最早的版本是 Joe Armstrong编写的基于栈的虚拟机JAM（Joe&rsquo;s Abstract Machine）。后来，Bogumil(Bogdan) Hausman在1993年编写了基于寄存器的虚拟机BEAM（Bogdan&rsquo;t Abstract Machine), 执行效率有了 大幅度提&hellip;</p></blockquote>
-  </div>
-  <footer>
-    <a href="/blog/erlang/erlang%E6%A8%A1%E5%9D%97%E5%92%8C%E5%87%BD%E6%95%B0/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
+      <li>None</li>
     </ul>
   
 </div>
@@ -547,7 +489,7 @@ X*Y	X乘以Y	整数	2&hellip;</code></pre>
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -604,6 +546,9 @@ X*Y	X乘以Y	整数	2&hellip;</code></pre>
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -617,9 +562,6 @@ X*Y	X乘以Y	整数	2&hellip;</code></pre>
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -639,7 +581,7 @@ X*Y	X乘以Y	整数	2&hellip;</code></pre>
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

@@ -47,7 +47,7 @@ Makefile的规则 target ... : prerequisites ...command... target就是一个
       
       <guid>https://zylhorse.github.io/blog/compilation/%E7%BC%96%E8%AF%91%E7%B1%BB%E5%9E%8B/</guid>
       <description>概述 高级语言所编制的程序不能直接被计算机识别，必须经过转换才能被执行
-静态编译（static compilation） 静态编译的程序在执行前全部被翻译成机器码。 解释型（interpretation） 解释型的程序在执行时一句一句的解释执行。 即时编译（Just-in-time compilation） 又称动态翻译，混合static compilation 和 interpretation，运行时将中间码转换成机器码编译。JIT 首先是compilation，对代码有优化，某个函数或者任意代码第一次调用时进行编译并cache，再次遇到该函数时直接从cache中执行已经编译好的机器码，也不用像interpretation一样对代码重复解释。 </description>
+类型  静态编译（static compilation）  静态编译的程序在执行前全部被翻译成机器码。   解释型（interpretation）  解释型的程序在执行时一句一句的解释执行。   即时编译（Just-in-time compilation）  又称动态翻译，混合static compilation 和 interpretation，运行时将中间码转换成机器码编译。 JIT 首先是compilation，对代码有优化，某个函数或者任意代码第一次调用时进行编译并cache，再次遇到该函数时直接从cache中执行已经编译好的机器码，也不用像interpretation一样对代码重复解释。    </description>
     </item>
     
     <item>

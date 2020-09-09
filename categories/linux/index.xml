@@ -26,12 +26,12 @@
       <pubDate>Mon, 02 Feb 2015 00:00:00 +0000</pubDate>
       
       <guid>https://zylhorse.github.io/blog/linux/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BA%90/</guid>
-      <description>联网系统步骤 清理apt 缓冲区 sudo rm -rf /var/cache/apt/archives/*
-下载所需组件 sudo apt-get -d install &amp;lt;包名&amp;gt;
-创建目录，并拷贝 mkdir &amp;lt;your-path&amp;gt;cp -r /var/cache/apt/archives &amp;lt;your-path&amp;gt;修改名目权限 chmod 777 -R 
-建立依赖关系 sudo touch &amp;lt;your-path&amp;gt;/Packages.gzcd &amp;lt;your-path&amp;gt;sudo dpkg-scanpackages ./ /dev/null | gzip &amp;gt; &amp;lt;your-path&amp;gt;/Packages.gz拷贝Packages.gz 到 deb 同目录下 cp /Packages.gz /archives/Packages.gz
-拷贝目录到离线系统 scp -r  &amp;lt;离线系统&amp;gt;
-离线系统步骤 修改apt源 vi /etc/apt/sources.list清空并添加deb file:///&amp;lt;your-path&amp;gt; archives/安装指定组件 apt-get update apt-get install &amp;lt;包名&amp;gt;</description>
+      <description>离线安装步骤 清理apt 缓冲区 $ sudo rm -rf /var/cache/apt/archives/*
+下载所需组件 $ sudo apt-get -d install &amp;lt;包名&amp;gt;
+创建目录，并拷贝 $ mkdir &amp;lt;your-path&amp;gt;$ cp -r /var/cache/apt/archives &amp;lt;your-path&amp;gt;修改名目权限 $ chmod 777 -R &amp;lt;your-path&amp;gt;
+建立依赖关系 $ sudo touch &amp;lt;your-path&amp;gt;/Packages.gz$ cd &amp;lt;your-path&amp;gt;$ sudo dpkg-scanpackages ./ /dev/null | gzip &amp;gt; &amp;lt;your-path&amp;gt;/Packages.gz拷贝Packages.gz 到 deb 同目录下 $ cp &amp;lt;your-path&amp;gt;/Packages.gz &amp;lt;your-path&amp;gt;/archives/Packages.gz
+拷贝目录到离线系统 $ scp -r &amp;lt;your-path&amp;gt; &amp;lt;离线系统&amp;gt;
+离线系统步骤 修改apt源 $ vi /etc/apt/sources.list清空并添加deb file:///&amp;lt;your-path&amp;gt; archives/安装指定组件 $ apt-get update $ apt-get install &amp;lt;包名&amp;gt;</description>
     </item>
     
     <item>
@@ -40,8 +40,8 @@
       <pubDate>Thu, 08 Jan 2015 00:00:00 +0000</pubDate>
       
       <guid>https://zylhorse.github.io/blog/linux/ubuntu-%E6%9C%8D%E5%8A%A1/</guid>
-      <description>服务制作 1、在/etc/init.d/ 下以管理员权限新建文件，在本例中为location_server.
-2、使用以下模板修改启动脚本的内容
+      <description>服务制作   在/etc/init.d/ 下以管理员权限新建文件，在本例中为location_server.
+  使用以下模板修改启动脚本的内容
 #!/bin/bash### BEGIN INIT INFO## Provides: location_server# Required-Start: $local_fs $remote_fs# Required-Stop: $local_fs $remote_fs# Default-Start: 2 3 4 5# Default-Stop: 0 1 6# Short-Description: initscript# Description: This file should be used to construct scripts to be placed in /etc/init.d.#### END INIT INFO## Fill in name of program here.PROG=&amp;quot;location_server&amp;quot;PROG_PATH=&amp;quot;/opt/location_server&amp;quot; ## Not need, but sometimes helpful (if $PROG resides in /opt for example).</description>
     </item>
     
@@ -52,9 +52,10 @@
       
       <guid>https://zylhorse.github.io/blog/linux/ubuntu-shadowsocks/</guid>
       <description>ubuntu shadowsocks 描述 ubuntu 下 shadowssocks 安装
-安装shadowsocks-libev sudo apt-get install software-properties-common -y sudo add-apt-repository ppa:max-c-lv/shadowsocks-libev -y sudo apt-get update sudo apt install shadowsocks-libev 编写配置文件 配置文件需要写入你的shadowsocks账号的信息，启动shadowsocks时需要加载这些信息，具体如下： 创建配置文件： sudo vi /etc/shadowsocks-libev.json 在配置文件中输入以下信息： { &amp;quot;server&amp;quot;:&amp;quot;XXXX服务器地址&amp;quot;, &amp;quot;server_port&amp;quot;:XXXX端口, &amp;quot;local_address&amp;quot;:&amp;quot;127.0.0.1&amp;quot;, &amp;quot;local_port&amp;quot;:1080, &amp;quot;password&amp;quot;:&amp;quot;XXXX密码&amp;quot;, &amp;quot;timeout&amp;quot;:60, &amp;quot;method&amp;quot;:&amp;quot;chacha20-ietf-poly1305&amp;quot;, &amp;quot;fast_open&amp;quot;:false, &amp;quot;workers&amp;quot;:1 } XXXX需要改成你的账号对应的具体信息，method就是加密方式，这里就是chacha20-ietf-poly1305,这个要看你的账号具体要求的加密方式。运行shadowsocks ss-local -c /etc/shadowsocks-libev.json &amp;amp; 其中 &amp;amp;是将其放在后台运行设置全局代理  进入 系统设置 -&amp;gt; 网络 -&amp;gt; 网络代理，方法选择手动，然后设置Socks主机127.0.0.1， 后面端口这是1080，然后点击应用到整个系统，输入密码即可。
-  缺点： 这样你使用的网络都是通过代理访问的，比如说我在登录微信的时候，居然提示我在未知地点登录，这样比较浪费流量，访问国内网络也使用代理，会导致访问国内网络网速较慢。所以可以使用浏览器代理，只在浏览器访问中使用代理。
- 使用polipo全局代理 设置浏览器代理 在firefox中可以通过设置浏览器的代理来使用代理访问国外网络，具体可以参考网上教程。而在ubuntu中，chrome中是不能设置代理的，但是！但是！但是！有一个非常非常好用的插件，可以设置代理，叫Proxy SwitchyOmega, 后面菜花会给出Proxy SwitchyOmega 的简易使用教程。</description>
+安装shadowsocks-libev $ sudo apt-get install software-properties-common -y $ sudo add-apt-repository ppa:max-c-lv/shadowsocks-libev -y $ sudo apt-get update $ sudo apt install shadowsocks-libev 编写配置文件 配置文件需要写入你的shadowsocks账号的信息，启动shadowsocks时需要加载这些信息，具体如下： 创建配置文件： $ sudo vi /etc/shadowsocks-libev.json 在配置文件中输入以下信息： { &amp;quot;server&amp;quot;:&amp;quot;XXXX服务器地址&amp;quot;, &amp;quot;server_port&amp;quot;:XXXX端口, &amp;quot;local_address&amp;quot;:&amp;quot;127.0.0.1&amp;quot;, &amp;quot;local_port&amp;quot;:1080, &amp;quot;password&amp;quot;:&amp;quot;XXXX密码&amp;quot;, &amp;quot;timeout&amp;quot;:60, &amp;quot;method&amp;quot;:&amp;quot;chacha20-ietf-poly1305&amp;quot;, &amp;quot;fast_open&amp;quot;:false, &amp;quot;workers&amp;quot;:1 }  XXXX需要改成你的账号对应的具体信息，method就是加密方式，这里就是chacha20-ietf-poly1305,这个要看你的账号具体要求的加密方式。
+ 运行shadowsocks $ ss-local -c /etc/shadowsocks-libev.json &amp;amp;  其中 &amp;amp;是将其放在后台运行
+ 设置全局代理 进入 系统设置 -&amp;gt; 网络 -&amp;gt; 网络代理，方法选择手动，然后设置Socks主机127.0.0.1， 后面端口这是1080， 然后点击应用到整个系统，输入密码即可。
+ 缺点： 这样你使用的网络都是通过代理访问的，比如说我在登录微信的时候，居然提示我在未知地点登录，这样比较浪费流量，访问国内网络也使用代理，会导致访问国内网络网速较慢。所以可以使用浏览器代理，只在浏览器访问中使用代理。</description>
     </item>
     
     <item>
@@ -65,13 +66,13 @@
       <guid>https://zylhorse.github.io/blog/vmware/vmware-ubuntu-%E6%89%A9%E5%AE%B9%E7%A3%81%E7%9B%98/</guid>
       <description>在VMWARE中扩容虚拟机磁盘大小 需要删除快照， 最好先克隆备份；
 查看扩容磁盘 调整完后，重新打开虚拟机，使用fdisk -l查看，可以看到我们刚刚扩容的空间已经可以看到，但没有分区，还不能使用。/dev/sda已经拥有了扩大的空间。
-分区 使用Linux的fdisk分区工具给磁盘/dev/sda分区，更可以根据提示输入m查看帮助信息，再输入n(表示增加分区)，回车后输入p(创建主分区)，回车后partition number输入3(因为上面已经有两个分区sda1和sda2)，回车会提示输入分区的start值(通过fdisk -l 可以看出sda2的end值为3917)，我们可以根据提示指定start值为3917，end值为默认即可(即当前最大值)，回车后输入W进行保存，分区划分完毕。
-修改分区ID 可以看到/dev/sda3的Id号为83，我们要将其改成8e(LVM卷文件系统的Id)，具体方法同上根上部中的磁盘分区大同小异，输入fdisk /dev/sda,选择t（change a partition&amp;rsquo;s system id 改变一个分区的系统ID）回车，然后选择分区3回车，然后输入L回车。然后输入8e回车，然后输入w，保存修改的分区信息。最后输入fdisk -l ,查看ID是否修改成功。修改成功后必须重新启动linux系统才能进行后面的操作。
+分区 使用Linux的fdisk分区工具给磁盘/dev/sda分区，更可以根据提示输入m查看帮助信息，再输入n(表示增加分区)，回车后输入p(创建主分区)， 回车后partition number输入3(因为上面已经有两个分区sda1和sda2)，回车会提示输入分区的start值(通过fdisk -l 可以看出sda2的end值为3917)， 我们可以根据提示指定start值为3917，end值为默认即可(即当前最大值)，回车后输入W进行保存，分区划分完毕。
+修改分区ID 可以看到/dev/sda3的Id号为83，我们要将其改成8e(LVM卷文件系统的Id)，具体方法同上根上部中的磁盘分区大同小异，输入fdisk /dev/sda, 选择t(change a partition&#39;s system id 改变一个分区的系统ID)回车，然后选择分区3回车，然后输入L回车。然后输入8e回车，然后输入w，保存修改的分区信息。 最后输入fdisk -l ,查看ID是否修改成功。修改成功后必须重新启动linux系统才能进行后面的操作。
 格式化分区 系统重启后，格式化新的分区为ext4格式。
-初始化物理卷 格式化后，创建PV. 用pvdisplay查看当前的物理卷。然后用pvcreate指令用于将物理硬盘分区初始化为物理卷，以便被LVM使用。要创建物理卷必须首先对硬盘进行分区，并且将硬盘分区的类型设置为“8e”后，才能使用pvcreat指令将分区初始化为物理卷。pvcreate /dev/sda3,创建完后，我们可以再用pvdisplay查看到新创建的物理卷。
-扩展VG 扩展VG：当前需要查看扩充的lvm组名，可以通过vgdisplay查看，在此例中我们的组名为 VolGroup,并可以看到里面的空间只有20多G。然后用vgextend指令用于动态的扩展卷组，它通过向卷组中添加物理卷来增加卷组的容量。vgextend VolGroup /dev/sda3 ,添加成功后，我们可以用vgdisplay再次查看，容量已经添加进去。
-扩容root lvextend -L+269.95G /dev/VolGroup/lv_root /dev/sda3 命令扩展空间到root下，扩容的空间要略小于VG的free空间，因此这里只输入了269.95G.然后通过df -h查看，root空间还是没变，因为我们差最后最关键的一部。
-扩容文件系统 使用使用resize2fs命令，用于扩大或者缩小未挂载的ext2,ext3或者是ext4文件系统。具体命令为：resize2fs -p /dev/mapper/VolGroup-lv_root 290G 。然后再用df -h 查看，扩容成功。</description>
+初始化物理卷 格式化后，创建PV. 用pvdisplay查看当前的物理卷。然后用pvcreate指令用于将物理硬盘分区初始化为物理卷，以便被LVM使用。 要创建物理卷必须首先对硬盘进行分区，并且将硬盘分区的类型设置为8e后，才能使用pvcreat指令将分区初始化为物理卷。pvcreate /dev/sda3,创建完后， 我们可以再用pvdisplay查看到新创建的物理卷。
+扩展VG 扩展VG：当前需要查看扩充的lvm组名，可以通过vgdisplay查看，在此例中我们的组名为 VolGroup,并可以看到里面的空间只有20多G。 然后用vgextend指令用于动态的扩展卷组，它通过向卷组中添加物理卷来增加卷组的容量。vgextend VolGroup /dev/sda3,添加成功后， 我们可以用vgdisplay再次查看，容量已经添加进去。
+扩容root lvextend -L+269.95G /dev/VolGroup/lv_root /dev/sda3命令扩展空间到root下，扩容的空间要略小于VG的free空间，因此这里只输入了269.95G. 然后通过df -h查看，root空间还是没变，因为我们差最后最关键的一部。
+扩容文件系统 使用使用resize2fs命令，用于扩大或者缩小未挂载的ext2,ext3或者是ext4文件系统。具体命令为：resize2fs -p /dev/mapper/VolGroup-lv_root 290G 。 然后再用df -h查看，扩容成功。</description>
     </item>
     
     <item>
@@ -80,11 +81,11 @@
       <pubDate>Wed, 11 Jun 2014 00:00:00 +0000</pubDate>
       
       <guid>https://zylhorse.github.io/blog/linux/ubuntu-wlan/</guid>
-      <description>查看所有网络 ifconfig -a
-打开无线网卡 ifconfig wlan0 up
-wlan 工具 apt-get install wpasupplicant
-连接无线网络 wpa_passphrase 无线网络SSID 无线网络密码 &amp;gt; 配置文件名
-配置无线网络  auto wlan0 iface wlan0 inet dhcp wpa-conf /etc/wpa_config.conf  修改网卡名称  vim /etc/default/grub GRUB_CMDLINE_LINUX=&amp;quot;net.ifnames=0 biosdevname=0&amp;rdquo; update-grub  若提示没有此命令，请先输入安装命令 apt-get install grub2-common</description>
+      <description>查看所有网络 $ ifconfig -a
+打开无线网卡 $ ifconfig wlan0 up
+wlan 工具 $ apt-get install wpasupplicant
+连接无线网络 wpa_passphrase 无线网络SSID无线网络密码 &amp;gt; 配置文件名
+配置无线网络  $ auto wlan0 $ iface wlan0 inet dhcp $ wpa-conf /etc/wpa_config.conf  修改网卡名称   $ vim /etc/default/grubGRUB_CMDLINE_LINUX=&amp;quot;net.ifnames=0 biosdevname=0&amp;quot; $ update-grub  若提示没有此命令，请先输入安装命令 $ apt-get install grub2-common</description>
     </item>
     
     <item>
@@ -93,7 +94,7 @@ wlan 工具 apt-get install wpasupplicant
       <pubDate>Sun, 08 Jun 2014 00:00:00 +0000</pubDate>
       
       <guid>https://zylhorse.github.io/blog/linux/%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</guid>
-      <description>常规问题 桌面版菜单栏消失  查看系统桌面环境  $ pgrep -l &amp;quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&amp;quot; $ ps -A | egrep -i &amp;quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&amp;quot; $ ls /usr/bin/*session* in GNOME returns /usr/bin/gnome-session (and more)in MATE returns /usr/bin/mate-session (and more)in LXDE returns /usr/bin/lxsession (and more)in JWM returns /usr/bin/icewm-session (should be jwm-session, not?!)   重置compiz后，重启Unity：$ setsid unity  Unity 是基于GNOME桌面环境的用户界面,由Canonical公司开发，主要用于Ubuntu操作系统
+      <description>桌面版菜单栏消失  查看系统桌面环境  $ pgrep -l &amp;quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&amp;quot; $ ps -A | egrep -i &amp;quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&amp;quot; $ ls /usr/bin/*session* in GNOME returns /usr/bin/gnome-session (and more)in MATE returns /usr/bin/mate-session (and more)in LXDE returns /usr/bin/lxsession (and more)in JWM returns /usr/bin/icewm-session (should be jwm-session, not?!)   重置compiz后，重启Unity：$ setsid unity  Unity 是基于GNOME桌面环境的用户界面,由Canonical公司开发，主要用于Ubuntu操作系统
    中文安装  查看当前语言: $ locale 查看系统语言包: $ locale -a 安装中文语言: $ apt-get install language-pack-zh-hans 添加中文支持: $ locale-gen zh_CN.</description>
     </item>
     
@@ -121,8 +122,12 @@ wlan 工具 apt-get install wpasupplicant
   复制安装镜像至U盘
   进入ubuntu控制台，可以直接通过Alt+F2进入终端环境
   查看u盘设备号 通过命令：ls /dev/sd*
-   查看U盘设备，通常U盘设备为sdb,sdc,sdd等名称或以此为前缀名称。如果不确定，可以将U盘拔出，然后再用 ls /dev/sd*命令查看设备，发现少了的那个就是U盘。但一般情况下，再次插入，U盘设备号会有所改变，例如原来是sdb4，重新插入，查看一下可能是sdb5，以最后插入查看的设备号为准。
- 查看到U盘设备号后，卸载设备，如下：  umount /dev/sdb4 #sdb4就是当前查看得到U盘设备重新挂载U盘,可以创建一个目录，然后将U盘挂载至新建目录，目的是为了找到U盘里的ubuntu server安装镜像文件，操作命令如下：  mkdir /mnt/usbmount /dev/sdb4 /mnt/usb # 将U盘挂载到该目录下挂载ubuntu server安装镜像文件至cdrom目录, 进入U盘目录(/mnt/usb )，找到ubuntu server安装镜像文件，并挂载镜像，操作参考如下：  cd /mnt/usbmount ubuntu-16.04.4-server-amd64.iso /cdrom #挂载镜像文件位于U盘根目录退出shell，进入安装向导界面安装系统。可以通过Alt+F1或者输入exit退出shell  </description>
+查看U盘设备，通常U盘设备为sdb,sdc,sdd等名称或以此为前缀名称。
+ 如果不确定，可以将U盘拔出，然后再用 ls /dev/sd*命令查看设备，发现少了的那个就是U盘。 但一般情况下，再次插入，U盘设备号会有所改变，例如原来是sdb4，重新插入，查看一下可能是sdb5，以最后插入查看的设备号为准。    查看到U盘设备号后，卸载设备，如下：
+umount /dev/sdb4 #sdb4就是当前查看得到U盘设备  重新挂载U盘,可以创建一个目录，然后将U盘挂载至新建目录，目的是为了找到U盘里的ubuntu server安装镜像文件，操作命令如下：
+mkdir /mnt/usbmount /dev/sdb4 /mnt/usb # 将U盘挂载到该目录下  挂载ubuntu server安装镜像文件至cdrom目录, 进入U盘目录(/mnt/usb )，找到ubuntu server安装镜像文件，并挂载镜像，操作参考如下：
+cd /mnt/usbmount ubuntu-16.04.4-server-amd64.iso /cdrom #挂载镜像文件位于U盘根目录  退出shell，进入安装向导界面安装系统。可以通过Alt+F1或者输入exit退出shell
+  </description>
     </item>
     
     <item>
@@ -131,12 +136,15 @@ wlan 工具 apt-get install wpasupplicant
       <pubDate>Sun, 22 Sep 2013 00:00:00 +0000</pubDate>
       
       <guid>https://zylhorse.github.io/blog/linux/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E5%8F%B7/</guid>
-      <description>信号列表  SIGHUP   本信号在用户终端连接(正常或非正常)结束时发出, 通常是在终端的控制进程结束时, 通知同一 session 内的各个作业, 这时它们与控制终端不再关联。
-  登录 Linux 时，系统会分配给登录用户一个终端( Session )。在这个终端运行的所有程序，包括前台进程组和后台进程组，一般都属于这个 Session 。当用户退出 Linux 登录时，前台进程组和后台有对终端输出的进程将会收到 SIGHUP 信号。这个信号的默认操作为终止进程，因此前台进程组和后台有终端输出的进程就会中止。不过可以捕获这个信号，比如 wget 能捕获 SIGHUP 信号，并忽略它，这样就算退出了Linux 登录，wget 也能继续下载。
-  此外，对于与终端脱离关系的守护进程，这个信号用于通知它重新读取配置文件。
- SIGINT   程序终止( interrupt )信号, 在用户键入 INTR 字符(通常是 Ctrl + C )时发出，用于通知前台进程组终止进程。
- SIGQUIT   和 SIGINT 类似, 但由 QUIT 字符(通常是 Ctrl + / )来控制. 进程在因收到 SIGQUIT 退出时会产生 core 文件, 在这个意义上类似于一个程序错误信号。
- SIGILL   执行了非法指令.</description>
+      <description>信号列表   SIGHUP
+本信号在用户终端连接(正常或非正常)结束时发出, 通常是在终端的控制进程结束时, 通知同一 session 内的各个作业, 这时它们与控制终端不再关联。 登录 Linux 时，系统会分配给登录用户一个终端( Session )。在这个终端运行的所有程序，包括前台进程组和后台进程组，一般都属于这个 Session 。 当用户退出 Linux 登录时，前台进程组和后台有对终端输出的进程将会收到 SIGHUP 信号。这个信号的默认操作为终止进程，因此前台进程组和后台有终端输出的进程就会中止。 不过可以捕获这个信号，比如 wget 能捕获 SIGHUP 信号，并忽略它，这样就算退出了Linux 登录，wget 也能继续下载。 此外，对于与终端脱离关系的守护进程，这个信号用于通知它重新读取配置文件。
+  SIGINT
+程序终止( interrupt )信号, 在用户键入 INTR 字符(通常是 Ctrl + C )时发出，用于通知前台进程组终止进程。
+  SIGQUIT
+和 SIGINT 类似, 但由 QUIT 字符(通常是 Ctrl + / )来控制. 进程在因收到 SIGQUIT 退出时会产生 core 文件, 在这个意义上类似于一个程序错误信号。
+  SIGILL
+执行了非法指令. 通常是因为可执行文件本身出现错误, 或者试图执行数据段. 堆栈溢出时也有可能产生这个信号。
+  SIGTRAP</description>
     </item>
     
   </channel>

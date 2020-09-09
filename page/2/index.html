@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,6 +179,71 @@
   <header>
   <div class="title">
     
+      <h2><a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">分布式锁</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-10-02 00:00:00 &#43;0000 UTC">2019-10-02</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="分布式锁">分布式锁</h2>
+<h2 id="应用场景">应用场景</h2>
+<ol>
+<li>多节点并发的对数据进行操作；</li>
+<li>多节点并发的执行同一个任务， 请求同一接口；</li>
+</ol>
+<h2 id="分布式锁条件">分布式锁条件</h2>
+<ol>
+<li>在分布式系统环境下， 一个资源同时只能被一个线程执行；</li>
+<li>高可用的获取锁和释放锁</li>
+<li>高性&hellip;</li></ol>
+  </div>
+  <footer>
+    <a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/distribution-system/">Distribution System</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/lock/">Lock</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
       <h2><a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%80%E8%87%B4%E6%80%A7/">分布式一致性</a></h2>
     
     
@@ -202,10 +269,7 @@
     <h2 id="一致性算法">一致性算法</h2>
 <p>算法目的是让整个集群的结点对某个值的变更达成一致</p>
 <ol>
-<li>Paxos 算法目的是让整个集群的结点对某个值的变更达成一致。Paxos 算法(强一致性算法)属于多数派——大多数的决定会成个整个集群的统一决定。任何一个点都可以提出要修改某个数据的提案，是否通过这个提案取决于这个集群中是否有超过半数的结点同意（所以 Paxos 算法需要集群中的结点是单数）；</li>
-</ol>
-<pre><code>这个算法有两个大阶段，四个小阶段（Paxos 有 Proposer 和 Acceptor 两个角色）
-Prepare proposer 提出一个提案，编号为 N ，此 N 大于这个 proposer 之前提出提案编号。&hellip;</code></pre>
+<li>Paxos 算法目的是让整个集群的结点对某个值的变更达成一致。Paxos 算法(强一致性算法)属于多数派——大多数的决定会成个整个集群的&hellip;</li></ol>
   </div>
   <footer>
     <a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%80%E8%87%B4%E6%80%A7/" class="button big">阅读全文</a>
@@ -271,19 +335,7 @@ Prepare proposer 提出一个提案，编号为 N ，此 N 大于这个 proposer
 <ol>
 <li>分布性： 分布式系统由多个节点组成， 地域上分散；</li>
 <li>自治性： 分布式系统的每个节点都包含自己的处理器和内存， 具备独立处理数据能力；</li>
-<li>并行性： 一个完整的任务可以划分成若干子任务， 运行在分布式系统的多个节点上；</li>
-<li>全局性： 分布式系统中的节点可以互相通信及系统间的相互调用；</li>
-</ol>
-<h2 id="cap">CAP</h2>
-<ol>
-<li>
-<p>一致性（consistency）： 分布式系统中的所有数据备份，在同一时刻是否是同样的值（分为弱、强、最终一致性）</p>
-</li>
-<li>
-<p>可用性（availability）： 在集群中某一个节点故障后， 集群整体是否还能响应客户端的读写请求（数据高可用性）</p>
-</li>
-<li>
-<p>分区&hellip;</p></li></ol>
+<li>并行&hellip;</li></ol>
   </div>
   <footer>
     <a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/" class="button big">阅读全文</a>
@@ -348,16 +400,7 @@ Prepare proposer 提出一个提案，编号为 N ，此 N 大于这个 proposer
 <h2 id="wsl安装">WSL安装</h2>
 <p><a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">reference</a></p>
 <ul>
-<li>启用Linux的windows子系统 功能
-<ul>
-<li>仅安装WSL1 <code>dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart</code></li>
-<li>重启电脑</li>
-<li>windows store 下载安装 <a href="https://www.microsoft.com/store/apps/9N9TNGVNDL3Q">linux 发行版</a></li>
-</ul>
-</li>
-<li>windows terminal 安装
-<ol>
-<li>windows store&hellip;</li></ol></li></li></ul></li></ul>
+<li>启用Linux&hellip;</li></ul>
   </div>
   <footer>
     <a href="/blog/windows/wsl/" class="button big">阅读全文</a>
@@ -419,16 +462,7 @@ Prepare proposer 提出一个提案，编号为 N ，此 N 大于这个 proposer
 <pre><code>version: '2'
 services:
   jenkins:
-          image: jenkins/jenkins:lts
-          ports:
-                  - 8080:8080
-                  - 50000:50000
-          volumes:
-                  - /opt/jenkins:/var/jenkins_home
-          restart: always
-
-</code></pre><ol start="2">
-<li>sudo&hellip;</li></ol>
+          image:&hellip;</code></pre>
   </div>
   <footer>
     <a href="/blog/jenkins/jenkins%E5%AE%89%E8%A3%85/" class="button big">阅读全文</a>
@@ -447,74 +481,6 @@ services:
       
         
           <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/database/oracle/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">Oracle数据库安装配置</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2019-07-15 00:00:00 &#43;0000 UTC">2019-07-15</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="docker安装">docker安装</h2>
-<pre><code>sudo docker pull deepdiver/docker-oracle-xe-11g
-sudo docker run -d -p 1522:22 -p 1521:1521 --name oracle deepdiver/docker-oracle-xe-11g
-</code></pre><h2 id="client">client</h2>
-<p><a href="https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html">https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html</a></p>
-<ol>
-<li>basic</li>
-<li>sdk</li>
-<li>sqlplus</li>
-</ol>
-<h3 id="链接动态库">链接动态库</h3>
-<pre><code>#!/bin/bash
-
-ln&hellip;</code></pre>
-  </div>
-  <footer>
-    <a href="/blog/database/oracle/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/oracle/">Oracle</a></li>
         
       
     </ul>
@@ -551,7 +517,7 @@ ln&hellip;</code></pre>
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -608,6 +574,9 @@ ln&hellip;</code></pre>
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -621,9 +590,6 @@ ln&hellip;</code></pre>
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -643,7 +609,7 @@ ln&hellip;</code></pre>
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

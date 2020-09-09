@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Erlang模块和函数">
 <meta itemprop="description" content="模块  模块是Erlang中代码的基本单元，我们编写的所有函数都存放在模块中，模块文件的扩展名通常为.erl。 编译后的文件扩展名为.beam,   注： beam 是 Erlang虚拟机（Bogdan‘s Erlang Abstract Machine）的所写。Erlang虚拟机最早的版本是 Joe Armstrong编写的基于栈的虚拟机JAM（Joe&rsquo;s Abstract Machine）。后来，Bogumil(Bogdan) Hausman在1993年编写了基于寄存器的虚拟机BEAM（Bogdan&rsquo;t Abstract Machine), 执行效率有了 大幅度提高。
   erlang虚拟机执行代码的原理：http://www.mamicode.com/info-detail-671999.html  函数  函数由子句构成，子句以分号分隔，最后一条子语句以句号结束。每一个函数由函数头和函数体组成，函数头由函数名和随后以括号括起来的模式组成，函数体由一系列表达式组成。 shell中编译模块文件： c(文件名） 引用模块中函数： moduleName:funcName(模式）。 模块中函数调用是顺序的从第一个子句开始进行模式匹配。 在erlang中做相同的事情，只需要编写模式及表达式，erlang编译器会自动生成优化的模式匹配代码。  同名不同目的函数  在Erlang中，同一个模块的两个函数，如果同名但是参数不同，则这两个函数被认为完全不同。 为了方便同名不同目的函数经常被用来作为辅助函数使用。  fun fun就是匿名函数,fun可以有任意参数（目：arity）。
@@ -33,7 +35,7 @@
   erlang虚拟机执行代码的原理：http://www.mamicode.com/info-detail-671999.html  函数  函数由子句构成，子句以分号分隔，最后一条子语句以句号结束。每一个函数由函数头和函数体组成，函数头由函数名和随后以括号括起来的模式组成，函数体由一系列表达式组成。 shell中编译模块文件： c(文件名） 引用模块中函数： moduleName:funcName(模式）。 模块中函数调用是顺序的从第一个子句开始进行模式匹配。 在erlang中做相同的事情，只需要编写模式及表达式，erlang编译器会自动生成优化的模式匹配代码。  同名不同目的函数  在Erlang中，同一个模块的两个函数，如果同名但是参数不同，则这两个函数被认为完全不同。 为了方便同名不同目的函数经常被用来作为辅助函数使用。  fun fun就是匿名函数,fun可以有任意参数（目：arity）。
 高阶函数（high-order function） 这些能返回fun或接受fun作为参数的函数，被称作高阶函数。
 什么时候使用高阶函数  编写返回fun的高阶函数不容易调试 高阶函数可以用来解决延迟求值、可重入的解析器、解析组合子等问题。  -import 和 -export 声明  声明 -import(lists,[map/2,sum/1]) 意味着函数 map/2,sum/1是从lists模块中导入。 声明 -export([total/1]) 意味着total/1能够在模块之外被调用。只有从一个模块中导出的函数才能在模块外调用。  简单的列表处理  lists:map(Fun,List): 将方法Fun应用到列表List的每一个元素中，输出操作后的元素列表。 lists:member(Ele,List): 判断元素Ele是否是列表List中的元素，输出true/false。 lists:filter(Fun,List): 用方法Fun过滤列表List中的每一个元素，输出符合要求的元素列表。 lists: sum(List):计算列表中所有元素的和。 lists: seq(1,N): 返回一个包含1到N的整数列表。 lists:reverse(L) : 将列表中元素顺序反转。  列表推导  列表推导无需使用fun、map或filter等表达式来创建列表。  1&gt;L= [1,2,3,4]."/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -90,12 +92,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -301,6 +303,7 @@ L ++ [H] 此方法易读，效率低。
 <pre><code>将数据结果分别添加到合适的列表里面，这些列表叫做归集器（accumulator）。    
 </code></pre>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -327,8 +330,22 @@ L ++ [H] 此方法易读，效率低。
     </footer>
   </article>
   
-    
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#同名不同目的函数">同名不同目的函数</a></li>
+  </ul>
 
+  <ul>
+    <li><a href="#什么时候使用高阶函数">什么时候使用高阶函数</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#关卡序列guard-sequence">关卡序列（guard sequence）</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -338,6 +355,22 @@ L ++ [H] 此方法易读，效率低。
       <a href="/blog/erlang/%E8%AE%B0%E5%BD%95%E5%92%8C%E6%98%A0%E5%B0%84%E7%BB%84/" class="button right"><span>Erlang记录和映射组</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Erlang]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -355,7 +388,7 @@ L ++ [H] 此方法易读，效率低。
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -412,6 +445,9 @@ L ++ [H] 此方法易读，效率低。
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -425,9 +461,6 @@ L ++ [H] 此方法易读，效率低。
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -447,7 +480,7 @@ L ++ [H] 此方法易读，效率低。
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

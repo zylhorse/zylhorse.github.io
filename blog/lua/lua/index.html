@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Lua语言简介">
 <meta itemprop="description" content="概念  轻量小巧的脚本语言 标准c语言编写，且开源 目的： 嵌入宿主语言，并提供灵活的扩展和定制  编程模型  面向过程编程和函数式编程 自动内存管理：值提供一种通用类型的表（table) 内置模式匹配，函数也可以看作值 提供多线程支持 通过闭包和table可以方便的支持面向对象编程的一些机制   参考  The Implementation of Lua 5.0  ">
 <meta itemprop="datePublished" content="2015-06-04T00:00:00+00:00" />
@@ -24,7 +26,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Lua语言简介"/>
 <meta name="twitter:description" content="概念  轻量小巧的脚本语言 标准c语言编写，且开源 目的： 嵌入宿主语言，并提供灵活的扩展和定制  编程模型  面向过程编程和函数式编程 自动内存管理：值提供一种通用类型的表（table) 内置模式匹配，函数也可以看作值 提供多线程支持 通过闭包和table可以方便的支持面向对象编程的一些机制   参考  The Implementation of Lua 5.0  "/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -81,12 +83,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -182,17 +184,18 @@
 <h2 id="编程模型">编程模型</h2>
 <ol>
 <li>面向过程编程和函数式编程</li>
-<li>自动内存管理：值提供一种通用类型的表（table)</li>
+<li>自动内存管理：值提供一种通用类型的表（<code>table</code>)</li>
 <li>内置模式匹配，函数也可以看作值</li>
 <li>提供多线程支持</li>
-<li>通过闭包和table可以方便的支持面向对象编程的一些机制</li>
+<li>通过闭包和<code>table</code>可以方便的支持面向对象编程的一些机制</li>
 </ol>
 <hr>
 <h2 id="参考">参考</h2>
 <ul>
-<li><a href="../../../book/The_Implementation_of_Lua5.0.pdf">The Implementation of Lua 5.0</a></li>
+<li><a href="/book/The_Implementation_of_Lua5.0.pdf">The Implementation of Lua 5.0</a></li>
 </ul>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -219,8 +222,16 @@
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#概念">概念</a></li>
+    <li><a href="#编程模型">编程模型</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -230,6 +241,22 @@
       <a href="/blog/security/%E7%94%9F%E6%88%90%E5%85%AC%E7%A7%81%E9%92%A5/" class="button right"><span>生成公私钥</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Lua]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -247,7 +274,7 @@
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -304,6 +331,9 @@
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -317,9 +347,6 @@
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -339,7 +366,7 @@
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

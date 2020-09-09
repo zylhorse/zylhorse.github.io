@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Redis持久化有哪些方式">
 <meta itemprop="description" content="持久化   RDB:
  redis 会fork一个子进程，将内存数据写磁盘；写完临时文件后， 将旧的rdb文件替换； 实现copy-on-write； 以快照的形式将内存中数据备份到dump.rdb文件中；定时保存； 缺点：  在服务故障时会丢失部分数据； 数据量大会导致服务停止几百毫秒；      AOF：
@@ -30,7 +32,7 @@
 <meta name="twitter:description" content="持久化   RDB:
  redis 会fork一个子进程，将内存数据写磁盘；写完临时文件后， 将旧的rdb文件替换； 实现copy-on-write； 以快照的形式将内存中数据备份到dump.rdb文件中；定时保存； 缺点：  在服务故障时会丢失部分数据； 数据量大会导致服务停止几百毫秒；      AOF：
  将redis 命令都存到一个文件中；redis 每执行一行命令都会将其写入到aof文件中； 配置： appendonly yes appendfsync always # 每次数据修改都会写入AOF文件， 影响redis性能appendfsync everysec # 每秒同步一次， 将更多写命令同步到磁盘appendsync no # 让系统决定何时同步 缺点： 文件会会大一些， 还原速度慢 ；    查看目录 语法： saveconfig get dirredis 4.0 新增  RDB和AOF混合持久， 配置： aof-use-rdb-preamble  如果混合持久打开， AOF重写时会直接吧RDB的内容写到AOF文件开头。 优点： 结合RDB和AOF优点，快速加载同时避免丢失过多数据。 缺点： AOF中的RDB部分时二进制格式， 可读性差；    "/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -87,12 +89,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -224,6 +226,7 @@ appendsync no        # 让系统决定何时同步
 </li>
 </ul>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -250,8 +253,19 @@ appendsync no        # 让系统决定何时同步
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#持久化">持久化</a>
+      <ul>
+        <li><a href="#查看目录">查看目录</a></li>
+        <li><a href="#redis-40-新增">redis 4.0 新增</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -261,6 +275,22 @@ appendsync no        # 让系统决定何时同步
       <a href="/blog/cache/redis/redis/" class="button right"><span>Redis的基本常识和memcache对比</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Cache]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -278,7 +308,7 @@ appendsync no        # 让系统决定何时同步
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -335,6 +365,9 @@ appendsync no        # 让系统决定何时同步
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -348,9 +381,6 @@ appendsync no        # 让系统决定何时同步
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -370,7 +400,7 @@ appendsync no        # 让系统决定何时同步
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

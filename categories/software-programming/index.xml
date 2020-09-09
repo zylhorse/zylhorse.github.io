@@ -32,8 +32,13 @@
       <pubDate>Tue, 01 Sep 2015 00:00:00 +0000</pubDate>
       
       <guid>https://zylhorse.github.io/blog/software-programming/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/</guid>
-      <description>函数式编程（Function Programming） 函数式编程将电脑运算看作是函数运算。 函数式编程的基础是λ 演算（ lambda caculus）。函数可以作为输入（参数）输出（返回值）。函数式编程最古老的例子： 1958年创造出来的LISP。 #特性
-函数是&amp;quot;第一公民&amp;rdquo;（first class） 函数可以作为变量 ”表达式“ not ”语句“ ”表达式“（expression）是运算过程，总有返回值”语句“（statement）是操作，无返回值。函数式编程要求只使用表达式，不使用语句， 每一步运算都有返回值。 无”副作用“（side effect） ”副作用“：函数内部与外部互动（eg:函数内部修改全局变量），操作外部。函数式编程强调没有”副作用“，保持独立，所有功能只是返回新值，不做其他行为尤其是不修改外部变量。 不修改&amp;quot;状态&amp;rdquo;（state) 函数式编程要求使用参数保存状态,状态不能保存在变量中。 引用透明（Referential transparency） 函数运行不依赖外部变量或”状态“，只根据输入参数，任何时候只要参数相同，引用函数所得到的结果总是相同。 闭包（closure capture） 1. 闭包函数： 声明在一个函数中的函数，叫闭包函数2. 闭包： 闭包函数总是可以访问其所在的外部函数中声明的参数和变量，即使在其外部函数被返回（寿命终结）了之后问题： 局部变量常驻内存，不被释放造成内存泄漏 高阶函数 接受一个或多个函数作为输入，输出一个函数。 意义 代码简洁，开发迅速 编码中大量使用函数，减少代码重复。 更方便的代码管理 每一个函数都是独立单元，有利与单元测试（unit test）和除错（debugging），以及模块化组合。 易于并发编程 函数不用考虑”死锁“（deadlock），因为修改变量，不用担心被其他线程修改，可以将工作分摊到多个线程，部署”并发编程“（concurrency）。 代码热升级 因为函数式编程无副作用，只要保证接口不变，内部实现是外部无关的。所以可以在运行状态下直接升级代码，不需要重启。 </description>
+      <description>函数式编程（Function Programming）  函数式编程将电脑运算看作是函数运算。 函数式编程的基础是λ 演算（ lambda caculus）。函数可以作为输入（参数）输出（返回值）。 函数式编程最古老的例子： 1958年创造出来的LISP。 #特性  函数是&amp;quot;第一公民&amp;rdquo;（first class） 函数可以作为变量
+”表达式“ not ”语句“  ”表达式“（expression）是运算过程，总有返回值 ”语句“（statement）是操作，无返回值。 函数式编程要求只使用表达式，不使用语句， 每一步运算都有返回值。  无”副作用“（side effect）  ”副作用“：函数内部与外部互动（eg:函数内部修改全局变量），操作外部。 函数式编程强调没有”副作用“，保持独立，所有功能只是返回新值，不做其他行为尤其是不修改外部变量。  不修改&amp;quot;状态&amp;rdquo;（state)  函数式编程要求使用参数保存状态,状态不能保存在变量中。  引用透明（Referential transparency）  函数运行不依赖外部变量或”状态“，只根据输入参数，任何时候只要参数相同，引用函数所得到的结果总是相同。  闭包（closure capture）  闭包函数： 声明在一个函数中的函数，叫闭包函数 闭包： 闭包函数总是可以访问其所在的外部函数中声明的参数和变量，即使在其外部函数被返回（寿命终结）了之后   问题： 局部变量常驻内存，不被释放造成内存泄漏
+ 高阶函数 接受一个或多个函数作为输入，输出一个函数。
+意义 代码简洁，开发迅速 编码中大量使用函数，减少代码重复。
+更方便的代码管理 每一个函数都是独立单元，有利与单元测试（unit test）和除错（debugging），以及模块化组合。
+易于并发编程 函数不用考虑”死锁“（deadlock），因为修改变量，不用担心被其他线程修改，可以将工作分摊到多个线程，部署”并发编程“（concurrency）。
+代码热升级 因为函数式编程无副作用，只要保证接口不变，内部实现是外部无关的。所以可以在运行状态下直接升级代码，不需要重启。</description>
     </item>
     
     <item>
@@ -54,14 +59,10 @@
       <pubDate>Fri, 11 Apr 2014 00:00:00 +0000</pubDate>
       
       <guid>https://zylhorse.github.io/blog/software-programming/%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE/</guid>
-      <description>GPL(GNU General Public License) GPL 出发点是代码的开源/免费使用和引用/修改/衍生代码的开源/免费使用， 不允许修改/衍生后的代码作为比原的商业软件发布和销售。
- 代表： linux
- BSD BSD开源协议允许自由的使用/修改源代码， 也可以将修改后的代码作为开源/专有软件发布。但是要满足三个条件：
- 源码发布，需要在源码中携带原有代码的BSD协议 类库/软件发布， 需要在类库/软件的文档和版权声明中包含原有代码的BSD协议 不可以使用开源代码的作者/机构名字做市场推广  Apache license 2.0 类似BSD协议
- Apache license 是对商业应用友好的许可
- MIT 类似BSD协议
- 必须在修改/衍生的代码中保留原许可协议的声明。
- </description>
+      <description>GPL(GNU General Public License) GPL 出发点是代码的开源/免费使用和引用/修改/衍生代码的开源/免费使用， 不允许修改/衍生后的代码作为比原的商业软件发布和销售。 代表： linux
+BSD BSD开源协议允许自由的使用/修改源代码， 也可以将修改后的代码作为开源/专有软件发布。但是要满足三个条件：
+ 源码发布，需要在源码中携带原有代码的BSD协议 类库/软件发布， 需要在类库/软件的文档和版权声明中包含原有代码的BSD协议 不可以使用开源代码的作者/机构名字做市场推广  Apache license 2.0 类似BSD协议,Apache license 是对商业应用友好的许可
+MIT 类似BSD协议,必须在修改/衍生的代码中保留原许可协议的声明。</description>
     </item>
     
     <item>
@@ -71,16 +72,7 @@
       
       <guid>https://zylhorse.github.io/blog/software-programming/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
       <description>概念 设计模式是在面向对象开发设计中反复出现问题的解决方案的总结。
-设计原则  对接口编程而不是对实现编程 优先使用对象编程而不是继承  设计模式原则  针对接口编程而不是对实现编程 优先使用对象组合而不是继承  开闭原则（Open Close Principle）  对扩展开放， 对修改关闭
- 为使程序的扩展性好，易于维护和升级， 在程序需要进行扩展的时候，不去修改原有代码，使用接口和抽象类。
-里氏代换原则（Liskov Substitution Principle）  任何基类可以出现的地方， 子类都可以出现。
- 只有当派生类可以替换掉基类，且软件的功能不受影响时， 基类才是真正被复用，而派生类也能够在基类的基础上增加新的行为。 里氏代换原则是对开闭原则的补充
-依赖倒转原则（Dependence Inversion Principle）  针对接口编程，依赖于抽象而不依赖于具体
- 依赖倒转原则是开闭原则的基础
-接口隔离原则（Interface Segregation Principle）  使用多个隔离的接口，比使用单个接口要好。降低类之间的耦合
- 迪米特原则，又称最少知道原则（Demeter Principle）  一个实体应当尽量地减少与其他实体之间发生相互作用， 使得系统模块相对独立
- 合成复用原则（Composite Reuse Principle）  尽量使用合成/聚合的方式，而不是使用继承
- </description>
+设计原则  对接口编程而不是对实现编程 优先使用对象编程而不是继承  设计模式原则  针对接口编程而不是对实现编程 优先使用对象组合而不是继承  开闭原则（Open Close Principle）  对扩展开放， 对修改关闭 为使程序的扩展性好，易于维护和升级， 在程序需要进行扩展的时候，不去修改原有代码，使用接口和抽象类。  里氏代换原则（Liskov Substitution Principle）  任何基类可以出现的地方， 子类都可以出现。 只有当派生类可以替换掉基类，且软件的功能不受影响时， 基类才是真正被复用，而派生类也能够在基类的基础上增加新的行为。 里氏代换原则是对开闭原则的补充  依赖倒转原则（Dependence Inversion Principle）  针对接口编程，依赖于抽象而不依赖于具体 依赖倒转原则是开闭原则的基础  接口隔离原则（Interface Segregation Principle）  使用多个隔离的接口，比使用单个接口要好。降低类之间的耦合  迪米特原则，又称最少知道原则（Demeter Principle）  一个实体应当尽量地减少与其他实体之间发生相互作用， 使得系统模块相对独立  合成复用原则（Composite Reuse Principle）  尽量使用合成/聚合的方式，而不是使用继承  </description>
     </item>
     
     <item>
@@ -99,7 +91,8 @@ Well behaved,ill behaved  well behaved:如果程序执行不出现forbidden beha
       <pubDate>Mon, 26 Aug 2013 00:00:00 +0000</pubDate>
       
       <guid>https://zylhorse.github.io/blog/software-programming/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/</guid>
-      <description>编程范式（programming paradigm） 概念  编程的基本风格或典范模式，是如何编写程序的方法论。 哲学观点：编程者在创造虚拟世界，而编程范式就是他们置身其中不自觉采用的世界观和方法论。 编程是为了解决问题，而解决问题可以有多种视角和思路，其中普适且行之有效的模式被归结为范式。 由于着眼点和思维方式不同，相应的范式有自己的侧重和偏向，因此范式常用&amp;rsquo;oriented&amp;rsquo;描述。换言之每种范式都引导编程者带着某种倾向去分析问题、解决问题，这不就是‘导向’吗？ 编程范式是抽象的，必须通过具体的编程语言来体现。任何编程语言在设计中都会倾向于某些编程范式，一种编程范式可以在不同的编程语言中体现，一种编程语言也可以适用多种范式。  常见编程范式 命令式（Imperative Programming） 命令“机器”如何去做(how)，这样不管你想要的是什么(what)，它都会按照命令实现。 声明式（Declarative Programming) 告诉“机器”你想要的是什么(what)，让“机器”推导如何去做(how). 函数式（Function Programming） 将机器运算当作是函数运算，并且避免使用程序状态及易变对象 逻辑编程（Logic programming） 设置答案需要匹配的规则解决问题，而不是设置步骤解决问题。编程语言：Prolog 过程式（Procedural Programming) 主要采用程序调用（Procedure call）或函数调用（Function call）来进行流程控制。 面向对象(Object Programming） 对象作为程序的单元，将程序和数据封装其中。对象是相互独立和相互调用。 </description>
+      <description>编程范式（programming paradigm） 概念  编程的基本风格或典范模式，是如何编写程序的方法论。 哲学观点：编程者在创造虚拟世界，而编程范式就是他们置身其中不自觉采用的世界观和方法论。 编程是为了解决问题，而解决问题可以有多种视角和思路，其中普适且行之有效的模式被归结为范式。 由于着眼点和思维方式不同，相应的范式有自己的侧重和偏向，因此范式常用&amp;rsquo;oriented&amp;rsquo;描述。换言之每种范式都引导编程者带着某种倾向去分析问题、解决问题，这不就是‘导向’吗？ 编程范式是抽象的，必须通过具体的编程语言来体现。任何编程语言在设计中都会倾向于某些编程范式，一种编程范式可以在不同的编程语言中体现，一种编程语言也可以适用多种范式。  常见编程范式  命令式（Imperative Programming）
+命令“机器”如何去做(how)，这样不管你想要的是什么(what)，它都会按照命令实现。 声明式（Declarative Programming) 告诉“机器”你想要的是什么(what)，让“机器”推导如何去做(how).  函数式（Function Programming） 将机器运算当作是函数运算，并且避免使用程序状态及易变对象 逻辑编程（Logic programming） 设置答案需要匹配的规则解决问题，而不是设置步骤解决问题。编程语言：Prolog 过程式（Procedural Programming) 主要采用程序调用（Procedure call）或函数调用（Function call）来进行流程控制。 面向对象(Object Programming） 对象作为程序的单元，将程序和数据封装其中。对象是相互独立和相互调用。 </description>
     </item>
     
   </channel>

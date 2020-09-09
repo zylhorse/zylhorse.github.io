@@ -6,31 +6,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Redis安装和配置">
-<meta itemprop="description" content="安全 语法： config get requirepassconfig set requirepass passwordauth password客户端连接 client list // redis 客户端列表client setname // 设置客户端连接名client getname // 获取客户端连接名client pause // 挂起客户端client kill // 关闭客户端外网访问  注释 redis.conf  # bind 127.0.0.1 添加requirepass
+<meta itemprop="description" content="安全 语法： config get requirepassconfig set requirepass passwordauth password客户端连接 client list // redis 客户端列表client setname // 设置客户端连接名client getname // 获取客户端连接名client pause // 挂起客户端client kill // 关闭客户端外网访问   注释 redis.conf
+# bind 127.0.0.1  添加requirepass
   版本大于3.2 还需要取消保护模式
-  protected-mode no修改linux redis最大连接数 修改用户打开文件句柄数 sudo vim /etc/security/limits.conf redis soft nofile 65535redis hard nofile	65535修改文件句柄限制 sudo vim /lib/systemd/system/redis.service LimitNOFILE=infinityLimitMEMLOCK=infinity修改redis最大连接数 sudo vim /etc/redis/redis.">
+protected-mode no  修改linux redis最大连接数 修改用户打开文件句柄数 $ sudo vim /etc/security/limits.conf redis soft nofile 65535redis hard nofile	65535修改文件句柄限制 $ sudo vim /lib/systemd/system/redis.">
 <meta itemprop="datePublished" content="2015-11-06T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2015-11-06T00:00:00+00:00" />
-<meta itemprop="wordCount" content="70">
+<meta itemprop="wordCount" content="73">
 
 
 
 <meta itemprop="keywords" content="Redis," />
 <meta property="og:title" content="Redis安装和配置" />
-<meta property="og:description" content="安全 语法： config get requirepassconfig set requirepass passwordauth password客户端连接 client list // redis 客户端列表client setname // 设置客户端连接名client getname // 获取客户端连接名client pause // 挂起客户端client kill // 关闭客户端外网访问  注释 redis.conf  # bind 127.0.0.1 添加requirepass
+<meta property="og:description" content="安全 语法： config get requirepassconfig set requirepass passwordauth password客户端连接 client list // redis 客户端列表client setname // 设置客户端连接名client getname // 获取客户端连接名client pause // 挂起客户端client kill // 关闭客户端外网访问   注释 redis.conf
+# bind 127.0.0.1  添加requirepass
   版本大于3.2 还需要取消保护模式
-  protected-mode no修改linux redis最大连接数 修改用户打开文件句柄数 sudo vim /etc/security/limits.conf redis soft nofile 65535redis hard nofile	65535修改文件句柄限制 sudo vim /lib/systemd/system/redis.service LimitNOFILE=infinityLimitMEMLOCK=infinity修改redis最大连接数 sudo vim /etc/redis/redis." />
+protected-mode no  修改linux redis最大连接数 修改用户打开文件句柄数 $ sudo vim /etc/security/limits.conf redis soft nofile 65535redis hard nofile	65535修改文件句柄限制 $ sudo vim /lib/systemd/system/redis." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://zylhorse.github.io/blog/cache/redis/%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/" />
 <meta property="article:published_time" content="2015-11-06T00:00:00+00:00" />
 <meta property="article:modified_time" content="2015-11-06T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Redis安装和配置"/>
-<meta name="twitter:description" content="安全 语法： config get requirepassconfig set requirepass passwordauth password客户端连接 client list // redis 客户端列表client setname // 设置客户端连接名client getname // 获取客户端连接名client pause // 挂起客户端client kill // 关闭客户端外网访问  注释 redis.conf  # bind 127.0.0.1 添加requirepass
+<meta name="twitter:description" content="安全 语法： config get requirepassconfig set requirepass passwordauth password客户端连接 client list // redis 客户端列表client setname // 设置客户端连接名client getname // 获取客户端连接名client pause // 挂起客户端client kill // 关闭客户端外网访问   注释 redis.conf
+# bind 127.0.0.1  添加requirepass
   版本大于3.2 还需要取消保护模式
-  protected-mode no修改linux redis最大连接数 修改用户打开文件句柄数 sudo vim /etc/security/limits.conf redis soft nofile 65535redis hard nofile	65535修改文件句柄限制 sudo vim /lib/systemd/system/redis.service LimitNOFILE=infinityLimitMEMLOCK=infinity修改redis最大连接数 sudo vim /etc/redis/redis."/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+protected-mode no  修改linux redis最大连接数 修改用户打开文件句柄数 $ sudo vim /etc/security/limits.conf redis soft nofile 65535redis hard nofile	65535修改文件句柄限制 $ sudo vim /lib/systemd/system/redis."/>
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -87,12 +92,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -192,34 +197,35 @@ client pause // 挂起客户端
 client kill // 关闭客户端
 </code></pre><h2 id="外网访问">外网访问</h2>
 <ol>
-<li>注释 redis.conf</li>
-</ol>
+<li>
+<p>注释 redis.conf</p>
 <pre><code># bind 127.0.0.1
-</code></pre><ol start="2">
+</code></pre></li>
 <li>
 <p>添加requirepass</p>
 </li>
 <li>
 <p>版本大于3.2 还需要取消保护模式</p>
-</li>
-</ol>
 <pre><code>protected-mode no
-</code></pre><h2 id="修改linux-redis最大连接数">修改linux redis最大连接数</h2>
+</code></pre></li>
+</ol>
+<h2 id="修改linux-redis最大连接数">修改linux redis最大连接数</h2>
 <h3 id="修改用户打开文件句柄数">修改用户打开文件句柄数</h3>
-<pre><code>sudo vim /etc/security/limits.conf 
+<pre><code>$ sudo vim /etc/security/limits.conf 
 
 redis 		 soft 	 nofile 	 65535
 redis 		 hard 	 nofile		 65535
 </code></pre><h3 id="修改文件句柄限制">修改文件句柄限制</h3>
-<pre><code>sudo vim /lib/systemd/system/redis.service 
+<pre><code>$ sudo vim /lib/systemd/system/redis.service 
 
 LimitNOFILE=infinity
 LimitMEMLOCK=infinity
 </code></pre><h3 id="修改redis最大连接数">修改redis最大连接数</h3>
-<pre><code>sudo vim /etc/redis/redis.cnf
+<pre><code>$ sudo vim /etc/redis/redis.cnf
 
 maxclients 65535
 </code></pre>
+      
     </div>
     <footer>
       <div class="stats">
@@ -246,8 +252,23 @@ maxclients 65535
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#安全">安全</a></li>
+    <li><a href="#客户端连接">客户端连接</a></li>
+    <li><a href="#外网访问">外网访问</a></li>
+    <li><a href="#修改linux-redis最大连接数">修改linux redis最大连接数</a>
+      <ul>
+        <li><a href="#修改用户打开文件句柄数">修改用户打开文件句柄数</a></li>
+        <li><a href="#修改文件句柄限制">修改文件句柄限制</a></li>
+        <li><a href="#修改redis最大连接数">修改redis最大连接数</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -257,6 +278,22 @@ maxclients 65535
       <a href="/blog/erlang/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95eunit/" class="button right"><span>Erlang单元测试</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Cache]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -274,7 +311,7 @@ maxclients 65535
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -331,6 +368,9 @@ maxclients 65535
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -344,9 +384,6 @@ maxclients 65535
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -366,7 +403,7 @@ maxclients 65535
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

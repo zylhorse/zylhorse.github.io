@@ -6,13 +6,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="TCP-握手和挥手">
 <meta itemprop="description" content="tcp 状态 tcp连接FLAGS字段表示当前连接状态，FLAGS包含一下几个标识：
  SYN表示建立连接 FIN表示关闭连接 ACK表示响应 PSH表示有 DATA数据传输 RST表示连接重置  三次握手 tcp建立连接的过程，需要三次握手；
- 客户端打开连接，主动结束CLOSED阶段； 服务器连接，被动结束CLOSED阶段， 进入LISTEN阶段； 开始握手：  1. 客户端向服务器发送tcp报文1.1 标记位为SYN， 表示请求建立连接1.2 序号seq=x (x一般为0)1.3 客户端进入SYN-SENT 阶段2. 服务器接收来自客户端的tcp报文，结束LISTEN阶段，并发送一段tcp报文2.1 标志位为SYN和ACK， 表示确认客户端报文seq有效，同意创建连接2.2 序号seq=y（y一般为0）， 确认号ack=x&#43;1, 表示收到客户端序号seq并将其值加1作为自己的确认号ack的值2.3 服务端进入SYN-RECVD阶段3. 客户端接收来自服务器的确认报文后， 结束SYN-SENT阶段，并返回一段tcp报文3.1 标志位为ACK， 表示确认收到服务器同意连接的信号；3.2 序号seq=x&#43;1， 表示收到服务器的确认号ack， 并将其作为自己的序号3.3 确认号ack=y&#43;1， 表示收到服务器的序号seq并将其值加1作为自己的确认号ack的值3.4 客户端进入ESTABLISHED阶段4. 服务器接收到来自客户端的确认报文后， 明确从服务器到客户端的数据传输时正常的4.1 服务器结束SYN-RECVD阶段， 进入ESTABLISHED阶段为什么三次握手  防止服务器开启无用连接，增加服务器开销； 防止失效的请求连接报文传输到服务端， 产生错误；  四次挥手 tcp释放连接，需要四次挥手">
+ 客户端打开连接，主动结束CLOSED阶段； 服务器连接，被动结束CLOSED阶段， 进入LISTEN阶段； 开始握手：   客户端向服务器发送tcp报文
+1.1 标记位为SYN， 表示请求建立连接
+1.2 序号seq=x (x一般为0)
+1.3 客户端进入SYN-SENT 阶段
+  服务器接收来自客户端的tcp报文，结束LISTEN阶段，并发送一段tcp报文
+2.1 标志位为SYN和ACK， 表示确认客户端报文seq有效，同意创建连接
+2.2 序号seq=y（y一般为0）， 确认号ack=x&#43;1, 表示收到客户端序号seq并将其值加1作为自己的确认号ack的值
+2.3 服务端进入SYN-RECVD阶段
+  客户端接收来自服务器的确认报文后， 结束SYN-SENT阶段，并返回一段tcp报文
+3.1 标志位为ACK， 表示确认收到服务器同意连接的信号；
+3.2 序号seq=x&#43;1， 表示收到服务器的确认号ack， 并将其作为自己的序号
+3.3 确认号ack=y&#43;1， 表示收到服务器的序号seq并将其值加1作为自己的确认号ack的值
+3.4 客户端进入ESTABLISHED阶段
+  服务器接收到来自客户端的确认报文后， 明确从服务器到客户端的数据传输时正常的
+4.1 服务器结束SYN-RECVD阶段， 进入ESTABLISHED阶段
+    为什么三次握手  防止服务器开启无用连接，增加服务器开销； 防止失效的请求连接报文传输到服务端， 产生错误；  四次挥手 tcp释放连接，需要四次挥手">
 <meta itemprop="datePublished" content="2014-12-03T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2014-12-03T00:00:00+00:00" />
-<meta itemprop="wordCount" content="172">
+<meta itemprop="wordCount" content="153">
 
 
 
@@ -20,7 +37,22 @@
 <meta property="og:title" content="TCP-握手和挥手" />
 <meta property="og:description" content="tcp 状态 tcp连接FLAGS字段表示当前连接状态，FLAGS包含一下几个标识：
  SYN表示建立连接 FIN表示关闭连接 ACK表示响应 PSH表示有 DATA数据传输 RST表示连接重置  三次握手 tcp建立连接的过程，需要三次握手；
- 客户端打开连接，主动结束CLOSED阶段； 服务器连接，被动结束CLOSED阶段， 进入LISTEN阶段； 开始握手：  1. 客户端向服务器发送tcp报文1.1 标记位为SYN， 表示请求建立连接1.2 序号seq=x (x一般为0)1.3 客户端进入SYN-SENT 阶段2. 服务器接收来自客户端的tcp报文，结束LISTEN阶段，并发送一段tcp报文2.1 标志位为SYN和ACK， 表示确认客户端报文seq有效，同意创建连接2.2 序号seq=y（y一般为0）， 确认号ack=x&#43;1, 表示收到客户端序号seq并将其值加1作为自己的确认号ack的值2.3 服务端进入SYN-RECVD阶段3. 客户端接收来自服务器的确认报文后， 结束SYN-SENT阶段，并返回一段tcp报文3.1 标志位为ACK， 表示确认收到服务器同意连接的信号；3.2 序号seq=x&#43;1， 表示收到服务器的确认号ack， 并将其作为自己的序号3.3 确认号ack=y&#43;1， 表示收到服务器的序号seq并将其值加1作为自己的确认号ack的值3.4 客户端进入ESTABLISHED阶段4. 服务器接收到来自客户端的确认报文后， 明确从服务器到客户端的数据传输时正常的4.1 服务器结束SYN-RECVD阶段， 进入ESTABLISHED阶段为什么三次握手  防止服务器开启无用连接，增加服务器开销； 防止失效的请求连接报文传输到服务端， 产生错误；  四次挥手 tcp释放连接，需要四次挥手" />
+ 客户端打开连接，主动结束CLOSED阶段； 服务器连接，被动结束CLOSED阶段， 进入LISTEN阶段； 开始握手：   客户端向服务器发送tcp报文
+1.1 标记位为SYN， 表示请求建立连接
+1.2 序号seq=x (x一般为0)
+1.3 客户端进入SYN-SENT 阶段
+  服务器接收来自客户端的tcp报文，结束LISTEN阶段，并发送一段tcp报文
+2.1 标志位为SYN和ACK， 表示确认客户端报文seq有效，同意创建连接
+2.2 序号seq=y（y一般为0）， 确认号ack=x&#43;1, 表示收到客户端序号seq并将其值加1作为自己的确认号ack的值
+2.3 服务端进入SYN-RECVD阶段
+  客户端接收来自服务器的确认报文后， 结束SYN-SENT阶段，并返回一段tcp报文
+3.1 标志位为ACK， 表示确认收到服务器同意连接的信号；
+3.2 序号seq=x&#43;1， 表示收到服务器的确认号ack， 并将其作为自己的序号
+3.3 确认号ack=y&#43;1， 表示收到服务器的序号seq并将其值加1作为自己的确认号ack的值
+3.4 客户端进入ESTABLISHED阶段
+  服务器接收到来自客户端的确认报文后， 明确从服务器到客户端的数据传输时正常的
+4.1 服务器结束SYN-RECVD阶段， 进入ESTABLISHED阶段
+    为什么三次握手  防止服务器开启无用连接，增加服务器开销； 防止失效的请求连接报文传输到服务端， 产生错误；  四次挥手 tcp释放连接，需要四次挥手" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://zylhorse.github.io/blog/network/tcp/tcp%E8%BF%9E%E6%8E%A5/" />
 <meta property="article:published_time" content="2014-12-03T00:00:00+00:00" />
@@ -29,8 +61,23 @@
 <meta name="twitter:title" content="TCP-握手和挥手"/>
 <meta name="twitter:description" content="tcp 状态 tcp连接FLAGS字段表示当前连接状态，FLAGS包含一下几个标识：
  SYN表示建立连接 FIN表示关闭连接 ACK表示响应 PSH表示有 DATA数据传输 RST表示连接重置  三次握手 tcp建立连接的过程，需要三次握手；
- 客户端打开连接，主动结束CLOSED阶段； 服务器连接，被动结束CLOSED阶段， 进入LISTEN阶段； 开始握手：  1. 客户端向服务器发送tcp报文1.1 标记位为SYN， 表示请求建立连接1.2 序号seq=x (x一般为0)1.3 客户端进入SYN-SENT 阶段2. 服务器接收来自客户端的tcp报文，结束LISTEN阶段，并发送一段tcp报文2.1 标志位为SYN和ACK， 表示确认客户端报文seq有效，同意创建连接2.2 序号seq=y（y一般为0）， 确认号ack=x&#43;1, 表示收到客户端序号seq并将其值加1作为自己的确认号ack的值2.3 服务端进入SYN-RECVD阶段3. 客户端接收来自服务器的确认报文后， 结束SYN-SENT阶段，并返回一段tcp报文3.1 标志位为ACK， 表示确认收到服务器同意连接的信号；3.2 序号seq=x&#43;1， 表示收到服务器的确认号ack， 并将其作为自己的序号3.3 确认号ack=y&#43;1， 表示收到服务器的序号seq并将其值加1作为自己的确认号ack的值3.4 客户端进入ESTABLISHED阶段4. 服务器接收到来自客户端的确认报文后， 明确从服务器到客户端的数据传输时正常的4.1 服务器结束SYN-RECVD阶段， 进入ESTABLISHED阶段为什么三次握手  防止服务器开启无用连接，增加服务器开销； 防止失效的请求连接报文传输到服务端， 产生错误；  四次挥手 tcp释放连接，需要四次挥手"/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+ 客户端打开连接，主动结束CLOSED阶段； 服务器连接，被动结束CLOSED阶段， 进入LISTEN阶段； 开始握手：   客户端向服务器发送tcp报文
+1.1 标记位为SYN， 表示请求建立连接
+1.2 序号seq=x (x一般为0)
+1.3 客户端进入SYN-SENT 阶段
+  服务器接收来自客户端的tcp报文，结束LISTEN阶段，并发送一段tcp报文
+2.1 标志位为SYN和ACK， 表示确认客户端报文seq有效，同意创建连接
+2.2 序号seq=y（y一般为0）， 确认号ack=x&#43;1, 表示收到客户端序号seq并将其值加1作为自己的确认号ack的值
+2.3 服务端进入SYN-RECVD阶段
+  客户端接收来自服务器的确认报文后， 结束SYN-SENT阶段，并返回一段tcp报文
+3.1 标志位为ACK， 表示确认收到服务器同意连接的信号；
+3.2 序号seq=x&#43;1， 表示收到服务器的确认号ack， 并将其作为自己的序号
+3.3 确认号ack=y&#43;1， 表示收到服务器的序号seq并将其值加1作为自己的确认号ack的值
+3.4 客户端进入ESTABLISHED阶段
+  服务器接收到来自客户端的确认报文后， 明确从服务器到客户端的数据传输时正常的
+4.1 服务器结束SYN-RECVD阶段， 进入ESTABLISHED阶段
+    为什么三次握手  防止服务器开启无用连接，增加服务器开销； 防止失效的请求连接报文传输到服务端， 产生错误；  四次挥手 tcp释放连接，需要四次挥手"/>
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -87,12 +134,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -180,98 +227,135 @@
     <div class="content">
       
       <h2 id="tcp-状态">tcp 状态</h2>
-<p>tcp连接FLAGS字段表示当前连接状态，FLAGS包含一下几个标识：</p>
+<p><code>tcp</code>连接<code>FLAGS</code>字段表示当前连接状态，<code>FLAGS</code>包含一下几个标识：</p>
 <ol>
-<li>SYN表示建立连接</li>
-<li>FIN表示关闭连接</li>
-<li>ACK表示响应</li>
-<li>PSH表示有 DATA数据传输</li>
-<li>RST表示连接重置</li>
+<li><code>SYN</code>表示建立连接</li>
+<li><code>FIN</code>表示关闭连接</li>
+<li><code>ACK</code>表示响应</li>
+<li><code>PSH</code>表示有 <code>DATA</code>数据传输</li>
+<li><code>RST</code>表示连接重置</li>
 </ol>
 <h2 id="三次握手">三次握手</h2>
-<p>tcp建立连接的过程，需要三次握手；</p>
+<p><code>tcp</code>建立连接的过程，需要三次握手；</p>
 <ol>
-<li>客户端打开连接，主动结束CLOSED阶段；</li>
-<li>服务器连接，被动结束CLOSED阶段， 进入LISTEN阶段；</li>
-<li>开始握手：</li>
+<li>客户端打开连接，主动结束<code>CLOSED</code>阶段；</li>
+<li>服务器连接，被动结束<code>CLOSED</code>阶段， 进入<code>LISTEN</code>阶段；</li>
+<li>开始握手：
+<ol>
+<li>
+<p>客户端向服务器发送<code>tcp</code>报文<br>
+1.1 标记位为<code>SYN</code>， 表示请求建立连接<br>
+1.2 序号<code>seq=x (x一般为0)</code><br>
+1.3 客户端进入<code>SYN-SENT</code> 阶段</p>
+</li>
+<li>
+<p>服务器接收来自客户端的<code>tcp</code>报文，结束<code>LISTEN</code>阶段，并发送一段<code>tcp</code>报文<br>
+2.1 标志位为<code>SYN</code>和<code>ACK</code>， 表示确认客户端报文<code>seq</code>有效，同意创建连接<br>
+2.2 序号<code>seq=y（y一般为0）</code>， 确认号<code>ack=x+1</code>, 表示收到客户端序号<code>seq</code>并将其值加<code>1</code>作为自己的确认号<code>ack</code>的值<br>
+2.3 服务端进入<code>SYN-RECVD</code>阶段</p>
+</li>
+<li>
+<p>客户端接收来自服务器的确认报文后， 结束<code>SYN-SENT</code>阶段，并返回一段<code>tcp</code>报文<br>
+3.1 标志位为<code>ACK</code>， 表示确认收到服务器同意连接的信号；<br>
+3.2 序号<code>seq=x+1</code>， 表示收到服务器的确认号<code>ack</code>， 并将其作为自己的序号<br>
+3.3 确认号<code>ack=y+1</code>， 表示收到服务器的序号<code>seq</code>并将其值加<code>1</code>作为自己的确认号<code>ack</code>的值<br>
+3.4 客户端进入<code>ESTABLISHED</code>阶段</p>
+</li>
+<li>
+<p>服务器接收到来自客户端的确认报文后， 明确从服务器到客户端的数据传输时正常的<br>
+4.1 服务器结束<code>SYN-RECVD</code>阶段， 进入<code>ESTABLISHED</code>阶段</p>
+</li>
 </ol>
-<pre><code>1. 客户端向服务器发送tcp报文
-1.1 标记位为SYN， 表示请求建立连接
-1.2 序号seq=x (x一般为0)
-1.3 客户端进入SYN-SENT 阶段
-
-2. 服务器接收来自客户端的tcp报文，结束LISTEN阶段，并发送一段tcp报文
-2.1 标志位为SYN和ACK， 表示确认客户端报文seq有效，同意创建连接
-2.2 序号seq=y（y一般为0）， 确认号ack=x+1, 表示收到客户端序号seq并将其值加1作为自己的确认号ack的值
-2.3 服务端进入SYN-RECVD阶段
-
-3. 客户端接收来自服务器的确认报文后， 结束SYN-SENT阶段，并返回一段tcp报文
-3.1 标志位为ACK， 表示确认收到服务器同意连接的信号；
-3.2 序号seq=x+1， 表示收到服务器的确认号ack， 并将其作为自己的序号
-3.3 确认号ack=y+1， 表示收到服务器的序号seq并将其值加1作为自己的确认号ack的值
-3.4 客户端进入ESTABLISHED阶段
-
-4. 服务器接收到来自客户端的确认报文后， 明确从服务器到客户端的数据传输时正常的
-4.1 服务器结束SYN-RECVD阶段， 进入ESTABLISHED阶段
-</code></pre><h3 id="为什么三次握手">为什么三次握手</h3>
-<ol>
+</li>
+</ol>
+<h3 id="为什么三次握手">为什么三次握手</h3>
+<ul>
 <li>防止服务器开启无用连接，增加服务器开销；</li>
 <li>防止失效的请求连接报文传输到服务端， 产生错误；</li>
-</ol>
+</ul>
 <h2 id="四次挥手">四次挥手</h2>
-<p>tcp释放连接，需要四次挥手</p>
-<pre><code>1. 客户端释放连接， 向服务器发送tcp报文
-1.1 标记位为FIN， 表示请求释放连接
-1.2 序号seq=u
-1.3 客户端结束ESTABLISHED阶段，进入FIN-WAIT-1阶段， 即半关闭状态。
-1.4 停止客户端向服务器发送数据， 但是可以接收服务器数据
-
-2. 服务器接收到来自客户端的报文后， 确认客户端要释放连接。服务器结束ESTABLISHED阶段，进入CLOSE-WAIT阶段，即半关闭状态， 并返回一段tcp报文
-2.1 标记位为ACK， 表示接收到客户端发送的释放连接请求
-2.2 序号seq=v
-2.3 确认号ack=u+1， 表示收到客户端的序号seq并将其值加1作为自己的确认号ack的值
-2.4 服务器准备释放服务器到客户端的连接
-
-3. 客户端接收到服务器发送的确认报文后， 客户端结束  FIN-WAIT-1阶段， 进入FIN-WAIT-2阶段
-
-4. 服务器发完ACK的确认报文后， 经过CLOSE-WAIT阶段， 做好释放连接的准备， 再次向客户端发送tcp报文
-4.1 标记位为FIN,ACK ， 表示已经准备好释放连接；
-4.2 序号seq=w
-4.3 确认号为u+1，表示收到客户端的序号seq并将其值加1作为自己的确认号ack的值
-4.4 服务器结束CLOSE-WAIT阶段，进入LAST-ACK阶段
-4.5 服务器停止向客户端发送数据，但是服务器能收到客户端传来的数据
-
-5. 客户端收到从服务器发送的tcp报文后，确认服务器做好释放连接的准备， 结束FIN-WAIT-2阶段， 进入TIME-WAIT阶段，并向服务器发送一段tcp报文
-5.1 标记位为ACK，表示收到服务器准备好释放连接的信号
-5.2 序号seq=u+1,表示收到服务器的确认号ack， 并将其作为自己的序号
-5.3 确认号ack=w+1， 表示收到服务器准备好释放连接的seq， 并将其之加1作为自己的确认号ack的值
-
-6. 服务器接收到客户端的tcp报文后，结束LAST-ACK阶段， 进入CLOSED阶段
-
-7. 客户端再等待2MSL后， 结束TIME-WAIT阶段，进入CLOSED阶段
-</code></pre><h3 id="挥手问题">挥手问题</h3>
-<pre><code>1. TIME-WAIT为什么等2MSL
-1.1 防止服务器发送FIN/ACK指令失败后重发， 这样客户端就能接收到服务器的重传
-1.2 防止客户端未不发送ACK,影响服务器的下一个连接
-
-2. CLOSE-WAIT过多，因为服务器没有发送FIN/ACK报文；解决办法： 
-2.1 socket用完要close
-2.2 socket读取长度为0时， 立刻close
-2.3 socket读取报错是， 检查错误类型； 1. INTR（被中断，可继续读取）；2. WOULDBLOCK（当前socket由阻塞变为非阻塞）； 3. AGAIN（现在还没数据，稍后重新读取）。 如果不是AGAIN， 其他立刻close
-</code></pre><h2 id="rst-重置连接">RST 重置连接</h2>
+<p><code>tcp</code>释放连接，需要四次挥手</p>
 <ol>
+<li>
+<p>客户端释放连接， 向服务器发送<code>tcp</code>报文<br>
+1.1 标记位为<code>FIN</code>， 表示请求释放连接<br>
+1.2 序号<code>seq=u</code><br>
+1.3 客户端结束<code>ESTABLISHED</code>阶段，进入<code>FIN-WAIT-1</code>阶段， 即半关闭状态。<br>
+1.4 停止客户端向服务器发送数据， 但是可以接收服务器数据</p>
+</li>
+<li>
+<p>服务器接收到来自客户端的报文后， 确认客户端要释放连接。
+服务器结束<code>ESTABLISHED</code>阶段，进入<code>CLOSE-WAIT</code>阶段，即半关闭状态， 并返回一段<code>tcp</code>报文<br>
+2.1 标记位为<code>ACK</code>， 表示接收到客户端发送的释放连接请求<br>
+2.2 序号<code>seq=v</code><br>
+2.3 确认号<code>ack=u+1</code>， 表示收到客户端的序号<code>seq</code>并将其值加<code>1</code>作为自己的确认号<code>ack</code>的值<br>
+2.4 服务器准备释放服务器到客户端的连接</p>
+</li>
+<li>
+<p>客户端接收到服务器发送的确认报文后， 客户端结束  <code>FIN-WAIT-1</code>阶段， 进入<code>FIN-WAIT-2</code>阶段</p>
+</li>
+<li>
+<p>服务器发完<code>ACK</code>的确认报文后， 经过<code>CLOSE-WAIT</code>阶段， 做好释放连接的准备， 再次向客户端发送<code>tcp</code>报文<br>
+4.1 标记位为<code>FIN,ACK</code> ， 表示已经准备好释放连接；<br>
+4.2 序号<code>seq=w</code><br>
+4.3 确认号为<code>u+1</code>，表示收到客户端的序号<code>seq</code>并将其值加<code>1</code>作为自己的确认号<code>ack</code>的值<br>
+4.4 服务器结束<code>CLOSE-WAIT</code>阶段，进入<code>LAST-ACK</code>阶段<br>
+4.5 服务器停止向客户端发送数据，但是服务器能收到客户端传来的数据</p>
+</li>
+<li>
+<p>客户端收到从服务器发送的<code>tcp</code>报文后，确认服务器做好释放连接的准备， 结束<code>FIN-WAIT-2</code>阶段， 
+进入<code>TIME-WAIT</code>阶段，并向服务器发送一段<code>tcp</code>报文<br>
+5.1 标记位为<code>ACK</code>，表示收到服务器准备好释放连接的信号<br>
+5.2 序号<code>seq=u+1</code>,表示收到服务器的确认号<code>ack</code>， 并将其作为自己的序号<br>
+5.3 确认号<code>ack=w+1</code>， 表示收到服务器准备好释放连接的<code>seq</code>， 并将其之加<code>1</code>作为自己的确认号<code>ack</code>的值</p>
+</li>
+<li>
+<p>服务器接收到客户端的<code>tcp</code>报文后，结束<code>LAST-ACK</code>阶段， 进入<code>CLOSED</code>阶段</p>
+</li>
+<li>
+<p>客户端再等待<code>2MSL</code>后， 结束<code>TIME-WAIT</code>阶段，进入<code>CLOSED</code>阶段</p>
+</li>
+</ol>
+<h3 id="挥手问题">挥手问题</h3>
+<ul>
+<li>
+<p><code>TIME-WAIT</code>为什么等<code>2MSL</code></p>
+<ul>
+<li>防止服务器发送<code>FIN/ACK</code>指令失败后重发， 这样客户端就能接收到服务器的重传</li>
+<li>防止客户端未不发送<code>ACK</code>,影响服务器的下一个连接</li>
+</ul>
+</li>
+<li>
+<p><code>CLOSE-WAIT</code>过多，因为服务器没有发送<code>FIN/ACK</code>报文；解决办法：</p>
+<ul>
+<li><code>socket</code>用完要<code>close</code></li>
+<li><code>socket</code>读取长度为<code>0</code>时， 立刻<code>close</code></li>
+<li><code>socket</code>读取报错是， 检查错误类型；
+<ul>
+<li><code>INTR</code>（被中断，可继续读取）；</li>
+<li><code>WOULDBLOCK</code>（当前socket由阻塞变为非阻塞）；</li>
+<li><code>AGAIN</code>（现在还没数据，稍后重新读取）。</li>
+<li>如果不是<code>AGAIN</code>， 其他立刻<code>close</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="rst-重置连接">RST 重置连接</h2>
+<ul>
 <li>用于复位某种原因引起的错误连接， 也用来拒绝非法数据和请求</li>
-<li>发送RST关闭连接时，不必等待缓冲区的包都发送完成，会直接清空缓冲区，并发送RST包</li>
-<li>接收到RST包后， 也不必发送ACK包进行响应</li>
-<li>RST表示不在发送数据，也不接受数据</li>
-</ol>
+<li>发送<code>RST</code>关闭连接时，不必等待缓冲区的包都发送完成，会直接清空缓冲区，并发送<code>RST</code>包</li>
+<li>接收到<code>RST</code>包后， 也不必发送<code>ACK</code>包进行响应</li>
+<li><code>RST</code>表示不在发送数据，也不接受数据</li>
+</ul>
 <h3 id="rst-场景">RST 场景</h3>
-<ol>
-<li>关闭socket连接（socket.close())，会发送RST报文</li>
-<li>connect 一个没有被监听的端口</li>
-<li>向已经关闭的连接发送数据，会收到RST报文</li>
-</ol>
+<ul>
+<li>关闭<code>socket</code>连接（<code>socket.close()</code>)，会发送<code>RST</code>报文</li>
+<li><code>connect</code> 一个没有被监听的端口</li>
+<li>向已经关闭的连接发送数据，会收到<code>RST</code>报文</li>
+</ul>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -298,8 +382,29 @@
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tcp-状态">tcp 状态</a></li>
+    <li><a href="#三次握手">三次握手</a>
+      <ul>
+        <li><a href="#为什么三次握手">为什么三次握手</a></li>
+      </ul>
+    </li>
+    <li><a href="#四次挥手">四次挥手</a>
+      <ul>
+        <li><a href="#挥手问题">挥手问题</a></li>
+      </ul>
+    </li>
+    <li><a href="#rst-重置连接">RST 重置连接</a>
+      <ul>
+        <li><a href="#rst-场景">RST 场景</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -309,6 +414,22 @@
       <a href="/blog/database/mysql/sql%E8%AF%AD%E5%8F%A5/" class="button right"><span>MySQL常用sql语句</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Network]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -326,7 +447,7 @@
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -383,6 +504,9 @@
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -396,9 +520,6 @@
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -418,7 +539,7 @@
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

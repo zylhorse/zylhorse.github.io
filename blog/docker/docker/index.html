@@ -6,58 +6,54 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Docker在linux上部署和配置">
-<meta itemprop="description" content="Docker Ubuntu安装 https://docs.docker.com/install/linux/docker-ce/ubuntu/
-查看容器 sudo docker ps -a
-查看镜像 sudo docker images
-设置容器重启策略 docker run xxx &ndash;restart
- no，默认策略，在容器退出时不重启容器 on-failure，在容器非正常退出时（退出状态非0），才会重启容器 on-failure:3，在容器非正常退出时重启容器，最多重启3次 always，在容器退出时总是重启容器 unless-stopped，在容器退出时总是重启容器，但是不考虑在Docker守护进程启动时就已经停止了的容器  如果创建时未指定 启动策略， 可以通过update命令: docker update &ndash;restart=always xxx
-运行容器 docker exec -it xxx /bin/bash
-拷贝本地文件到容器 docker cp [option] local container:/dir
--L 保持源文件链接
-提交镜像 docker commit -m=message -a=author containerid imagesname
-保存镜像 docker save imageid &gt; image.tar
-加载镜像 docker load &lt; image.tar
-使用 Dockerfile 构建镜像 docker build -t aishijie/asjview:base Dockerfile-path">
+<meta itemprop="description" content="Docker Ubuntu安装 下载地址
+查看容器 $ sudo docker ps -a
+查看镜像 $ sudo docker images
+设置容器重启策略 $ docker run xxx --restart
+ no: 默认策略，在容器退出时不重启容器 on-failure: 在容器非正常退出时（退出状态非0），才会重启容器 on-failure:3，在容器非正常退出时重启容器，最多重启3次 always: 在容器退出时总是重启容器 unless-stopped: 在容器退出时总是重启容器，但是不考虑在Docker守护进程启动时就已经停止了的容器   如果创建时未指定 启动策略， 可以通过update命令: docker update &ndash;restart=always xxx
+ 运行容器 $ docker exec -it xxx /bin/bash
+ xxx 容器ID
+ 拷贝本地文件到容器 $ docker cp [option] local container:/dir
+ -L 保持源文件链接
+ 提交镜像 $ docker commit -m=message -a=author containerid imagesname">
 <meta itemprop="datePublished" content="2018-09-04T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2018-09-04T00:00:00+00:00" />
-<meta itemprop="wordCount" content="272">
+<meta itemprop="wordCount" content="309">
 
 
 
 <meta itemprop="keywords" content="," />
 <meta property="og:title" content="Docker在linux上部署和配置" />
-<meta property="og:description" content="Docker Ubuntu安装 https://docs.docker.com/install/linux/docker-ce/ubuntu/
-查看容器 sudo docker ps -a
-查看镜像 sudo docker images
-设置容器重启策略 docker run xxx &ndash;restart
- no，默认策略，在容器退出时不重启容器 on-failure，在容器非正常退出时（退出状态非0），才会重启容器 on-failure:3，在容器非正常退出时重启容器，最多重启3次 always，在容器退出时总是重启容器 unless-stopped，在容器退出时总是重启容器，但是不考虑在Docker守护进程启动时就已经停止了的容器  如果创建时未指定 启动策略， 可以通过update命令: docker update &ndash;restart=always xxx
-运行容器 docker exec -it xxx /bin/bash
-拷贝本地文件到容器 docker cp [option] local container:/dir
--L 保持源文件链接
-提交镜像 docker commit -m=message -a=author containerid imagesname
-保存镜像 docker save imageid &gt; image.tar
-加载镜像 docker load &lt; image.tar
-使用 Dockerfile 构建镜像 docker build -t aishijie/asjview:base Dockerfile-path" />
+<meta property="og:description" content="Docker Ubuntu安装 下载地址
+查看容器 $ sudo docker ps -a
+查看镜像 $ sudo docker images
+设置容器重启策略 $ docker run xxx --restart
+ no: 默认策略，在容器退出时不重启容器 on-failure: 在容器非正常退出时（退出状态非0），才会重启容器 on-failure:3，在容器非正常退出时重启容器，最多重启3次 always: 在容器退出时总是重启容器 unless-stopped: 在容器退出时总是重启容器，但是不考虑在Docker守护进程启动时就已经停止了的容器   如果创建时未指定 启动策略， 可以通过update命令: docker update &ndash;restart=always xxx
+ 运行容器 $ docker exec -it xxx /bin/bash
+ xxx 容器ID
+ 拷贝本地文件到容器 $ docker cp [option] local container:/dir
+ -L 保持源文件链接
+ 提交镜像 $ docker commit -m=message -a=author containerid imagesname" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://zylhorse.github.io/blog/docker/docker/" />
 <meta property="article:published_time" content="2018-09-04T00:00:00+00:00" />
 <meta property="article:modified_time" content="2018-09-04T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Docker在linux上部署和配置"/>
-<meta name="twitter:description" content="Docker Ubuntu安装 https://docs.docker.com/install/linux/docker-ce/ubuntu/
-查看容器 sudo docker ps -a
-查看镜像 sudo docker images
-设置容器重启策略 docker run xxx &ndash;restart
- no，默认策略，在容器退出时不重启容器 on-failure，在容器非正常退出时（退出状态非0），才会重启容器 on-failure:3，在容器非正常退出时重启容器，最多重启3次 always，在容器退出时总是重启容器 unless-stopped，在容器退出时总是重启容器，但是不考虑在Docker守护进程启动时就已经停止了的容器  如果创建时未指定 启动策略， 可以通过update命令: docker update &ndash;restart=always xxx
-运行容器 docker exec -it xxx /bin/bash
-拷贝本地文件到容器 docker cp [option] local container:/dir
--L 保持源文件链接
-提交镜像 docker commit -m=message -a=author containerid imagesname
-保存镜像 docker save imageid &gt; image.tar
-加载镜像 docker load &lt; image.tar
-使用 Dockerfile 构建镜像 docker build -t aishijie/asjview:base Dockerfile-path"/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<meta name="twitter:description" content="Docker Ubuntu安装 下载地址
+查看容器 $ sudo docker ps -a
+查看镜像 $ sudo docker images
+设置容器重启策略 $ docker run xxx --restart
+ no: 默认策略，在容器退出时不重启容器 on-failure: 在容器非正常退出时（退出状态非0），才会重启容器 on-failure:3，在容器非正常退出时重启容器，最多重启3次 always: 在容器退出时总是重启容器 unless-stopped: 在容器退出时总是重启容器，但是不考虑在Docker守护进程启动时就已经停止了的容器   如果创建时未指定 启动策略， 可以通过update命令: docker update &ndash;restart=always xxx
+ 运行容器 $ docker exec -it xxx /bin/bash
+ xxx 容器ID
+ 拷贝本地文件到容器 $ docker cp [option] local container:/dir
+ -L 保持源文件链接
+ 提交镜像 $ docker commit -m=message -a=author containerid imagesname"/>
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -114,12 +110,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -208,41 +204,52 @@
       
       <h1 id="docker">Docker</h1>
 <h2 id="ubuntu安装">Ubuntu安装</h2>
-<p><a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">https://docs.docker.com/install/linux/docker-ce/ubuntu/</a></p>
+<p><a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">下载地址</a></p>
 <h2 id="查看容器">查看容器</h2>
-<p>sudo docker ps -a</p>
+<p><code>$ sudo docker ps -a</code></p>
 <h2 id="查看镜像">查看镜像</h2>
-<p>sudo docker images</p>
+<p><code>$ sudo docker images</code></p>
 <h2 id="设置容器重启策略">设置容器重启策略</h2>
-<p>docker run xxx &ndash;restart</p>
-<ol>
-<li>no，默认策略，在容器退出时不重启容器</li>
-<li>on-failure，在容器非正常退出时（退出状态非0），才会重启容器</li>
+<p><code>$ docker run xxx --restart</code></p>
+<ul>
+<li>no: 默认策略，在容器退出时不重启容器</li>
+<li>on-failure: 在容器非正常退出时（退出状态非0），才会重启容器</li>
 <li>on-failure:3，在容器非正常退出时重启容器，最多重启3次</li>
-<li>always，在容器退出时总是重启容器</li>
-<li>unless-stopped，在容器退出时总是重启容器，但是不考虑在Docker守护进程启动时就已经停止了的容器</li>
-</ol>
+<li>always: 在容器退出时总是重启容器</li>
+<li>unless-stopped: 在容器退出时总是重启容器，但是不考虑在Docker守护进程启动时就已经停止了的容器</li>
+</ul>
+<blockquote>
 <p>如果创建时未指定 启动策略， 可以通过update命令: docker update &ndash;restart=always xxx</p>
+</blockquote>
 <h2 id="运行容器">运行容器</h2>
-<p>docker exec -it xxx /bin/bash</p>
+<p><code>$ docker exec -it xxx /bin/bash</code></p>
+<blockquote>
+<p>xxx 容器ID</p>
+</blockquote>
 <h2 id="拷贝本地文件到容器">拷贝本地文件到容器</h2>
-<p>docker cp [option] local container:/dir</p>
+<p><code>$ docker cp [option] local container:/dir</code></p>
+<blockquote>
 <p>-L 保持源文件链接</p>
+</blockquote>
 <h2 id="提交镜像">提交镜像</h2>
-<p>docker commit -m=message -a=author containerid imagesname</p>
+<p><code>$ docker commit -m=message -a=author containerid imagesname</code></p>
 <h2 id="保存镜像">保存镜像</h2>
-<p>docker save imageid &gt; image.tar</p>
+<p><code>$ docker save imageid &gt; image.tar</code></p>
 <h2 id="加载镜像">加载镜像</h2>
-<p>docker load &lt; image.tar</p>
+<p><code>$ docker load &lt; image.tar</code></p>
 <h2 id="使用-dockerfile-构建镜像">使用 Dockerfile 构建镜像</h2>
-<p>docker build -t aishijie/asjview:base Dockerfile-path</p>
+<p><code>$ docker build -t aishijie/asjview:base Dockerfile-path</code></p>
 <h2 id="ubuntu-docker-语言设置">ubuntu docker 语言设置</h2>
-<p>Dockfile 中添加：</p>
+<ol>
+<li>
+<p><code>Dockfile</code> 中添加：</p>
 <pre><code>RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8    
 ENV LANGUAGE en_US:en    
 ENV LC_ALL en_US.UTF-8 
-</code></pre><p>/etc/default/locale</p>
+</code></pre></li>
+<li>
+<p><code>/etc/default/locale</code>中添加：</p>
 <pre><code>LANG=en_US.UTF-8
 LANGUAGE=en_US:en
 LC_CTYPE=&quot;en_US.UTF-8&quot;
@@ -258,52 +265,80 @@ LC_TELEPHONE=&quot;en_US.UTF-8&quot;
 LC_MEASUREMENT=&quot;en_US.UTF-8&quot;
 LC_IDENTIFICATION=&quot;en_US.UTF-8&quot;
 LC_ALL=en_US.UTF-8
-</code></pre><pre><code>执行： locale-gen en_US.UTF-8
-如果提示没有安装 en_US:
-</code></pre><pre><code>apt-get --reinstall install language-pack-en  
-update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8  
-</code></pre><h2 id="安装mysql">安装mysql</h2>
+</code></pre></li>
+<li>
+<p><code>$ locale-gen en_US.UTF-8</code></p>
+<ul>
+<li>如果提示没有安装 <code>en_US</code>
+<pre><code>$ apt-get --reinstall install language-pack-en  
+$ update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8  
+</code></pre></li>
+</ul>
+</li>
+</ol>
+<h2 id="安装mysql">安装mysql</h2>
 <ol>
-<li>sudo rm /var/lib/mysql/ -R</li>
-<li>sudo rm /etc/mysql/ -R</li>
-<li>sudo apt-get autoremove mysql* &ndash;purge</li>
-<li>sudo apt-get remove apparmor // 输入Y回车</li>
-<li>sudo apt-get install mysql-server mysql-common //重新安装</li>
+<li><code>$ sudo rm /var/lib/mysql/ -R</code></li>
+<li><code>$sudo rm /etc/mysql/ -R</code></li>
+<li><code>$ sudo apt-get autoremove mysql* --purge</code></li>
+<li><code>$ sudo apt-get remove apparmor // 输入Y回车</code></li>
+<li><code>$ sudo apt-get install mysql-server mysql-common //重新安装</code></li>
 </ol>
 <h3 id="mysql启动问题">mysql启动问题</h3>
-<p>chown -R mysql:mysql /var/lib/mysql</p>
+<p><code>chown -R mysql:mysql /var/lib/mysql</code></p>
 <h2 id="修改镜像名">修改镜像名</h2>
-<p>docker tag IMAGEID(镜像id) REPOSITORY:TAG（仓库：标签）</p>
+<p><code>docker tag IMAGEID(镜像id) REPOSITORY:TAG（仓库：标签）</code></p>
 <h2 id="网络模式">网络模式</h2>
-<pre><code>host模式:使用–net=host指定。
-container模式:使用–net=container:NAME_or_ID指定。
-none模式:使用–net=none指定。
-bridge模式:使用–net=bridge指定，默认设置。
-</code></pre>
+<ul>
+<li><code>host</code>模式<br>
+使用<code>-–net=host</code>指定。</li>
+<li><code>container</code>模式<br>
+使用<code>-–net=container:NAME_or_ID</code>指定。</li>
+<li><code>none</code>模式<br>
+使用<code>-–net=none</code>指定。</li>
+<li><code>bridge</code>模式<br>
+使用<code>-–net=bridge</code>指定，默认设置。</li>
+</ul>
 <h2 id="修改docker-映射port">修改docker 映射port</h2>
-<p>如何对运行中的Docker容器添加端口映射？</p>
+<p>如何对运行中的<code>Docker</code>容器添加端口映射？</p>
 <ol>
-<li>iptables -t nat -A DOCKER -p tcp &ndash;dport ${YOURPORT} -j DNAT &ndash;to-destination ${CONTAINERIP}:${YOURPORT}</li>
-<li>iptables -t nat -A POSTROUTING -j MASQUERADE -p tcp &ndash;source ${CONTAINERIP} &ndash;destination ${CONTAINERIP} &ndash;dport ${YOURPORT}</li>
-<li>iptables -A DOCKER -j ACCEPT -p tcp &ndash;destination ${CONTAINERIP} &ndash;dport ${YOURPORT}12345</li>
+<li><code>iptables -t nat -A DOCKER -p tcp --dport ${YOURPORT} -j DNAT --to-destination ${CONTAINERIP}:${YOURPORT}</code></li>
+<li><code>iptables -t nat -A POSTROUTING -j MASQUERADE -p tcp --source ${CONTAINERIP} --destination ${CONTAINERIP} --dport ${YOURPORT}</code></li>
+<li><code>iptables -A DOCKER -j ACCEPT -p tcp --destination ${CONTAINERIP} --dport ${YOURPORT}</code></li>
 </ol>
 <p>总共有3条命令，把他们运行在安装了docker的宿主机上。其中就修改两个参数：</p>
-<p>${CONTAINERIP} 就是对应容器的ip地址，比如我的容器ip地址是 172.17.0.2 ，（容器的IP可以通过如下方式查看：a.在容器中：ip addr;b.在宿主机中: docker inspect 容器名 |grep IPAddress ）所以我就把上述的参数换成我的IP地址。
-${YOURPORT} 就是要映射出来的端口，我配置的是一个hadoop平台，其端口是50070
-所以最终我的几条命令更改如下：</p>
+<ul>
+<li><code>${CONTAINERIP}</code> 就是对应容器的<code>ip</code>地址，比如我的容器<code>ip</code>地址是 <code>172.17.0.2</code> ，
+<ul>
+<li>容器的<code>IP</code>可以通过如下方式查看
+<ul>
+<li>在容器中：ip addr;</li>
+<li>在宿主机中: docker inspect 容器名 |grep IPAddress</li>
+</ul>
+</li>
+<li>所以我就把上述的参数换成我的IP地址</li>
+</ul>
+</li>
+<li><code>${YOURPORT}</code> 就是要映射出来的端口，我配置的是一个hadoop平台，其端口是50070</li>
+</ul>
+<p>所以最终我的几条命令更改如下：</p>
 <ol>
-<li>sudo iptables -t nat -A DOCKER -p tcp &ndash;dport 50070 -j DNAT &ndash;to-destination 172.17.0.2:50070</li>
-<li>sudo iptables -t nat -A POSTROUTING -j MASQUERADE -p tcp &ndash;source 172.17.0.2 &ndash;destination 172.17.0.2 &ndash;dport 50070</li>
-<li>sudo iptables -A DOCKER -j ACCEPT -p tcp &ndash;destination 172.17.0.2 &ndash;dport 50070</li>
+<li><code>sudo iptables -t nat -A DOCKER -p tcp --dport 50070 -j DNAT --to-destination 172.17.0.2:50070</code></li>
+<li><code>sudo iptables -t nat -A POSTROUTING -j MASQUERADE -p tcp --source 172.17.0.2 --destination 172.17.0.2 --dport 50070</code></li>
+<li><code>sudo iptables -A DOCKER -j ACCEPT -p tcp --destination 172.17.0.2 --dport 50070</code></li>
 </ol>
 <h2 id="supervisorctl-无状态">supervisorctl 无状态</h2>
-<p>正常情况下上面配置正常是能让supervisorctl加载当前supervisor管理的进程信息的，但是有时候换一个docker打包就不一定行，这个时候修改 supervisorctl 的链接方式从 serverurl=unix:///tmp/supervisor.sock，切换到serverurl=http://127.0.0.1:9001</p>
+<p>正常情况下配置正常是能让<code>supervisorctl</code>加载当前<code>supervisor</code>管理的进程信息的，但是有时候换一个<code>docker</code>打包就不一定行。<br>
+这个时候修改 <code>supervisorctl</code> 的链接方式从 <code>serverurl=unix:///tmp/supervisor.sock</code>，切换到<code>serverurl=http://127.0.0.1:9001</code></p>
 <h2 id="挂载本地磁盘">挂载本地磁盘</h2>
-<p>docker run -v /localDir:/dockerDir</p>
+<p><code>docker run -v /localDir:/dockerDir</code></p>
 <h2 id="本地修改docker容器中文件">本地修改docker容器中文件</h2>
 <pre><code>cd /var/lib/docker/overlay2
 find ./ -name you_err_conf_file
-</code></pre>
+</code></pre><h2 id="docker-映射地址段">docker 映射地址段</h2>
+<p><code>$ docker run xxx -p 44000-65000:44000-65000</code></p>
+
+      
     </div>
     <footer>
       <div class="stats">
@@ -330,8 +365,36 @@ find ./ -name you_err_conf_file
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ubuntu安装">Ubuntu安装</a></li>
+    <li><a href="#查看容器">查看容器</a></li>
+    <li><a href="#查看镜像">查看镜像</a></li>
+    <li><a href="#设置容器重启策略">设置容器重启策略</a></li>
+    <li><a href="#运行容器">运行容器</a></li>
+    <li><a href="#拷贝本地文件到容器">拷贝本地文件到容器</a></li>
+    <li><a href="#提交镜像">提交镜像</a></li>
+    <li><a href="#保存镜像">保存镜像</a></li>
+    <li><a href="#加载镜像">加载镜像</a></li>
+    <li><a href="#使用-dockerfile-构建镜像">使用 Dockerfile 构建镜像</a></li>
+    <li><a href="#ubuntu-docker-语言设置">ubuntu docker 语言设置</a></li>
+    <li><a href="#安装mysql">安装mysql</a>
+      <ul>
+        <li><a href="#mysql启动问题">mysql启动问题</a></li>
+      </ul>
+    </li>
+    <li><a href="#修改镜像名">修改镜像名</a></li>
+    <li><a href="#网络模式">网络模式</a></li>
+    <li><a href="#修改docker-映射port">修改docker 映射port</a></li>
+    <li><a href="#supervisorctl-无状态">supervisorctl 无状态</a></li>
+    <li><a href="#挂载本地磁盘">挂载本地磁盘</a></li>
+    <li><a href="#本地修改docker容器中文件">本地修改docker容器中文件</a></li>
+    <li><a href="#docker-映射地址段">docker 映射地址段</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -341,6 +404,22 @@ find ./ -name you_err_conf_file
       <a href="/blog/stories/%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E4%B8%96%E7%95%8C%E8%A7%82/" class="button right"><span>方法论和世界观</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Docker]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -358,7 +437,7 @@ find ./ -name you_err_conf_file
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -415,6 +494,9 @@ find ./ -name you_err_conf_file
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -428,9 +510,6 @@ find ./ -name you_err_conf_file
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -450,7 +529,7 @@ find ./ -name you_err_conf_file
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

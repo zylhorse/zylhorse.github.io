@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="LDAP协议简介">
 <meta itemprop="description" content="概述 LDAP: light diretory access protocol, 轻量级目录访问协议； LDAP 目录服务，由目录数据库和访问协议组成；
 目录树  目录树： 在目录服务系统中， 整个目录信息集， 都可以表示为一个目录信息树。树中的每个节点是一个条目； 条目： 每个条目是一条记录， 每个条目有自己唯一的名称（DN） 对象类： 与某个实体类型对应的一组属性，可以继承。这样父类的属性也会被继承下来。 属性： 描述条目的某方面信息。 一个属性由一个属性类型和一个或多个属性值组成， 属性由必须属性和非必须属性。  关键字    关键字 英文全称 含义     dc domain Component 域名的部分，其格式是将完整的域名分成几部分，如域名为example.com变成dc=example,dc=com（一条记录的所属位置）   uid User Id 用户ID songtao.xu（一条记录的ID）   ou Organization Unit 组织单位，组织单位可以包含其他各种对象（包括其他组织单元），如“oa组”（一条记录的所属组织）   cn Common Name 公共名称，如“Thomas Johansson”（一条记录的名称）   sn Surname 姓，如“许”   dn Distinguished Name “uid=songtao.">
@@ -27,7 +29,7 @@
 <meta name="twitter:title" content="LDAP协议简介"/>
 <meta name="twitter:description" content="概述 LDAP: light diretory access protocol, 轻量级目录访问协议； LDAP 目录服务，由目录数据库和访问协议组成；
 目录树  目录树： 在目录服务系统中， 整个目录信息集， 都可以表示为一个目录信息树。树中的每个节点是一个条目； 条目： 每个条目是一条记录， 每个条目有自己唯一的名称（DN） 对象类： 与某个实体类型对应的一组属性，可以继承。这样父类的属性也会被继承下来。 属性： 描述条目的某方面信息。 一个属性由一个属性类型和一个或多个属性值组成， 属性由必须属性和非必须属性。  关键字    关键字 英文全称 含义     dc domain Component 域名的部分，其格式是将完整的域名分成几部分，如域名为example.com变成dc=example,dc=com（一条记录的所属位置）   uid User Id 用户ID songtao.xu（一条记录的ID）   ou Organization Unit 组织单位，组织单位可以包含其他各种对象（包括其他组织单元），如“oa组”（一条记录的所属组织）   cn Common Name 公共名称，如“Thomas Johansson”（一条记录的名称）   sn Surname 姓，如“许”   dn Distinguished Name “uid=songtao."/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -84,12 +86,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -238,6 +240,7 @@ LDAP 目录服务，由目录数据库和访问协议组成；</p>
 <h2 id="应用错误">应用错误</h2>
 <p>Golang https请求发生错误 <code>x509: certificate signed by unknown authority</code> ### 重点： 引入&quot;crypto/tls&rdquo;</p>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -264,8 +267,18 @@ LDAP 目录服务，由目录数据库和访问协议组成；</p>
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#概述">概述</a></li>
+    <li><a href="#目录树">目录树</a></li>
+    <li><a href="#关键字">关键字</a></li>
+    <li><a href="#dn">DN</a></li>
+    <li><a href="#应用错误">应用错误</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -275,6 +288,22 @@ LDAP 目录服务，由目录数据库和访问协议组成；</p>
       <a href="/blog/distribution-system/cdn/" class="button right"><span>CDN内容分发网络工作过程和分类</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Web]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -292,7 +321,7 @@ LDAP 目录服务，由目录数据库和访问协议组成；</p>
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -349,6 +378,9 @@ LDAP 目录服务，由目录数据库和访问协议组成；</p>
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -362,9 +394,6 @@ LDAP 目录服务，由目录数据库和访问协议组成；</p>
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -384,7 +413,7 @@ LDAP 目录服务，由目录数据库和访问协议组成；</p>
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Erlang基本数据结构">
 <meta itemprop="description" content="Erlang Erlang 创始人Joe Armstrong，基于Prolog开发。Erlang 是通用的面向并发的编程语言，由瑞典电信设备制造商爱立信所辖CS-Lab开发。于1987年开发，1988年开源。Erlang是运行于虚拟机上的解释型语言。 Erlang 编写的程序运行时通常由大量的轻量级进程组成，并通过消息传递进行通讯。Erlang 目前包含 乌普萨拉大学的高性能计划（Hipe）开发的本地代码编译器，自R11B04版本开始erlang 支持脚本式解释器。 注： erlang 的hipe 相当于jit（Just-in-time compilation），根据语言评测有hipe支持的erlang运算上快2-3倍。
 Shell 启动：$&gt; erl停止(受控方式)：1&gt;q().init:stop().立即停止： erlang:halt().切换erl 中shell命令： CTRL &#43; P ， CTRL &#43; N。shell 只能对erlang 的表达式求值，不能在shell中输入Erlang文件中代码（.erl文件中的句法形式不是表达式），不能输入模块注释（如：-module，-export）。编写分布式程序时，集群中会有许多正运行的erlang系统节点，可以将shell随意附着在他们中的任何一个上， 甚至可以用ssh向一个运行着erlang系统的计算机上发起一个直连接，通过这个方法，在erlang 的节点集群中你能与其中的任何节点上的任意一个程序打交道 注释 % ： 代表一行注释的开始，被erlang 和 shell 忽略。 整数运算： 采用不定长整数进行运算，整数运算没有误差不会溢出。 进制表达： 进制#值： 16#1(16进制1)， 2#111(2进制111)。 变量 变量首字母大写变量是单一赋值，只能一次性给定，重复赋值是错误的。一个变量如果被赋值，则被称为绑定变量，否则为自由变量。一开始所有的变量都是自由变量。下划线（_） 是匿名变量，与常规变量不同，在同一模式下_可以绑定不同的值。f() 会释放shell之前进行过绑定的变量。 等号（=） =是一个模式匹配运算符，当变量是自由变量时，其行为相当于赋值运算。 变量绑定表： 变量经过赋值，shell就会形成一个变量绑定表。形如： {X |-&gt; 111, Y |-&gt; 222} 原子 原子是全局有效的，无需使用宏定义或者包含文件。 原子是以小写字母开头，后面跟数字、字母、下划线、邮件符号（@）的字符。使用单引号的字符也是原子。这种形式使得我们可以用大些字母开头或者包含特殊字符。原子的值是原子本身。 元组（tuple） 将若干个以逗号分割的值用一对花括号括起来就形成一个元组。元组是匿名的，元组中的字段没有名字，因此推荐元组的第一个元素用原子来表明这个元组所代表的含义。eg:  Person={person, {name,zyl}, {age,27}, {height,1.">
@@ -27,7 +29,7 @@ Shell 启动：$&gt; erl停止(受控方式)：1&gt;q().init:stop().立即停
 <meta name="twitter:title" content="Erlang基本数据结构"/>
 <meta name="twitter:description" content="Erlang Erlang 创始人Joe Armstrong，基于Prolog开发。Erlang 是通用的面向并发的编程语言，由瑞典电信设备制造商爱立信所辖CS-Lab开发。于1987年开发，1988年开源。Erlang是运行于虚拟机上的解释型语言。 Erlang 编写的程序运行时通常由大量的轻量级进程组成，并通过消息传递进行通讯。Erlang 目前包含 乌普萨拉大学的高性能计划（Hipe）开发的本地代码编译器，自R11B04版本开始erlang 支持脚本式解释器。 注： erlang 的hipe 相当于jit（Just-in-time compilation），根据语言评测有hipe支持的erlang运算上快2-3倍。
 Shell 启动：$&gt; erl停止(受控方式)：1&gt;q().init:stop().立即停止： erlang:halt().切换erl 中shell命令： CTRL &#43; P ， CTRL &#43; N。shell 只能对erlang 的表达式求值，不能在shell中输入Erlang文件中代码（.erl文件中的句法形式不是表达式），不能输入模块注释（如：-module，-export）。编写分布式程序时，集群中会有许多正运行的erlang系统节点，可以将shell随意附着在他们中的任何一个上， 甚至可以用ssh向一个运行着erlang系统的计算机上发起一个直连接，通过这个方法，在erlang 的节点集群中你能与其中的任何节点上的任意一个程序打交道 注释 % ： 代表一行注释的开始，被erlang 和 shell 忽略。 整数运算： 采用不定长整数进行运算，整数运算没有误差不会溢出。 进制表达： 进制#值： 16#1(16进制1)， 2#111(2进制111)。 变量 变量首字母大写变量是单一赋值，只能一次性给定，重复赋值是错误的。一个变量如果被赋值，则被称为绑定变量，否则为自由变量。一开始所有的变量都是自由变量。下划线（_） 是匿名变量，与常规变量不同，在同一模式下_可以绑定不同的值。f() 会释放shell之前进行过绑定的变量。 等号（=） =是一个模式匹配运算符，当变量是自由变量时，其行为相当于赋值运算。 变量绑定表： 变量经过赋值，shell就会形成一个变量绑定表。形如： {X |-&gt; 111, Y |-&gt; 222} 原子 原子是全局有效的，无需使用宏定义或者包含文件。 原子是以小写字母开头，后面跟数字、字母、下划线、邮件符号（@）的字符。使用单引号的字符也是原子。这种形式使得我们可以用大些字母开头或者包含特殊字符。原子的值是原子本身。 元组（tuple） 将若干个以逗号分割的值用一对花括号括起来就形成一个元组。元组是匿名的，元组中的字段没有名字，因此推荐元组的第一个元素用原子来表明这个元组所代表的含义。eg:  Person={person, {name,zyl}, {age,27}, {height,1."/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -84,12 +86,12 @@ Shell 启动：$&gt; erl停止(受控方式)：1&gt;q().init:stop().立即停
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -254,6 +256,7 @@ eg:
 erlang所关心的只是 以某种编码方式编码的一串整数值列表。
 </code></pre>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -280,8 +283,19 @@ erlang所关心的只是 以某种编码方式编码的一串整数值列表。
     </footer>
   </article>
   
-    
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#怎样获取元组的值">怎样获取元组的值：</a></li>
+  </ul>
 
+  <ul>
+    <li><a href="#列表运算">列表运算</a></li>
+    <li><a href="#提取列表元素">提取列表元素</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -291,6 +305,22 @@ erlang所关心的只是 以某种编码方式编码的一串整数值列表。
       <a href="/blog/erlang/%E7%BC%96%E8%AF%91%E5%92%8C%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F/" class="button right"><span>Erlang编译和运行</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Erlang]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -308,7 +338,7 @@ erlang所关心的只是 以某种编码方式编码的一串整数值列表。
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -365,6 +395,9 @@ erlang所关心的只是 以某种编码方式编码的一串整数值列表。
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -378,9 +411,6 @@ erlang所关心的只是 以某种编码方式编码的一串整数值列表。
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -400,7 +430,7 @@ erlang所关心的只是 以某种编码方式编码的一串整数值列表。
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

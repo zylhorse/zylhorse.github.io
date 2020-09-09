@@ -17,7 +17,8 @@
       <pubDate>Fri, 10 Oct 2014 00:00:00 +0000</pubDate>
       
       <guid>https://zylhorse.github.io/blog/memory/mmap/</guid>
-      <description>概念  mmap 是一种文档映射到内存的方法； 将文件或其他对象映射到进程的内存地址空间；实现文件磁盘地址和进程虚拟地址空间的映射。 映射后， 进程就可以采用指针的方式读写操作这段内存。而系统会自动回写修改内容到磁盘文件中。 同样内核空间对这段内存的修改也会直接映射到用户空间， 从而实现不同进程间的文档共享。  内部原理 struct vm_area_struct {vm_endvm_startvm_protvm_flagsvm_next *vm_area_struct} linux 内核使用vm_area_struct结构来表示一个独立的虚拟内存区域。  工作流程 void *mmap(void *start, size_t length, int prot, int flags,int fd, off_t offset);int munmap( void * addr, size_t len ) int msync( void *addr, size_t len, int flags )优点 1、对文件的读取操作跨过了页缓存，减少了数据的拷贝次数，用内存读写取代I/O读写，提高了文件读取效率。常规文件操作需要从磁盘到页缓存再到用户主存的两次数据拷贝 2. 实现了用户空间和内核空间的高校交互；俩个空间的操作口可以直接反映到映射的内存区域； 3. 实现进程间共享内存进行通讯； 4. 实现高校大规模数据传输，借助磁盘空间协助内存操作。</description>
+      <description>概念  mmap是一种文档映射到内存的方法； 将文件或其他对象映射到进程的内存地址空间；实现文件磁盘地址和进程虚拟地址空间的映射。 映射后， 进程就可以采用指针的方式读写操作这段内存。而系统会自动回写修改内容到磁盘文件中。 同样内核空间对这段内存的修改也会直接映射到用户空间， 从而实现不同进程间的文档共享。  内部原理 struct vm_area_struct {vm_endvm_startvm_protvm_flagsvm_next *vm_area_struct}linux 内核使用vm_area_struct结构来表示一个独立的虚拟内存区域。
+工作流程 void *mmap(void *start, size_t length, int prot, int flags,int fd, off_t offset);int munmap( void * addr, size_t len ) int msync( void *addr, size_t len, int flags )优点  对文件的读取操作跨过了页缓存，减少了数据的拷贝次数，用内存读写取代I/O读写，提高了文件读取效率。常规文件操作需要从磁盘到页缓存再到用户主存的两次数据拷贝 实现了用户空间和内核空间的高校交互；俩个空间的操作口可以直接反映到映射的内存区域； 实现进程间共享内存进行通讯； 实现高校大规模数据传输，借助磁盘空间协助内存操作。  </description>
     </item>
     
     <item>

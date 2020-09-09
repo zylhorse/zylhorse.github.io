@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,6 +179,63 @@
   <header>
   <div class="title">
     
+      <h2><a href="/blog/security/%E9%AB%98%E9%98%B2ip/">高防IP服务工作原理和配置</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-02-13 00:00:00 &#43;0000 UTC">2019-02-13</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="概念">概念</h2>
+<p>高防IP是针对互联网服务器遭受大流量的DDos攻击后， 导致服务不可用的情况下。 用户通过配置高防IP， 将攻击流量引流到高防IP， 并配置一定的转发规则， 将合法的请求转发到源站；</p>
+<h2 id="高防ip包含">高防IP包&hellip;</h2>
+  </div>
+  <footer>
+    <a href="/blog/security/%E9%AB%98%E9%98%B2ip/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/security/">Security</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
       <h2><a href="/blog/message-queue/%E4%B8%AD%E9%97%B4%E4%BB%B6/">消息队列简介和消息队列中间件</a></h2>
     
     
@@ -200,21 +259,7 @@
     
     
     <h1 id="消息队列">消息队列</h1>
-<p>消息队列是消息的一个链表。 拥有写权限的可以向队列中写入特定格式消息， 拥有读权限可以从队列中读取特定格式消息。</p>
-<h1 id="消息队列中间件">消息队列中间件</h1>
-<p>ActiveMQ，RabbitMQ，ZeroMQ，Kafka，MetaMQ，RocketMQ，NSQ</p>
-<h1 id="意义">意义</h1>
-<ol>
-<li>解耦： 生产者根据自己逻辑发布消息； 消费者根据需要去订阅；对于多服务依赖有解耦的意义；</li>
-<li>异步： 多服务调用，减少同步等待时间；</li>
-<li>削峰： 业务系统根据自己的处理能力去消息队列中拿，防止大量信息导致系统崩溃；</li>
-</ol>
-<h1 id="问题">问题</h1>
-<ol>
-<li>高可用：mq 肯定事集群部署，防止单机挂掉，业务停掉；</li>
-<li>数据丢失： mq 需要数据本地磁盘持久化；</li>
-</ol>
-
+<p>消息队列是消息的一个链表。 拥有写权限的可以向队列中写入特定格式消息， 拥有读权限可以从队列中读取特定格式消息。&hellip;</p>
   </div>
   <footer>
     <a href="/blog/message-queue/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="button big">阅读全文</a>
@@ -272,12 +317,7 @@
     <h2 id="zookeeper">ZooKeeper</h2>
 <p>ZooKeeper是一个开源的分布式协调服务， 由雅虎创建， 是Google Chubby的开源实现， 现在被拆分为Hadoop的独立子项目。</p>
 <ol>
-<li>ZookKeeper是一个分布式小文件系统，且被设计为高可用。通过选举算法和集群复制来避免单点故障。</li>
-<li>因为是基于文件系统设计， 即使所有ZooKeeper节点全部挂掉， 数据也会持久化， 重启服务器后， 可恢复数据。</li>
-<li>ZooKeeper通过mvvc（多版本控制）实现乐观锁，节点更新是原子的，所以不是成功就是失败。</li>
-</ol>
-<h2 id="功能简介">功能简介</h2>
-<p>分布式系统基于ZooKeeper可以实现诸如： 数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群&hellip;</p>
+<li>ZookKeeper是一个分布式小&hellip;</li></ol>
   </div>
   <footer>
     <a href="/blog/distribution-system/zookeeper/" class="button big">阅读全文</a>
@@ -339,11 +379,7 @@
    
 listen 443 ssl;
 listen [::]:443 ssl;
-ssl_certificate /etc/nginx/fullchain1.pem;
-ssl_certificate_key /etc/nginx/privkey1.pem;
-</code></pre></li>
-</ol>
-
+ssl_certificate&hellip;</code></pre></li></ol>
   </div>
   <footer>
     <a href="/blog/nginx/%E8%AF%81%E4%B9%A6%E9%85%8D%E7%BD%AE/" class="button big">阅读全文</a>
@@ -402,79 +438,10 @@ ssl_certificate_key /etc/nginx/privkey1.pem;
 <pre><code>version: '2'
 services:
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.2.0
-    environment:
-      ELASTICSEARCH_HOSTS: http://192.168.20.99:9200
-    ports:
-      - 5601:5601
-    restart: always
-</code></pre>
+    image: docker.elastic.co/kibana/kibana:7.2.0&hellip;</code></pre>
   </div>
   <footer>
     <a href="/blog/elk/kibana/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/elk/">ELK</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/elk/filebeat/">ELK-搭建Filebeat</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2018-12-05 00:00:00 &#43;0000 UTC">2018-12-05</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="安装">安装</h2>
-<p>deb:</p>
-<pre><code>curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.3.0-amd64.deb
-sudo dpkg -i filebeat-7.3.0-amd64.deb
-</code></pre><p>rpm:</p>
-<pre><code>curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.3.0-x86_64.rpm
-sudo rpm -vi filebeat-7.3.0-x86_64.rpm
-</code></pre><h2 id="docker-compose">docker-compose</h2>
-<pre><code>version:&hellip;</code></pre>
-  </div>
-  <footer>
-    <a href="/blog/elk/filebeat/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -526,7 +493,7 @@ sudo rpm -vi filebeat-7.3.0-x86_64.rpm
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -583,6 +550,9 @@ sudo rpm -vi filebeat-7.3.0-x86_64.rpm
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -596,9 +566,6 @@ sudo rpm -vi filebeat-7.3.0-x86_64.rpm
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -618,7 +585,7 @@ sudo rpm -vi filebeat-7.3.0-x86_64.rpm
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

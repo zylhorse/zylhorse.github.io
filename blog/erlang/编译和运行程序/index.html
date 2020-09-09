@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Erlang编译和运行">
 <meta itemprop="description" content="代码搜索路径  Erlang运行时系统使用一种代码自动载入机制，要让它正确工作，必须设置一些搜索路径来找到正确版本代码。 代码的载入是按需进行的，当系统尝试调用的函数属于一个尚未加载的模块时，就会出现异常，系统尝试查找缺失模块代码文件。代码载入器会在代码载入路径所有目录里查找缺失模块代码文件。只要找到相符的文件，搜索停止，载入该文件的目标代码。 以下是两个最常用来操作载入路径的函数：   -spec code::add_patha(Dir) =&gt; true | {error, bad_directory}. 向载入路径的开头添加一个新目录Dir。
   -spec code::add_pathz(Dir) =&gt; true | {error, bad_directory}. 向载入路径的末尾添加一个新目录Dir。
@@ -30,7 +32,7 @@
 <meta name="twitter:description" content="代码搜索路径  Erlang运行时系统使用一种代码自动载入机制，要让它正确工作，必须设置一些搜索路径来找到正确版本代码。 代码的载入是按需进行的，当系统尝试调用的函数属于一个尚未加载的模块时，就会出现异常，系统尝试查找缺失模块代码文件。代码载入器会在代码载入路径所有目录里查找缺失模块代码文件。只要找到相符的文件，搜索停止，载入该文件的目标代码。 以下是两个最常用来操作载入路径的函数：   -spec code::add_patha(Dir) =&gt; true | {error, bad_directory}. 向载入路径的开头添加一个新目录Dir。
   -spec code::add_pathz(Dir) =&gt; true | {error, bad_directory}. 向载入路径的末尾添加一个新目录Dir。
   通常的惯例是将这些命令放到主目录下的一个.erlang文件中。 也可以在启动erl时添加代码搜索路径：  $ erl -pa Dir1 -pa Dir2 ... -pz Dirk1 -pz Dirk2-pa: 把Dir添加到搜索路径的开头-pz:把Dir添加到搜索路径的结尾在系统启动时执行.erlang里的命令  启动erlang时，它会首先读取并执行.erlang中的所有命令。当前目录下的.erlang优先级高于主目录下的.erlang Erlang认为的主目录的位置获取:init:get_argument(home). code:clash()会报告代码搜索路径里面所有重复的模块。  运行程序的不同方式 程序 hello.erl-module(hello).-export([start/0]).start() -&gt; io:format(&quot;Hello World ~n&quot;).在erlang shell里面编译运行： 1&gt;c(hello).2&gt;hello:start().快速脚本编程：  在命令行中执行任意的erlang函数：  erl -eval &#39;io:format(&quot;Memory: ~p~n&quot;, [erlang:memory(total)])."/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -87,12 +89,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -335,6 +337,7 @@ clean:
 <p>&gt;help().</p>
 </blockquote>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -361,8 +364,25 @@ clean:
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#程序">程序</a></li>
+    <li><a href="#在erlang-shell里面编译运行">在erlang shell里面编译运行：</a></li>
+    <li><a href="#快速脚本编程">快速脚本编程：</a></li>
+    <li><a href="#在shell中编译执行">在shell中编译执行</a></li>
+    <li><a href="#作为escript运行">作为Escript运行</a></li>
+    <li><a href="#带命令行参数的程序">带命令行参数的程序</a></li>
+    <li><a href="#使用makefile使编译自动化">使用makefile使编译自动化</a>
+      <ul>
+        <li><a href="#一个makefile模板">一个makefile模板</a></li>
+        <li><a href="#一个精简的makefile">一个精简的makefile</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -372,6 +392,22 @@ clean:
       <a href="/blog/security/ssl-tls/" class="button right"><span>详解安全传输协议SSL TLS</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Erlang]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -389,7 +425,7 @@ clean:
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -446,6 +482,9 @@ clean:
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -459,9 +498,6 @@ clean:
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -481,7 +517,7 @@ clean:
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

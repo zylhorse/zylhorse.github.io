@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,6 +179,63 @@
   <header>
   <div class="title">
     
+      <h2><a href="/blog/database/mongo/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">MongoDB数据库安装配置</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2018-08-02 00:00:00 &#43;0000 UTC">2018-08-02</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="远程访问">远程访问</h2>
+<p>修改 /etc/mongod.conf: bindIpAll:true</p>
+
+  </div>
+  <footer>
+    <a href="/blog/database/mongo/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/mongodb/">MongoDB</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
       <h2><a href="/blog/database/mongo/sql%E8%AF%AD%E5%8F%A5/">MongoDB数据库常用sql语句</a></h2>
     
     
@@ -202,15 +261,7 @@
     <h2 id="备份数据库">备份数据库</h2>
 <p>mongodump -h dbhost -d dbname -o dumpdir</p>
 <h2 id="备份数据库表">备份数据库表</h2>
-<pre><code>mongoexport -d dbname -c collectionname -o file --type json/csv -f field
-参数说明：
-    -d ：数据库名
-    -c ：collection名
-    -o ：输出的文件名
-    --type ： 输出的格式，默认为json
-    -f ：输出的字段，如果-type为csv，则需要加上-f &quot;字段名&quot;
-</code></pre><h2 id="还原数据库">还原数据库</h2>
-<p>mongorestore -h dbhost -d&hellip;</p>
+<pre><code>mongoexport -d dbname -c collectionname -o&hellip;</code></pre>
   </div>
   <footer>
     <a href="/blog/database/mongo/sql%E8%AF%AD%E5%8F%A5/" class="button big">阅读全文</a>
@@ -356,14 +407,16 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/golang/%E9%83%A8%E5%88%86%E5%87%BD%E6%95%B0/">Golang API实例</a></h2>
+      <h2><a href="/blog/hugo/hugo/">Hugo使用手册</a></h2>
     
+    
+      <p>记录Hugo使用过程中遇到的问题</p>
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2018-06-11 00:00:00 &#43;0000 UTC">2018-06-11</time>
+        <time datetime="2018-07-07 00:00:00 &#43;0000 UTC">2018-07-07</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -378,102 +431,22 @@
   <div class="content">
     
     
-    <h2 id="setfinalizer">SetFinalizer</h2>
-<ul>
-<li>
-<p>定义</p>
-<ul>
-<li>对象可以关联一个SetFinalizer函数， 当gc检测到unreachable对象有关联的SetFinalizer函数时，会执行关联的SetFinalizer函数， 同时取消关联</li>
-</ul>
-</li>
-<li>
-<p>问题</p>
-<ul>
-<li><code>func SetFinalizer(obj interface{}, finalizer interface{})</code>。
-<ol>
-<li>参数obj必须是指针类型。</li>
-<li>参数finalizer是一个函数，其参数类型是obj的类型，并且没有返回值。</li>
-</ol>
-</li>
-<li>在对象被 GC 进程选中并从内存中移除以前，SetFinalizer 都不会执行，即使程序正常结束或者发生错误。</li>
-<li>如果对象存在循环方&hellip;</li></li></ol></li></ul></li></li></ul></li></ul>
+    <h2 id="bind-ip">bind ip</h2>
+<p>使本地可被其他机器访问： <code>hugo --bind x.x.x.x</code></p>
+<blockquote>
+<p>x.x.x.x 可以是0.0.0.0 也可以是本机ip</p>
+</blockquote>
+<h2 id="添加文章引用">添加文章引用</h2>
+<p>Hugo 提供了两种 shortcode 用&hellip;</p>
   </div>
   <footer>
-    <a href="/blog/golang/%E9%83%A8%E5%88%86%E5%87%BD%E6%95%B0/" class="button big">阅读全文</a>
+    <a href="/blog/hugo/hugo/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/golang/%E6%95%B0%E6%8D%AE%E5%BA%93/">Golang数据库-数据类型转换</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2018-05-23 00:00:00 &#43;0000 UTC">2018-05-23</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <p>#数据库</p>
-<h2 id="问题">问题</h2>
-<h2 id="字段为空">字段为空</h2>
-<p>row.scan 遇到字段为空时， 变量赋值异常：can not convert null=&gt; *string
-需要在sql语句中添加： ifnull/coalesce 指定默认空值</p>
-<h2 id="添加-sql-convert-函数">添加 sql convert 函数</h2>
-<p>根据数据类型， 做转换</p>
-<pre><code>const (
-	FormatTime     = &quot;15:04:05&quot;
-	FormatDate     = &quot;2006-01-02&quot;
-	FormatDateTime = &quot;2006-01-02 15:04:05&quot;
-)
-
-var (&hellip;</code></pre>
-  </div>
-  <footer>
-    <a href="/blog/golang/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+          <li><a class="article-terms-link" href="/categories/hugo/">Hugo</a></li>
         
       
     </ul>
@@ -519,7 +492,7 @@ var (&hellip;</code></pre>
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -576,6 +549,9 @@ var (&hellip;</code></pre>
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -589,9 +565,6 @@ var (&hellip;</code></pre>
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -611,7 +584,7 @@ var (&hellip;</code></pre>
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

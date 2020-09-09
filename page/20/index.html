@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/cache/redis/key%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/">Redis中key的命名规范</a></h2>
+      <h2><a href="/blog/cache/redis/hotkeybigkey/">Redis的hotkey和bigkey监控和处理</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-07-07 00:00:00 &#43;0000 UTC">2016-07-07</time>
+        <time datetime="2016-10-23 00:00:00 &#43;0000 UTC">2016-10-23</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -199,15 +201,18 @@
   <div class="content">
     
     
-    <ol>
-<li>建议全部大写</li>
-<li>key不能太长，太长占用资源，可读性差</li>
-<li>key根据命名空间使用： 分开； 命名空间示例： 项目名：表名：字段名：字段id</li>
+    <h2 id="bigkey">bigkey</h2>
+<ol>
+<li>单个key 存储value很大</li>
+<li>hash set list zset 等存储元素过多</li>
 </ol>
-
+<h3 id="如何发现">如何发现</h3>
+<ol>
+<li>redis-cli &ndash;bigkeys</li>
+<li>rdbtools 分析rdb&hellip;</li></ol>
   </div>
   <footer>
-    <a href="/blog/cache/redis/key%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/" class="button big">阅读全文</a>
+    <a href="/blog/cache/redis/hotkeybigkey/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -237,14 +242,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/cache/redis/%E6%8C%81%E4%B9%85%E5%8C%96/">Redis持久化有哪些方式</a></h2>
+      <h2><a href="/blog/stories/%E4%BB%80%E4%B9%88%E4%BA%BA%E9%83%BD%E6%9C%89/">什么人都有</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-06-10 00:00:00 &#43;0000 UTC">2016-06-10</time>
+        <time datetime="2016-10-20 00:00:00 &#43;0000 UTC">2016-10-20</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -252,199 +257,25 @@
     
     
         <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
+            10000分钟
         </p>
     
 </div>
   <div class="content">
     
     
-    <h2 id="持久化">持久化</h2>
-<ul>
-<li>
-<p>RDB:</p>
-<ul>
-<li>redis 会fork一个子进程，将内存数据写磁盘；写完临时文件后， 将旧的rdb文件替换； 实现copy-on-write；</li>
-<li>以快照的形式将内存中数据备份到dump.rdb文件中；定时保存；</li>
-<li>缺点：
-<ol>
-<li>在服务故障时会丢失部分数据；</li>
-<li>数据量大会导致服务停止几百毫秒；</li>
-</ol>
-</li>
-</ul>
-</li>
-<li>
-<p>AOF：</p>
-<ul>
-<li>将redis 命令都存到一个文件中；redis 每执行一行命令都会将其写入到aof文件中；</li>
-<li>配置：
-<pre><code>appendonly yes 
-appendfsync always   # 每次数据修改都会写入AOF文件， 影响redis性能
-appendfsync everysec # 每秒&hellip;</code></pre></li></ul></li></li></ul></li></ul>
+    <p>什么人都有</p>
+<center>可以这样的歇斯底里</center>
+
   </div>
   <footer>
-    <a href="/blog/cache/redis/%E6%8C%81%E4%B9%85%E5%8C%96/" class="button big">阅读全文</a>
+    <a href="/blog/stories/%E4%BB%80%E4%B9%88%E4%BA%BA%E9%83%BD%E6%9C%89/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/cache/redis/redis/">Redis的基本常识和memcache对比</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-06-02 00:00:00 &#43;0000 UTC">2016-06-02</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="redis">redis</h2>
-<ol>
-<li>redis 使用c语言编写的高性能键值对内存数据库；</li>
-<li>读速度： 110000/s; 写速度： 81000/s</li>
-<li>单进程单线程， 是线程安全的；</li>
-<li>采用多路复用机制处理请求；</li>
-<li>有5种数据结构strnig、hash、list、set、sort set</li>
-<li>使用管道技术，解决客户端发送阻塞； 服务端对多个请求批量处理，一次返回；</li>
-</ol>
-<h2 id="redis性能">redis性能</h2>
-<ol>
-<li>redis 所有数据都存储在内存中， 读写都非常迅速；</li>
-<li>redis 采用单线程， 避免了线程调度的上下文切换和资源竞争</li>
-<li>redis 多路复用，非阻塞I/O</li>
-</ol>
-<h2 id="memecache-区别">memecache 区别</h2>
-<ol>
-<li>memcache 数据全部存储到内存中， 断电会挂掉；&hellip;</li></ol>
-  </div>
-  <footer>
-    <a href="/blog/cache/redis/redis/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/erlang/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%96%E7%A8%8B/">Erlang分布式编程</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-05-17 00:00:00 &#43;0000 UTC">2016-05-17</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h1 id="分布式编程">分布式编程</h1>
-<h2 id="分布式编程需求">分布式编程需求</h2>
-<ol>
-<li>性能</li>
-</ol>
-<blockquote>
-<p>通过安排程序的不同部分在不同的机器上并行运行，让程序跑的更快。</p>
-</blockquote>
-<ol start="2">
-<li>可靠性</li>
-</ol>
-<blockquote>
-<p>通过让系统运行到数台机器上来实现容错系统，如果一台机器故障，可以在另一台机器上继续。</p>
-</blockquote>
-<ol start="3">
-<li>可扩展性</li>
-</ol>
-<blockquote>
-<p>随着应用程序越做越大，即使机器的处理能力再强大也会被耗尽。这时我们需要添加更多的机器来提升处理能力。添加新机器应当是一次简单的操作，不需对程序架构做大的修改。</p>
-</blockquote>
-<ol start="4">
-<li>天生分布式的程序</li>
-</ol>
-<blockquote>
-<p>许多应用程序天生分布式。如编写一个聊天系统，就会有来自世界各地的分散用户。如果我们在某个地理位置拥有大量用户，就希望把计算资源放在接近这些用户的地方。</p>
-</blockquote>
-<h2 id="两种分布式模型">两种分布式模型</h2>
-<p>我们构建程序的基本单&hellip;</p>
-  </div>
-  <footer>
-    <a href="/blog/erlang/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
+          <li><a class="article-terms-link" href="/categories/stories/">Stories</a></li>
         
       
     </ul>
@@ -468,14 +299,70 @@ appendfsync everysec # 每秒&hellip;</code></pre></li></ul></li></li></ul></li>
   <header>
   <div class="title">
     
-      <h2><a href="/blog/erlang/%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF/">Erlang接口技术</a></h2>
+      <h2><a href="/blog/stories/%E5%BF%AB%E4%B9%90%E6%98%AF%E4%B8%80%E7%A7%8D%E6%96%B9%E5%BC%8F/">快乐是一种方式</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-05-05 00:00:00 &#43;0000 UTC">2016-05-05</time>
+        <time datetime="2016-10-20 00:00:00 &#43;0000 UTC">2016-10-20</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            10000分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <p>快乐是一种方式</p>
+<center>有心快乐，自然快乐</center>
+  </div>
+  <footer>
+    <a href="/blog/stories/%E5%BF%AB%E4%B9%90%E6%98%AF%E4%B8%80%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/stories/">Stories</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/cache/redis/ziplist/">Redis源码阅读-ziplist</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-10-10 00:00:00 &#43;0000 UTC">2016-10-10</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -490,29 +377,19 @@ appendfsync everysec # 每秒&hellip;</code></pre></li></ul></li></li></ul></li>
   <div class="content">
     
     
-    <h1 id="接口技术">接口技术</h1>
-<p>可以多种方式建立外部语言程序与Erlang之间的接口。</p>
-<ol>
-<li>让程序以外部操作系统进程的方式在erlang虚拟机以外运行。这是一种安全的方式，即使外部程序代码有问题，也不会让erlang程序崩溃。</li>
-</ol>
-<blockquote>
-<p>Erlang 通过一种名为端口(port)的对象来控制外部进程，与外部进程的通信则是通过一个面向字节的通信信道。Erlang通过端口，控制外部进程的启动和结束。并监视外部进程，崩溃后启动。</p>
-</blockquote>
-<ol start="2">
-<li>在Erlang内部运行操作系统命令并捕获结果。</li>
-<li>在Erlang虚拟机的内部运行外部语言代码。这涉及链接外部代码和Erlang虚拟机代码。</li>
-</ol>
-<blockquote>
-<p>外部语言代码的错误可能导致Erlang系统崩溃。虽然它不&hellip;</p></blockquote>
+    <h2 id="定义">定义</h2>
+<p>ziplist由一系列特殊编码的连续内存块组成的顺序存储结构，类似数组， 但是ziplist每个元素占用内存大小不同。</p>
+<h2 id="数据结构">数据结构</h2>
+<pre><code>type ziplist struct {&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/erlang/%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF/" class="button big">阅读全文</a>
+    <a href="/blog/cache/redis/ziplist/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
+          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
         
       
     </ul>
@@ -521,7 +398,62 @@ appendfsync everysec # 每秒&hellip;</code></pre></li></ul></li></li></ul></li>
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/"></a></li>
+          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/cache/redis/skiplist/">Redis源码阅读-skiplist</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-09-20 00:00:00 &#43;0000 UTC">2016-09-20</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    
+  </div>
+  <footer>
+    <a href="/blog/cache/redis/skiplist/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
         
       
     </ul>
@@ -558,7 +490,7 @@ appendfsync everysec # 每秒&hellip;</code></pre></li></ul></li></li></ul></li>
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -615,6 +547,9 @@ appendfsync everysec # 每秒&hellip;</code></pre></li></ul></li></li></ul></li>
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -628,9 +563,6 @@ appendfsync everysec # 每秒&hellip;</code></pre></li></ul></li></li></ul></li>
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -650,7 +582,7 @@ appendfsync everysec # 每秒&hellip;</code></pre></li></ul></li></li></ul></li>
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

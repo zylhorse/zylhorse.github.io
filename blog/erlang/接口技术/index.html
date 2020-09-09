@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Erlang接口技术">
 <meta itemprop="description" content="接口技术 可以多种方式建立外部语言程序与Erlang之间的接口。
  让程序以外部操作系统进程的方式在erlang虚拟机以外运行。这是一种安全的方式，即使外部程序代码有问题，也不会让erlang程序崩溃。   Erlang 通过一种名为端口(port)的对象来控制外部进程，与外部进程的通信则是通过一个面向字节的通信信道。Erlang通过端口，控制外部进程的启动和结束。并监视外部进程，崩溃后启动。
@@ -54,7 +56,7 @@
   stream   发送消息时不带数据包长度信息。应用程序必须知道如何处理这些数据包。
   {line, Max}   发送消息时使用一次一行的形式。如果有一行超过了Max字节，就会在Max字节处被拆分。
   {cd, Dir}   只适用于{spawn,Command}选项。外部程序在Dir目录启动。"/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -111,12 +113,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -315,6 +317,7 @@
 </ul>
 <pre><code>http://www.erlang.rog/doc/tutorial/introduction.html 里的互操作性教程对C-node做了介绍。
 </code></pre>
+      
     </div>
     <footer>
       <div class="stats">
@@ -341,8 +344,20 @@
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#erlang如何与外部程序通信">Erlang如何与外部程序通信</a>
+      <ul>
+        <li><a href="#端口创建和使用">端口创建和使用</a></li>
+      </ul>
+    </li>
+    <li><a href="#在erlang里调用shell脚本">在Erlang里调用shell脚本</a></li>
+    <li><a href="#高级接口技术">高级接口技术</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -352,6 +367,22 @@
       <a href="/blog/web/%E9%98%B2%E6%AD%A2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/" class="button right"><span>防止并发请求重复提交</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Erlang]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -369,7 +400,7 @@
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -426,6 +457,9 @@
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -439,9 +473,6 @@
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -461,7 +492,7 @@
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

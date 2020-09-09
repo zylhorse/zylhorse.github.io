@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Erlang并发编程错误">
 <meta itemprop="description" content="错误处理理念  并发Erlang程序里的错误处理建立在远程检测和处理错误的概念上。我们选择让发生错误的进程崩溃，然后在其它进程里面进行纠错处理。 在设计容错式的系统时就假设错误会发生，进程会崩溃。因此能够在错误发生时检测出来，可能的话也需要纠正他们。同时避免系统用户注意到任何故障，或者在错误修复过程中遭受服务终端。 检测错误和找出故障原因是内建于Erlang虚拟机底层的功能，也是Erlang语言编程的一部分。标准OTP库提供了构建互相监视的进程组和检测到错误时采取纠正措施的功能。本章介绍的是语言层面的错误检测和恢复。 总结为两句话：“让其它进程修复错误&quot;和&quot;任其崩溃&rdquo;  让其它进程修复错误  要让一个进程监控另一个，需要在这两个进程之间建立链接(link)或者(monitor)。如果被链接或者监视的进程挂了，监控进程会收到通知。 监控进程可以实现跨机器的透明运作，因此运行在某一台机器上的进程可以监视运行在不同机器上进程的行为。这是编写容错式系统的基础。不能在一台机器上构建容错式系统，因为崩溃的可能是整台机器。一台机器负责计算，其它的机器负责监控它，并在一台机器崩溃时接管计算。  任其崩溃  在Erlang中，我们把应用程序构建成两部分：一部分负责解决问题，另一部分负责在错误发生时纠正他们。 负责解决问题的部分尽可能少的编写防御性代码，并假设函数所有参数是正确的，程序运行正常。 负责纠正错误的部分往往是通用的，因此同一段错误纠正代码可以用在许多不同的应用程序里面。例如：如果数据库的某个事务出错，就简单终止该事务，让系统把数据库恢复到出错之前的状态；如果操作系统里面的某个进程崩溃，就让操作系统关闭所有打开的文件和套接字，然后让系统恢复到某个稳定状态。  任其崩溃意义  不必编写防御性代码来防止错误，直接崩溃就好。 不必思考应对措施，选择直接崩溃，让别人来修复错误。 不会使错误恶化，无需在知道出错后进行额外的计算。 如果错误发生后第一时间通知，就能得到非常好的错误诊断。错误发生后继续运行会导致更多的错误，让调试更困难。 编写错误恢复代码时不用担心崩溃的原因，只要把注意力放到事后的清理上。 简化系统架构，这样我们就能把应用程序和错误恢复当成两个独立的问题来思考。  错误处理的术语含义  进程   进程有两种：普通进程和系统进程。spawn创建的是普通进程。普通进程可以执行内置函数process_flag（trap_exit,true)变成系统进程。
  连接   进程可以互相连接。如果A和B两个进程有连接，而A出于某种原因终止了，就会向B发送一个错误信号，反之亦然。
@@ -48,7 +50,7 @@
  显示错误信号   任何执行exit(Why)的进程都会终止（如果代码不是在catch或者try的范围内执行的话），并向它的连接组广播一个带有原因Why的退出信号。进程可以通过执行exit(Pid,Why)来发送一个&quot;虚假&quot;的错误信号。这种情况Pid会收到一个带有原因Why的退出信号。调用exit/2的进程则不会终止。
  不可捕捉的退出信号   进程收到摧毁信号(kill signal)时会终止。摧毁信号通过调用exit(Pid,kill)生成。这种信号会绕过常规的错误信号处理机制，不会被转换成消息。摧毁信号只应该用在其它错误处理机制无法终止的顽固进程上。
  创建链接 调用接口：link(Pid)。建立调用进程与Pid进程之间的连接。"/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -105,12 +107,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -334,6 +336,7 @@
 </blockquote>
 <h1 id="容错式编程">容错式编程</h1>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -360,8 +363,14 @@
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#任其崩溃意义">任其崩溃意义</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -371,6 +380,22 @@
       <a href="/blog/erlang/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="button right"><span>Erlang并发编程</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Erlang]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -388,7 +413,7 @@
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -445,6 +470,9 @@
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -458,9 +486,6 @@
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -480,7 +505,7 @@
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

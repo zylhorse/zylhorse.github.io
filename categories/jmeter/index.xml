@@ -17,10 +17,9 @@
       <pubDate>Tue, 11 Nov 2014 00:00:00 +0000</pubDate>
       
       <guid>https://zylhorse.github.io/blog/jmeter/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</guid>
-      <description>下载 http://jmeter.apache.org/download_jmeter.cgi
+      <description>下载 地址
 汉化 jmeter.properties =&amp;gt; language=zh_CN
-websocket配置 下载jar包
- jetty-http jetty-io jetty-util websocket-api websocket-client websocket-common  </description>
+websocket配置 下载jar包 jetty-http jetty-io jetty-util websocket-api websocket-client websocket-common</description>
     </item>
     
   </channel>

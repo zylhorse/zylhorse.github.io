@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Erlang顺序编程错误处理">
 <meta itemprop="description" content="概括  Erlang中当错误出现时，需要发现并纠正，然后继续。 构建真正容错的系统，需要不止一台计算机，毕竟可能整台机器崩溃。因此故障检测和别处重启计算的概念需要扩展到联网的计算机上。  顺序代码里面的错误处理  异常错误发生时，可以显示调用throw(Exception),exit(Exception),error(Exception) 触发。 永远不能让函数对非法的参数返回值，而是抛出一个异常错误。 exit(Why):当你确实想要终止当前进程时就用它。如果此异常没有被捕获，信号{&lsquo;Exit&rsquo;,Pid,Why}就会被广播给当前进程链接的所有进程。 throw(Why):这个函数的作用是抛出一个调用者想要捕获的异常错误。因此我们可以将调用封装到try&hellip;catch表达式里面，然后对错误进行处理。 error(Why):这个函数的作用是指示“崩溃性错误”，调用者没有准备好处理非常严重的问题。  捕获异常错误 两种方法：
  把抛出异常错误的调用函数封装在try&hellip;catch中 把调用封装在一个catch表达式中？？？  try ... catch 结构%执行函数或表达式try FuncOrExpressionSeq of%执行过程无异常则匹配以下模式Pattern1 [when Guard1] -&gt; Expressions1;Pattern2 [when Guard2] -&gt; Expressions2;catch%执行过程出现异常则匹配以下异常模式，ExceptionType：error throw exit其中之一ExceptionType1: ExPattern1 [when ExGuard1] -&gt; ExExpressions1;ExceptionType2: ExPattern2 [when ExGuard2] -&gt; ExExpressions2after%after区域的代码实在FuncorExpressSeq结束后执行清理工作的。这段代码无论是否抛出异常都会在函数调用执行完立刻执行。AfterExpressions返回值会被丢弃。AfterExpressionsendtry ... catch 表达式也有值。注：Erlang里的一切都是表达式，表达式都有值。针对异常处理的编程方式  改进错误消息：内置函数error/1。 经常返回错误时代码：{ok,Value}, {error,Reason} 捕捉一切可能的错误：try Expr of catch : -&gt; &hellip; end %这里处理所有的异常错误。 如果代码漏写标签：try Expr of catch _ -&gt; &hellip; end %这里只处理throw 异常。  栈跟踪 捕获到一个异常错误后，可以调用erlang:get_stacktrace() 来找到最近栈跟踪信息。">
@@ -27,7 +29,7 @@
 <meta name="twitter:title" content="Erlang顺序编程错误处理"/>
 <meta name="twitter:description" content="概括  Erlang中当错误出现时，需要发现并纠正，然后继续。 构建真正容错的系统，需要不止一台计算机，毕竟可能整台机器崩溃。因此故障检测和别处重启计算的概念需要扩展到联网的计算机上。  顺序代码里面的错误处理  异常错误发生时，可以显示调用throw(Exception),exit(Exception),error(Exception) 触发。 永远不能让函数对非法的参数返回值，而是抛出一个异常错误。 exit(Why):当你确实想要终止当前进程时就用它。如果此异常没有被捕获，信号{&lsquo;Exit&rsquo;,Pid,Why}就会被广播给当前进程链接的所有进程。 throw(Why):这个函数的作用是抛出一个调用者想要捕获的异常错误。因此我们可以将调用封装到try&hellip;catch表达式里面，然后对错误进行处理。 error(Why):这个函数的作用是指示“崩溃性错误”，调用者没有准备好处理非常严重的问题。  捕获异常错误 两种方法：
  把抛出异常错误的调用函数封装在try&hellip;catch中 把调用封装在一个catch表达式中？？？  try ... catch 结构%执行函数或表达式try FuncOrExpressionSeq of%执行过程无异常则匹配以下模式Pattern1 [when Guard1] -&gt; Expressions1;Pattern2 [when Guard2] -&gt; Expressions2;catch%执行过程出现异常则匹配以下异常模式，ExceptionType：error throw exit其中之一ExceptionType1: ExPattern1 [when ExGuard1] -&gt; ExExpressions1;ExceptionType2: ExPattern2 [when ExGuard2] -&gt; ExExpressions2after%after区域的代码实在FuncorExpressSeq结束后执行清理工作的。这段代码无论是否抛出异常都会在函数调用执行完立刻执行。AfterExpressions返回值会被丢弃。AfterExpressionsendtry ... catch 表达式也有值。注：Erlang里的一切都是表达式，表达式都有值。针对异常处理的编程方式  改进错误消息：内置函数error/1。 经常返回错误时代码：{ok,Value}, {error,Reason} 捕捉一切可能的错误：try Expr of catch : -&gt; &hellip; end %这里处理所有的异常错误。 如果代码漏写标签：try Expr of catch _ -&gt; &hellip; end %这里只处理throw 异常。  栈跟踪 捕获到一个异常错误后，可以调用erlang:get_stacktrace() 来找到最近栈跟踪信息。"/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -84,12 +86,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -237,6 +239,7 @@ end
 错误信息应当保存到永久的日志文件中。</li>
 </ul>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -263,8 +266,10 @@ end
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents"></nav>
+    </aside>
   
   <div class="pagination">
     
@@ -274,6 +279,22 @@ end
       <a href="/blog/software-programming/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="button right"><span>编程范式-函数式编程</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Erlang]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -291,7 +312,7 @@ end
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -348,6 +369,9 @@ end
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -361,9 +385,6 @@ end
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -383,7 +404,7 @@ end
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

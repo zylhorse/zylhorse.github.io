@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="linux磁盘管理和lvm磁盘扩容">
 <meta itemprop="description" content="reference
 磁盘管理 硬盘分区 | Hard disk add new partition   显示硬盘及所属分区情况。在终端窗口中输入如下命令： $ sudo fdisk -l
@@ -36,7 +38,7 @@
  显示当前的硬盘及所属分区的情况。 系统提示：DIsk /dev/sdb doesn&rsquo;t contain a valid partition table。 如图所示    对硬盘进行分区。在终端窗口中输入如下命令： $ sudo fdisk /dev/sdb
  在Command (m for help)提示符后面输入m显示一个帮助菜单， 如图所示。 在Command (m for help)提示符后面输入n，执行 add a new partition指令给硬盘增加一个新分区。 出现Command action时，输入e，指定分区为扩展分区（extended）。 出现Partition number(1-4)时，输入１表示只分一个区。 后续指定起启柱面（cylinder）号完成分区, 如图所示。    在Command (m for help)提示符后面输入p，显示分区表。
  系统提示如图所示：  Device Boot Start End Blocks Id System/dev/sdb1 1 26108 209712478&#43; 5 Extended  在Command (m for help)提示符后面输入w，保存分区表。"/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -93,12 +95,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -281,6 +283,7 @@ resize2fs -p /dev/mapper/ubuntu--vg-ubuntu--lv
 </code></pre></li>
 </ol>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -307,8 +310,17 @@ resize2fs -p /dev/mapper/ubuntu--vg-ubuntu--lv
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#硬盘分区--hard-disk-add-new-partition">硬盘分区 | Hard disk add new partition</a></li>
+    <li><a href="#硬盘格式化--format-hard-disk">硬盘格式化 | Format hard disk</a></li>
+    <li><a href="#挂载硬盘分区--mount-hard-disk-partition">挂载硬盘分区 | Mount hard disk partition</a></li>
+    <li><a href="#lvm-磁盘扩容">lvm 磁盘扩容</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -318,6 +330,22 @@ resize2fs -p /dev/mapper/ubuntu--vg-ubuntu--lv
       <a href="/blog/linux/ubuntu-%E5%AE%89%E8%A3%85/" class="button right"><span>ubutnu本地安装实操</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Linux]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -335,7 +363,7 @@ resize2fs -p /dev/mapper/ubuntu--vg-ubuntu--lv
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -392,6 +420,9 @@ resize2fs -p /dev/mapper/ubuntu--vg-ubuntu--lv
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -405,9 +436,6 @@ resize2fs -p /dev/mapper/ubuntu--vg-ubuntu--lv
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -427,7 +455,7 @@ resize2fs -p /dev/mapper/ubuntu--vg-ubuntu--lv
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

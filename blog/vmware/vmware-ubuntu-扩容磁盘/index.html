@@ -6,19 +6,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="VMWare之Linux系统磁盘扩容">
 <meta itemprop="description" content="在VMWARE中扩容虚拟机磁盘大小 需要删除快照， 最好先克隆备份；
 查看扩容磁盘 调整完后，重新打开虚拟机，使用fdisk -l查看，可以看到我们刚刚扩容的空间已经可以看到，但没有分区，还不能使用。/dev/sda已经拥有了扩大的空间。
-分区 使用Linux的fdisk分区工具给磁盘/dev/sda分区，更可以根据提示输入m查看帮助信息，再输入n(表示增加分区)，回车后输入p(创建主分区)，回车后partition number输入3(因为上面已经有两个分区sda1和sda2)，回车会提示输入分区的start值(通过fdisk -l 可以看出sda2的end值为3917)，我们可以根据提示指定start值为3917，end值为默认即可(即当前最大值)，回车后输入W进行保存，分区划分完毕。
-修改分区ID 可以看到/dev/sda3的Id号为83，我们要将其改成8e(LVM卷文件系统的Id)，具体方法同上根上部中的磁盘分区大同小异，输入fdisk /dev/sda,选择t（change a partition&rsquo;s system id 改变一个分区的系统ID）回车，然后选择分区3回车，然后输入L回车。然后输入8e回车，然后输入w，保存修改的分区信息。最后输入fdisk -l ,查看ID是否修改成功。修改成功后必须重新启动linux系统才能进行后面的操作。
+分区 使用Linux的fdisk分区工具给磁盘/dev/sda分区，更可以根据提示输入m查看帮助信息，再输入n(表示增加分区)，回车后输入p(创建主分区)， 回车后partition number输入3(因为上面已经有两个分区sda1和sda2)，回车会提示输入分区的start值(通过fdisk -l 可以看出sda2的end值为3917)， 我们可以根据提示指定start值为3917，end值为默认即可(即当前最大值)，回车后输入W进行保存，分区划分完毕。
+修改分区ID 可以看到/dev/sda3的Id号为83，我们要将其改成8e(LVM卷文件系统的Id)，具体方法同上根上部中的磁盘分区大同小异，输入fdisk /dev/sda, 选择t(change a partition&#39;s system id 改变一个分区的系统ID)回车，然后选择分区3回车，然后输入L回车。然后输入8e回车，然后输入w，保存修改的分区信息。 最后输入fdisk -l ,查看ID是否修改成功。修改成功后必须重新启动linux系统才能进行后面的操作。
 格式化分区 系统重启后，格式化新的分区为ext4格式。
-初始化物理卷 格式化后，创建PV. 用pvdisplay查看当前的物理卷。然后用pvcreate指令用于将物理硬盘分区初始化为物理卷，以便被LVM使用。要创建物理卷必须首先对硬盘进行分区，并且将硬盘分区的类型设置为“8e”后，才能使用pvcreat指令将分区初始化为物理卷。pvcreate /dev/sda3,创建完后，我们可以再用pvdisplay查看到新创建的物理卷。
-扩展VG 扩展VG：当前需要查看扩充的lvm组名，可以通过vgdisplay查看，在此例中我们的组名为 VolGroup,并可以看到里面的空间只有20多G。然后用vgextend指令用于动态的扩展卷组，它通过向卷组中添加物理卷来增加卷组的容量。vgextend VolGroup /dev/sda3 ,添加成功后，我们可以用vgdisplay再次查看，容量已经添加进去。
-扩容root lvextend -L&#43;269.95G /dev/VolGroup/lv_root /dev/sda3 命令扩展空间到root下，扩容的空间要略小于VG的free空间，因此这里只输入了269.95G.然后通过df -h查看，root空间还是没变，因为我们差最后最关键的一部。
-扩容文件系统 使用使用resize2fs命令，用于扩大或者缩小未挂载的ext2,ext3或者是ext4文件系统。具体命令为：resize2fs -p /dev/mapper/VolGroup-lv_root 290G 。然后再用df -h 查看，扩容成功。">
+初始化物理卷 格式化后，创建PV. 用pvdisplay查看当前的物理卷。然后用pvcreate指令用于将物理硬盘分区初始化为物理卷，以便被LVM使用。 要创建物理卷必须首先对硬盘进行分区，并且将硬盘分区的类型设置为8e后，才能使用pvcreat指令将分区初始化为物理卷。pvcreate /dev/sda3,创建完后， 我们可以再用pvdisplay查看到新创建的物理卷。
+扩展VG 扩展VG：当前需要查看扩充的lvm组名，可以通过vgdisplay查看，在此例中我们的组名为 VolGroup,并可以看到里面的空间只有20多G。 然后用vgextend指令用于动态的扩展卷组，它通过向卷组中添加物理卷来增加卷组的容量。vgextend VolGroup /dev/sda3,添加成功后， 我们可以用vgdisplay再次查看，容量已经添加进去。
+扩容root lvextend -L&#43;269.95G /dev/VolGroup/lv_root /dev/sda3命令扩展空间到root下，扩容的空间要略小于VG的free空间，因此这里只输入了269.95G. 然后通过df -h查看，root空间还是没变，因为我们差最后最关键的一部。
+扩容文件系统 使用使用resize2fs命令，用于扩大或者缩小未挂载的ext2,ext3或者是ext4文件系统。具体命令为：resize2fs -p /dev/mapper/VolGroup-lv_root 290G 。 然后再用df -h查看，扩容成功。">
 <meta itemprop="datePublished" content="2014-07-11T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2014-07-11T00:00:00+00:00" />
-<meta itemprop="wordCount" content="48">
+<meta itemprop="wordCount" content="55">
 
 
 
@@ -26,13 +28,13 @@
 <meta property="og:title" content="VMWare之Linux系统磁盘扩容" />
 <meta property="og:description" content="在VMWARE中扩容虚拟机磁盘大小 需要删除快照， 最好先克隆备份；
 查看扩容磁盘 调整完后，重新打开虚拟机，使用fdisk -l查看，可以看到我们刚刚扩容的空间已经可以看到，但没有分区，还不能使用。/dev/sda已经拥有了扩大的空间。
-分区 使用Linux的fdisk分区工具给磁盘/dev/sda分区，更可以根据提示输入m查看帮助信息，再输入n(表示增加分区)，回车后输入p(创建主分区)，回车后partition number输入3(因为上面已经有两个分区sda1和sda2)，回车会提示输入分区的start值(通过fdisk -l 可以看出sda2的end值为3917)，我们可以根据提示指定start值为3917，end值为默认即可(即当前最大值)，回车后输入W进行保存，分区划分完毕。
-修改分区ID 可以看到/dev/sda3的Id号为83，我们要将其改成8e(LVM卷文件系统的Id)，具体方法同上根上部中的磁盘分区大同小异，输入fdisk /dev/sda,选择t（change a partition&rsquo;s system id 改变一个分区的系统ID）回车，然后选择分区3回车，然后输入L回车。然后输入8e回车，然后输入w，保存修改的分区信息。最后输入fdisk -l ,查看ID是否修改成功。修改成功后必须重新启动linux系统才能进行后面的操作。
+分区 使用Linux的fdisk分区工具给磁盘/dev/sda分区，更可以根据提示输入m查看帮助信息，再输入n(表示增加分区)，回车后输入p(创建主分区)， 回车后partition number输入3(因为上面已经有两个分区sda1和sda2)，回车会提示输入分区的start值(通过fdisk -l 可以看出sda2的end值为3917)， 我们可以根据提示指定start值为3917，end值为默认即可(即当前最大值)，回车后输入W进行保存，分区划分完毕。
+修改分区ID 可以看到/dev/sda3的Id号为83，我们要将其改成8e(LVM卷文件系统的Id)，具体方法同上根上部中的磁盘分区大同小异，输入fdisk /dev/sda, 选择t(change a partition&#39;s system id 改变一个分区的系统ID)回车，然后选择分区3回车，然后输入L回车。然后输入8e回车，然后输入w，保存修改的分区信息。 最后输入fdisk -l ,查看ID是否修改成功。修改成功后必须重新启动linux系统才能进行后面的操作。
 格式化分区 系统重启后，格式化新的分区为ext4格式。
-初始化物理卷 格式化后，创建PV. 用pvdisplay查看当前的物理卷。然后用pvcreate指令用于将物理硬盘分区初始化为物理卷，以便被LVM使用。要创建物理卷必须首先对硬盘进行分区，并且将硬盘分区的类型设置为“8e”后，才能使用pvcreat指令将分区初始化为物理卷。pvcreate /dev/sda3,创建完后，我们可以再用pvdisplay查看到新创建的物理卷。
-扩展VG 扩展VG：当前需要查看扩充的lvm组名，可以通过vgdisplay查看，在此例中我们的组名为 VolGroup,并可以看到里面的空间只有20多G。然后用vgextend指令用于动态的扩展卷组，它通过向卷组中添加物理卷来增加卷组的容量。vgextend VolGroup /dev/sda3 ,添加成功后，我们可以用vgdisplay再次查看，容量已经添加进去。
-扩容root lvextend -L&#43;269.95G /dev/VolGroup/lv_root /dev/sda3 命令扩展空间到root下，扩容的空间要略小于VG的free空间，因此这里只输入了269.95G.然后通过df -h查看，root空间还是没变，因为我们差最后最关键的一部。
-扩容文件系统 使用使用resize2fs命令，用于扩大或者缩小未挂载的ext2,ext3或者是ext4文件系统。具体命令为：resize2fs -p /dev/mapper/VolGroup-lv_root 290G 。然后再用df -h 查看，扩容成功。" />
+初始化物理卷 格式化后，创建PV. 用pvdisplay查看当前的物理卷。然后用pvcreate指令用于将物理硬盘分区初始化为物理卷，以便被LVM使用。 要创建物理卷必须首先对硬盘进行分区，并且将硬盘分区的类型设置为8e后，才能使用pvcreat指令将分区初始化为物理卷。pvcreate /dev/sda3,创建完后， 我们可以再用pvdisplay查看到新创建的物理卷。
+扩展VG 扩展VG：当前需要查看扩充的lvm组名，可以通过vgdisplay查看，在此例中我们的组名为 VolGroup,并可以看到里面的空间只有20多G。 然后用vgextend指令用于动态的扩展卷组，它通过向卷组中添加物理卷来增加卷组的容量。vgextend VolGroup /dev/sda3,添加成功后， 我们可以用vgdisplay再次查看，容量已经添加进去。
+扩容root lvextend -L&#43;269.95G /dev/VolGroup/lv_root /dev/sda3命令扩展空间到root下，扩容的空间要略小于VG的free空间，因此这里只输入了269.95G. 然后通过df -h查看，root空间还是没变，因为我们差最后最关键的一部。
+扩容文件系统 使用使用resize2fs命令，用于扩大或者缩小未挂载的ext2,ext3或者是ext4文件系统。具体命令为：resize2fs -p /dev/mapper/VolGroup-lv_root 290G 。 然后再用df -h查看，扩容成功。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://zylhorse.github.io/blog/vmware/vmware-ubuntu-%E6%89%A9%E5%AE%B9%E7%A3%81%E7%9B%98/" />
 <meta property="article:published_time" content="2014-07-11T00:00:00+00:00" />
@@ -41,14 +43,14 @@
 <meta name="twitter:title" content="VMWare之Linux系统磁盘扩容"/>
 <meta name="twitter:description" content="在VMWARE中扩容虚拟机磁盘大小 需要删除快照， 最好先克隆备份；
 查看扩容磁盘 调整完后，重新打开虚拟机，使用fdisk -l查看，可以看到我们刚刚扩容的空间已经可以看到，但没有分区，还不能使用。/dev/sda已经拥有了扩大的空间。
-分区 使用Linux的fdisk分区工具给磁盘/dev/sda分区，更可以根据提示输入m查看帮助信息，再输入n(表示增加分区)，回车后输入p(创建主分区)，回车后partition number输入3(因为上面已经有两个分区sda1和sda2)，回车会提示输入分区的start值(通过fdisk -l 可以看出sda2的end值为3917)，我们可以根据提示指定start值为3917，end值为默认即可(即当前最大值)，回车后输入W进行保存，分区划分完毕。
-修改分区ID 可以看到/dev/sda3的Id号为83，我们要将其改成8e(LVM卷文件系统的Id)，具体方法同上根上部中的磁盘分区大同小异，输入fdisk /dev/sda,选择t（change a partition&rsquo;s system id 改变一个分区的系统ID）回车，然后选择分区3回车，然后输入L回车。然后输入8e回车，然后输入w，保存修改的分区信息。最后输入fdisk -l ,查看ID是否修改成功。修改成功后必须重新启动linux系统才能进行后面的操作。
+分区 使用Linux的fdisk分区工具给磁盘/dev/sda分区，更可以根据提示输入m查看帮助信息，再输入n(表示增加分区)，回车后输入p(创建主分区)， 回车后partition number输入3(因为上面已经有两个分区sda1和sda2)，回车会提示输入分区的start值(通过fdisk -l 可以看出sda2的end值为3917)， 我们可以根据提示指定start值为3917，end值为默认即可(即当前最大值)，回车后输入W进行保存，分区划分完毕。
+修改分区ID 可以看到/dev/sda3的Id号为83，我们要将其改成8e(LVM卷文件系统的Id)，具体方法同上根上部中的磁盘分区大同小异，输入fdisk /dev/sda, 选择t(change a partition&#39;s system id 改变一个分区的系统ID)回车，然后选择分区3回车，然后输入L回车。然后输入8e回车，然后输入w，保存修改的分区信息。 最后输入fdisk -l ,查看ID是否修改成功。修改成功后必须重新启动linux系统才能进行后面的操作。
 格式化分区 系统重启后，格式化新的分区为ext4格式。
-初始化物理卷 格式化后，创建PV. 用pvdisplay查看当前的物理卷。然后用pvcreate指令用于将物理硬盘分区初始化为物理卷，以便被LVM使用。要创建物理卷必须首先对硬盘进行分区，并且将硬盘分区的类型设置为“8e”后，才能使用pvcreat指令将分区初始化为物理卷。pvcreate /dev/sda3,创建完后，我们可以再用pvdisplay查看到新创建的物理卷。
-扩展VG 扩展VG：当前需要查看扩充的lvm组名，可以通过vgdisplay查看，在此例中我们的组名为 VolGroup,并可以看到里面的空间只有20多G。然后用vgextend指令用于动态的扩展卷组，它通过向卷组中添加物理卷来增加卷组的容量。vgextend VolGroup /dev/sda3 ,添加成功后，我们可以用vgdisplay再次查看，容量已经添加进去。
-扩容root lvextend -L&#43;269.95G /dev/VolGroup/lv_root /dev/sda3 命令扩展空间到root下，扩容的空间要略小于VG的free空间，因此这里只输入了269.95G.然后通过df -h查看，root空间还是没变，因为我们差最后最关键的一部。
-扩容文件系统 使用使用resize2fs命令，用于扩大或者缩小未挂载的ext2,ext3或者是ext4文件系统。具体命令为：resize2fs -p /dev/mapper/VolGroup-lv_root 290G 。然后再用df -h 查看，扩容成功。"/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+初始化物理卷 格式化后，创建PV. 用pvdisplay查看当前的物理卷。然后用pvcreate指令用于将物理硬盘分区初始化为物理卷，以便被LVM使用。 要创建物理卷必须首先对硬盘进行分区，并且将硬盘分区的类型设置为8e后，才能使用pvcreat指令将分区初始化为物理卷。pvcreate /dev/sda3,创建完后， 我们可以再用pvdisplay查看到新创建的物理卷。
+扩展VG 扩展VG：当前需要查看扩充的lvm组名，可以通过vgdisplay查看，在此例中我们的组名为 VolGroup,并可以看到里面的空间只有20多G。 然后用vgextend指令用于动态的扩展卷组，它通过向卷组中添加物理卷来增加卷组的容量。vgextend VolGroup /dev/sda3,添加成功后， 我们可以用vgdisplay再次查看，容量已经添加进去。
+扩容root lvextend -L&#43;269.95G /dev/VolGroup/lv_root /dev/sda3命令扩展空间到root下，扩容的空间要略小于VG的free空间，因此这里只输入了269.95G. 然后通过df -h查看，root空间还是没变，因为我们差最后最关键的一部。
+扩容文件系统 使用使用resize2fs命令，用于扩大或者缩小未挂载的ext2,ext3或者是ext4文件系统。具体命令为：resize2fs -p /dev/mapper/VolGroup-lv_root 290G 。 然后再用df -h查看，扩容成功。"/>
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -105,12 +107,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -197,25 +199,36 @@
 </div>
     <div class="content">
       
-      <h3 id="在vmware中扩容虚拟机磁盘大小">在VMWARE中扩容虚拟机磁盘大小</h3>
+      <h2 id="在vmware中扩容虚拟机磁盘大小">在VMWARE中扩容虚拟机磁盘大小</h2>
 <p>需要删除快照， 最好先克隆备份；</p>
-<h3 id="查看扩容磁盘">查看扩容磁盘</h3>
-<p>调整完后，重新打开虚拟机，使用fdisk -l查看，可以看到我们刚刚扩容的空间已经可以看到，但没有分区，还不能使用。/dev/sda已经拥有了扩大的空间。</p>
-<h3 id="分区">分区</h3>
-<p>使用Linux的fdisk分区工具给磁盘/dev/sda分区，更可以根据提示输入m查看帮助信息，再输入n(表示增加分区)，回车后输入p(创建主分区)，回车后partition number输入3(因为上面已经有两个分区sda1和sda2)，回车会提示输入分区的start值(通过fdisk -l 可以看出sda2的end值为3917)，我们可以根据提示指定start值为3917，end值为默认即可(即当前最大值)，回车后输入W进行保存，分区划分完毕。</p>
-<h3 id="修改分区id">修改分区ID</h3>
-<p>可以看到/dev/sda3的Id号为83，我们要将其改成8e(LVM卷文件系统的Id)，具体方法同上根上部中的磁盘分区大同小异，输入fdisk  /dev/sda,选择t（change a partition&rsquo;s system id 改变一个分区的系统ID）回车，然后选择分区3回车，然后输入L回车。然后输入8e回车，然后输入w，保存修改的分区信息。最后输入fdisk -l ,查看ID是否修改成功。修改成功后必须重新启动linux系统才能进行后面的操作。</p>
-<h3 id="格式化分区">格式化分区</h3>
-<p>系统重启后，格式化新的分区为ext4格式。</p>
-<h3 id="初始化物理卷">初始化物理卷</h3>
-<p>格式化后，创建PV. 用pvdisplay查看当前的物理卷。然后用pvcreate指令用于将物理硬盘分区初始化为物理卷，以便被LVM使用。要创建物理卷必须首先对硬盘进行分区，并且将硬盘分区的类型设置为“8e”后，才能使用pvcreat指令将分区初始化为物理卷。pvcreate /dev/sda3,创建完后，我们可以再用pvdisplay查看到新创建的物理卷。</p>
-<h3 id="扩展vg">扩展VG</h3>
-<p>扩展VG：当前需要查看扩充的lvm组名，可以通过vgdisplay查看，在此例中我们的组名为  VolGroup,并可以看到里面的空间只有20多G。然后用vgextend指令用于动态的扩展卷组，它通过向卷组中添加物理卷来增加卷组的容量。vgextend VolGroup  /dev/sda3  ,添加成功后，我们可以用vgdisplay再次查看，容量已经添加进去。</p>
-<h3 id="扩容root">扩容root</h3>
-<p>lvextend -L+269.95G /dev/VolGroup/lv_root /dev/sda3 命令扩展空间到root下，扩容的空间要略小于VG的free空间，因此这里只输入了269.95G.然后通过df -h查看，root空间还是没变，因为我们差最后最关键的一部。</p>
-<h3 id="扩容文件系统">扩容文件系统</h3>
-<p>使用使用resize2fs命令，用于扩大或者缩小未挂载的ext2,ext3或者是ext4文件系统。具体命令为：resize2fs -p /dev/mapper/VolGroup-lv_root  290G 。然后再用df -h 查看，扩容成功。</p>
+<h2 id="查看扩容磁盘">查看扩容磁盘</h2>
+<p>调整完后，重新打开虚拟机，使用<code>fdisk -l</code>查看，可以看到我们刚刚扩容的空间已经可以看到，但没有分区，还不能使用。<code>/dev/sda</code>已经拥有了扩大的空间。</p>
+<h2 id="分区">分区</h2>
+<p>使用<code>Linux</code>的<code>fdisk</code>分区工具给磁盘<code>/dev/sda</code>分区，更可以根据提示输入<code>m</code>查看帮助信息，再输入<code>n</code>(表示增加分区)，回车后输入<code>p</code>(创建主分区)，
+回车后<code>partition number</code>输入<code>3</code>(因为上面已经有两个分区<code>sda1</code>和<code>sda2</code>)，回车会提示输入分区的<code>start</code>值(通过<code>fdisk -l</code> 可以看出<code>sda2</code>的<code>end</code>值为<code>3917</code>)，
+我们可以根据提示指定<code>start</code>值为<code>3917</code>，<code>end</code>值为默认即可(即当前最大值)，回车后输入<code>W</code>进行保存，分区划分完毕。</p>
+<h2 id="修改分区id">修改分区ID</h2>
+<p>可以看到<code>/dev/sda3</code>的<code>Id</code>号为<code>83</code>，我们要将其改成<code>8e</code>(LVM卷文件系统的<code>Id</code>)，具体方法同上根上部中的磁盘分区大同小异，输入<code>fdisk  /dev/sda</code>,
+选择<code>t</code>(<code>change a partition's system id</code> 改变一个分区的系统<code>ID</code>)回车，然后选择分区<code>3</code>回车，然后输入<code>L</code>回车。然后输入<code>8e</code>回车，然后输入<code>w</code>，保存修改的分区信息。
+最后输入<code>fdisk -l</code> ,查看<code>ID</code>是否修改成功。修改成功后必须重新启动linux系统才能进行后面的操作。</p>
+<h2 id="格式化分区">格式化分区</h2>
+<p>系统重启后，格式化新的分区为<code>ext4</code>格式。</p>
+<h2 id="初始化物理卷">初始化物理卷</h2>
+<p>格式化后，创建<code>PV</code>. 用<code>pvdisplay</code>查看当前的物理卷。然后用<code>pvcreate</code>指令用于将物理硬盘分区初始化为物理卷，以便被LVM使用。
+要创建物理卷必须首先对硬盘进行分区，并且将硬盘分区的类型设置为<code>8e</code>后，才能使用<code>pvcreat</code>指令将分区初始化为物理卷。<code>pvcreate /dev/sda3</code>,创建完后，
+我们可以再用<code>pvdisplay</code>查看到新创建的物理卷。</p>
+<h2 id="扩展vg">扩展VG</h2>
+<p>扩展<code>VG</code>：当前需要查看扩充的<code>lvm</code>组名，可以通过<code>vgdisplay</code>查看，在此例中我们的组名为 <code>VolGroup</code>,并可以看到里面的空间只有20多G。
+然后用<code>vgextend</code>指令用于动态的扩展卷组，它通过向卷组中添加物理卷来增加卷组的容量。<code>vgextend VolGroup  /dev/sda3</code>,添加成功后，
+我们可以用<code>vgdisplay</code>再次查看，容量已经添加进去。</p>
+<h2 id="扩容root">扩容root</h2>
+<p><code>lvextend -L+269.95G /dev/VolGroup/lv_root /dev/sda3</code>命令扩展空间到<code>root</code>下，扩容的空间要略小于<code>VG</code>的<code>free</code>空间，因此这里只输入了<code>269.95G</code>.
+然后通过<code>df -h</code>查看，<code>root</code>空间还是没变，因为我们差最后最关键的一部。</p>
+<h2 id="扩容文件系统">扩容文件系统</h2>
+<p>使用使用<code>resize2fs</code>命令，用于扩大或者缩小未挂载的<code>ext2</code>,<code>ext3</code>或者是<code>ext4</code>文件系统。具体命令为：<code>resize2fs -p /dev/mapper/VolGroup-lv_root  290G</code> 。
+然后再用<code>df -h</code>查看，扩容成功。</p>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -244,8 +257,22 @@
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#在vmware中扩容虚拟机磁盘大小">在VMWARE中扩容虚拟机磁盘大小</a></li>
+    <li><a href="#查看扩容磁盘">查看扩容磁盘</a></li>
+    <li><a href="#分区">分区</a></li>
+    <li><a href="#修改分区id">修改分区ID</a></li>
+    <li><a href="#格式化分区">格式化分区</a></li>
+    <li><a href="#初始化物理卷">初始化物理卷</a></li>
+    <li><a href="#扩展vg">扩展VG</a></li>
+    <li><a href="#扩容root">扩容root</a></li>
+    <li><a href="#扩容文件系统">扩容文件系统</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -255,6 +282,22 @@
       <a href="/blog/linux/ubuntu-wlan/" class="button right"><span>Ubuntu安装配置无线网卡</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[VMWare&#32;Linux]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -272,7 +315,7 @@
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -329,6 +372,9 @@
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -342,9 +388,6 @@
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -364,7 +407,7 @@
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,6 +179,63 @@
   <header>
   <div class="title">
     
+      <h2><a href="/blog/elk/elk/">ELK简介及日志收集、服务监控、性能监控</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2018-12-04 00:00:00 &#43;0000 UTC">2018-12-04</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="elk-描述">elk 描述</h2>
+<p>elk 架构是指：elastic 公司三个开源的产品： elasticsearch, logstash, kibana</p>
+<p>Elasticsearch是个开源分布式搜索引擎，提供搜集、分析、&hellip;</p>
+  </div>
+  <footer>
+    <a href="/blog/elk/elk/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/elk/">ELK</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/log/">Log</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
       <h2><a href="/blog/log-system/docker%E5%AE%89%E8%A3%85nsqbeat/">Docker部署和配置nsqbeat</a></h2>
     
     
@@ -203,11 +262,7 @@
 ############################# Nsqbeat ######################################
 
 nsqbeat:
-    # A list of NSQ Lookup Daemons to connect to
-    lookupdhttpaddrs: [&quot;192.168.20.99:4161&quot;]
-    # a Topic to sucscribe to
-    topic: &quot;logic.log&quot;
-    # The channel name to join&hellip;</code></pre>
+    # A&hellip;</code></pre>
   </div>
   <footer>
     <a href="/blog/log-system/docker%E5%AE%89%E8%A3%85nsqbeat/" class="button big">阅读全文</a>
@@ -267,15 +322,7 @@ nsqbeat:
 services:
   nsqlookupd:
     image: nsqio/nsq
-    command: /nsqlookupd
-    ports:
-      - 4160:4160
-      - 4161:4161
-  nsqd:
-    image: nsqio/nsq
-    command: /nsqd --lookupd-tcp-address=192.168.20.99:4160 --broadcast-address=192.168.20.99
-    depends_on:
-      -&hellip;</code></pre>
+    command: /nsqlookupd&hellip;</code></pre>
   </div>
   <footer>
     <a href="/blog/message-queue/nsq/docker-%E5%AE%89%E8%A3%85nsq/" class="button big">阅读全文</a>
@@ -333,9 +380,7 @@ services:
     <h2 id="描述">描述</h2>
 <p>是一个守护进程，负责接收，排队，投递消息给客户端</p>
 <h2 id="参数">参数</h2>
-<p>-lookupd-tcp-address=: nslookup tcp 监听地址
--broadcast-address=&rdquo;&quot;: 注册到nslookup地址， 需要显示指定</p>
-
+<p>-lookupd-tcp-address=: nslookup tcp&hellip;</p>
   </div>
   <footer>
     <a href="/blog/message-queue/nsq/nsqd/" class="button big">阅读全文</a>
@@ -420,76 +465,6 @@ services:
 </article>
 
       
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/log-system/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/">日志业务系统架构设计</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2018-10-27 00:00:00 &#43;0000 UTC">2018-10-27</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="日志业务">日志业务</h2>
-<p>两种日志收集架构</p>
-<ol>
-<li>应用产生日志-&gt; 根据大小/时间 写入文件-&gt; rotation 日志文件 -&gt; 定期查看/定期删除</li>
-<li>应用产生日志-&gt; 传输 -&gt; 过滤/转换 -&gt; 存储-&gt; 分析/查看</li>
-</ol>
-<h2 id="日志业务结构">日志业务结构</h2>
-<p>采集-&gt;缓存-&gt;转换/过滤-&gt;存储-&gt;可视化</p>
-<h2 id="日志技术架构">日志技术架构</h2>
-<p>filebeat/logstash -&gt; kafka -&gt; fluentd -&gt; es -&gt; kibana</p>
-<h2 id="日志平台优化">日志平台优化</h2>
-<ol>
-<li>由于日志低频次， 将历史数据存入廉价存储， 普通用户需要时再导入es</li>
-<li>日志存储的时间越长，意义越小。 根据实&hellip;</li></ol>
-  </div>
-  <footer>
-    <a href="/blog/log-system/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/log-system/">Log System</a></li>
-        
-          <li><a class="article-terms-link" href="/categories/elk/">ELK</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/log/">Log</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
       <div class="pagination">
           
               <a href="/page/6/" class="button left"><span>上页</span></a>
@@ -516,7 +491,7 @@ services:
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -573,6 +548,9 @@ services:
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -586,9 +564,6 @@ services:
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -608,7 +583,7 @@ services:
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

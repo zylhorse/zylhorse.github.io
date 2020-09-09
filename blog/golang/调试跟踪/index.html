@@ -1,462 +1,0 @@
-<!doctype html>
-<html lang="zh-cn">
-  <head>
-  <meta charset="utf-8">
-<title>Golang自带调试跟踪工具 - zylhorse blog</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Golang自带调试跟踪工具">
-<meta itemprop="description" content="gops 获取：go get -u github.com/google/gops
-package mainimport (&quot;log&quot;&quot;time&quot;&quot;github.com/google/gops/agent&quot;)func main() {if err := agent.Listen(agent.Options{}); err != nil {log.Fatal(err)}time.Sleep(time.Hour)}使用：
- 打印所有go进程：  $ gopspid ppid 进程名 go 版本 关联进程的位置983 980 uplink-soecks go1.9 /usr/local/bin/uplink-soecks52697 52695 gops go1.10 /Users/jbd/bin/gops获取go进程更多信息  $ gops &lt;pid&gt;parent PID:	5985threads:	27memory usage:	0.199%cpu usage:	0.139%username:	jbdcmd&#43;args:	/Applications/Splice.app/Contents/Resources/Splice Helper.">
-<meta itemprop="datePublished" content="2017-10-01T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2017-10-01T00:00:00+00:00" />
-<meta itemprop="wordCount" content="331">
-
-
-
-<meta itemprop="keywords" content="," />
-<meta property="og:title" content="Golang自带调试跟踪工具" />
-<meta property="og:description" content="gops 获取：go get -u github.com/google/gops
-package mainimport (&quot;log&quot;&quot;time&quot;&quot;github.com/google/gops/agent&quot;)func main() {if err := agent.Listen(agent.Options{}); err != nil {log.Fatal(err)}time.Sleep(time.Hour)}使用：
- 打印所有go进程：  $ gopspid ppid 进程名 go 版本 关联进程的位置983 980 uplink-soecks go1.9 /usr/local/bin/uplink-soecks52697 52695 gops go1.10 /Users/jbd/bin/gops获取go进程更多信息  $ gops &lt;pid&gt;parent PID:	5985threads:	27memory usage:	0.199%cpu usage:	0.139%username:	jbdcmd&#43;args:	/Applications/Splice.app/Contents/Resources/Splice Helper." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://zylhorse.github.io/blog/golang/%E8%B0%83%E8%AF%95%E8%B7%9F%E8%B8%AA/" />
-<meta property="article:published_time" content="2017-10-01T00:00:00+00:00" />
-<meta property="article:modified_time" content="2017-10-01T00:00:00+00:00" />
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Golang自带调试跟踪工具"/>
-<meta name="twitter:description" content="gops 获取：go get -u github.com/google/gops
-package mainimport (&quot;log&quot;&quot;time&quot;&quot;github.com/google/gops/agent&quot;)func main() {if err := agent.Listen(agent.Options{}); err != nil {log.Fatal(err)}time.Sleep(time.Hour)}使用：
- 打印所有go进程：  $ gopspid ppid 进程名 go 版本 关联进程的位置983 980 uplink-soecks go1.9 /usr/local/bin/uplink-soecks52697 52695 gops go1.10 /Users/jbd/bin/gops获取go进程更多信息  $ gops &lt;pid&gt;parent PID:	5985threads:	27memory usage:	0.199%cpu usage:	0.139%username:	jbdcmd&#43;args:	/Applications/Splice.app/Contents/Resources/Splice Helper."/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
-</head>
-
-  <body>
-    
-
-<header id="site-header">
-  <nav id="site-nav">
-    <h1 class="nav-title">
-      <a href="/" class="nav">
-        
-          博客
-        
-      </a>
-    </h1>
-    <menu id="site-nav-menu" class="flyout-menu menu">
-      
-        
-          
-          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
-        
-      
-        
-          
-          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
-        
-      
-        
-          
-          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
-        
-      
-        
-          
-          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
-        
-      
-        
-          
-          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
-        
-      
-      
-      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
-    </menu>
-    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
-    
-    
-    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
-  </nav>
-  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
-  
-  
-</header>
-
-    <div id="wrapper">
-      <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
-  <header>
-    <h1>张勇良</h1>
-  </header>
-  <main>
-    <p>不念过往，不负当下</p>
-  </main>
-  
-    <footer>
-      <ul class="socnet-icons">
-        
-
-        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
-
-      </ul>
-    </footer>
-  
-</section>
-
-      <main id="site-main">
-        
-  <article class="post">
-    <header>
-  <div class="title">
-    
-      <h2><a href="/blog/golang/%E8%B0%83%E8%AF%95%E8%B7%9F%E8%B8%AA/">Golang自带调试跟踪工具</a></h2>
-    
-    
-  </div>
-</header>
-    <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2017-10-01 00:00:00 &#43;0000 UTC">2017-10-01</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-    
-        <p id="busuanzi_container_page_pv">
-        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
-        </p>
-        </p>
-    
-</div>
-    <div class="content">
-      
-      <h2 id="gopshttpsgithubcomgooglegops"><a href="https://github.com/google/gops">gops</a></h2>
-<p>获取：<code>go get -u github.com/google/gops</code></p>
-<pre><code>package main
-
-import (
-	&quot;log&quot;
-	&quot;time&quot;
-
-	&quot;github.com/google/gops/agent&quot;
-)
-
-func main() {
-	if err := agent.Listen(agent.Options{}); err != nil {
-		log.Fatal(err)
-	}
-	time.Sleep(time.Hour)
-}
-
-</code></pre><p>使用：</p>
-<ol>
-<li>打印所有go进程：</li>
-</ol>
-<pre><code>$ gops
-pid   ppid   进程名         go 版本 关联进程的位置
-983   980    uplink-soecks  go1.9   /usr/local/bin/uplink-soecks
-52697 52695  gops           go1.10  /Users/jbd/bin/gops
-</code></pre><ol start="2">
-<li>获取go进程更多信息</li>
-</ol>
-<pre><code>$ gops &lt;pid&gt;
-parent PID:	5985
-threads:	27
-memory usage:	0.199%
-cpu usage:	0.139%
-username:	jbd
-cmd+args:	/Applications/Splice.app/Contents/Resources/Splice Helper.app/Contents/MacOS/Splice Helper -pid 5985
-local/remote:	127.0.0.1:56765 &lt;-&gt; :0 (LISTEN)
-local/remote:	127.0.0.1:56765 &lt;-&gt; 127.0.0.1:50955 (ESTABLISHED)
-local/remote:	100.76.175.164:52353 &lt;-&gt; 54.241.191.232:443 (ESTABLISHED)
-</code></pre><ol start="3">
-<li>获取进程树 <code>$ gops tree</code></li>
-<li>获取进程堆栈 <code>$ gops stack &lt;pid&gt; | &lt;addr&gt;</code></li>
-<li>获取进程当前内存 <code>$ gops memstats &lt;pid&gt; | &lt;addr&gt;</code></li>
-<li>gc 当前进程 <code>$ gops gc (&lt;pid&gt;|&lt;addr&gt;)</code></li>
-<li>设置当前进程gc百分比 <code>$gops setgc (&lt;pid&gt;|&lt;addr&gt;) </code>
-<code>$ gops setgc (&lt;pid&gt;|&lt;addr&gt;) 10</code></li>
-<li>打印构建目标程序的go版本: <code>$ gops version (&lt;pid&gt;|&lt;addr&gt;)</code></li>
-<li>打印运行时统计信息： <code>$ gops stats (&lt;pid&gt;|&lt;addr&gt;)</code></li>
-</ol>
-<h3 id="gops-pprof">gops pprof</h3>
-<ol>
-<li><code>gops pprof-cpu (&lt;pid&gt;|&lt;addr&gt;)</code></li>
-<li><code>gops pprof-heap (&lt;pid&gt;|&lt;addr&gt;)</code></li>
-</ol>
-<h3 id="gops-trace">gops trace</h3>
-<p><code>gops trace (&lt;pid&gt;|&lt;addr&gt;)</code></p>
-<h2 id="pprofhttpsbloggolangorg"><a href="https://blog.golang.org/">pprof</a></h2>
-<p>使用： <code>go tool pprof -http=:port http://localhost:port/debug/pprof/heap</code></p>
-<pre><code>import (
-	_ &quot;net/http/pprof&quot;
-)
-
-http.ListenAndServe(lisAddr, nil)
-
-</code></pre><h3 id="堆内存和gc">堆内存和GC</h3>
-<pre><code>Alloc uint64 //golang语言框架堆空间分配的字节数
-TotalAlloc uint64 //从服务开始运行至今分配器为分配的堆空间总 和，只有增加，释放的时候不减少
-Sys uint64 //服务现在系统使用的内存
-Lookups uint64 //被runtime监视的指针数
-Mallocs uint64 //服务malloc heap objects的次数
-Frees uint64 //服务回收的heap objects的次数
-HeapAlloc uint64 //服务分配的堆内存字节数
-HeapSys uint64 //系统分配的作为运行栈的内存
-HeapIdle uint64 //申请但是未分配的堆内存或者回收了的堆内存（空闲）字节数
-HeapInuse uint64 //正在使用的堆内存字节数
-HeapReleased uint64 //返回给OS的堆内存，类似C/C++中的free。
-HeapObjects uint64 //堆内存块申请的量
-StackInuse uint64 //正在使用的栈字节数
-StackSys uint64 //系统分配的作为运行栈的内存
-MSpanInuse uint64 //用于测试用的结构体使用的字节数
-MSpanSys uint64 //系统为测试用的结构体分配的字节数
-MCacheInuse uint64 //mcache结构体申请的字节数(不会被视为垃圾回收)
-MCacheSys uint64 //操作系统申请的堆空间用于mcache的字节数
-BuckHashSys uint64 //用于剖析桶散列表的堆空间
-GCSys uint64 //垃圾回收标记元信息使用的内存
-OtherSys uint64 //golang系统架构占用的额外空间
-NextGC uint64 //垃圾回收器检视的内存大小
-LastGC uint64 // 垃圾回收器最后一次执行时间。
-PauseTotalNs uint64 // 垃圾回收或者其他信息收集导致服务暂停的次数。
-PauseNs [256]uint64 //一个循环队列，记录最近垃圾回收系统中断的时间
-PauseEnd [256]uint64 //一个循环队列，记录最近垃圾回收系统中断的时间开始点。
-NumForcedGC uint32 //服务调用runtime.GC()强制使用垃圾回收的次数。
-GCCPUFraction float64 //垃圾回收占用服务CPU工作的时间总和。如果有100个goroutine，垃圾回收的时间为1S,那么就占用了100S。
-BySize //内存分配器使用情况
-</code></pre><h2 id="trace">trace</h2>
-<p>问题:</p>
-<ul>
-<li>web 白屏bug<a href="https://github.com/golang/go/issues/34374">#34374</a></li>
-<li>暂时解决方案: <code>chrome.exe --enable-blink-features=ShadowDOMV0,CustomElementsV0,HTMLImports</code></li>
-</ul>
-<pre><code>set GOGCTRACE=1
-set GODEBUG=gctrace=1
-</code></pre><pre><code>gc 1 @0.005s 0%: 0+11+0.99 ms clock, 0+0/15/0+7.9 ms cpu, 25-&gt;25-&gt;24 MB, 26 MB goal, 8 P
-gc 1：说明gc过程，不做解释，1 表示第几次执行gc操作
-@0.005s：表示程序执行的总时间
-0%:：表示gc时时间和程序运行总时间的百分比
-0+11+0.99 ms clock,：wall-clock (还不清楚什么意思)
-0+0/15/0+7.9 ms cpu,：CPU times for the phases of the GC (还不清楚什么意思)
-25-&gt;25-&gt;24 MB,：gc开始时的堆大小；GC结束时的堆大小；存活的堆大小
-26 MB goal,：整体堆的大小
-8 P：使用的处理器的数量
-
-说明 scvg4: inuse: 143, idle: 70, sys: 213, released: 0, consumed: 213 (MB)
-
-inuse: 143,：使用多少M内存
-idle: 70,：0 剩下要清除的内存
-sys: 213,： 系统映射的内存
-released: 0,： 释放的系统内存
-consumed: 213： 申请的系统内存
-</code></pre>
-    </div>
-    <footer>
-      <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-    </footer>
-  </article>
-  
-    
-
-  
-  <div class="pagination">
-    
-      <a href="/blog/golang/protobuf/" class="button left"><span>Golang中protobuf应用实战</span></a>
-    
-    
-      <a href="/blog/golang/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" class="button right"><span>Golang单元测试</span></a>
-    
-  </div>
-
-      </main>
-      <section id="site-sidebar">
-  
-
-  
-    <section id="categories">
-      <header>
-        <h1><a href="/categories">分类</a></h1>
-      </header>
-      <ul>
-        
-        
-        <li>
-          <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
-          
-        <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
-          
-        <li>
-          <a href="/categories/cache/">cache<span class="count">23</span></a>
-          
-        <li>
-          <a href="/categories/compilation/">compilation<span class="count">5</span></a>
-          
-        <li>
-          <a href="/categories/concurrence/">concurrence<span class="count">4</span></a>
-          
-        <li>
-          <a href="/categories/data-structure/">data-structure<span class="count">5</span></a>
-          
-        <li>
-          <a href="/categories/database/">database<span class="count">9</span></a>
-          
-        <li>
-          <a href="/categories/distribution-system/">distribution-system<span class="count">10</span></a>
-          
-        <li>
-          <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
-          
-        </li>
-      </ul>
-      
-        <footer class="see-more">
-          <a href="/categories" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
-        </footer>
-      
-    </section>
-  
-
-  
-      <section id="tags">
-        <header>
-          <h1><a href="/tags">标签</a></h1>
-        </header>
-        <ul>
-          
-          
-          <li>
-            <a href="/tags/algorithm/">algorithm<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/audio/">audio<span class="count">2</span></a>
-            
-          <li>
-            <a href="/tags/cdn/">cdn<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/certificate/">certificate<span class="count">4</span></a>
-            
-          <li>
-            <a href="/tags/http/">http<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/i/o/">i/o<span class="count">2</span></a>
-            
-          <li>
-            <a href="/tags/ide/">ide<span class="count">2</span></a>
-            
-          <li>
-            <a href="/tags/kafka/">kafka<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
-            
-          </li>
-        </ul>
-        
-          <footer class="see-more">
-            <a href="/tags" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
-          </footer>
-        
-      </section>
-  
-
-  
-</section>
-      <footer id="site-footer">
-  
-  <p class="copyright">
-      
-      <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
-      <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
-      <br>
-    由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
-  </p>
-</footer>
-<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
-
-      <script src="/js/highlight.js"></script>
-    
-    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.7e8b85fb814aa446375b535c9ecd0857b9de7637062ea359390ae8675c7761d8.js" integrity="sha256-fouF&#43;4FKpEY3W1Ncns0IV7nedjcGLqNZOQroZ1x3Ydg="></script>
-    <script src="/js/add-on.js"></script>
-  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    </div>
-  </body>
-</html>

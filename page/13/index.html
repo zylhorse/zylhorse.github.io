@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -172,6 +174,180 @@
         
   
       
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/context%E6%9C%BA%E5%88%B6/">Golang源码阅读-Context</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2017-12-16 00:00:00 &#43;0000 UTC">2017-12-16</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h1 id="context-数据结构">context 数据结构</h1>
+<pre><code>type Context interface {
+    // Done return a channel that is closed when this context&hellip;</code></pre>
+  </div>
+  <footer>
+    <a href="/blog/golang/context%E6%9C%BA%E5%88%B6/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/sync.map/">Golang源码阅读-sync.map</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2017-11-29 00:00:00 &#43;0000 UTC">2017-11-29</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="syncmap">sync.map</h2>
+<ol>
+<li>runtime中go的基本类型 map 不支持并发的读写， 会报错：fatal error: concurrent map writes</li>
+<li>为了支持并发， 我们直接对整个map加读写&hellip;</li></ol>
+  </div>
+  <footer>
+    <a href="/blog/golang/sync.map/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/godoc/">Golang doc使用细则</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2017-11-23 00:00:00 &#43;0000 UTC">2017-11-23</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="简介">简介</h2>
+<p><code>go doc</code>和<code>godoc</code> 在<code>golang 1.13</code>版本被移除，可手动安装<code>go get golang.org/x/tools/cmd/godoc</code></p>
+<h2 id="go-doc">go doc</h2>
+<p><code>GO</code> 命令行工具， 打印和显示文档
+&hellip;</p>
+  </div>
+  <footer>
+    <a href="/blog/golang/godoc/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
       
           <article class="post">
   <header>
@@ -283,211 +459,6 @@
 </article>
 
       
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/golang/protobuf/">Golang中protobuf应用实战</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2017-10-28 00:00:00 &#43;0000 UTC">2017-10-28</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="reference-google-protocol-buffershttpsdevelopersgooglecomprotocol-buffersdocsreferencego-generated">reference <a href="https://developers.google.com/protocol-buffers/docs/reference/go-generated">google protocol-buffers</a></h2>
-<h2 id="protobuf-描述">protobuf 描述</h2>
-<ol>
-<li>语言无关、平台无关。即 ProtoBuf 支持 Java、C++、Python 等多种语言，支持多个平台</li>
-<li>高效。即比 XML 更小（3 ~ 10倍）、更快（20 ~ 100倍）、更为简单</li>
-<li>扩展性、兼容性好。你可以更新数据结构，而不影响和破坏原有的旧程序</li>
-</ol>
-<h2 id="golang-protobuf-配置">golang protobuf 配置</h2>
-<ol>
-<li><code>go get -u github.com/golang/protobuf/{protoc-gen-go,proto}</code></li>
-<li><code>go install&hellip;</code></li></ol>
-  </div>
-  <footer>
-    <a href="/blog/golang/protobuf/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/golang/%E8%B0%83%E8%AF%95%E8%B7%9F%E8%B8%AA/">Golang自带调试跟踪工具</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2017-10-01 00:00:00 &#43;0000 UTC">2017-10-01</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="gopshttpsgithubcomgooglegops"><a href="https://github.com/google/gops">gops</a></h2>
-<p>获取：<code>go get -u github.com/google/gops</code></p>
-<pre><code>package main
-
-import (
-	&quot;log&quot;
-	&quot;time&quot;
-
-	&quot;github.com/google/gops/agent&quot;
-)
-
-func main() {
-	if err := agent.Listen(agent.Options{}); err != nil {
-		log.Fatal(err)
-	}
-	time.Sleep(time.Hour)
-}
-
-</code></pre><p>使用：</p>
-<ol>
-<li>打印所有go进程：</li>
-</ol>
-<pre><code>$ gops&hellip;</code></pre>
-  </div>
-  <footer>
-    <a href="/blog/golang/%E8%B0%83%E8%AF%95%E8%B7%9F%E8%B8%AA/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/golang/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">Golang单元测试</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2017-09-23 00:00:00 &#43;0000 UTC">2017-09-23</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="单元测试">单元测试</h2>
-<h2 id="测试命令">测试命令</h2>
-<pre><code>go test -v -run TestAdminController_Update admin_test.go admin.go base.go -count=1
-</code></pre><h2 id="问题">问题</h2>
-<h3 id="缓存">缓存</h3>
-<p>golang 单元测试，有缓存机制， 导致前后测试结果一致； 需要手动清理；</p>
-<pre><code>指定不缓存： go test -count=1
-手动清理：go clean -testcache
-</code></pre>
-  </div>
-  <footer>
-    <a href="/blog/golang/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
       <div class="pagination">
           
               <a href="/page/12/" class="button left"><span>上页</span></a>
@@ -514,7 +485,7 @@ func main() {
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -571,6 +542,9 @@ func main() {
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -584,9 +558,6 @@ func main() {
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -606,7 +577,7 @@ func main() {
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

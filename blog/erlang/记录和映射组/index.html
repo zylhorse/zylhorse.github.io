@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Erlang记录和映射组">
 <meta itemprop="description" content="数据容器 元组（tuple）：保存固定数量的元素列表（list）：保存可变数量的元素记录（record）：是元组的另一种形式，通过记录给元组里面的各个元素关联一个名字，映射组（map）：是键-值对关联性的集合。键可以是任意类型的Erlang数据类型。 使用记录和映射组 记录使用一组固定且预定义的关联名称映射组可以动态添加新的关联名称；映射组比元组占用更多存储空间，查找慢。但是映射组比元祖灵活。 何时使用映射组或记录 记录 -record（Name,{%% 以下两个键带默认值key1 = Default，key2 = Default，...%%下一行Key3 = undefinedkey3,...}).记录既可以保存在源代码的文件里，也可以保存在扩展名为.hrl的文件中，然后包含到源文件中。注意：文件包含是唯一确保多个Erlang模块共享相同记录的方式。命令行中读取记录文件 ：rr(&quot;myrecord.hrl&quot;).命令行中删除记录定义：rf(&quot;myrecord.hrl&quot;). 映射组(R17版本及以上引入) #{Key1 op Val1, Key2 op Val2, Key3 op Val3,...}语法与记录相似，只是散列符号（#）后面少了记录名，而op是符号 =&gt;或者:=中的其中之一。键和值是任何有效的Erlang数据类型。表达式 Key =&gt;Val有两种用途，一种是给映射组添加一个全新的 Key=&gt;Val，另一种是更新 映射组里面Key对应的值。表达式 Key := Val ，作用是将现有键Key的值更新为新值Val。如果被更新的映射组中不包含键Key，则提示更新失败。注： 由于本地Erlang版本为R16B, 映射组（map）数据类型在 Erlang R17版本中才引入，因此此处不予学习，练习，待后续跟进。 ">
 <meta itemprop="datePublished" content="2015-08-15T00:00:00+00:00" />
@@ -24,7 +26,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Erlang记录和映射组"/>
 <meta name="twitter:description" content="数据容器 元组（tuple）：保存固定数量的元素列表（list）：保存可变数量的元素记录（record）：是元组的另一种形式，通过记录给元组里面的各个元素关联一个名字，映射组（map）：是键-值对关联性的集合。键可以是任意类型的Erlang数据类型。 使用记录和映射组 记录使用一组固定且预定义的关联名称映射组可以动态添加新的关联名称；映射组比元组占用更多存储空间，查找慢。但是映射组比元祖灵活。 何时使用映射组或记录 记录 -record（Name,{%% 以下两个键带默认值key1 = Default，key2 = Default，...%%下一行Key3 = undefinedkey3,...}).记录既可以保存在源代码的文件里，也可以保存在扩展名为.hrl的文件中，然后包含到源文件中。注意：文件包含是唯一确保多个Erlang模块共享相同记录的方式。命令行中读取记录文件 ：rr(&quot;myrecord.hrl&quot;).命令行中删除记录定义：rf(&quot;myrecord.hrl&quot;). 映射组(R17版本及以上引入) #{Key1 op Val1, Key2 op Val2, Key3 op Val3,...}语法与记录相似，只是散列符号（#）后面少了记录名，而op是符号 =&gt;或者:=中的其中之一。键和值是任何有效的Erlang数据类型。表达式 Key =&gt;Val有两种用途，一种是给映射组添加一个全新的 Key=&gt;Val，另一种是更新 映射组里面Key对应的值。表达式 Key := Val ，作用是将现有键Key的值更新为新值Val。如果被更新的映射组中不包含键Key，则提示更新失败。注： 由于本地Erlang版本为R16B, 映射组（map）数据类型在 Erlang R17版本中才引入，因此此处不予学习，练习，待后续跟进。 "/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -81,12 +83,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -210,6 +212,7 @@ key3,
 注： 由于本地Erlang版本为R16B, 映射组（map）数据类型在 Erlang R17版本中才引入，因此此处不予学习，练习，待后续跟进。
 </code></pre>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -236,8 +239,14 @@ key3,
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#何时使用映射组或记录">何时使用映射组或记录</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -247,6 +256,22 @@ key3,
       <a href="/blog/erlang/erlang%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="button right"><span>Erlang基本数据结构</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Erlang]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -264,7 +289,7 @@ key3,
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -321,6 +346,9 @@ key3,
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -334,9 +362,6 @@ key3,
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -356,7 +381,7 @@ key3,
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

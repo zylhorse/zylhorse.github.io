@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="MySQL数据库有哪些日志">
 <meta itemprop="description" content="事务日志 undo log 事务中在操作任何数据之前，首先将原数据备份到undo log。
 redo log 事务提交前会把新数据备份到redo log并持久化。
@@ -30,7 +32,7 @@ binlog " />
 <meta name="twitter:description" content="事务日志 undo log 事务中在操作任何数据之前，首先将原数据备份到undo log。
 redo log 事务提交前会把新数据备份到redo log并持久化。
 binlog "/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -87,12 +89,12 @@ binlog "/>
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -181,11 +183,12 @@ binlog "/>
       
       <h2 id="事务日志">事务日志</h2>
 <h3 id="undo-log">undo log</h3>
-<p>事务中在操作任何数据之前，首先将原数据备份到undo log。</p>
+<p>事务中在操作任何数据之前，首先将原数据备份到<code>undo log</code>。</p>
 <h3 id="redo-log">redo log</h3>
-<p>事务提交前会把新数据备份到redo log并持久化。</p>
+<p>事务提交前会把新数据备份到<code>redo log</code>并持久化。</p>
 <h2 id="binlog">binlog</h2>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -212,8 +215,20 @@ binlog "/>
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#事务日志">事务日志</a>
+      <ul>
+        <li><a href="#undo-log">undo log</a></li>
+        <li><a href="#redo-log">redo log</a></li>
+      </ul>
+    </li>
+    <li><a href="#binlog">binlog</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -223,6 +238,22 @@ binlog "/>
       <a href="/blog/browser/download/" class="button right"><span>不同平台常用浏览器的离线下载地址</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Database]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -240,7 +271,7 @@ binlog "/>
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -297,6 +328,9 @@ binlog "/>
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -310,9 +344,6 @@ binlog "/>
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -332,7 +363,7 @@ binlog "/>
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

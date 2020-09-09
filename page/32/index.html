@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/compilation/makefile/">Makefile是怎样让make工作的</a></h2>
+      <h2><a href="/blog/jmeter/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">Jmeter部署和配置</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-04-26 00:00:00 &#43;0000 UTC">2014-04-26</time>
+        <time datetime="2014-11-11 00:00:00 &#43;0000 UTC">2014-11-11</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -199,30 +201,24 @@
   <div class="content">
     
     
-    <h1 id="make版本">make版本</h1>
-<p>GNU make 3.8.1</p>
-<p>Makefile文件告诉make命令怎样去编译和链接程序</p>
-<h1 id="makefile的规则">Makefile的规则</h1>
-<pre><code>target ... : prerequisites ...
-    command
-    ...
-</code></pre><ul>
-<li>target就是一个目标文件，可以是中间文件，也可以时目标文件。</li>
-<li>prerequisites就是生成target所依赖的文件</li>
-<li>command就是make需要执行的命令</li>
-</ul>
-<h1 id="一个例子">一个例子</h1>
-<pre><code>edit : main.o kbd.o command.o display.o \
-      insert.o search.o files.o utils.o&hellip;</code></pre>
+    <h2 id="下载">下载</h2>
+<p><a href="http://jmeter.apache.org/download_jmeter.cgi">地址</a></p>
+<h2 id="汉化">汉化</h2>
+<p><code>jmeter.properties =&gt; language=zh_CN</code></p>
+<h2 id="websocket配置">websocket配置</h2>
+<p>下载<code>jar</code>包
+<code>jetty-http</code>
+<code>jetty-io</code>
+<code>jetty-util&hellip;</code></p>
   </div>
   <footer>
-    <a href="/blog/compilation/makefile/" class="button big">阅读全文</a>
+    <a href="/blog/jmeter/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/compilation/">Compilation</a></li>
+          <li><a class="article-terms-link" href="/categories/jmeter/">Jmeter</a></li>
         
       
     </ul>
@@ -246,14 +242,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/software-programming/%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE/">常见的开源许可协议和注意事项</a></h2>
+      <h2><a href="/blog/memory/mmap/">mmap实现原理简述及使用场景</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-04-11 00:00:00 &#43;0000 UTC">2014-04-11</time>
+        <time datetime="2014-10-10 00:00:00 &#43;0000 UTC">2014-10-10</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -261,38 +257,92 @@
     
     
         <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
+            3分钟
         </p>
     
 </div>
   <div class="content">
     
     
-    <h2 id="gplgnu-general-public-license">GPL(GNU General Public License)</h2>
-<p>GPL 出发点是代码的开源/免费使用和引用/修改/衍生代码的开源/免费使用， 不允许修改/衍生后的代码作为比原的商业软件发布和销售。</p>
-<blockquote>
-<p>代表： linux</p>
-</blockquote>
-<h2 id="bsd">BSD</h2>
-<p>BSD开源协议允许自由的使用/修改源代码， 也可以将修改后的代码作为开源/专有软件发布。但是要满足三个条件：</p>
+    <h2 id="概念">概念</h2>
+<ul>
+<li><code>mmap</code>是一种文档映射到内存的方法；</li>
+<li>将文件或其他对象映射到进程的内存地址空间；实现文件磁盘地址和进程虚拟地址空间的映射。</li>
+<li>映射后， 进程就可以采用指针的方式读写操作这段内存。而系统会自动回写&hellip;</li></ul>
+  </div>
+  <footer>
+    <a href="/blog/memory/mmap/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/memory/">Memory</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      <li>None</li>
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/concurrence/io/">多类型I/O操作流程</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2014-10-03 00:00:00 &#43;0000 UTC">2014-10-03</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            10分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h3 id="io">I/O</h3>
+<p><code>IO</code>分为两个阶段：</p>
 <ol>
-<li>源码发布，需要在源码中携带原有代码的BSD协议</li>
-<li>类库/软件发布， 需要在类库/软件的文档和版权声明中包含原有代码的BSD协议</li>
-<li>不可以使用开源代码的作者/机构名字做市场推广</li>
+<li>数据准备阶段</li>
+<li>内核空间复制数据到用户进程缓冲区（用户空间）阶段</li>
 </ol>
-<h2 id="apache-license-20">Apache license 2.0</h2>
-<p>类似BSD协议</p>
-<blockquote>
-<p>Apache license&hellip;</p></blockquote>
+<h4 id="io类型">IO类型</h4>
+<ul>
+<li>
+<p>阻塞IO
+用户线程进行IO读写操作时发生阻塞，等待数据准备就绪</p>
+</li>
+<li>
+<p>非阻塞IO
+用户线程进&hellip;</p></li></ul>
   </div>
   <footer>
-    <a href="/blog/software-programming/%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE/" class="button big">阅读全文</a>
+    <a href="/blog/concurrence/io/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/software-programming/">Software Programming</a></li>
+          <li><a class="article-terms-link" href="/categories/concurrence/">Concurrence</a></li>
         
       
     </ul>
@@ -301,7 +351,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/"></a></li>
+          <li><a class="article-terms-link" href="/tags/i/o/">I/O</a></li>
         
       
     </ul>
@@ -316,14 +366,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/windows/%E6%B8%85%E7%90%86%E7%B3%BB%E7%BB%9F%E7%BC%93%E5%AD%98%E5%9B%BE%E6%A0%87/">Windows中文件的最新图标刷新不出来问题</a></h2>
+      <h2><a href="/blog/windows/visual-studio/">下载安装Visual Studio历史版本</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-03-15 00:00:00 &#43;0000 UTC">2014-03-15</time>
+        <time datetime="2014-09-10 00:00:00 &#43;0000 UTC">2014-09-10</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -338,22 +388,19 @@
   <div class="content">
     
     
-    <h2 id="磁盘上的图片被覆盖后文件预览还是旧的">磁盘上的图片被覆盖后文件预览还是旧的</h2>
-<p>reseticon.bat</p>
-<pre><code>rem 关闭Windows外壳程序explorer
- 
-taskkill /f /im explorer.exe
- 
-rem 清理系统图标缓存数据库
- 
-attrib -h -s -r &quot;%userprofile%AppDataLocalIconCache.db&quot;
- 
-del /f &quot;%userprofile%AppDataLocalIconCache.db&quot;
- 
-attrib /s /d -h -s -r&hellip;</code></pre>
+    <h2 id="下载安装">下载安装</h2>
+<p><a href="https://visualstudio.microsoft.com/zh-hans/vs/older-downloads/">历史版本</a></p>
+<h2 id="2017-激活码">2017 激活码</h2>
+<ul>
+<li>
+<p>professional<br>
+<code>KBJFW-NXHK6-W4WJM-CRMQB-G3CDH</code></p>
+</li>
+<li>
+<p>enterprise&hellip;</p></li></ul>
   </div>
   <footer>
-    <a href="/blog/windows/%E6%B8%85%E7%90%86%E7%B3%BB%E7%BB%9F%E7%BC%93%E5%AD%98%E5%9B%BE%E6%A0%87/" class="button big">阅读全文</a>
+    <a href="/blog/windows/visual-studio/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -383,14 +430,14 @@ attrib /s /d -h -s -r&hellip;</code></pre>
   <header>
   <div class="title">
     
-      <h2><a href="/blog/linux/%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/">linux磁盘管理和lvm磁盘扩容</a></h2>
+      <h2><a href="/blog/windows/proxy/">Windows系统配置CMD网络代理</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-03-11 00:00:00 &#43;0000 UTC">2014-03-11</time>
+        <time datetime="2014-09-05 00:00:00 &#43;0000 UTC">2014-09-05</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -405,105 +452,20 @@ attrib /s /d -h -s -r&hellip;</code></pre>
   <div class="content">
     
     
-    <p><a href="https://blog.51cto.com/12348890/2092339">reference</a></p>
-<h1 id="磁盘管理">磁盘管理</h1>
-<h2 id="硬盘分区--hard-disk-add-new-partition">硬盘分区 | Hard disk add new partition</h2>
-<ul>
-<li>
-<p>显示硬盘及所属分区情况。在终端窗口中输入如下命令：
-<code>$ sudo fdisk -l</code></p>
-<ul>
-<li>显示当前的硬盘及所属分区的情况。
-系统提示：DIsk /dev/sdb doesn&rsquo;t contain a valid partition table。</li>
-<li><a href="https://s1.51cto.com/images/20180329/1522291142953258.gif?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">如图所示</a></li>
-</ul>
-</li>
-<li>
-<p>对硬盘进行分区。在终端窗口中输入如下命令：
-<code>$ sudo fdisk /dev/sdb</code></p>
-<ul>
-<li>在Command (m for help)提示符后面输入m显示一个帮助菜单， <a href="https://s1.51cto.com/images/20180329/1522291150631562.gif?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">如图所示</a>。</li>
-<li>在Command (m for help)提示符&hellip;</li></ul></li></li></ul></li></ul>
+    <h2 id="cmd-设置代理">cmd 设置代理</h2>
+<pre><code>x:&gt;netsh
+netsh&gt;winhttp
+netsh winhttp&gt;
+netsh winhttp&gt;set proxy 127.0.0.1:1080&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/linux/%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/" class="button big">阅读全文</a>
+    <a href="/blog/windows/proxy/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/linux/ubuntu-%E5%AE%89%E8%A3%85/">ubutnu本地安装实操</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-03-11 00:00:00 &#43;0000 UTC">2014-03-11</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h1 id="ubuntu-u盘安装">ubuntu U盘安装</h1>
-<p>遇到类似加载镜像文件问题，最简单粗暴的解决方案就是把挂载ubuntu server镜像文件至cdrom目录</p>
-<p>具体步骤如下：</p>
-<ol>
-<li>
-<p>复制安装镜像至U盘</p>
-</li>
-<li>
-<p>进入ubuntu控制台，可以直接通过Alt+F2进入终端环境</p>
-</li>
-<li>
-<p>查看u盘设备号
-通过命令：ls /dev/sd*</p>
-</li>
-</ol>
-<blockquote>
-<p>查看U盘设备，通常U盘设备为sdb,sdc,sdd等名称或以此为前缀名称。如果不确定，可以将U盘拔出，然后再用 ls /dev/sd*命令查看设备，发现少了的那个就是U盘。但一般情况下，再次插入，U盘设备号会有所改变，例如原来是sdb4，重新插入，查看一下可能是sdb5，以最后插入查看的设备号为准。&hellip;</p></blockquote>
-  </div>
-  <footer>
-    <a href="/blog/linux/ubuntu-%E5%AE%89%E8%A3%85/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
+          <li><a class="article-terms-link" href="/categories/windows/">Windows</a></li>
         
       
     </ul>
@@ -549,7 +511,7 @@ attrib /s /d -h -s -r&hellip;</code></pre>
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -606,6 +568,9 @@ attrib /s /d -h -s -r&hellip;</code></pre>
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -619,9 +584,6 @@ attrib /s /d -h -s -r&hellip;</code></pre>
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -641,7 +603,7 @@ attrib /s /d -h -s -r&hellip;</code></pre>
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

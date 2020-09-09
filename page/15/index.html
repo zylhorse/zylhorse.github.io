@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,16 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/golang/%E5%B8%B8%E7%94%A8%E7%BD%91%E5%9D%80/">golang常用网址</a></h2>
+      <h2><a href="/blog/golang/select/">Golang源码阅读-select</a></h2>
     
-    
-      <p>记录golang学习和使用的常用地址</p>
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2017-06-23 00:00:00 &#43;0000 UTC">2017-06-23</time>
+        <time datetime="2017-08-23 00:00:00 &#43;0000 UTC">2017-08-23</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -201,22 +201,16 @@
   <div class="content">
     
     
-    <h1 id="官网">官网</h1>
+    <h1 id="描述">描述</h1>
+<p>select就是用来监听和channel有关的IO操作，当 IO 操作发生时，触发相应的动作。</p>
+<h1 id="执行步骤">执行步骤</h1>
 <ol>
-<li>golang官方项目地址：https://golang.org/</li>
-<li>golang官方博客：https://blog.golang.org/</li>
-<li>golang官方情报： <a href="http://talks.golang.org/">http://talks.golang.org/</a></li>
-<li>在线运行golang程序：https://play.golang.org/</li>
-<li>golang在线运行的互动小程序：https://tour.golang.org</li>
-<li>golang标准库：https://golang.org/pkg/</li>
-<li>golang 论坛： <a href="https://github.com/golang/go/wiki/">https://github.com/golang/go/wiki/</a></li>
+<li>构建select对象：</li>
 </ol>
-<h1 id="学习地址">学习地址</h1>
-<ol>
-<li>The Go Programming&hellip;</li></ol>
+<pre><code>type hselect struct {&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/golang/%E5%B8%B8%E7%94%A8%E7%BD%91%E5%9D%80/" class="button big">阅读全文</a>
+    <a href="/blog/golang/select/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -246,16 +240,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/golang/ide/">GoLand激活</a></h2>
+      <h2><a href="/blog/golang/chan/">Golang源码阅读-chan</a></h2>
     
-    
-      <p>激活goland</p>
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2017-06-06 00:00:00 &#43;0000 UTC">2017-06-06</time>
+        <time datetime="2017-08-11 00:00:00 &#43;0000 UTC">2017-08-11</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -270,21 +262,13 @@
   <div class="content">
     
     
-    <h2 id="破解补丁">破解补丁</h2>
-<p>链接：https://pan.baidu.com/s/1TpmrZ0rNMKSaDxhD1t1Jow 
-提取码：mont</p>
-<h3 id="步骤">步骤</h3>
-<ol>
-<li>先关闭golang，并将把JetbrainsCrack-release-enc.jar 放置到 goland安装目录的\bin目录下。</li>
-<li>然后修改文件goland64.exe.vmoptions和goland.exe.vmoptions，新增数据：-javaagent:$GoLand\bin\JetbrainsCrack-release-enc.jar</li>
-<li>启动goland 输入激活码激活</li>
-</ol>
-<h2 id="激活码">激活码</h2>
-<h3 id="有效期">有效期</h3>
-<p>2019-03-10 ~ 2020-03-10&hellip;</p>
+    <h2 id="描述">描述</h2>
+<p>channel 是golang实现CSP理念的重点。channel实现一个进程内不同协程之间的通信方式。</p>
+<h2 id="结构体">结构体</h2>
+<p>channel 实际上是一个环形队列，实际的队列空间就是在这个channel结构&hellip;</p>
   </div>
   <footer>
-    <a href="/blog/golang/ide/" class="button big">阅读全文</a>
+    <a href="/blog/golang/chan/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -299,7 +283,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/ide/">IDE</a></li>
+          <li><a class="article-terms-link" href="/tags/"></a></li>
         
       
     </ul>
@@ -314,14 +298,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/data-structure/huffman/">数据结构-Huffman</a></h2>
+      <h2><a href="/blog/golang/slice/">Golang源码阅读-slice</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2017-05-28 00:00:00 &#43;0000 UTC">2017-05-28</time>
+        <time datetime="2017-07-11 00:00:00 &#43;0000 UTC">2017-07-11</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -336,16 +320,21 @@
   <div class="content">
     
     
-    
+    <h2 id="数组array">数组(array)</h2>
+<p>golang 中 array 在函数传参中是值传递， 修改不影响原数组；</p>
+<h2 id="切片slice">切片(slice)</h2>
+<ol>
+<li>切片数据结构很简单， 对底层数组进行了抽象，并提供相关操作方法；</li>
+<li>切片数据结构包含三&hellip;</li></ol>
   </div>
   <footer>
-    <a href="/blog/data-structure/huffman/" class="button big">阅读全文</a>
+    <a href="/blog/golang/slice/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/data-structure/">Data Structure</a></li>
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
         
       
     </ul>
@@ -369,14 +358,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/network/hpack/">HPACK工作原理</a></h2>
+      <h2><a href="/blog/golang/map/">Golang源码阅读-map</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2017-05-27 00:00:00 &#43;0000 UTC">2017-05-27</time>
+        <time datetime="2017-07-08 00:00:00 &#43;0000 UTC">2017-07-08</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -391,21 +380,22 @@
   <div class="content">
     
     
-    <h2 id="原理">原理</h2>
-<ol>
-<li>HAPCK使用两个索引表（静态索引表和动态索引表）把http的请求头映射到索引值</li>
-<li>如果请求头在静态索引表中不存在， 则对其进行哈夫曼（huffman）编码， 并缓存到动态索引表中， 从而达到压缩headers的效果</li>
-</ol>
-
+    <h1 id="map">map</h1>
+<h2 id="声明">声明</h2>
+<pre><code>var m map[string]string
+</code></pre><p>map声明默认值是nil， 此时取值，返回的是value对应类型的零值</p>
+<h2 id="初始化">初始化</h2>
+<pre><code>// 声明之后必须初始化，才能使用
+m =&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/network/hpack/" class="button big">阅读全文</a>
+    <a href="/blog/golang/map/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/network/">Network</a></li>
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
         
       
     </ul>
@@ -429,14 +419,16 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/network/http2/">http2协议解析及解决哪些问题</a></h2>
+      <h2><a href="/blog/golang/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">Golang 代码规范</a></h2>
     
+    
+      <p>代码编写，命名等规范</p>
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2017-05-26 00:00:00 &#43;0000 UTC">2017-05-26</time>
+        <time datetime="2017-07-07 00:00:00 &#43;0000 UTC">2017-07-07</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -451,43 +443,21 @@
   <div class="content">
     
     
-    <h2 id="http超文本传输协议">http超文本传输协议</h2>
-<ol>
-<li>http是简单的请求-响应协议，指定客户端发送数据格式以及服务器响应的数据格式</li>
-<li>http是一次性连接，每次连接处理一个请求</li>
-<li>http是无状态连接，服务器不保留客户信息</li>
-</ol>
-<h3 id="http-报文格式">http 报文格式</h3>
-<ol>
-<li>请求报文：</li>
-</ol>
-<pre><code>请求行\r\n
-通用信息头\r\n
-请求头\r\n
-实体头\r\n
-报文主体
-</code></pre><ol start="2">
-<li>响应报文：</li>
-</ol>
-<pre><code>状态行\r\n
-通用信息头\r\n
-响应头\r\n
-实体头\r\n
-报文主体
-</code></pre><h2 id="http11-缺陷">http1.1 缺陷</h2>
-<h3 id="高延迟">高延迟</h3>
-<p>网络延迟问题主要由队头阻塞（head-of-line blocking）导致带宽无法被充分利用；</p>
-<blockquote>
-<p>队头阻塞指当顺序请求序列中的一个请求因为某种原&hellip;</p></blockquote>
+    <h2 id="gofmt工具">gofmt工具</h2>
+<p><code>gofmt</code> 格式化Go程序。使用<code>tabs</code>进行缩进，<code>blanks</code>进行对齐。</p>
+<h3 id="gofmt-参数">gofmt 参数</h3>
+<p><code>gofmt [flags] [path...]</code></p>
+<ul>
+<li><code>-cpuprofile</code>: 指定打印<code>cpu&hellip;</code></li></ul>
   </div>
   <footer>
-    <a href="/blog/network/http2/" class="button big">阅读全文</a>
+    <a href="/blog/golang/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/network/">Network</a></li>
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
         
       
     </ul>
@@ -496,7 +466,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/http/">HTTP</a></li>
+          <li><a class="article-terms-link" href="/tags/"></a></li>
         
       
     </ul>
@@ -533,7 +503,7 @@
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -590,6 +560,9 @@
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -603,9 +576,6 @@
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -625,7 +595,7 @@
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

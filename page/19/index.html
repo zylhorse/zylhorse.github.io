@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/cache/redis/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">Redis自带性能测试命令</a></h2>
+      <h2><a href="/blog/stories/%E4%B8%80%E6%AC%A1/">一次</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-09-06 00:00:00 &#43;0000 UTC">2016-09-06</time>
+        <time datetime="2016-12-13 00:00:00 &#43;0000 UTC">2016-12-13</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -192,94 +194,25 @@
     
     
         <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
+            10000分钟
         </p>
     
 </div>
   <div class="content">
     
     
-    <h2 id="性能测试">性能测试</h2>
-<p>redis-benchmark options options value</p>
-<pre><code>序号	选项	描述	默认值
-1	-h	指定服务器主机名	127.0.0.1
-2	-p	指定服务器端口	6379
-3	-s	指定服务器 socket	
-4	-c	指定并发连接数	50
-5	-n	指定请求数	10000
-6	-d	以字节的形式指定 SET/GET 值的数据大小	2
-7	-k	1=keep alive 0=reconnect	1
-8	-r	SET/GET/INCR 使用随机 key, SADD 使用随机值	
-9	-P	通过管道传输 &lt;numreq&gt; 请求	1
-10	-q&hellip;</code></pre>
+    <p>往事讲一遍，是最初的感受。</p>
+<p>有些事情一次就好。</p>
+
   </div>
   <footer>
-    <a href="/blog/cache/redis/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" class="button big">阅读全文</a>
+    <a href="/blog/stories/%E4%B8%80%E6%AC%A1/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/algorithm/lru%E7%AE%97%E6%B3%95/">LRU(Least Recently Used)算法原理和代码实现</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-08-23 00:00:00 &#43;0000 UTC">2016-08-23</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h1 id="概述">概述</h1>
-<p>least recently used ： 淘汰最近最少使用页面</p>
-<h2 id="技术实现">技术实现</h2>
-<p>hashmap + linked list</p>
-
-  </div>
-  <footer>
-    <a href="/blog/algorithm/lru%E7%AE%97%E6%B3%95/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/algorithm/">Algorithm</a></li>
+          <li><a class="article-terms-link" href="/categories/stories/">Stories</a></li>
         
       
     </ul>
@@ -303,14 +236,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/cache/redis/%E5%86%85%E5%AD%98%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5/">Redis有哪些内存淘汰策略</a></h2>
+      <h2><a href="/blog/cache/redis/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">Redis的主从同步方式</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-08-18 00:00:00 &#43;0000 UTC">2016-08-18</time>
+        <time datetime="2016-12-01 00:00:00 &#43;0000 UTC">2016-12-01</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -325,24 +258,13 @@
   <div class="content">
     
     
-    <h4 id="淘汰策略">淘汰策略</h4>
-<ol>
-<li>volatile-lru： 从设置过期事件的数据集合中，对最近最少使用的数据进行淘汰</li>
-<li>volitile-ttl： 从设置过期事件的数据集合中，对将要过期数据进行淘汰</li>
-<li>allkeys-lru： 在内存不足容纳新的数据时，对最近最少使用的数据进行淘汰；</li>
-<li>allkeys-random: 从数据集中淘汰任意数据</li>
-</ol>
-<blockquote>
-<p>redis 4.0版本新增</p>
-</blockquote>
-<ol start="5">
-<li>volatile-lfu: 从设置过期事件的数据集合中，对使用次数最少的数据进行淘汰</li>
-<li>allkeys-lru： 在内存不足容纳新的数据时，对使用次数最少的数据进行淘汰</li>
-</ol>
-
+    <h3 id="概述">概述</h3>
+<p>为了分担redis读写压力， 支持主从复制； 分为全量同步和增量同步</p>
+<h4 id="全量同步">全量同步</h4>
+<p>全量同步一般发生在slave 初始化阶段， 这时slave需要将master上的所有数据复制一份，具体步骤：&hellip;</p>
   </div>
   <footer>
-    <a href="/blog/cache/redis/%E5%86%85%E5%AD%98%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5/" class="button big">阅读全文</a>
+    <a href="/blog/cache/redis/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -372,14 +294,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/cache/redis/sds%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/">Redis源码阅读-SDS动态字符串</a></h2>
+      <h2><a href="/blog/cache/redis/%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F/">Redis高可用方案-集群模式</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-07-21 00:00:00 &#43;0000 UTC">2016-07-21</time>
+        <time datetime="2016-11-27 00:00:00 &#43;0000 UTC">2016-11-27</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -396,14 +318,12 @@
     
     <h2 id="概述">概述</h2>
 <ol>
-<li>redis 没有直接使用C语言的字符串，而是定义了自己的字符串结构： SDS(simple dynamic string)作为默认字符串；</li>
-<li>我们使用的所有键值基本都是SDS类</li>
-</ol>
-<h2 id="定义">定义</h2>
-
+<li>redis cluster 时redis的分布式解决方案， 在3.0 推出；</li>
+<li>当遇到单机内存，并发流量等瓶颈时，可以采用cluster架构达到负载均衡的目的；</li>
+<li>cluster 将整个数据集，按&hellip;</li></ol>
   </div>
   <footer>
-    <a href="/blog/cache/redis/sds%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="button big">阅读全文</a>
+    <a href="/blog/cache/redis/%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -433,14 +353,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/cache/redis/key%E8%BF%87%E6%9C%9F%E5%88%A0%E9%99%A4/">Redis中key过期删除</a></h2>
+      <h2><a href="/blog/cache/redis/%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/">Redis高可用方案-哨兵模式</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-07-12 00:00:00 &#43;0000 UTC">2016-07-12</time>
+        <time datetime="2016-11-12 00:00:00 &#43;0000 UTC">2016-11-12</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -455,19 +375,77 @@
   <div class="content">
     
     
-    <h3 id="定期删除">定期删除</h3>
+    <h3 id="哨兵模式">哨兵模式</h3>
+<p>哨兵是一个独立的进程， 通过和redis各个节点的通信，监听各节点的状态；并互相监控；
+备注： 
+sentinel节点需要2n+1(n&gt;=1)个</p>
+<h4 id="sentinel监听">sentinel监听</h4>
 <ol>
-<li>redis 默认每个100ms 就会随机抽取一些设置过期时间的key， 检查其是否过期， 如果过期就删除。</li>
-<li>随机抽取是为了防止完整遍历增加cpu负载</li>
-</ol>
-<h3 id="惰性删除">惰性删除</h3>
-<ol>
-<li>key在被使用时， 去检查过期时间， 如果过期就删除</li>
-</ol>
-
+<li>每10&hellip;</li></ol>
   </div>
   <footer>
-    <a href="/blog/cache/redis/key%E8%BF%87%E6%9C%9F%E5%88%A0%E9%99%A4/" class="button big">阅读全文</a>
+    <a href="/blog/cache/redis/%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/cache/redis/%E9%AB%98%E5%8F%AF%E7%94%A8ha-high-available/">Redis高可用解决方案</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-11-08 00:00:00 &#43;0000 UTC">2016-11-08</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h3 id="高可用扩容">高可用扩容</h3>
+<ol>
+<li>垂直扩容： 提升机器内存配置， 不需要应用程序支持；</li>
+<li>水平扩容： 增加节点，需要应用程序支持；</li>
+</ol>
+<h3 id="哨兵模式sentinel">哨兵模式（sentinel）</h3>
+<p>故障转移后redis客户端将无法感知redis节点的变化；&hellip;</p>
+  </div>
+  <footer>
+    <a href="/blog/cache/redis/%E9%AB%98%E5%8F%AF%E7%94%A8ha-high-available/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -519,7 +497,7 @@
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -576,6 +554,9 @@
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -589,9 +570,6 @@
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -611,7 +589,7 @@
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

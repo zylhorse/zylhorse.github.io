@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Golang API实例">
 <meta itemprop="description" content="SetFinalizer   定义
  对象可以关联一个SetFinalizer函数， 当gc检测到unreachable对象有关联的SetFinalizer函数时，会执行关联的SetFinalizer函数， 同时取消关联    问题
@@ -30,7 +32,7 @@
 <meta name="twitter:description" content="SetFinalizer   定义
  对象可以关联一个SetFinalizer函数， 当gc检测到unreachable对象有关联的SetFinalizer函数时，会执行关联的SetFinalizer函数， 同时取消关联    问题
  func SetFinalizer(obj interface{}, finalizer interface{})。  参数obj必须是指针类型。 参数finalizer是一个函数，其参数类型是obj的类型，并且没有返回值。   在对象被 GC 进程选中并从内存中移除以前，SetFinalizer 都不会执行，即使程序正常结束或者发生错误。 如果对象存在循环方法，需要给对象添加wrapper；   strcut Cache {...stop chan bool}// 包裹定义struct CacheWrapper {*Cache}func New() *CacheWrapper {cc := &amp;Cache{...}go cc.clear()// 包一层cw := &amp;CacheWrapper{cc}// 重点在此:设置被回收时操作runtime.SetFinalizer(cw, onGarbageCollect)return cw}func (m *Cache) clear() {for {select {// 关闭case &lt;-m."/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -87,12 +89,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -274,6 +276,7 @@
 </li>
 </ul>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -300,17 +303,40 @@
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#setfinalizer">SetFinalizer</a></li>
+    <li><a href="#lockosthread">LockOSThread</a></li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
-      <a href="/blog/golang/graceful/" class="button left"><span>Golang实现服务优雅的重启</span></a>
+      <a href="/blog/hugo/hugo/" class="button left"><span>Hugo使用手册</span></a>
     
     
       <a href="/blog/golang/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="button right"><span>Golang数据库-数据类型转换</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Golang]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -328,7 +354,7 @@
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -385,6 +411,9 @@
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -398,9 +427,6 @@
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -420,7 +446,7 @@
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

@@ -236,9 +236,10 @@ const M = N * 2//生成随机数random = GenRandom(0, M)//构造备份新key
       <pubDate>Fri, 06 Nov 2015 00:00:00 +0000</pubDate>
       
       <guid>https://zylhorse.github.io/blog/cache/redis/%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</guid>
-      <description>安全 语法： config get requirepassconfig set requirepass passwordauth password客户端连接 client list // redis 客户端列表client setname // 设置客户端连接名client getname // 获取客户端连接名client pause // 挂起客户端client kill // 关闭客户端外网访问  注释 redis.conf  # bind 127.0.0.1 添加requirepass
+      <description>安全 语法： config get requirepassconfig set requirepass passwordauth password客户端连接 client list // redis 客户端列表client setname // 设置客户端连接名client getname // 获取客户端连接名client pause // 挂起客户端client kill // 关闭客户端外网访问   注释 redis.conf
+# bind 127.0.0.1  添加requirepass
   版本大于3.2 还需要取消保护模式
-  protected-mode no修改linux redis最大连接数 修改用户打开文件句柄数 sudo vim /etc/security/limits.conf redis soft nofile 65535redis hard nofile	65535修改文件句柄限制 sudo vim /lib/systemd/system/redis.service LimitNOFILE=infinityLimitMEMLOCK=infinity修改redis最大连接数 sudo vim /etc/redis/redis.</description>
+protected-mode no  修改linux redis最大连接数 修改用户打开文件句柄数 $ sudo vim /etc/security/limits.conf redis soft nofile 65535redis hard nofile	65535修改文件句柄限制 $ sudo vim /lib/systemd/system/redis.</description>
     </item>
     
   </channel>

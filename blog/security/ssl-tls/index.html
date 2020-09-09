@@ -6,14 +6,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="详解安全传输协议SSL TLS">
 <meta itemprop="description" content="tls 传输层安全协议 包含两部分：
  握手协议（handshake protocol）： 客户端和服务端进行协商，确定一组用于数据传输加密的密钥串 记录协议（record protocol）： 通过握手协议确定的密钥串进行数据加密传输  握手和密钥协商过程FullHandshake 客户端ClientHello 客户端发起请求，以明文传输请求信息包含：
- version： 支持最高TLS协议版本, 从低到高：SSLV1、SSLV3、TLSV1、TLSV1.1、TLSV1.2 cipher suites： 客户端支持的加密套件列表：  Kx = Key Exchange 密钥协商算法Au = Authentication 身份认证算法Enc = Encrypt 加密算法Mac = Message Authentication Code 信息摘要算法compression methods：压缩算法列表，用于后续信息压缩传输 random_C：客户端随机数，用于后续密钥生成 extensions： 扩展字段，支持协议与算法相关参数及辅助信息 session id： 会话id，后续连接到同一台服务器，可以避免完全握手；  如果客户端时第一次连接服务器，则该字段为空。服务器ServerHello 服务端返回协商的结果信息， 包含：
- version： 选择使用的TLS协议版本 cipher suite： 选择使用的加密套件 compression method： 选择使用的压缩算法 random_S: 服务器随机数 ，用于后续密钥生成 session id： 会话id，  握手成功，服务器会缓存session 参数到tls缓存中， 并生成对应的session id返回该session id 给客户端，客户端将session id存储在浏览器并设置时限后续连接到同一台服务器，则发送session id， 服务器验证后， 使用以前使用过的对称密钥来恢复session问题： 大量客户端连接，会造成巨大的缓存开销；Session Ticket：1.">
+ version： 支持最高TLS协议版本, 从低到高：SSLV1、SSLV3、TLSV1、TLSV1.1、TLSV1.2 cipher suites： 客户端支持的加密套件列表： Kx = Key Exchange 密钥协商算法Au = Authentication 身份认证算法Enc = Encrypt 加密算法Mac = Message Authentication Code 信息摘要算法 compression methods：压缩算法列表，用于后续信息压缩传输 random_C：客户端随机数，用于后续密钥生成 extensions： 扩展字段，支持协议与算法相关参数及辅助信息 session id： 会话id，后续连接到同一台服务器，可以避免完全握手；  如果客户端时第一次连接服务器，则该字段为空。
+   服务器ServerHello 服务端返回协商的结果信息， 包含：
+ version： 选择使用的TLS协议版本 cipher suite： 选择使用的加密套件 compression method： 选择使用的压缩算法 random_S: 服务器随机数 ，用于后续密钥生成 session id： 会话id  握手成功，服务器会缓存session 参数到tls缓存中， 并生成对应的session id 返回该session id 给客户端，客户端将session id存储在浏览器并设置时限 后续连接到同一台服务器，则发送session id， 服务器验证后， 使用以前使用过的对称密钥来恢复session">
 <meta itemprop="datePublished" content="2015-07-03T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2015-07-03T00:00:00+00:00" />
-<meta itemprop="wordCount" content="170">
+<meta itemprop="wordCount" content="167">
 
 
 
@@ -21,8 +24,9 @@
 <meta property="og:title" content="详解安全传输协议SSL TLS" />
 <meta property="og:description" content="tls 传输层安全协议 包含两部分：
  握手协议（handshake protocol）： 客户端和服务端进行协商，确定一组用于数据传输加密的密钥串 记录协议（record protocol）： 通过握手协议确定的密钥串进行数据加密传输  握手和密钥协商过程FullHandshake 客户端ClientHello 客户端发起请求，以明文传输请求信息包含：
- version： 支持最高TLS协议版本, 从低到高：SSLV1、SSLV3、TLSV1、TLSV1.1、TLSV1.2 cipher suites： 客户端支持的加密套件列表：  Kx = Key Exchange 密钥协商算法Au = Authentication 身份认证算法Enc = Encrypt 加密算法Mac = Message Authentication Code 信息摘要算法compression methods：压缩算法列表，用于后续信息压缩传输 random_C：客户端随机数，用于后续密钥生成 extensions： 扩展字段，支持协议与算法相关参数及辅助信息 session id： 会话id，后续连接到同一台服务器，可以避免完全握手；  如果客户端时第一次连接服务器，则该字段为空。服务器ServerHello 服务端返回协商的结果信息， 包含：
- version： 选择使用的TLS协议版本 cipher suite： 选择使用的加密套件 compression method： 选择使用的压缩算法 random_S: 服务器随机数 ，用于后续密钥生成 session id： 会话id，  握手成功，服务器会缓存session 参数到tls缓存中， 并生成对应的session id返回该session id 给客户端，客户端将session id存储在浏览器并设置时限后续连接到同一台服务器，则发送session id， 服务器验证后， 使用以前使用过的对称密钥来恢复session问题： 大量客户端连接，会造成巨大的缓存开销；Session Ticket：1." />
+ version： 支持最高TLS协议版本, 从低到高：SSLV1、SSLV3、TLSV1、TLSV1.1、TLSV1.2 cipher suites： 客户端支持的加密套件列表： Kx = Key Exchange 密钥协商算法Au = Authentication 身份认证算法Enc = Encrypt 加密算法Mac = Message Authentication Code 信息摘要算法 compression methods：压缩算法列表，用于后续信息压缩传输 random_C：客户端随机数，用于后续密钥生成 extensions： 扩展字段，支持协议与算法相关参数及辅助信息 session id： 会话id，后续连接到同一台服务器，可以避免完全握手；  如果客户端时第一次连接服务器，则该字段为空。
+   服务器ServerHello 服务端返回协商的结果信息， 包含：
+ version： 选择使用的TLS协议版本 cipher suite： 选择使用的加密套件 compression method： 选择使用的压缩算法 random_S: 服务器随机数 ，用于后续密钥生成 session id： 会话id  握手成功，服务器会缓存session 参数到tls缓存中， 并生成对应的session id 返回该session id 给客户端，客户端将session id存储在浏览器并设置时限 后续连接到同一台服务器，则发送session id， 服务器验证后， 使用以前使用过的对称密钥来恢复session" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://zylhorse.github.io/blog/security/ssl-tls/" />
 <meta property="article:published_time" content="2015-07-03T00:00:00+00:00" />
@@ -31,9 +35,10 @@
 <meta name="twitter:title" content="详解安全传输协议SSL TLS"/>
 <meta name="twitter:description" content="tls 传输层安全协议 包含两部分：
  握手协议（handshake protocol）： 客户端和服务端进行协商，确定一组用于数据传输加密的密钥串 记录协议（record protocol）： 通过握手协议确定的密钥串进行数据加密传输  握手和密钥协商过程FullHandshake 客户端ClientHello 客户端发起请求，以明文传输请求信息包含：
- version： 支持最高TLS协议版本, 从低到高：SSLV1、SSLV3、TLSV1、TLSV1.1、TLSV1.2 cipher suites： 客户端支持的加密套件列表：  Kx = Key Exchange 密钥协商算法Au = Authentication 身份认证算法Enc = Encrypt 加密算法Mac = Message Authentication Code 信息摘要算法compression methods：压缩算法列表，用于后续信息压缩传输 random_C：客户端随机数，用于后续密钥生成 extensions： 扩展字段，支持协议与算法相关参数及辅助信息 session id： 会话id，后续连接到同一台服务器，可以避免完全握手；  如果客户端时第一次连接服务器，则该字段为空。服务器ServerHello 服务端返回协商的结果信息， 包含：
- version： 选择使用的TLS协议版本 cipher suite： 选择使用的加密套件 compression method： 选择使用的压缩算法 random_S: 服务器随机数 ，用于后续密钥生成 session id： 会话id，  握手成功，服务器会缓存session 参数到tls缓存中， 并生成对应的session id返回该session id 给客户端，客户端将session id存储在浏览器并设置时限后续连接到同一台服务器，则发送session id， 服务器验证后， 使用以前使用过的对称密钥来恢复session问题： 大量客户端连接，会造成巨大的缓存开销；Session Ticket：1."/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+ version： 支持最高TLS协议版本, 从低到高：SSLV1、SSLV3、TLSV1、TLSV1.1、TLSV1.2 cipher suites： 客户端支持的加密套件列表： Kx = Key Exchange 密钥协商算法Au = Authentication 身份认证算法Enc = Encrypt 加密算法Mac = Message Authentication Code 信息摘要算法 compression methods：压缩算法列表，用于后续信息压缩传输 random_C：客户端随机数，用于后续密钥生成 extensions： 扩展字段，支持协议与算法相关参数及辅助信息 session id： 会话id，后续连接到同一台服务器，可以避免完全握手；  如果客户端时第一次连接服务器，则该字段为空。
+   服务器ServerHello 服务端返回协商的结果信息， 包含：
+ version： 选择使用的TLS协议版本 cipher suite： 选择使用的加密套件 compression method： 选择使用的压缩算法 random_S: 服务器随机数 ，用于后续密钥生成 session id： 会话id  握手成功，服务器会缓存session 参数到tls缓存中， 并生成对应的session id 返回该session id 给客户端，客户端将session id存储在浏览器并设置时限 后续连接到同一台服务器，则发送session id， 服务器验证后， 使用以前使用过的对称密钥来恢复session"/>
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -90,12 +95,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -185,45 +190,49 @@
       <h2 id="tls-传输层安全协议">tls 传输层安全协议</h2>
 <p>包含两部分：</p>
 <ol>
-<li>握手协议（handshake protocol）： 客户端和服务端进行协商，确定一组用于数据传输加密的密钥串</li>
-<li>记录协议（record protocol）： 通过握手协议确定的密钥串进行数据加密传输</li>
+<li>握手协议（<code>handshake protocol</code>）： 客户端和服务端进行协商，确定一组用于数据传输加密的密钥串</li>
+<li>记录协议（<code>record protocol</code>）： 通过握手协议确定的密钥串进行数据加密传输</li>
 </ol>
 <h2 id="握手和密钥协商过程fullhandshake">握手和密钥协商过程FullHandshake</h2>
 <h3 id="客户端clienthello">客户端ClientHello</h3>
 <p>客户端发起请求，以明文传输请求信息包含：</p>
 <ol>
-<li>version： 支持最高TLS协议版本, 从低到高：SSLV1、SSLV3、TLSV1、TLSV1.1、TLSV1.2</li>
-<li>cipher suites： 客户端支持的加密套件列表：</li>
-</ol>
+<li><code>version</code>： 支持最高<code>TLS</code>协议版本, 从低到高：<code>SSLV1</code>、<code>SSLV3</code>、<code>TLSV1</code>、<code>TLSV1.1</code>、<code>TLSV1.2</code></li>
+<li><code>cipher suites</code>： 客户端支持的加密套件列表：
 <pre><code>Kx = Key Exchange 密钥协商算法
 Au = Authentication 身份认证算法
 Enc = Encrypt 加密算法
 Mac = Message Authentication Code 信息摘要算法
-</code></pre><ol start="3">
-<li>compression methods：压缩算法列表，用于后续信息压缩传输</li>
-<li>random_C：客户端随机数，用于后续密钥生成</li>
-<li>extensions： 扩展字段，支持协议与算法相关参数及辅助信息</li>
-<li>session id： 会话id，后续连接到同一台服务器，可以避免完全握手；</li>
+</code></pre></li>
+<li><code>compression methods</code>：压缩算法列表，用于后续信息压缩传输</li>
+<li><code>random_C</code>：客户端随机数，用于后续密钥生成</li>
+<li><code>extensions</code>： 扩展字段，支持协议与算法相关参数及辅助信息</li>
+<li><code>session id</code>： 会话id，后续连接到同一台服务器，可以避免完全握手；
+<blockquote>
+<p>如果客户端时第一次连接服务器，则该字段为空。</p>
+</blockquote>
+</li>
 </ol>
-<pre><code>如果客户端时第一次连接服务器，则该字段为空。
-</code></pre><h3 id="服务器serverhello">服务器ServerHello</h3>
+<h3 id="服务器serverhello">服务器ServerHello</h3>
 <p>服务端返回协商的结果信息， 包含：</p>
 <ol>
-<li>version： 选择使用的TLS协议版本</li>
-<li>cipher suite： 选择使用的加密套件</li>
-<li>compression method： 选择使用的压缩算法</li>
-<li>random_S: 服务器随机数 ，用于后续密钥生成</li>
-<li>session id： 会话id，</li>
+<li><code>version</code>： 选择使用的<code>TLS</code>协议版本</li>
+<li><code>cipher suite</code>： 选择使用的加密套件</li>
+<li><code>compression method</code>： 选择使用的压缩算法</li>
+<li><code>random_S</code>: 服务器随机数 ，用于后续密钥生成</li>
+<li><code>session id</code>： 会话id</li>
 </ol>
-<pre><code>握手成功，服务器会缓存session 参数到tls缓存中， 并生成对应的session id
-返回该session id 给客户端，客户端将session id存储在浏览器并设置时限
-后续连接到同一台服务器，则发送session id， 服务器验证后， 使用以前使用过的对称密钥来恢复session
-问题： 大量客户端连接，会造成巨大的缓存开销；
-Session Ticket：
-1. 客户端在client hello 中指定是否支持session ticket
-1. 如果客户端支持session ticket， 服务器将创建新的session ticket， 并将Session参数使用私钥进行加密，返回给客户端。
-2. 客户端存储该session ticket
-</code></pre><h3 id="服务器servercertificate">服务器ServerCertificate</h3>
+<p>握手成功，服务器会缓存<code>session</code> 参数到<code>tls</code>缓存中， 并生成对应的<code>session id</code>
+返回该<code>session id</code> 给客户端，客户端将<code>session id</code>存储在浏览器并设置时限
+后续连接到同一台服务器，则发送<code>session id</code>， 服务器验证后， 使用以前使用过的对称密钥来恢复<code>session</code></p>
+<p>问题： 大量客户端连接，会造成巨大的缓存开销；</p>
+<p><code>Session Ticket</code>：</p>
+<ol>
+<li>客户端在<code>client hello</code> 中指定是否支持<code>session ticket</code></li>
+<li>如果客户端支持<code>session ticket</code>， 服务器将创建新的<code>session ticket</code>， 并将<code>Session</code>参数使用私钥进行加密，返回给客户端。</li>
+<li>客户端存储该<code>session ticket</code></li>
+</ol>
+<h3 id="服务器servercertificate">服务器ServerCertificate</h3>
 <ol>
 <li>服务端发送服务器证书给客户端， 用于身份验证和密钥交换</li>
 <li>客户端校验证书合法性： 可信性、是否吊销、有效期、域名</li>
@@ -231,26 +240,26 @@ Session Ticket：
 <h3 id="服务器clientcertificaterequest-可选">服务器ClientCertificateRequest （可选）</h3>
 <p>如果进行双端验证，则服务端会向客户端请求客户端证书</p>
 <h3 id="服务器serverhellodone">服务器ServerHelloDone</h3>
-<p>服务器通知客户端初始协商ServerHello结束</p>
+<p>服务器通知客户端初始协商<code>ServerHello</code>结束</p>
 <h3 id="客户端clientcertificate可选">客户端ClientCertificate（可选）</h3>
 <p>如果选择双端验证， 客户端向服务器端发送客户端证书</p>
 <h3 id="客户端clientkeyexchange">客户端ClientKeyExchange</h3>
 <ol>
-<li>客户端计算PreMaster,并使用证书公钥加密发送给服务器</li>
-<li>客户端根据random_C,random_S,PreMaster计算得到协商密钥（master）</li>
+<li>客户端计算<code>PreMaster</code>,并使用证书公钥加密发送给服务器</li>
+<li>客户端根据<code>random_C</code>,<code>random_S</code>,<code>PreMaster</code>计算得到协商密钥（<code>master</code>）</li>
 </ol>
 <h3 id="客户端certificateverifymessage-可选">客户端CertificateVerifyMessage （可选）</h3>
 <p>如果选择双向验证，客户端使用本地私钥生成数字签名， 并发送给服务器，服务器使用客户端公钥证书进行身份验证</p>
 <h3 id="客户端changecipherspec">客户端ChangeCipherSpec</h3>
-<p>客户端通知服务器后续通信都使用协商密钥（master）和协商算法进行加密通信</p>
+<p>客户端通知服务器后续通信都使用协商密钥（<code>master</code>）和协商算法进行加密通信</p>
 <h3 id="客户端encryptedhandshakemessage">客户端EncryptedHandshakeMessage</h3>
 <p>使用协商密钥和算法加密一段数据， 发送给服务器</p>
 <h3 id="服务器changecipherspec">服务器ChangeCipherSpec</h3>
 <ol>
-<li>服务器接收到PreMaster， 使用私钥进行解密</li>
-<li>服务器根据random_C,random_S,PreMaster计算得到协商密钥（master）</li>
+<li>服务器接收到<code>PreMaster</code>， 使用私钥进行解密</li>
+<li>服务器根据<code>random_C</code>,<code>random_S</code>,<code>PreMaster</code>计算得到协商密钥（<code>master</code>）</li>
 <li>解密客户端发送的加密数据，验证数据和密钥的正确性</li>
-<li>服务器验证通过后， 同样发送ChangeCipherSpec消息，告诉客户端后续通信采用协商的密钥和算法进行加密通信</li>
+<li>服务器验证通过后， 同样发送<code>ChangeCipherSpec</code>消息，告诉客户端后续通信采用协商的密钥和算法进行加密通信</li>
 </ol>
 <h3 id="服务器encrypthandshakemessage">服务器EncryptHandshakeMessage</h3>
 <ol>
@@ -260,23 +269,24 @@ Session Ticket：
 <h2 id="会话缓存握手">会话缓存握手</h2>
 <h3 id="session-id">session id</h3>
 <ol>
-<li>如果客户端和服务器之间曾经建立连接， 服务器会在握手成功后返回Session ID给客户端， 并在服务器缓存对应的通信参数</li>
-<li>如果客户端和服务器再次建立连接， 则ClientHello 会携带Session ID发送给服务器</li>
-<li>服务器收到客户端的Session ID，回去检索TLS缓存， 如果没有检索到或Session过期， 则进行完整握手过程（FullHandshake）</li>
-<li>如果服务器检索到Session缓存， 则发送ChangeCipherSpec和EncryptHandshakeMessage</li>
-<li>如果客户端能偶验证通过服务器的加密数据， 则客户端也发送ChangeCipherSpec和EncryptHandshakeMessage</li>
+<li>如果客户端和服务器之间曾经建立连接， 服务器会在握手成功后返回<code>Session ID</code>给客户端， 并在服务器缓存对应的通信参数</li>
+<li>如果客户端和服务器再次建立连接， 则<code>ClientHello</code> 会携带<code>Session ID</code>发送给服务器</li>
+<li>服务器收到客户端的<code>Session ID</code>，回去检索TLS缓存， 如果没有检索到或Session过期， 则进行完整握手过程（<code>FullHandshake</code>）</li>
+<li>如果服务器检索到<code>Session</code>缓存， 则发送<code>ChangeCipherSpec</code>和<code>EncryptHandshakeMessage</code></li>
+<li>如果客户端能偶验证通过服务器的加密数据， 则客户端也发送<code>ChangeCipherSpec</code>和<code>EncryptHandshakeMessage</code></li>
 <li>服务器验证客户端的加密数据， 通过则握手成功</li>
 </ol>
 <h3 id="session-ticket">session ticket</h3>
 <ol>
-<li>如果客户端和服务器之间曾经建立连接， 服务器会在握手成功后返回Session Ticket给客户端， 并在客户端保存</li>
-<li>如果客户端和服务器再次建立连接， 则ClientHello 会携带Session Ticket发送给服务器</li>
-<li>服务器收到客户端的Session Ticket，并进行解密， 如果解密失败则进行完整握手过程（FullHandshake）</li>
-<li>如果服务器解密成功， 则发送ChangeCipherSpec和EncryptHandshakeMessage</li>
-<li>如果客户端能偶验证通过服务器的加密数据， 则客户端也发送ChangeCipherSpec和EncryptHandshakeMessage</li>
+<li>如果客户端和服务器之间曾经建立连接， 服务器会在握手成功后返回<code>Session Ticket</code>给客户端， 并在客户端保存</li>
+<li>如果客户端和服务器再次建立连接， 则<code>ClientHello</code> 会携带<code>Session Ticket</code>发送给服务器</li>
+<li>服务器收到客户端的<code>Session Ticket</code>，并进行解密， 如果解密失败则进行完整握手过程（<code>FullHandshake</code>）</li>
+<li>如果服务器解密成功， 则发送<code>ChangeCipherSpec</code>和<code>EncryptHandshakeMessage</code></li>
+<li>如果客户端能偶验证通过服务器的加密数据， 则客户端也发送<code>ChangeCipherSpec</code>和<code>EncryptHandshakeMessage</code></li>
 <li>服务器验证客户端的加密数据， 通过则握手成功</li>
 </ol>
 
+      
     </div>
     <footer>
       <div class="stats">
@@ -303,8 +313,36 @@ Session Ticket：
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tls-传输层安全协议">tls 传输层安全协议</a></li>
+    <li><a href="#握手和密钥协商过程fullhandshake">握手和密钥协商过程FullHandshake</a>
+      <ul>
+        <li><a href="#客户端clienthello">客户端ClientHello</a></li>
+        <li><a href="#服务器serverhello">服务器ServerHello</a></li>
+        <li><a href="#服务器servercertificate">服务器ServerCertificate</a></li>
+        <li><a href="#服务器clientcertificaterequest-可选">服务器ClientCertificateRequest （可选）</a></li>
+        <li><a href="#服务器serverhellodone">服务器ServerHelloDone</a></li>
+        <li><a href="#客户端clientcertificate可选">客户端ClientCertificate（可选）</a></li>
+        <li><a href="#客户端clientkeyexchange">客户端ClientKeyExchange</a></li>
+        <li><a href="#客户端certificateverifymessage-可选">客户端CertificateVerifyMessage （可选）</a></li>
+        <li><a href="#客户端changecipherspec">客户端ChangeCipherSpec</a></li>
+        <li><a href="#客户端encryptedhandshakemessage">客户端EncryptedHandshakeMessage</a></li>
+        <li><a href="#服务器changecipherspec">服务器ChangeCipherSpec</a></li>
+        <li><a href="#服务器encrypthandshakemessage">服务器EncryptHandshakeMessage</a></li>
+      </ul>
+    </li>
+    <li><a href="#会话缓存握手">会话缓存握手</a>
+      <ul>
+        <li><a href="#session-id">session id</a></li>
+        <li><a href="#session-ticket">session ticket</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -314,6 +352,22 @@ Session Ticket：
       <a href="/blog/security/%E7%94%9F%E6%88%90%E8%AF%81%E4%B9%A6/" class="button right"><span>生成自签名SSL证书</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Security]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -331,7 +385,7 @@ Session Ticket：
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -388,6 +442,9 @@ Session Ticket：
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -401,9 +458,6 @@ Session Ticket：
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -423,7 +477,7 @@ Session Ticket：
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

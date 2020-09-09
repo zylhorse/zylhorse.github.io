@@ -46,8 +46,9 @@ www.example.com 为生成服务器证书域名；
       <guid>https://zylhorse.github.io/blog/security/ssl-tls/</guid>
       <description>tls 传输层安全协议 包含两部分：
  握手协议（handshake protocol）： 客户端和服务端进行协商，确定一组用于数据传输加密的密钥串 记录协议（record protocol）： 通过握手协议确定的密钥串进行数据加密传输  握手和密钥协商过程FullHandshake 客户端ClientHello 客户端发起请求，以明文传输请求信息包含：
- version： 支持最高TLS协议版本, 从低到高：SSLV1、SSLV3、TLSV1、TLSV1.1、TLSV1.2 cipher suites： 客户端支持的加密套件列表：  Kx = Key Exchange 密钥协商算法Au = Authentication 身份认证算法Enc = Encrypt 加密算法Mac = Message Authentication Code 信息摘要算法compression methods：压缩算法列表，用于后续信息压缩传输 random_C：客户端随机数，用于后续密钥生成 extensions： 扩展字段，支持协议与算法相关参数及辅助信息 session id： 会话id，后续连接到同一台服务器，可以避免完全握手；  如果客户端时第一次连接服务器，则该字段为空。服务器ServerHello 服务端返回协商的结果信息， 包含：
- version： 选择使用的TLS协议版本 cipher suite： 选择使用的加密套件 compression method： 选择使用的压缩算法 random_S: 服务器随机数 ，用于后续密钥生成 session id： 会话id，  握手成功，服务器会缓存session 参数到tls缓存中， 并生成对应的session id返回该session id 给客户端，客户端将session id存储在浏览器并设置时限后续连接到同一台服务器，则发送session id， 服务器验证后， 使用以前使用过的对称密钥来恢复session问题： 大量客户端连接，会造成巨大的缓存开销；Session Ticket：1.</description>
+ version： 支持最高TLS协议版本, 从低到高：SSLV1、SSLV3、TLSV1、TLSV1.1、TLSV1.2 cipher suites： 客户端支持的加密套件列表： Kx = Key Exchange 密钥协商算法Au = Authentication 身份认证算法Enc = Encrypt 加密算法Mac = Message Authentication Code 信息摘要算法 compression methods：压缩算法列表，用于后续信息压缩传输 random_C：客户端随机数，用于后续密钥生成 extensions： 扩展字段，支持协议与算法相关参数及辅助信息 session id： 会话id，后续连接到同一台服务器，可以避免完全握手；  如果客户端时第一次连接服务器，则该字段为空。
+   服务器ServerHello 服务端返回协商的结果信息， 包含：
+ version： 选择使用的TLS协议版本 cipher suite： 选择使用的加密套件 compression method： 选择使用的压缩算法 random_S: 服务器随机数 ，用于后续密钥生成 session id： 会话id  握手成功，服务器会缓存session 参数到tls缓存中， 并生成对应的session id 返回该session id 给客户端，客户端将session id存储在浏览器并设置时限 后续连接到同一台服务器，则发送session id， 服务器验证后， 使用以前使用过的对称密钥来恢复session</description>
     </item>
     
     <item>
@@ -74,7 +75,7 @@ www.example.com 为生成服务器证书域名；
       <pubDate>Wed, 03 Jun 2015 00:00:00 +0000</pubDate>
       
       <guid>https://zylhorse.github.io/blog/security/%E7%94%9F%E6%88%90%E5%85%AC%E7%A7%81%E9%92%A5/</guid>
-      <description>openssl genrsa -out privatekey.pem 1024openssl pkcs8 -topk8 -inform PEM -in privatekey.pem -outform PEM -nocryptopenssl rsa -in privatekey.pem -pubout -out publickey.pem</description>
+      <description>$ openssl genrsa -out privatekey.pem 1024$ openssl pkcs8 -topk8 -inform PEM -in privatekey.pem -outform PEM -nocrypt$ openssl rsa -in privatekey.pem -pubout -out publickey.pem</description>
     </item>
     
   </channel>

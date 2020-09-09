@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Redis怎么减少RRT-Pipeline">
 <meta itemprop="description" content="概述 redis client 与server 的每次通信，都会产生一次RTT（round time trip); 并且多次通信会频繁的进行网络IO；为此pipeline 可以将多条命令请求整合，一次发送；
 问题 1. 应当限制pipeline中命令的大小1.1 在pipeline机制中， client不会去读取缓冲数据， 除非pipeline所有命令执行完成。1.2 当缓冲中被应答数据填满， server端调用write 就会阻塞或失败2. pipeline不能保证命令执行的原子性2.1 如果多个命令在执行时发生异常， 则丢失未执行的命令2.2 因此在使用pipeline时， 要自己保证执行命令的数据安全3. 不能进解决多条命令之间的依赖关系3.1 多条命令村">
@@ -27,7 +29,7 @@
 <meta name="twitter:title" content="Redis怎么减少RRT-Pipeline"/>
 <meta name="twitter:description" content="概述 redis client 与server 的每次通信，都会产生一次RTT（round time trip); 并且多次通信会频繁的进行网络IO；为此pipeline 可以将多条命令请求整合，一次发送；
 问题 1. 应当限制pipeline中命令的大小1.1 在pipeline机制中， client不会去读取缓冲数据， 除非pipeline所有命令执行完成。1.2 当缓冲中被应答数据填满， server端调用write 就会阻塞或失败2. pipeline不能保证命令执行的原子性2.1 如果多个命令在执行时发生异常， 则丢失未执行的命令2.2 因此在使用pipeline时， 要自己保证执行命令的数据安全3. 不能进解决多条命令之间的依赖关系3.1 多条命令村"/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -84,12 +86,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -190,6 +192,7 @@
 3. 不能进解决多条命令之间的依赖关系
 3.1 多条命令村
 </code></pre>
+      
     </div>
     <footer>
       <div class="stats">
@@ -216,8 +219,19 @@
     </footer>
   </article>
   
-    
-
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#概述">概述</a></li>
+        <li><a href="#问题">问题</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
   
   <div class="pagination">
     
@@ -227,6 +241,22 @@
       <a href="/blog/cache/redis/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="button right"><span>Redis有没有数据库的概念</span></a>
     
   </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=[Cache]
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+  
 
       </main>
       <section id="site-sidebar">
@@ -244,7 +274,7 @@
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -301,6 +331,9 @@
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -314,9 +347,6 @@
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -336,7 +366,7 @@
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>

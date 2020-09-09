@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hugo on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/hugo/</link>
+    <description>Recent content in Hugo on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 07 Jul 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://zylhorse.github.io/categories/hugo/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hugo使用手册</title>
+      <link>https://zylhorse.github.io/blog/hugo/hugo/</link>
+      <pubDate>Sat, 07 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/hugo/hugo/</guid>
+      <description>bind ip 使本地可被其他机器访问： hugo --bind x.x.x.x
+ x.x.x.x 可以是0.0.0.0 也可以是本机ip
+ 添加文章引用 Hugo 提供了两种 shortcode 用来在文档中插入引用链接地址： ref 和 relref ，语法如下：
+ relref 插入被引用文档的相对链接地址，而 ref 则插入被引用文档的完整链接地址。 ref 和 relref 的唯一参数是文档路径+锚点组成的字符串，并且文档路径和锚点都是可选的  当参数中只含有文档路径时，会插入被引用文档的链接地址； 当参数中只含有锚点时，会插入当前文档的锚点链接地址； 当参数中二者都存在时，会插入被引用文档的锚点链接地址。     锚点是文档标题，如果标题有空格则将空格替换成中划线-
+ 添加评论系统   注册LeanCloud开发版
+ 创建LeanCloud应用 获取appId和appKey,用于以下配置    配置config.toml
+ # Valine.# You can get your appid and appkey from https://leancloud.cn# more info please open https://valine.js.org[params.valine]enable = trueappId = &amp;quot;appId&amp;quot;appKey = &#39;appKey&#39;notify = false # 邮件通知verify = false # 是否需要验证码avatar = &amp;quot;&amp;quot; # 空字符串默认使用Gravatar头像placeholder = &#39;说点什么吧.</description>
+    </item>
+    
+  </channel>
+</rss>

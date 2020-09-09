@@ -6,17 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
 <meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="zylhorse blog">
 <meta itemprop="description" content="">
 <meta property="og:title" content="zylhorse blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zylhorse.github.io/" />
-<meta property="og:updated_time" content="2019-11-11T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-08-28T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.11eaf4f2e24ab98d02def1d61e625c54a2408fd42c702f31f1dc2389d244e79a.css" integrity="sha256-Eer08uJKuY0C3vHWHmJcVKJAj9QscC8x8dwjidJE55o="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -109,12 +111,12 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <a href="/"><img src="https://zylhorse.github.io/" class="circle" width="100" alt="" /></a>
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
   
     <footer>
@@ -177,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/erlang/%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5/">Erlang类型检查</a></h2>
+      <h2><a href="/blog/erlang/%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF/">Erlang接口技术</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-12-15 00:00:00 &#43;0000 UTC">2015-12-15</time>
+        <time datetime="2016-05-05 00:00:00 &#43;0000 UTC">2016-05-05</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -199,225 +201,127 @@
   <div class="content">
     
     
-    <h1 id="类型检测">类型检测</h1>
-<pre><code>9.3　dialyzer(待补充)</code></pre>
-
-  </div>
-  <footer>
-    <a href="/blog/erlang/%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/erlang/%E7%B1%BB%E5%9E%8B/">Erlang类型表示法</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-12-01 00:00:00 &#43;0000 UTC">2015-12-01</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h1 id="类型">类型</h1>
-<p>Erlang有一种类型表示法，可以用来定义新的数据类型并给代码添加类型注解。类型注解让代码更容易理解和维护，还可以在编译时检测错误。</p>
-<h1 id="指定数据和函数类型">指定数据和函数类型</h1>
-<pre><code>-module(...).
--export([plan_route/2]).
--spec play_route(point(), point()) -&gt; route().
--type direction() :: north | south | east | west.
--type point()     :: {integer(), integer()}.
--type route()     :: [{go,&hellip;</code></pre>
-  </div>
-  <footer>
-    <a href="/blog/erlang/%E7%B1%BB%E5%9E%8B/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/erlang/%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B%E6%9C%AA%E5%AE%8C/">Erlang套接字编程</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-11-11 00:00:00 &#43;0000 UTC">2015-11-11</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="客户端">客户端</h2>
-<ul>
-<li>gen_tcp:connect(Host, Port, [Options]) -&gt; {ok, Socket} | {error, Reason}</li>
-</ul>
-<pre><code>与指定域名、端口号的服务器建立连接。
-</code></pre><ul>
-<li>
-<p>gen_tcp: send(Socket, Msg) -&gt; ok | {error, Reason}<br>
-向Socket发送消息（二进制字节流）</p>
-</li>
-<li>
-<p>接受服务器传递消息</p>
-</li>
-</ul>
-<pre><code>receive
-    {tcp,Socket, Bin} -&gt; 
-        ...;
-    {tcp_closed, Socket} -&gt;
-        ...
-end.&hellip;</code></pre>
-  </div>
-  <footer>
-    <a href="/blog/erlang/%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B%E6%9C%AA%E5%AE%8C/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/cache/redis/%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/">Redis安装和配置</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-11-06 00:00:00 &#43;0000 UTC">2015-11-06</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="安全">安全</h2>
-<pre><code>语法： 
-    config get requirepass
-    config set requirepass password
-    auth password
-</code></pre><h2 id="客户端连接">客户端连接</h2>
-<pre><code>client list // redis 客户端列表
-client setname // 设置客户端连接名
-client getname // 获取客户端连接名
-client pause // 挂起客户端
-client kill // 关闭客户端
-</code></pre><h2 id="外网访问">外网访问</h2>
+    <h1 id="接口技术">接口技术</h1>
+<p>可以多种方式建立外部语言程序与Erlang之间的接口。</p>
 <ol>
-<li>注释 redis.conf</li>
-</ol>
-<pre><code># bind 127.0.0.1
-</code></pre><ol start="2">
-<li>
-<p>添加requirepass</p>
-</li>
-<li>
-<p>版本大于3.2 还需要取消保护&hellip;</p></li></ol>
+<li>让程序以外部操作系统进程的方式在erlang虚拟机以外运行。这是一种安全的方式，即使外部程序代码有问题，也不会让erlang程序崩&hellip;</li></ol>
   </div>
   <footer>
-    <a href="/blog/cache/redis/%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/" class="button big">阅读全文</a>
+    <a href="/blog/erlang/%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/web/%E9%98%B2%E6%AD%A2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/">防止并发请求重复提交</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-04-23 00:00:00 &#43;0000 UTC">2016-04-23</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h4 id="方案">方案</h4>
+<ol>
+<li>客户端为每个订单生成deduplicate key，并在前端缓存商品信息及dedupkey 列表</li>
+<li>提交订单时，传递dedup key 和订单信息， 客户端则一直等待该订单处理结果；</li>
+<li>服务端接收&hellip;</li></ol>
+  </div>
+  <footer>
+    <a href="/blog/web/%E9%98%B2%E6%AD%A2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/web/">Web</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/cache/redis/%E9%97%AE%E9%A2%98/">Redis使用遇到的问题</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-04-10 00:00:00 &#43;0000 UTC">2016-04-10</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    
+  </div>
+  <footer>
+    <a href="/blog/cache/redis/%E9%97%AE%E9%A2%98/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -447,14 +351,14 @@ client kill // 关闭客户端
   <header>
   <div class="title">
     
-      <h2><a href="/blog/erlang/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95eunit/">Erlang单元测试</a></h2>
+      <h2><a href="/blog/web/%E9%97%AE%E9%A2%98/">记录web开发遇到的问题和详细解决方案</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-10-22 00:00:00 &#43;0000 UTC">2015-10-22</time>
+        <time datetime="2016-04-09 00:00:00 &#43;0000 UTC">2016-04-09</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -469,18 +373,71 @@ client kill // 关闭客户端
   <div class="content">
     
     
-    <h1 id="概述">概述</h1>
-<p>eunit是erlang的测试框架。
-eunit使用了很多预处理宏，这些宏被设计成非入侵式的，不会与现有代码冲突。给模块添加eunit的测试集，一般不需要修改现有代码。测试模块导出函数的测试，可以放在完全独立的模块中，避免冲突。</p>
-<h1 id="单元测试">单元测试</h1>
-<p>单元测试是指对程序相对独立的单元进行测试。一个单元可以是一个函数，一个模块，甚至是完整的应用程序。<br>
-为了测试一个单元，指定测试用例，并搭建测试需要的最基本环境。运行测试集并收集结果，为了能够再次测试需要进行必要的清理工作。<br>
-单元测试框架就是为了帮助单元测试过程的每个阶段，使单元测试更容易编写，容易运行，容易检查测试错误。</p>
-<h2 id="单元测试优点">单元测试优点</h2>
-<h3 id="减少改变程序的风险">减少改变程序的风&hellip;</h3>
+    <h2 id="中文名下载乱码">中文名下载乱码</h2>
+<p>对文件名进行UTF-8编码</p>
+<h2 id="http文件下载">http文件下载</h2>
+<p>添加报文头: <code>&quot;content-disposition&quot;,&hellip;</code></p>
   </div>
   <footer>
-    <a href="/blog/erlang/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95eunit/" class="button big">阅读全文</a>
+    <a href="/blog/web/%E9%97%AE%E9%A2%98/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/web/">Web</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%92%8C%E4%BD%8D%E8%AF%AD%E6%B3%95/">Erlang二进制语法</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-03-21 00:00:00 &#43;0000 UTC">2016-03-21</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h1 id="二进制型binary">二进制型（binary）</h1>
+<ul>
+<li>用一种节省空间的方式来保存大批量的无结构原始数据。</li>
+<li>多数情况二进制型的位数都是8的整数倍，因此对应一个字节串。如果位数不是8的整数倍，我们叫这段数据为位&hellip;</li></ul>
+  </div>
+  <footer>
+    <a href="/blog/erlang/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%92%8C%E4%BD%8D%E8%AF%AD%E6%B3%95/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -493,11 +450,7 @@ eunit使用了很多预处理宏，这些宏被设计成非入侵式的，不会
   
   
     <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
+      <li>None</li>
     </ul>
   
 </div>
@@ -532,7 +485,7 @@ eunit使用了很多预处理宏，这些宏被设计成非入侵式的，不会
           <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
           
         <li>
-          <a href="/categories/browser/">browser<span class="count">1</span></a>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
           
         <li>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
@@ -589,6 +542,9 @@ eunit使用了很多预处理宏，这些宏被设计成非入侵式的，不会
             <a href="/tags/certificate/">certificate<span class="count">4</span></a>
             
           <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -602,9 +558,6 @@ eunit使用了很多预处理宏，这些宏被设计成非入侵式的，不会
             
           <li>
             <a href="/tags/ldap/">ldap<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/lock/">lock<span class="count">3</span></a>
             
           </li>
         </ul>
@@ -624,7 +577,7 @@ eunit使用了很多预处理宏，这些宏被设计成非入侵式的，不会
       
       <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
       <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
-      <br/>© 2019 zylhorse
+      <br/>© 2020 zylhorse
       <br>
     由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
   </p>
