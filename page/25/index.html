@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -179,6 +179,238 @@
   <header>
   <div class="title">
     
+      <h2><a href="/blog/cache/redis/%E6%95%B0%E6%8D%AE%E5%BA%93/">Redis有没有数据库的概念</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-03-01 00:00:00 &#43;0000 UTC">2016-03-01</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="概述">概述</h2>
+<ol>
+<li>redis单机支持16个数据库， 每个数据库的数据是隔离的不能共享；redis cluster 是没有数据库概念的</li>
+<li>redis 之所以分这么多数据库， 也是为了区分业务， 不同业务存放在不同的&hellip;</li></ol>
+  </div>
+  <footer>
+    <a href="/blog/cache/redis/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF/">Erlang并发编程错误</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-02-05 00:00:00 &#43;0000 UTC">2016-02-05</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h1 id="错误处理理念">错误处理理念</h1>
+<ul>
+<li>并发Erlang程序里的错误处理建立在远程检测和处理错误的概念上。我们选择让发生错误的进程崩溃，然后在其它进程里面进行纠错处理。</li>
+<li>在设计容错式的系统时就假设错误会发生，进程会崩溃。因此&hellip;</li></ul>
+  </div>
+  <footer>
+    <a href="/blog/erlang/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">Erlang并发编程</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-02-03 00:00:00 &#43;0000 UTC">2016-02-03</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="概述">概述</h2>
+<p>Erlang的并发是基于进程的。进程是一些独立的小型虚拟机。
+在Erlang里面：</p>
+<ol>
+<li>创建和销毁进程是非常迅速的</li>
+<li>在进程之间发送消息是非常迅速的</li>
+<li>进程在所有操作系统上都具有相同的行为方式</li>
+<li>可以生&hellip;</li></ol>
+  </div>
+  <footer>
+    <a href="/blog/erlang/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/ets%E5%92%8Cdets%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/">Erlang大数据存储</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-01-22 00:00:00 &#43;0000 UTC">2016-01-22</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h1 id="概述">概述</h1>
+<p>ets和dets是Erlang用于高效存储大量Erlang数据条目的两个系统模块。提供大型的&quot;键-值&quot;搜索表。</p>
+<h2 id="etserlang-term-storage">ETS(Erlang Term Storage)</h2>
+<p>ETS驻留在&hellip;</p>
+  </div>
+  <footer>
+    <a href="/blog/erlang/ets%E5%92%8Cdets%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      <li>None</li>
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
       <h2><a href="/blog/cache/redis/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">Redis基本数据类型</a></h2>
     
     
@@ -236,239 +468,6 @@
 </article>
 
       
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/erlang/%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5/">Erlang类型检查</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-12-15 00:00:00 &#43;0000 UTC">2015-12-15</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h1 id="类型检测">类型检测</h1>
-<pre><code>9.3　dialyzer(待补充)</code></pre>
-
-  </div>
-  <footer>
-    <a href="/blog/erlang/%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/erlang/%E7%B1%BB%E5%9E%8B/">Erlang类型表示法</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-12-01 00:00:00 &#43;0000 UTC">2015-12-01</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="类型">类型</h2>
-<p>Erlang有一种类型表示法，可以用来定义新的数据类型并给代码添加类型注解。类型注解让代码更容易理解和维护，还可以在编译时检测错误。</p>
-<h2 id="指定数据和函数类型">指定数据和函数类型</h2>
-<pre><code>-module(...).&hellip;</code></pre>
-  </div>
-  <footer>
-    <a href="/blog/erlang/%E7%B1%BB%E5%9E%8B/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/erlang/%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B%E6%9C%AA%E5%AE%8C/">Erlang套接字编程</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-11-11 00:00:00 &#43;0000 UTC">2015-11-11</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="客户端">客户端</h2>
-<ul>
-<li>gen_tcp:connect(Host, Port, [Options]) -&gt; {ok, Socket} | {error, Reason}</li>
-</ul>
-<pre><code>与指定域名、端口号的服务器建立连接。&hellip;</code></pre>
-  </div>
-  <footer>
-    <a href="/blog/erlang/%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B%E6%9C%AA%E5%AE%8C/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/cache/redis/%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/">Redis安装和配置</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-11-06 00:00:00 &#43;0000 UTC">2015-11-06</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="安全">安全</h2>
-<pre><code>语法： 
-    config get requirepass
-    config set requirepass password
-    auth password&hellip;</code></pre>
-  </div>
-  <footer>
-    <a href="/blog/cache/redis/%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
       <div class="pagination">
           
               <a href="/page/24/" class="button left"><span>上页</span></a>
@@ -501,6 +500,9 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -517,9 +519,6 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

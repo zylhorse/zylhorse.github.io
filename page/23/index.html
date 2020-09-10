@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -179,6 +179,255 @@
   <header>
   <div class="title">
     
+      <h2><a href="/blog/cache/redis/key%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/">Redis中key的命名规范</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-07-07 00:00:00 &#43;0000 UTC">2016-07-07</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <ol>
+<li>建议全部大写</li>
+<li>key不能太长，太长占用资源，可读性差</li>
+<li>key根据命名空间使用： 分开； 命名空间示例： 项目名：表名：字段名：字段id</li>
+</ol>
+
+  </div>
+  <footer>
+    <a href="/blog/cache/redis/key%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/cache/redis/%E6%8C%81%E4%B9%85%E5%8C%96/">Redis持久化有哪些方式</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-06-10 00:00:00 &#43;0000 UTC">2016-06-10</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="持久化">持久化</h2>
+<ul>
+<li>
+<p>RDB:</p>
+<ul>
+<li>redis 会fork一个子进程，将内存数据写磁盘；写完临时文件后， 将旧的rdb文件替换； 实现copy-on-write；</li>
+<li>以快照的形式将内存中数据备份到dump.rdb文&hellip;</li></ul></li></ul>
+  </div>
+  <footer>
+    <a href="/blog/cache/redis/%E6%8C%81%E4%B9%85%E5%8C%96/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/cache/redis/redis/">Redis的基本常识和memcache对比</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-06-02 00:00:00 &#43;0000 UTC">2016-06-02</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="redis">redis</h2>
+<ol>
+<li>redis 使用c语言编写的高性能键值对内存数据库；</li>
+<li>读速度： 110000/s; 写速度： 81000/s</li>
+<li>单进程单线程， 是线程安全的；</li>
+<li>采用多路复用机制处理请求；</li>
+<li>有5种数据结&hellip;</li></ol>
+  </div>
+  <footer>
+    <a href="/blog/cache/redis/redis/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%96%E7%A8%8B/">Erlang分布式编程</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-05-17 00:00:00 &#43;0000 UTC">2016-05-17</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h1 id="分布式编程">分布式编程</h1>
+<h2 id="分布式编程需求">分布式编程需求</h2>
+<ol>
+<li>性能</li>
+</ol>
+<blockquote>
+<p>通过安排程序的不同部分在不同的机器上并行运行，让程序跑的更快。</p>
+</blockquote>
+<ol start="2">
+<li>可靠性</li>
+</ol>
+<blockquote>
+<p>通过让系统运行到数台机器上来实现容错系统，如果一台机器故障，可以在另一台机器上继&hellip;</p></blockquote>
+  </div>
+  <footer>
+    <a href="/blog/erlang/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
       <h2><a href="/blog/erlang/%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF/">Erlang接口技术</a></h2>
     
     
@@ -233,232 +482,6 @@
 </article>
 
       
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/web/%E9%98%B2%E6%AD%A2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/">防止并发请求重复提交</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-04-23 00:00:00 &#43;0000 UTC">2016-04-23</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h4 id="方案">方案</h4>
-<ol>
-<li>客户端为每个订单生成deduplicate key，并在前端缓存商品信息及dedupkey 列表</li>
-<li>提交订单时，传递dedup key 和订单信息， 客户端则一直等待该订单处理结果；</li>
-<li>服务端接收&hellip;</li></ol>
-  </div>
-  <footer>
-    <a href="/blog/web/%E9%98%B2%E6%AD%A2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/web/">Web</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/cache/redis/%E9%97%AE%E9%A2%98/">Redis使用遇到的问题</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-04-10 00:00:00 &#43;0000 UTC">2016-04-10</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    
-  </div>
-  <footer>
-    <a href="/blog/cache/redis/%E9%97%AE%E9%A2%98/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/web/%E9%97%AE%E9%A2%98/">记录web开发遇到的问题和详细解决方案</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-04-09 00:00:00 &#43;0000 UTC">2016-04-09</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="中文名下载乱码">中文名下载乱码</h2>
-<p>对文件名进行UTF-8编码</p>
-<h2 id="http文件下载">http文件下载</h2>
-<p>添加报文头: <code>&quot;content-disposition&quot;,&hellip;</code></p>
-  </div>
-  <footer>
-    <a href="/blog/web/%E9%97%AE%E9%A2%98/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/web/">Web</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/erlang/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%92%8C%E4%BD%8D%E8%AF%AD%E6%B3%95/">Erlang二进制语法</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-03-21 00:00:00 &#43;0000 UTC">2016-03-21</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h1 id="二进制型binary">二进制型（binary）</h1>
-<ul>
-<li>用一种节省空间的方式来保存大批量的无结构原始数据。</li>
-<li>多数情况二进制型的位数都是8的整数倍，因此对应一个字节串。如果位数不是8的整数倍，我们叫这段数据为位&hellip;</li></ul>
-  </div>
-  <footer>
-    <a href="/blog/erlang/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%92%8C%E4%BD%8D%E8%AF%AD%E6%B3%95/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      <li>None</li>
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
       <div class="pagination">
           
               <a href="/page/22/" class="button left"><span>上页</span></a>
@@ -491,6 +514,9 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -507,9 +533,6 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

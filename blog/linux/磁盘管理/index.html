@@ -38,7 +38,7 @@
  显示当前的硬盘及所属分区的情况。 系统提示：DIsk /dev/sdb doesn&rsquo;t contain a valid partition table。 如图所示    对硬盘进行分区。在终端窗口中输入如下命令： $ sudo fdisk /dev/sdb
  在Command (m for help)提示符后面输入m显示一个帮助菜单， 如图所示。 在Command (m for help)提示符后面输入n，执行 add a new partition指令给硬盘增加一个新分区。 出现Command action时，输入e，指定分区为扩展分区（extended）。 出现Partition number(1-4)时，输入１表示只分一个区。 后续指定起启柱面（cylinder）号完成分区, 如图所示。    在Command (m for help)提示符后面输入p，显示分区表。
  系统提示如图所示：  Device Boot Start End Blocks Id System/dev/sdb1 1 26108 209712478&#43; 5 Extended  在Command (m for help)提示符后面输入w，保存分区表。"/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -333,16 +333,25 @@ resize2fs -p /dev/mapper/ubuntu--vg-ubuntu--lv
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Linux]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Linux"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -369,6 +378,9 @@ resize2fs -p /dev/mapper/ubuntu--vg-ubuntu--lv
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -385,9 +397,6 @@ resize2fs -p /dev/mapper/ubuntu--vg-ubuntu--lv
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

@@ -32,7 +32,7 @@ import (_ &quot;net/http/pprof&quot;)http.ListenAndServe(lisAddr, nil)堆内
 <meta name="twitter:description" content="Profiling Profiling分析Go程序的复杂性和成本，例如内存占用和函数调用，来确定Go程序的开销。
 Tracing 使用： go tool pprof -http=:port http://localhost:port/debug/pprof/heap
 import (_ &quot;net/http/pprof&quot;)http.ListenAndServe(lisAddr, nil)堆内存和GC Alloc uint64 //golang语言框架堆空间分配的字节数TotalAlloc uint64 //从服务开始运行至今分配器为分配的堆空间总 和，只有增加，释放的时候不减少Sys uint64 //服务现在系统使用的内存Lookups uint64 //被runtime监视的指针数Mallocs uint64 //服务malloc heap objects的次数Frees uint64 //服务回收的heap objects的次数HeapAlloc uint64 //服务分配的堆内存字节数HeapSys uint64 //系统分配的作为运行栈的内存HeapIdle uint64 //申请但是未分配的堆内存或者回收了的堆内存（空闲）字节数HeapInuse uint64 //正在使用的堆内存字节数HeapReleased uint64 //返回给OS的堆内存，类似C/C&#43;&#43;中的free。HeapObjects uint64 //堆内存块申请的量StackInuse uint64 //正在使用的栈字节数StackSys uint64 //系统分配的作为运行栈的内存MSpanInuse uint64 //用于测试用的结构体使用的字节数MSpanSys uint64 //系统为测试用的结构体分配的字节数MCacheInuse uint64 //mcache结构体申请的字节数(不会被视为垃圾回收)MCacheSys uint64 //操作系统申请的堆空间用于mcache的字节数BuckHashSys uint64 //用于剖析桶散列表的堆空间GCSys uint64 //垃圾回收标记元信息使用的内存OtherSys uint64 //golang系统架构占用的额外空间NextGC uint64 //垃圾回收器检视的内存大小LastGC uint64 // 垃圾回收器最后一次执行时间。PauseTotalNs uint64 // 垃圾回收或者其他信息收集导致服务暂停的次数。PauseNs [256]uint64 //一个循环队列，记录最近垃圾回收系统中断的时间PauseEnd [256]uint64 //一个循环队列，记录最近垃圾回收系统中断的时间开始点。NumForcedGC uint32 //服务调用runtime."/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -309,16 +309,25 @@ consumed: 213： 申请的系统内存
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Golang]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Golang"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -345,6 +354,9 @@ consumed: 213： 申请的系统内存
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -361,9 +373,6 @@ consumed: 213： 申请的系统内存
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

@@ -35,7 +35,7 @@
  basic sdk sqlplus  链接动态库 #!/bin/bashln /opt/instantclient_11_2/libclntsh.so.11.1 /usr/lib/libclntsh.soln /optinstantclient_11_2/libnnz11.so /usr/lib/libnnz11.soln /opt/instantclient_11_2/libocci.so.11.1 /usr/lib/libocci.soln /opt/instantclient_11_2/libociei.so /usr/lib/libociei.soln /opt/instantclient_11_2/libocijdbc11.so /usr/lib/libocijdbc11.soln /opt/instantclient_11_2/libsqlplusic.so /usr/lib/libsqlplusic.soln /opt/instantclient_11_2/libsqlplus.so /usr/lib/libsqlplus.so添加动态库到系统 echo /opt/instantclient_11_2 &gt;&gt; /etc/ld.so.confldconfig安装 oracle client 下载地址： https://www.oracle.com/database/technologies/112010-win64soft.html
 错误提示  不满足安装条件, oracle 没有配置当前系统的支持   修改stage/cvu/cvu_prereq.xml添加
   &lt;OPERATING_SYSTEM RELEASE=&quot;6.2&quot;&gt;&lt;VERSION VALUE=&quot;3&quot;/&gt;&lt;ARCHITECTURE VALUE=&quot;64-bit&quot;/&gt;&lt;NAME VALUE=&quot;Windows 10&quot;/&gt;&lt;ENV_VAR_LIST&gt;&lt;ENV_VAR NAME=&quot;PATH&quot; MAX_LENGTH=&quot;1023&quot; /&gt;&lt;/ENV_VAR_LIST&gt;&lt;/OPERATING_SYSTEM&gt;安装plsql developer 软件 下载地址： https://www."/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -289,16 +289,25 @@ ldconfig
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Database]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Database"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -325,6 +334,9 @@ ldconfig
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -341,9 +353,6 @@ ldconfig
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

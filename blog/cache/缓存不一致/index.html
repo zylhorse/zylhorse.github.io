@@ -35,7 +35,7 @@
 方案一： 先读db后写缓存  请求来了，先读缓存， 为空则访问数据库， 并将数据放入缓存 更新的时候，先删除缓存，在更新数据库  问题：
  更新时， 先删除缓存，导致db还没有写入成功，另一个请求到来会将旧的db数据 更新到缓存中； 造成只有下次更新数据库时，才会更新缓存；造成缓存和数据库数据不一致；  方案二  请求来了，先读缓存， 为空则访问数据库， 并将数据放入缓存 更新的时候，先更新数据库，在删除缓存  问题：
  更新数据库成功， 而删除缓存失败， 造成脏数据； 引入消息队列和binlog监听， 尝试重复删除；  "/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -262,16 +262,25 @@
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Cache]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Cache"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -298,6 +307,9 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -314,9 +326,6 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

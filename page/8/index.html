@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -179,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/log-system/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/">日志业务系统架构设计</a></h2>
+      <h2><a href="/blog/elk/elk/">ELK简介及日志收集、服务监控、性能监控</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2018-10-27 00:00:00 &#43;0000 UTC">2018-10-27</time>
+        <time datetime="2018-12-04 00:00:00 &#43;0000 UTC">2018-12-04</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -201,20 +201,16 @@
   <div class="content">
     
     
-    <h2 id="日志业务">日志业务</h2>
-<p>两种日志收集架构</p>
-<ol>
-<li>应用产生日志-&gt; 根据大小/时间 写入文件-&gt; rotation 日志文件 -&gt; 定期查看/定期删除</li>
-<li>应用产生日志-&gt; 传输 -&gt; 过滤/转&hellip;</li></ol>
+    <h2 id="elk-描述">elk 描述</h2>
+<p>elk 架构是指：elastic 公司三个开源的产品： elasticsearch, logstash, kibana</p>
+<p>Elasticsearch是个开源分布式搜索引擎，提供搜集、分析、&hellip;</p>
   </div>
   <footer>
-    <a href="/blog/log-system/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/" class="button big">阅读全文</a>
+    <a href="/blog/elk/elk/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
-        
-          <li><a class="article-terms-link" href="/categories/log-system/">Log System</a></li>
         
           <li><a class="article-terms-link" href="/categories/elk/">ELK</a></li>
         
@@ -240,14 +236,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/golang/golang-%E8%BF%9B%E9%98%B6/">Golang代码开发需要注意的性能优化问题</a></h2>
+      <h2><a href="/blog/log-system/docker%E5%AE%89%E8%A3%85nsqbeat/">Docker部署和配置nsqbeat</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2018-10-10 00:00:00 &#43;0000 UTC">2018-10-10</time>
+        <time datetime="2018-12-03 00:00:00 &#43;0000 UTC">2018-12-03</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -262,20 +258,20 @@
   <div class="content">
     
     
-    <h2 id="优化">优化</h2>
-<ol>
-<li>string bytes 互转，可以使用unitptr</li>
-<li>map 会按需扩张，需要内存拷贝和重新hash。 尽量预设定容量空间；</li>
-<li>defer 会多次函数调用参数复制，缓存等问题。所以除了异常捕获&hellip;</li></ol>
+    <pre><code>
+############################# Nsqbeat ######################################
+
+nsqbeat:
+    # A&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/golang/golang-%E8%BF%9B%E9%98%B6/" class="button big">阅读全文</a>
+    <a href="/blog/log-system/docker%E5%AE%89%E8%A3%85nsqbeat/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+          <li><a class="article-terms-link" href="/categories/log-system/">Log System</a></li>
         
       
     </ul>
@@ -284,7 +280,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/"></a></li>
+          <li><a class="article-terms-link" href="/tags/nsq/">NSQ</a></li>
         
       
     </ul>
@@ -299,14 +295,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/docker/%E9%97%AE%E9%A2%98/">Docker问题集锦</a></h2>
+      <h2><a href="/blog/message-queue/nsq/docker-%E5%AE%89%E8%A3%85nsq/">Docker部署和配置nsq集群</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2018-09-15 00:00:00 &#43;0000 UTC">2018-09-15</time>
+        <time datetime="2018-11-25 00:00:00 &#43;0000 UTC">2018-11-25</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -321,19 +317,21 @@
   <div class="content">
     
     
-    <ul>
-<li>docker 解决 x509: certificate signed by unknown authority
-<pre><code># vim /etc/docker/daemon.json
-{&hellip;</code></pre></li></ul>
+    <h3 id="nsqyml">nsq.yml</h3>
+<pre><code>version: '3'
+services:
+  nsqlookupd:
+    image: nsqio/nsq
+    command: /nsqlookupd&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/docker/%E9%97%AE%E9%A2%98/" class="button big">阅读全文</a>
+    <a href="/blog/message-queue/nsq/docker-%E5%AE%89%E8%A3%85nsq/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/docker/">Docker</a></li>
+          <li><a class="article-terms-link" href="/categories/message-queue/">Message Queue</a></li>
         
       
     </ul>
@@ -342,7 +340,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/"></a></li>
+          <li><a class="article-terms-link" href="/tags/nsq/">NSQ</a></li>
         
       
     </ul>
@@ -357,14 +355,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/docker/docker/">Docker在linux上部署和配置</a></h2>
+      <h2><a href="/blog/message-queue/nsq/nsqd/">NSQ简介</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2018-09-04 00:00:00 &#43;0000 UTC">2018-09-04</time>
+        <time datetime="2018-11-23 00:00:00 &#43;0000 UTC">2018-11-23</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -379,24 +377,19 @@
   <div class="content">
     
     
-    <h1 id="docker">Docker</h1>
-<h2 id="ubuntu安装">Ubuntu安装</h2>
-<p><a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">下载地址</a></p>
-<h2 id="查看容器">查看容器</h2>
-<p><code>$ sudo docker ps -a</code></p>
-<h2 id="查看镜像">查看镜像</h2>
-<p><code>$ sudo docker images</code></p>
-<h2 id="设置容器重启策略">设置容器重启策略</h2>
-<p><code>$ docker run xxx&hellip;</code></p>
+    <h2 id="描述">描述</h2>
+<p>是一个守护进程，负责接收，排队，投递消息给客户端</p>
+<h2 id="参数">参数</h2>
+<p>-lookupd-tcp-address=: nslookup tcp&hellip;</p>
   </div>
   <footer>
-    <a href="/blog/docker/docker/" class="button big">阅读全文</a>
+    <a href="/blog/message-queue/nsq/nsqd/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/docker/">Docker</a></li>
+          <li><a class="article-terms-link" href="/categories/message-queue/">Message Queue</a></li>
         
       
     </ul>
@@ -405,7 +398,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/"></a></li>
+          <li><a class="article-terms-link" href="/tags/nsq/">NSQ</a></li>
         
       
     </ul>
@@ -420,14 +413,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/stories/%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E4%B8%96%E7%95%8C%E8%A7%82/">方法论和世界观</a></h2>
+      <h2><a href="/blog/message-queue/kafka/kafka/">Kafka简介</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2018-08-20 00:00:00 &#43;0000 UTC">2018-08-20</time>
+        <time datetime="2018-11-08 00:00:00 &#43;0000 UTC">2018-11-08</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -442,25 +435,17 @@
   <div class="content">
     
     
-    <h2 id="方法论">方法论</h2>
-<pre><code>是人们认识世界改变世界的的根本方法。
-</code></pre>
-<h2 id="世界观">世界观</h2>
-<pre><code>通俗讲就是”观世界“， 是人们对世界的总体看法和根本观点。
-</code></pre>
-<h1 id="关系">关系</h1>
-<blockquote>
-<p>世界观主要解决世界”是什么“的问题，方法论主要解决”怎么办“的问题。<br>
-&hellip;</p></blockquote>
+    <h1 id="简介">简介</h1>
+
   </div>
   <footer>
-    <a href="/blog/stories/%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E4%B8%96%E7%95%8C%E8%A7%82/" class="button big">阅读全文</a>
+    <a href="/blog/message-queue/kafka/kafka/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/stories/">Stories</a></li>
+          <li><a class="article-terms-link" href="/categories/message-queue/">Message Queue</a></li>
         
       
     </ul>
@@ -469,7 +454,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/"></a></li>
+          <li><a class="article-terms-link" href="/tags/kafka/">Kafka</a></li>
         
       
     </ul>
@@ -512,6 +497,9 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -528,9 +516,6 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

@@ -32,7 +32,7 @@
 <meta name="twitter:description" content="环境准备  手机打开开发人员选项 用数据线将手机连接到主机  调试  chrome进入inspect:地址栏输入chrome://inspect
  点击对应网址的inspect按钮进行调试
   问题  DevTools页面空白或者404 Not Found  由于国内无法访问 https://chrome-devtools-frontend.appspot.com 这里的解决方法： 翻墙    "/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -213,6 +213,8 @@
         
           <li><a class="article-terms-link" href="/categories/browser/">Browser</a></li>
         
+          <li><a class="article-terms-link" href="/categories/chrome/">Chrome</a></li>
+        
       
     </ul>
   
@@ -244,22 +246,31 @@
   <div class="pagination">
     
     
-      <a href="/blog/distribution-system/%E7%86%94%E6%96%AD%E5%92%8C%E9%99%8D%E7%BA%A7/" class="button right"><span>服务治理-服务的熔断和降级</span></a>
+      <a href="/blog/hugo/gitalk/" class="button right"><span>Hugo评论系统-Gitalk</span></a>
     
   </div>
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Browser]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Browser","Chrome"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -286,6 +297,9 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -302,9 +316,6 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

@@ -32,7 +32,7 @@ gops gops: Golang进程管理工具，支持远程调用
 <meta name="twitter:description" content="简介 Go 生态系统提供了一套API和工具来检测程序的逻辑和性能问题。本章总结了可用的工具，并帮助用户在遇到问题时，选择正确的工具。
 gops gops: Golang进程管理工具，支持远程调用
  安装：go get -u github.com/google/gops 项目启动代理： package mainimport (&quot;log&quot;&quot;time&quot;&quot;github.com/google/gops/agent&quot;)func main() {if err := agent.Listen(agent.Options{}); err != nil {log.Fatal(err)}time.Sleep(time.Hour)} agent.Options{} type Options struct {// gops agent 监听地址// 格式： host:portAddr string// 配置文件保存目录// 保存内容： gops pid，filename， port，contentConfigDir string// 设置是否自动清理资源// true: 进程接收到终端信号后，会自动清理// false：进程关闭前用户需要调用 CloseShutdownCleanup bool}   命令行使用：  打印所有Go进程： $ gopspid ppid 进程名 go 版本 关联进程的位置983 980 docc * go1."/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -350,16 +350,25 @@ created by github.com/google/gops/agent.Listen
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Golang]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Golang"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -386,6 +395,9 @@ created by github.com/google/gops/agent.Listen
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -402,9 +414,6 @@ created by github.com/google/gops/agent.Listen
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

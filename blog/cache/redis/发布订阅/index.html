@@ -35,7 +35,7 @@
 语法：subscribe channel1 channel2publish channel messageunsubscribe channel1 channel2pubsub subcommand // eg: pubsub channels 查看订阅channelpsubscribe pattern // 订阅给定模式频道punsubscribe pattern // 退订给定模式频道事件通知（keyspace notification）  keyspace 通知是的客户端可以通过订阅频道或模式，来接收那些以某种方式改动redis数据集的事件； 事件通过redis的订阅发布功能来进行分发； redis的订阅和发布功能采取的是发送即忘（fire and forget）策略， 会导致离线的redis-cli，丢失这部分事件。  事件类型 对每个数据的修改， 键空间都会发送两种不同类型的事件：
  键空间（key-space）通知 键事件（key-event）通知  例如： 当del key命令执行时：1. 键空间频道的订阅者将接收到被执行的事件的名字，在这个例子中，就是 del2. 键事件频道的订阅者将接收到被执行事件的键的名字，在这个例子中，就是 mykey配置 修改 redis.conf 中的notify-keyspace-events， 参数配置如下：
 字符	发送的通知K	键空间通知，所有通知以__keyspace@&lt;db&gt;__为前缀，针对KeyE	键事件通知，所有通知以__keyevent@&lt;db&gt;__为前缀，针对eventg	DEL、EXPIRE、RENAME等类型无关的通用命令的通知$	字符串命令的通知l	列表命令的通知s	集合命令的通知h	哈希命令的通知z	有序集合命令的通知x	过期事件：每当有过期键被删除时发送e	驱逐(evict)事件：每当有键因为maxmemory政策而被删除时发送A	参数g$lshzxe的别名，相当于是All输入的参数中至少要有一个K或E， 否则不管其余的参数是什么， 都不会有任何通知被分发。"/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -284,16 +284,25 @@ A	参数g$lshzxe的别名，相当于是All
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Cache]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Cache"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -320,6 +329,9 @@ A	参数g$lshzxe的别名，相当于是All
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -336,9 +348,6 @@ A	参数g$lshzxe的别名，相当于是All
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

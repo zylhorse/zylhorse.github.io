@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -179,6 +179,258 @@
   <header>
   <div class="title">
     
+      <h2><a href="/blog/mediastream/%E5%BC%80%E6%BA%90%E7%BD%91%E7%AB%99/">流媒体学习-开源网站</a></h2>
+    
+    
+      <p>记录流媒体学习、应用网站</p>
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2018-04-11 00:00:00 &#43;0000 UTC">2018-04-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="golang-webrtc">golang webrtc</h2>
+<p><a href="https://github.com/pion">https://github.com/pion</a></p>
+
+  </div>
+  <footer>
+    <a href="/blog/mediastream/%E5%BC%80%E6%BA%90%E7%BD%91%E7%AB%99/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/mediastream/">MediaStream</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/mediastream/%E8%A7%86%E9%A2%91%E5%83%8F%E7%B4%A0%E6%95%B0%E6%8D%AE/">流媒体学习-视频像素格式</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2018-04-11 00:00:00 &#43;0000 UTC">2018-04-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="视频像素数据">视频像素数据</h2>
+<h3 id="格式">格式</h3>
+<p>数据格式为</p>
+<ol>
+<li>Planar(YUV):分量分块存储；</li>
+<li>Packed(RGB):分量连续村粗。</li>
+</ol>
+<blockquote>
+<p>注：像素的采样位数根据图像不同获取。本文默认采样位数为8bit，所以一个像素采样值&hellip;</p></blockquote>
+  </div>
+  <footer>
+    <a href="/blog/mediastream/%E8%A7%86%E9%A2%91%E5%83%8F%E7%B4%A0%E6%95%B0%E6%8D%AE/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/mediastream/">MediaStream</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/video/">Video</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/mediastream/%E9%9F%B3%E9%A2%91%E9%87%87%E6%A0%B7%E6%95%B0%E6%8D%AE/">流媒体学习-音频采样格式</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2018-04-11 00:00:00 &#43;0000 UTC">2018-04-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h1 id="音频采样数据">音频采样数据</h1>
+<p>保存格式：pcm文件</p>
+<h2 id="格式">格式</h2>
+<ol>
+<li>左声道数据</li>
+<li>右声道数据</li>
+</ol>
+<blockquote>
+<p>注：左声道和右声道数据间隔存储，声道的每个样值大小根据采样格式决定。</p>
+</blockquote>
+<h3 id="增降音量值">增、降音量值</h3>
+<p>将声道的每个样值做加、减法。</p>
+<h3 id="提高速度">提高速度</h3>
+<p>根&hellip;</p>
+  </div>
+  <footer>
+    <a href="/blog/mediastream/%E9%9F%B3%E9%A2%91%E9%87%87%E6%A0%B7%E6%95%B0%E6%8D%AE/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/mediastream/">MediaStream</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/audio/">Audio</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/mediastream/%E5%85%A5%E9%97%A8/">流媒体学习-流媒体名词解释</a></h2>
+    
+    
+      <p>了解流媒体技术常用名称</p>
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2018-04-10 00:00:00 &#43;0000 UTC">2018-04-10</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h1 id="入门">入门</h1>
+<h2 id="封装格式">封装格式</h2>
+<p>将音频、视频打包成一个文件的规范，主要是把视频码流和音频码流按一定格式存储在一个文件中。</p>
+<blockquote>
+<p>mp4,flv,mkv,avi,rmvb,mkv<br>
+不同封装格式差距不大，支持的音视频编码标准&hellip;</p></blockquote>
+  </div>
+  <footer>
+    <a href="/blog/mediastream/%E5%85%A5%E9%97%A8/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/mediastream/">MediaStream</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
       <h2><a href="/blog/data-structure/ringbuffer/">数据结构-RingBuffer</a></h2>
     
     
@@ -230,248 +482,6 @@
 </article>
 
       
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/golang/%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4/">Golang源码阅读-编译指令</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2018-02-05 00:00:00 &#43;0000 UTC">2018-02-05</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="定义">定义</h2>
-<ol>
-<li>告诉编译器可以根据表达式的值或者某个特定的宏来确定编译条件，以决定编译哪些代码，不编译哪些</li>
-<li>如C++ 中的#define #undef #pragma等</li>
-<li>golang中也有编译指令， 它的实现&hellip;</li></ol>
-  </div>
-  <footer>
-    <a href="/blog/golang/%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/golang/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">Golang跨平台之交叉编译</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2018-01-23 00:00:00 &#43;0000 UTC">2018-01-23</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="概述">概述</h2>
-<p>交叉编译： 在一个平台生成另一个平台的可执行代码。</p>
-<h2 id="golang-交叉编译变量">golang 交叉编译变量</h2>
-<ol>
-<li>GOOS:目标系统</li>
-<li>GOARCH:目标架构</li>
-<li>CGO_ENABLED: 开启cgo</li>
-</ol>
-<h2 id="支持的编译平台">支持的编译平台</h2>
-<p>查看命令：&hellip;</p>
-  </div>
-  <footer>
-    <a href="/blog/golang/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/golang/%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%BC%8F/">Golang线程调度模型</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2018-01-11 00:00:00 &#43;0000 UTC">2018-01-11</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="csp模型">CSP模型</h2>
-<ol>
-<li>communicating sequential process: 通讯顺序进程；
-描述多个并发的实体通过共享channel进行通信的并发模型；</li>
-<li>channel是重要对象，不用关注发送消&hellip;</li></ol>
-  </div>
-  <footer>
-    <a href="/blog/golang/%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%BC%8F/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/golang/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">Golang源码阅读-内存管理</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2017-12-26 00:00:00 &#43;0000 UTC">2017-12-26</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h1 id="内存管理">内存管理</h1>
-<h2 id="内存模型">内存模型</h2>
-<p>保证共享内存的可见性、有序性、原子性，内存模型定义了共享内存系统中多线程读写操作的规范。</p>
-<h2 id="happens-before">happens before</h2>
-<ol>
-<li>go中也定义了happens before以及各种发&hellip;</li></ol>
-  </div>
-  <footer>
-    <a href="/blog/golang/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
       <div class="pagination">
           
               <a href="/page/11/" class="button left"><span>上页</span></a>
@@ -504,6 +514,9 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -520,9 +533,6 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

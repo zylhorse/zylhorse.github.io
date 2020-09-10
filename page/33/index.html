@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -179,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/windows/%E6%9C%AC%E5%9C%B0%E6%8A%93%E5%8C%85/">Windows下Wireshark抓包问题</a></h2>
+      <h2><a href="/blog/jmeter/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">Jmeter部署和配置</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-09-03 00:00:00 &#43;0000 UTC">2014-09-03</time>
+        <time datetime="2014-11-11 00:00:00 &#43;0000 UTC">2014-11-11</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -201,12 +201,206 @@
   <div class="content">
     
     
-    <h2 id="windows-本地抓包">windows 本地抓包</h2>
-<p>在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。
-但是<code>wireshark</code>此时是无法抓取到数据包的，需要通过简单的设置才可&hellip;</p>
+    <h2 id="下载">下载</h2>
+<p><a href="http://jmeter.apache.org/download_jmeter.cgi">地址</a></p>
+<h2 id="汉化">汉化</h2>
+<p><code>jmeter.properties =&gt; language=zh_CN</code></p>
+<h2 id="websocket配置">websocket配置</h2>
+<p>下载<code>jar</code>包
+<code>jetty-http</code>
+<code>jetty-io</code>
+<code>jetty-util&hellip;</code></p>
   </div>
   <footer>
-    <a href="/blog/windows/%E6%9C%AC%E5%9C%B0%E6%8A%93%E5%8C%85/" class="button big">阅读全文</a>
+    <a href="/blog/jmeter/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/jmeter/">Jmeter</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/memory/mmap/">mmap实现原理简述及使用场景</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2014-10-10 00:00:00 &#43;0000 UTC">2014-10-10</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            3分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="概念">概念</h2>
+<ul>
+<li><code>mmap</code>是一种文档映射到内存的方法；</li>
+<li>将文件或其他对象映射到进程的内存地址空间；实现文件磁盘地址和进程虚拟地址空间的映射。</li>
+<li>映射后， 进程就可以采用指针的方式读写操作这段内存。而系统会自动回写&hellip;</li></ul>
+  </div>
+  <footer>
+    <a href="/blog/memory/mmap/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/memory/">Memory</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      <li>None</li>
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/concurrence/io/">多类型I/O操作流程</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2014-10-03 00:00:00 &#43;0000 UTC">2014-10-03</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            10分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h3 id="io">I/O</h3>
+<p><code>IO</code>分为两个阶段：</p>
+<ol>
+<li>数据准备阶段</li>
+<li>内核空间复制数据到用户进程缓冲区（用户空间）阶段</li>
+</ol>
+<h4 id="io类型">IO类型</h4>
+<ul>
+<li>
+<p>阻塞IO
+用户线程进行IO读写操作时发生阻塞，等待数据准备就绪</p>
+</li>
+<li>
+<p>非阻塞IO
+用户线程进&hellip;</p></li></ul>
+  </div>
+  <footer>
+    <a href="/blog/concurrence/io/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/concurrence/">Concurrence</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/i/o/">I/O</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/windows/visual-studio/">下载安装Visual Studio历史版本</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2014-09-10 00:00:00 &#43;0000 UTC">2014-09-10</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="下载安装">下载安装</h2>
+<p><a href="https://visualstudio.microsoft.com/zh-hans/vs/older-downloads/">历史版本</a></p>
+<h2 id="2017-激活码">2017 激活码</h2>
+<ul>
+<li>
+<p>professional<br>
+<code>KBJFW-NXHK6-W4WJM-CRMQB-G3CDH</code></p>
+</li>
+<li>
+<p>enterprise&hellip;</p></li></ul>
+  </div>
+  <footer>
+    <a href="/blog/windows/visual-studio/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -236,14 +430,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/linux/ubuntu-shadowsocks/">Ubuntu安装配置shadowsocks</a></h2>
+      <h2><a href="/blog/windows/proxy/">Windows系统配置CMD网络代理</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-07-12 00:00:00 &#43;0000 UTC">2014-07-12</time>
+        <time datetime="2014-09-05 00:00:00 &#43;0000 UTC">2014-09-05</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -258,199 +452,20 @@
   <div class="content">
     
     
-    <h1 id="ubuntu-shadowsocks">ubuntu shadowsocks</h1>
-<p>描述 <code>ubuntu</code> 下 <code>shadowssocks</code> 安装</p>
-<h2 id="安装shadowsocks-libev">安装shadowsocks-libev</h2>
-<pre><code>$ sudo apt-get install&hellip;</code></pre>
+    <h2 id="cmd-设置代理">cmd 设置代理</h2>
+<pre><code>x:&gt;netsh
+netsh&gt;winhttp
+netsh winhttp&gt;
+netsh winhttp&gt;set proxy 127.0.0.1:1080&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/linux/ubuntu-shadowsocks/" class="button big">阅读全文</a>
+    <a href="/blog/windows/proxy/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/vmware/vmware-ubuntu-%E6%89%A9%E5%AE%B9%E7%A3%81%E7%9B%98/">VMWare之Linux系统磁盘扩容</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-07-11 00:00:00 &#43;0000 UTC">2014-07-11</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="在vmware中扩容虚拟机磁盘大小">在VMWARE中扩容虚拟机磁盘大小</h2>
-<p>需要删除快照， 最好先克隆备份；</p>
-<h2 id="查看扩容磁盘">查看扩容磁盘</h2>
-<p>调整完后，重新打开虚拟机，使用<code>fdisk -l</code>查看，可以看到我们刚刚扩容的空间已经可以看到，但没有分区，还不能使用。&hellip;</p>
-  </div>
-  <footer>
-    <a href="/blog/vmware/vmware-ubuntu-%E6%89%A9%E5%AE%B9%E7%A3%81%E7%9B%98/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/vmware/">VMWare</a></li>
-        
-          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/linux/ubuntu-wlan/">Ubuntu安装配置无线网卡</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-06-11 00:00:00 &#43;0000 UTC">2014-06-11</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="查看所有网络">查看所有网络</h2>
-<p><code>$ ifconfig -a</code></p>
-<h2 id="打开无线网卡">打开无线网卡</h2>
-<p><code>$ ifconfig wlan0 up</code></p>
-<h2 id="wlan-工具">wlan 工具</h2>
-<p><code>$ apt-get install wpasupplicant&hellip;</code></p>
-  </div>
-  <footer>
-    <a href="/blog/linux/ubuntu-wlan/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/linux/%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/">记录linux常规问题和解决方案</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-06-08 00:00:00 &#43;0000 UTC">2014-06-08</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="桌面版菜单栏消失">桌面版菜单栏消失</h2>
-<ol>
-<li>查看系统桌面环境
-<ul>
-<li><code>$ pgrep -l &quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&quot;</code></li>
-<li><code>$ ps -A | egrep -i&hellip;</code></li></ul></li></ol>
-  </div>
-  <footer>
-    <a href="/blog/linux/%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
+          <li><a class="article-terms-link" href="/categories/windows/">Windows</a></li>
         
       
     </ul>
@@ -502,6 +517,9 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -518,9 +536,6 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

@@ -29,7 +29,7 @@ Well behaved,ill behaved  well behaved:如果程序执行不出现forbidden beha
 <meta name="twitter:title" content="编程语言分类"/>
 <meta name="twitter:description" content="Program Errors  trapped errors：出错后程序终止执行，如：除0。 untrapped errors：出错后程序继续执行，会出现任意行为，如：缓冲区溢出。  Forbidden Behavious 语言设计时定义一组 Forbidden Behavious， 它必须包含所有的 untrapped errors，但可能包含 trapped errors。
 Well behaved,ill behaved  well behaved:如果程序执行不出现forbidden behavious，则为 well behaved ill behaved： 否则是ill behaved。  动态、静态类型 静态类型 编译时拒绝 ill behaved 的语言是 statically  静态类型分为两种： 显式类型explicitly typed：类型是语言的一部分。隐式类型implicitly typed：类型通过编译推 动态类型 dynamically 运行时拒绝ill behaved的语言是 dynamically typed 类型安全： 是否在运行时进行类型检查，是否类型错误。 "/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -261,16 +261,25 @@ Well behaved,ill behaved  well behaved:如果程序执行不出现forbidden beha
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Software&#32;Programming]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Software Programming"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -297,6 +306,9 @@ Well behaved,ill behaved  well behaved:如果程序执行不出现forbidden beha
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -313,9 +325,6 @@ Well behaved,ill behaved  well behaved:如果程序执行不出现forbidden beha
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

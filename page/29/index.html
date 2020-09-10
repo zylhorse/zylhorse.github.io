@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -179,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A5%E5%BF%97/">MySQL数据库有哪些日志</a></h2>
+      <h2><a href="/blog/security/%E7%94%9F%E6%88%90%E8%AF%81%E4%B9%A6/">生成自签名SSL证书</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-05-15 00:00:00 &#43;0000 UTC">2015-05-15</time>
+        <time datetime="2015-06-22 00:00:00 &#43;0000 UTC">2015-06-22</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -201,22 +201,21 @@
   <div class="content">
     
     
-    <h2 id="事务日志">事务日志</h2>
-<h3 id="undo-log">undo log</h3>
-<p>事务中在操作任何数据之前，首先将原数据备份到<code>undo log</code>。</p>
-<h3 id="redo-log">redo log</h3>
-<p>事务提交前会把新数据备份到<code>redo log</code>并持久化。</p>
-<h2 id="binlog">binlog</h2>
+    <pre><code>#!/bin/sh
 
+# create self-signed server certificate:
+
+SSLDIR=$PWD/ssl
+SERVERDIR=$SSLDIR/server&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A5%E5%BF%97/" class="button big">阅读全文</a>
+    <a href="/blog/security/%E7%94%9F%E6%88%90%E8%AF%81%E4%B9%A6/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
+          <li><a class="article-terms-link" href="/categories/security/">Security</a></li>
         
       
     </ul>
@@ -225,7 +224,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/mysql/">MySQL</a></li>
+          <li><a class="article-terms-link" href="/tags/certificate/">Certificate</a></li>
         
       
     </ul>
@@ -240,14 +239,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/browser/download/">不同平台常用浏览器的离线下载地址</a></h2>
+      <h2><a href="/blog/security/%E7%94%9F%E6%88%90%E5%85%8D%E5%AF%86%E8%AF%81%E4%B9%A6/">生成自签名SSL免密证书</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-04-02 00:00:00 &#43;0000 UTC">2015-04-02</time>
+        <time datetime="2015-06-13 00:00:00 &#43;0000 UTC">2015-06-13</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -262,34 +261,32 @@
   <div class="content">
     
     
-    <ul>
-<li>
-<p><a href="https://www.microsoftedgeinsider.com/en-us/download">edge</a></p>
-</li>
-<li>
-<p><a href="https://www.google.cn/chrome/thank-you.html?platform=mac&standalone=1">chrome-mac</a></p>
-</li>
-<li>
-<p><a href="https://www.google.cn/chrome/thank-you.html?platform=win64&standalone=1">chrome-win64</a></p>
-</li>
-</ul>
+    <pre><code>#!/bin/sh
+  
+# create self-signed server certificate:
 
+SSLDIR=$PWD/ssl
+SERVERDIR=$SSLDIR/server&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/browser/download/" class="button big">阅读全文</a>
+    <a href="/blog/security/%E7%94%9F%E6%88%90%E5%85%8D%E5%AF%86%E8%AF%81%E4%B9%A6/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/browser/">Browser</a></li>
+          <li><a class="article-terms-link" href="/categories/security/">Security</a></li>
         
       
     </ul>
   
   
     <ul class="tags">
-      <li>None</li>
+      
+        
+          <li><a class="article-terms-link" href="/tags/certificate/">Certificate</a></li>
+        
+      
     </ul>
   
 </div>
@@ -302,14 +299,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/software-programming/%E6%B2%99%E7%AE%B1/">Sandboxie（沙箱）网络编程虚拟执行环境</a></h2>
+      <h2><a href="/blog/lua/ide/">lua编译环境搭建和IDE配置</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-03-22 00:00:00 &#43;0000 UTC">2015-03-22</time>
+        <time datetime="2015-06-05 00:00:00 &#43;0000 UTC">2015-06-05</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -324,23 +321,86 @@
   <div class="content">
     
     
-    <h2 id="关键字">关键字</h2>
-<p><code>Sandboxie</code>（沙箱）网络编程虚拟执行环境</p>
-<h2 id="概念">概念</h2>
-<p>沙箱是一个虚拟系统程序， 允许程序在沙箱环境中独立运行， 限制沙箱中程序对宿主系统的修改和影响。</p>
-<h3 id="有哪些限制">有哪些限制</h3>
-<p>在沙箱中运行的程序，</p>
+    <h2 id="lua-编译环境安装">lua 编译环境安装</h2>
+<ul>
+<li>
+<p>linux:</p>
+<pre><code>$ curl -R -O http://www.lua.org/ftp/lua-5.3.0.tar.gz
+$ tar zxf lua-5.3.0.tar.gz&hellip;</code></pre></li></ul>
+  </div>
+  <footer>
+    <a href="/blog/lua/ide/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/lua/">Lua</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/ide/">IDE</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/lua/lua/">Lua语言简介</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-06-04 00:00:00 &#43;0000 UTC">2015-06-04</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="概念">概念</h2>
 <ol>
-<li>不能&hellip;</li></ol>
+<li>轻量小巧的脚本语言</li>
+<li>标准c语言编写，且开源</li>
+<li>目的： 嵌入宿主语言，并提供灵活的扩展和定制</li>
+</ol>
+<h2 id="编程模型">编程模型</h2>
+<ol>
+<li>面向过程编程和函数式编程</li>
+<li>自动内存管理：值提供一种通用类型的表（<code>table</code>)</li>
+<li>内置模式匹&hellip;</li></ol>
   </div>
   <footer>
-    <a href="/blog/software-programming/%E6%B2%99%E7%AE%B1/" class="button big">阅读全文</a>
+    <a href="/blog/lua/lua/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/software-programming/">Software Programming</a></li>
+          <li><a class="article-terms-link" href="/categories/lua/">Lua</a></li>
         
       
     </ul>
@@ -364,14 +424,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%94%81/">MySQL数据库锁</a></h2>
+      <h2><a href="/blog/security/%E7%94%9F%E6%88%90%E5%85%AC%E7%A7%81%E9%92%A5/">生成公私钥</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-03-16 00:00:00 &#43;0000 UTC">2015-03-16</time>
+        <time datetime="2015-06-03 00:00:00 &#43;0000 UTC">2015-06-03</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -386,23 +446,17 @@
   <div class="content">
     
     
-    <h2 id="按操作分">按操作分</h2>
-<ol>
-<li>共享锁（读锁）： 针对同一块数据， 多个读操作可以同时进行且不会互相影响。 只能读不能写</li>
-<li>排他锁（写锁）： 对当前数据的排他锁操作， 没有解锁前， 阻断其他共享锁和排他锁</li>
-</ol>
-<h2 id="按粒度分">按粒度分</h2>
-<ol>
-<li>行&hellip;</li></ol>
+    <pre><code>$ openssl genrsa -out privatekey.pem 1024
+$ openssl pkcs8 -topk8 -inform PEM -in privatekey.pem&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%94%81/" class="button big">阅读全文</a>
+    <a href="/blog/security/%E7%94%9F%E6%88%90%E5%85%AC%E7%A7%81%E9%92%A5/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
+          <li><a class="article-terms-link" href="/categories/security/">Security</a></li>
         
       
     </ul>
@@ -411,67 +465,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/mysql/">MySQL</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1/">MySQL数据库事务原理</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-03-10 00:00:00 &#43;0000 UTC">2015-03-10</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="概念">概念</h2>
-<p>事务处理用于维护数据库操作的完整性， 保证批量操作要么完全执行， 要么完全不执行。</p>
-<h2 id="事务特性acid">事务特性acid</h2>
-<ol>
-<li>原子性（<code>automicity</code>）： 事务中的所有操作， 要么全部完成， 要么不做；</li>
-<li>一致性（&hellip;</li></ol>
-  </div>
-  <footer>
-    <a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/mysql/">MySQL</a></li>
+          <li><a class="article-terms-link" href="/tags/"></a></li>
         
       
     </ul>
@@ -514,6 +508,9 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -530,9 +527,6 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

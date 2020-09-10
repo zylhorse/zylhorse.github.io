@@ -26,7 +26,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Erlang记录和映射组"/>
 <meta name="twitter:description" content="数据容器 元组（tuple）：保存固定数量的元素列表（list）：保存可变数量的元素记录（record）：是元组的另一种形式，通过记录给元组里面的各个元素关联一个名字，映射组（map）：是键-值对关联性的集合。键可以是任意类型的Erlang数据类型。 使用记录和映射组 记录使用一组固定且预定义的关联名称映射组可以动态添加新的关联名称；映射组比元组占用更多存储空间，查找慢。但是映射组比元祖灵活。 何时使用映射组或记录 记录 -record（Name,{%% 以下两个键带默认值key1 = Default，key2 = Default，...%%下一行Key3 = undefinedkey3,...}).记录既可以保存在源代码的文件里，也可以保存在扩展名为.hrl的文件中，然后包含到源文件中。注意：文件包含是唯一确保多个Erlang模块共享相同记录的方式。命令行中读取记录文件 ：rr(&quot;myrecord.hrl&quot;).命令行中删除记录定义：rf(&quot;myrecord.hrl&quot;). 映射组(R17版本及以上引入) #{Key1 op Val1, Key2 op Val2, Key3 op Val3,...}语法与记录相似，只是散列符号（#）后面少了记录名，而op是符号 =&gt;或者:=中的其中之一。键和值是任何有效的Erlang数据类型。表达式 Key =&gt;Val有两种用途，一种是给映射组添加一个全新的 Key=&gt;Val，另一种是更新 映射组里面Key对应的值。表达式 Key := Val ，作用是将现有键Key的值更新为新值Val。如果被更新的映射组中不包含键Key，则提示更新失败。注： 由于本地Erlang版本为R16B, 映射组（map）数据类型在 Erlang R17版本中才引入，因此此处不予学习，练习，待后续跟进。 "/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -259,16 +259,25 @@ key3,
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Erlang]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Erlang"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -295,6 +304,9 @@ key3,
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -311,9 +323,6 @@ key3,
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

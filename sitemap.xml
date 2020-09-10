@@ -23,6 +23,11 @@
   </url>
   
   <url>
+    <loc>https://zylhorse.github.io/categories/chrome/</loc>
+    <lastmod>2020-08-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zylhorse.github.io/blog/browser/chrome-debug/</loc>
     <lastmod>2020-08-28T00:00:00+00:00</lastmod>
   </url>
@@ -35,6 +40,36 @@
   <url>
     <loc>https://zylhorse.github.io/</loc>
     <lastmod>2020-08-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zylhorse.github.io/categories/hugo/</loc>
+    <lastmod>2020-03-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zylhorse.github.io/blog/hugo/gitalk/</loc>
+    <lastmod>2020-03-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zylhorse.github.io/blog/hugo/utteranc/</loc>
+    <lastmod>2020-03-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zylhorse.github.io/blog/hugo/valine/</loc>
+    <lastmod>2020-03-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zylhorse.github.io/blog/hugo/comments/</loc>
+    <lastmod>2020-03-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zylhorse.github.io/blog/hugo/hugo/</loc>
+    <lastmod>2020-03-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -385,16 +420,6 @@
   <url>
     <loc>https://zylhorse.github.io/blog/golang/graceful/</loc>
     <lastmod>2018-07-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zylhorse.github.io/categories/hugo/</loc>
-    <lastmod>2018-07-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zylhorse.github.io/blog/hugo/hugo/</loc>
-    <lastmod>2018-07-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -845,6 +870,16 @@
   <url>
     <loc>https://zylhorse.github.io/blog/cache/redis/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</loc>
     <lastmod>2016-01-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zylhorse.github.io/categories/markdown/</loc>
+    <lastmod>2016-01-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zylhorse.github.io/blog/markdown/markdown/</loc>
+    <lastmod>2016-01-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>

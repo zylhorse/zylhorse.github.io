@@ -35,7 +35,7 @@
  FLV包含两部分，文件头(file header)和文件体(file body)。文件体由一系列Tag组成。
  FLV Header    字段名 字段大小 字段描述     Signature 3Byte 文件标识(FLV)   Version 1Byte 版本号（0x01)   Flags 1Byte 前5位保留为0，第6位表示是否有音频Tag，第7位保留为0，第8位表示是否有视频Tag。   HeaderSize 4Byte 表示从file header开始到file body开始的字节数，版本1总为9。    FLV Body  间隔包含Previous Tag Size字段，标识前一个Tag大小。
     Previous Tag Size Tag1 &hellip; Previous Tag Size Tagn    Tag    Tag Header Tag Data    Tag Header    字段 字段大小 字段描述     Type 1Byte 标识Tag类型，音频(0x08)、视频(0x09)、script data(0x12),其他值保留   Datasize 3Byte 标识Tag Data数据大小   Timestamp 3Byte 标识Tag时间戳   Timestamp_ex 1Byte 时间戳扩展字节，24字节数值不够时，该字节最高位将时间戳扩展为32位数。   StreamID 3Byte stream id 总是0    Tag Data 不同类型Tag的data部分结构不同；"/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -463,16 +463,25 @@
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[MediaStream]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["MediaStream"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -499,6 +508,9 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -515,9 +527,6 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

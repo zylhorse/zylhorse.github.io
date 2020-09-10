@@ -23,6 +23,68 @@
     </item>
     
     <item>
+      <title>Hugo评论系统-Gitalk</title>
+      <link>https://zylhorse.github.io/blog/hugo/gitalk/</link>
+      <pubDate>Sat, 07 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/hugo/gitalk/</guid>
+      <description>注册GitHub OAuth application
+  配置config.toml
+[params.gitalk]enable = trueclientId = &amp;quot;&amp;quot;clientSecret = &amp;quot;&amp;quot;repo = &amp;quot;&amp;quot; # 保存评论的repoowner = &amp;quot;&amp;quot; //app 所有者admin = &amp;quot;&amp;quot; //app 所有者perPage = 20 # 每页评论条数，最大100pagerDirection = &amp;quot;last&amp;quot; # 评论排序方式： 最新：last， 最早：first  配置comments.html 在layouts/_default/comments.html中添加一下代码：
+{{- if .Site.Params.valine.gitalk -}} &amp;lt;div id=&amp;quot;gitalk-container&amp;quot; class=&amp;quot;gcomments&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css&amp;quot;&amp;gt;&amp;lt;script src=&amp;quot;https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&amp;lt;script&amp;gt;const gitalk = new Gitalk({clientID: {{ .Site.Params.gitalk.clientId }},clientSecret: {{ .</description>
+    </item>
+    
+    <item>
+      <title>Hugo评论系统-Utteranc</title>
+      <link>https://zylhorse.github.io/blog/hugo/utteranc/</link>
+      <pubDate>Sat, 07 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/hugo/utteranc/</guid>
+      <description>安装Utteranc
+ 进入Utteranc GitHub App 在页面中选择你要添加的repo,进行安装    配置config.toml
+## Utterances[params.utterances]enable = truerepo = &amp;quot;zylhorse/zylhorse.github.io&amp;quot; // 这里替换为你的github repoissueTerm = &amp;quot;title&amp;quot; // issue 标题， 基于当前文章标题/路径..theme = &amp;quot;github-light&amp;quot; // 风格themeDark = &amp;quot;photon-dark&amp;quot; 参考： https://utteranc.es/
+   配置comments.html 在layouts/_default/comments.html中添加一下代码：
+{{ if .Site.Params.utterances.enable }}&amp;lt;label&amp;gt;{{ jsonify .Params.categories }}&amp;lt;/label&amp;gt;&amp;lt;article class=&amp;quot;ucomments&amp;quot;&amp;gt;&amp;lt;script src=&amp;quot;https://utteranc.es/client.js&amp;quot;repo={{ .Site.Params.utterances.repo }}issue-term={{ .Site.Params.utterances.issueTerm }}label={{ jsonify .Params.categories }} // 以categories作为issue的labelstheme={{ .</description>
+    </item>
+    
+    <item>
+      <title>Hugo评论系统-Valine</title>
+      <link>https://zylhorse.github.io/blog/hugo/valine/</link>
+      <pubDate>Sat, 07 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/hugo/valine/</guid>
+      <description>注册LeanCloud开发版
+ 创建LeanCloud应用 获取appId和appKey,用于以下配置    配置config.toml
+ # Valine.# You can get your appid and appkey from https://leancloud.cn# more info please open https://valine.js.org[params.valine]enable = trueappId = &amp;quot;appId&amp;quot;appKey = &#39;appKey&#39;notify = false # 邮件通知verify = false # 是否需要验证码avatar = &amp;quot;&amp;quot; # 空字符串默认使用Gravatar头像placeholder = &#39;说点什么吧...&#39;visitor = true  配置comments.html 在layouts/_default/comments.html中添加一下代码：
+{{- if .Site.Params.valine.enable -}}&amp;lt;!-- id 将作为查询条件 --&amp;gt;&amp;lt;div id=&amp;quot;vcomments&amp;quot; style=&amp;quot;border: #4d99bf&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;script src=&amp;quot;//cdn1.</description>
+    </item>
+    
+    <item>
+      <title>Hugo评论系统</title>
+      <link>https://zylhorse.github.io/blog/hugo/comments/</link>
+      <pubDate>Fri, 06 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/hugo/comments/</guid>
+      <description>评论系统 Hugo自带Disqus评论系统，无法在国内加载。本系统采用Utterances。国内推荐以下评论系统：
+   名称 简介 优缺点     Valine 诞生于2017年8月7日，是一款基于LeanCloud的无后端评论系统 1.样式简洁,有回复功能 2. LeanCloud免费容器无法24小时在线，需要配置定时器，防止服务休眠3. Valine-Admin 可以实现评论管理，配置复杂度较高   Utterances 基于Github Issue的评论系统 1. 配置简单 2. 无回复功能 3. 基于Github Issue，可以进行评论管理   Gitalk 基于GitHub Issue和Preact开发的评论插件 1. 配置简单
+2. 有回复功能 3. 基于Github Issue，可以进行评论管理     Gitalk 会申请授权者所有公共仓库的读写权限 静态网站会暴露该OAuth Application的ID和密钥
+ </description>
+    </item>
+    
+    <item>
+      <title>Hugo使用手册</title>
+      <link>https://zylhorse.github.io/blog/hugo/hugo/</link>
+      <pubDate>Thu, 05 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/hugo/hugo/</guid>
+      <description>bind ip 使本地可被其他机器访问： hugo --bind x.x.x.x
+ x.x.x.x 可以是0.0.0.0 也可以是本机ip
+ 添加文章引用 Hugo 提供了两种 shortcode 用来在文档中插入引用链接地址： ref 和 relref ，语法如下：
+ relref 插入被引用文档的相对链接地址，而 ref 则插入被引用文档的完整链接地址。 ref 和 relref 的唯一参数是文档路径+锚点组成的字符串，并且文档路径和锚点都是可选的  当参数中只含有文档路径时，会插入被引用文档的链接地址； 当参数中只含有锚点时，会插入当前文档的锚点链接地址； 当参数中二者都存在时，会插入被引用文档的锚点链接地址。     锚点是文档标题，如果标题有空格则将空格替换成中划线-
+ </description>
+    </item>
+    
+    <item>
       <title>服务治理-服务的熔断和降级</title>
       <link>https://zylhorse.github.io/blog/distribution-system/%E7%86%94%E6%96%AD%E5%92%8C%E9%99%8D%E7%BA%A7/</link>
       <pubDate>Mon, 11 Nov 2019 00:00:00 +0000</pubDate>
@@ -482,21 +544,6 @@ Macos不支持host模式，因此需要使用端口映射模式  </description>
       
       <guid>https://zylhorse.github.io/blog/golang/graceful/</guid>
       <description>https://grisha.org/blog/2014/06/03/graceful-restart-in-golang/</description>
-    </item>
-    
-    <item>
-      <title>Hugo使用手册</title>
-      <link>https://zylhorse.github.io/blog/hugo/hugo/</link>
-      <pubDate>Sat, 07 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zylhorse.github.io/blog/hugo/hugo/</guid>
-      <description>bind ip 使本地可被其他机器访问： hugo --bind x.x.x.x
- x.x.x.x 可以是0.0.0.0 也可以是本机ip
- 添加文章引用 Hugo 提供了两种 shortcode 用来在文档中插入引用链接地址： ref 和 relref ，语法如下：
- relref 插入被引用文档的相对链接地址，而 ref 则插入被引用文档的完整链接地址。 ref 和 relref 的唯一参数是文档路径+锚点组成的字符串，并且文档路径和锚点都是可选的  当参数中只含有文档路径时，会插入被引用文档的链接地址； 当参数中只含有锚点时，会插入当前文档的锚点链接地址； 当参数中二者都存在时，会插入被引用文档的锚点链接地址。     锚点是文档标题，如果标题有空格则将空格替换成中划线-
- 添加评论系统   注册LeanCloud开发版
- 创建LeanCloud应用 获取appId和appKey,用于以下配置    配置config.toml
- # Valine.# You can get your appid and appkey from https://leancloud.cn# more info please open https://valine.js.org[params.valine]enable = trueappId = &amp;quot;appId&amp;quot;appKey = &#39;appKey&#39;notify = false # 邮件通知verify = false # 是否需要验证码avatar = &amp;quot;&amp;quot; # 空字符串默认使用Gravatar头像placeholder = &#39;说点什么吧.</description>
     </item>
     
     <item>
@@ -1347,6 +1394,26 @@ DETS(Disk ETS) DETS驻留在硬盘，DETS要比ETS慢，但是比ETS更省内存
       
       <guid>https://zylhorse.github.io/blog/cache/redis/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</guid>
       <description>键 redis 键值为string类型， 最大可为512M语法： get keydel key dump key exists keyexpire key second expireat key timestampkeys pattern move key db // 将key移动到数据库db中randomkey // 随机获取db中keypersist key // 移除过期时间TTL key rename key newnametype key String字符串 string类型是二进制安全的。表示string可以包含任何数据；最大可为512M；语法：set key valueget keygetrange key start endsetrange key offset valuesetex key seconds valuesetnx key value strlen key mset key1 value1 key2 value2append key valueincr keydecr keyincrby key valuedecrby key value应用场景：  常规key-value缓存 分布式锁 计数器： 禁止非法IP访问频率；文档访问频率； 限速： 限制登录接口获取验证码频率 共享session： 使用redis将用户session集中管理  Hash哈希 hash 是一个键值对集合，是string类型的映射表。最大可存储uint32max 个键值对；语法：hset key field1 value1hget key field1hmset key field1 value1 field2 value2hmget key field1 field2hdel key field1 field2hexist key field1hkeys key hvals keyhgetall keyhlen keyhsetnx key field valueshscan key cursor match [pattern] count [count]应用场景： 存储用户id及用户信息</description>
+    </item>
+    
+    <item>
+      <title>markdown使用手册</title>
+      <link>https://zylhorse.github.io/blog/markdown/markdown/</link>
+      <pubDate>Thu, 07 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/markdown/markdown/</guid>
+      <description>简单链接   格式
+[zylhorse blog](https://zylhorse.github.io)
+  效果
+zylhorse blog
+  后置链接地址   格式
+[zylhorse blog][1][zylhorse about][about]....[1]: https://zylhorse.github.io[about]: https://zylhorse.github.io/about  效果
+zylhorse blog
+zylhorse about
+&amp;hellip;.
+  表格   格式
+表头|表头|表头:---|:---:|---:左对齐 | 居中 | 右对齐换行&amp;lt;br&amp;gt;换行 | &amp;lt;img width=&amp;quot;100px&amp;quot; height=&amp;quot;100px&amp;quot; src=&amp;quot;/img/main/logo.jpg&amp;quot;/&amp;gt; | ![logo](/img/main/wechat.jpg)   效果
+   表头 表头 表头     左对齐 居中 右对齐   换行</description>
     </item>
     
     <item>

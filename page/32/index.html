@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -179,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/jmeter/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">Jmeter部署和配置</a></h2>
+      <h2><a href="/blog/network/tcp/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">TCP-数据传输可靠性</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-11-11 00:00:00 &#43;0000 UTC">2014-11-11</time>
+        <time datetime="2014-12-06 00:00:00 &#43;0000 UTC">2014-12-06</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -201,24 +201,22 @@
   <div class="content">
     
     
-    <h2 id="下载">下载</h2>
-<p><a href="http://jmeter.apache.org/download_jmeter.cgi">地址</a></p>
-<h2 id="汉化">汉化</h2>
-<p><code>jmeter.properties =&gt; language=zh_CN</code></p>
-<h2 id="websocket配置">websocket配置</h2>
-<p>下载<code>jar</code>包
-<code>jetty-http</code>
-<code>jetty-io</code>
-<code>jetty-util&hellip;</code></p>
+    <h2 id="tcp数据传输">TCP数据传输</h2>
+<p>面向字节流， 传输可靠， 面向连接</p>
+<h3 id="问题">问题</h3>
+<p>网络数据不可靠， 丢包， 错包， 重复包， 乱序包；</p>
+<h3 id="滑动窗口">滑动窗口</h3>
+<p>提高数据吞吐量， 传输数据块（包含多组数据）</p>
+<p>滑动窗口本身可以看做是一个协议，&hellip;</p>
   </div>
   <footer>
-    <a href="/blog/jmeter/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="button big">阅读全文</a>
+    <a href="/blog/network/tcp/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/jmeter/">Jmeter</a></li>
+          <li><a class="article-terms-link" href="/categories/network/">Network</a></li>
         
       
     </ul>
@@ -227,7 +225,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/"></a></li>
+          <li><a class="article-terms-link" href="/tags/tcp/">TCP</a></li>
         
       
     </ul>
@@ -242,14 +240,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/memory/mmap/">mmap实现原理简述及使用场景</a></h2>
+      <h2><a href="/blog/network/tcp/tcp%E8%BF%9E%E6%8E%A5/">TCP-握手和挥手</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-10-10 00:00:00 &#43;0000 UTC">2014-10-10</time>
+        <time datetime="2014-12-03 00:00:00 &#43;0000 UTC">2014-12-03</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -257,92 +255,32 @@
     
     
         <p title="ReadingTime" class="fas fa-stopwatch">
-            3分钟
+            5分钟
         </p>
     
 </div>
   <div class="content">
     
     
-    <h2 id="概念">概念</h2>
-<ul>
-<li><code>mmap</code>是一种文档映射到内存的方法；</li>
-<li>将文件或其他对象映射到进程的内存地址空间；实现文件磁盘地址和进程虚拟地址空间的映射。</li>
-<li>映射后， 进程就可以采用指针的方式读写操作这段内存。而系统会自动回写&hellip;</li></ul>
-  </div>
-  <footer>
-    <a href="/blog/memory/mmap/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/memory/">Memory</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      <li>None</li>
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/concurrence/io/">多类型I/O操作流程</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-10-03 00:00:00 &#43;0000 UTC">2014-10-03</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            10分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h3 id="io">I/O</h3>
-<p><code>IO</code>分为两个阶段：</p>
+    <h2 id="tcp-状态">tcp 状态</h2>
+<p><code>tcp</code>连接<code>FLAGS</code>字段表示当前连接状态，<code>FLAGS</code>包含一下几个标识：</p>
 <ol>
-<li>数据准备阶段</li>
-<li>内核空间复制数据到用户进程缓冲区（用户空间）阶段</li>
+<li><code>SYN</code>表示建立连接</li>
+<li><code>FIN</code>表示关闭连接</li>
+<li><code>ACK</code>表示响应</li>
+<li><code>PSH</code>表示有 <code>DATA</code>数据传输</li>
+<li><code>RST</code>表示连接重置</li>
 </ol>
-<h4 id="io类型">IO类型</h4>
-<ul>
-<li>
-<p>阻塞IO
-用户线程进行IO读写操作时发生阻塞，等待数据准备就绪</p>
-</li>
-<li>
-<p>非阻塞IO
-用户线程进&hellip;</p></li></ul>
+<h2 id="三次握手">三&hellip;</h2>
   </div>
   <footer>
-    <a href="/blog/concurrence/io/" class="button big">阅读全文</a>
+    <a href="/blog/network/tcp/tcp%E8%BF%9E%E6%8E%A5/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/concurrence/">Concurrence</a></li>
+          <li><a class="article-terms-link" href="/categories/network/">Network</a></li>
         
       
     </ul>
@@ -351,7 +289,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/i/o/">I/O</a></li>
+          <li><a class="article-terms-link" href="/tags/tcp/">TCP</a></li>
         
       
     </ul>
@@ -366,14 +304,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/windows/visual-studio/">下载安装Visual Studio历史版本</a></h2>
+      <h2><a href="/blog/database/mysql/sql%E8%AF%AD%E5%8F%A5/">MySQL常用sql语句</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-09-10 00:00:00 &#43;0000 UTC">2014-09-10</time>
+        <time datetime="2014-11-20 00:00:00 &#43;0000 UTC">2014-11-20</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -388,25 +326,19 @@
   <div class="content">
     
     
-    <h2 id="下载安装">下载安装</h2>
-<p><a href="https://visualstudio.microsoft.com/zh-hans/vs/older-downloads/">历史版本</a></p>
-<h2 id="2017-激活码">2017 激活码</h2>
-<ul>
-<li>
-<p>professional<br>
-<code>KBJFW-NXHK6-W4WJM-CRMQB-G3CDH</code></p>
-</li>
-<li>
-<p>enterprise&hellip;</p></li></ul>
+    <h2 id="创建数据库">创建数据库</h2>
+<p><code>mysql&gt; create database &quot;dbname&quot;;</code></p>
+<h2 id="创建用户">创建用户</h2>
+<p><code>mysql&gt; create user&hellip;</code></p>
   </div>
   <footer>
-    <a href="/blog/windows/visual-studio/" class="button big">阅读全文</a>
+    <a href="/blog/database/mysql/sql%E8%AF%AD%E5%8F%A5/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/windows/">Windows</a></li>
+          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
         
       
     </ul>
@@ -415,7 +347,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/"></a></li>
+          <li><a class="article-terms-link" href="/tags/mysql/">MySQL</a></li>
         
       
     </ul>
@@ -430,14 +362,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/windows/proxy/">Windows系统配置CMD网络代理</a></h2>
+      <h2><a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">MySQL数据库安装配置</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-09-05 00:00:00 &#43;0000 UTC">2014-09-05</time>
+        <time datetime="2014-11-20 00:00:00 &#43;0000 UTC">2014-11-20</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -452,20 +384,19 @@
   <div class="content">
     
     
-    <h2 id="cmd-设置代理">cmd 设置代理</h2>
-<pre><code>x:&gt;netsh
-netsh&gt;winhttp
-netsh winhttp&gt;
-netsh winhttp&gt;set proxy 127.0.0.1:1080&hellip;</code></pre>
+    <h2 id="ubuntu-安装">ubuntu 安装</h2>
+<pre><code>$ sudo rm /var/lib/mysql/ -R
+$ sudo rm /etc/mysql/ -R
+$ sudo apt-get autoremove&hellip;</code></pre>
   </div>
   <footer>
-    <a href="/blog/windows/proxy/" class="button big">阅读全文</a>
+    <a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/windows/">Windows</a></li>
+          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
         
       
     </ul>
@@ -474,7 +405,66 @@ netsh winhttp&gt;set proxy 127.0.0.1:1080&hellip;</code></pre>
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/"></a></li>
+          <li><a class="article-terms-link" href="/tags/mysql/">MySQL</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/database/mysql/%E9%97%AE%E9%A2%98/">MySQL数据库问题集锦</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2014-11-20 00:00:00 &#43;0000 UTC">2014-11-20</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="登录">登录</h2>
+<p>问题：
+<code>Access denied for user 'root'@'localhost' (using password: YES)</code></p>
+<p>解决办法：</p>
+<pre><code>$ /etc/init.d/mysql&hellip;</code></pre>
+  </div>
+  <footer>
+    <a href="/blog/database/mysql/%E9%97%AE%E9%A2%98/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/mysql/">MySQL</a></li>
         
       
     </ul>
@@ -517,6 +507,9 @@ netsh winhttp&gt;set proxy 127.0.0.1:1080&hellip;</code></pre>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -533,9 +526,6 @@ netsh winhttp&gt;set proxy 127.0.0.1:1080&hellip;</code></pre>
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

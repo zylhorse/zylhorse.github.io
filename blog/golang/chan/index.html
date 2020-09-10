@@ -32,7 +32,7 @@ type hchan struct {qcount uint // 缓冲队列中的元素计数器dataqsiz ui
 <meta name="twitter:description" content="描述 channel 是golang实现CSP理念的重点。channel实现一个进程内不同协程之间的通信方式。
 结构体 channel 实际上是一个环形队列，实际的队列空间就是在这个channel结构体之后申请的空间。
 type hchan struct {qcount uint // 缓冲队列中的元素计数器dataqsiz uint // 缓冲队列，=make(chan T, x)中的xbuf unsafe.Pointer // 缓冲队列，数组类型elemsize uint16 // 元素大小，单位为字节closed uint32 // chan关闭标记elemtype *_type // 元素类型sendx uint // 待发送元素在缓冲器中的索引recvx uint // 待接收元素在缓冲器中的索引recvq waitq // 阻塞等待读channel的G队列sendq waitq // 阻塞等待写channel的G队列lock mutex // 互斥锁} elem 大小不能超过65536个字节，超过会抛异常  特性  当chan缓冲中还有数据时，关闭chan后，接受者不会立刻接收到chan的关闭信号， 而是等缓冲中所有的数据被全部读取后接受者才会收到chan的关闭信号； 没有被初始化的chan在调用发送或者接收的时候会被阻塞 当chan被close之后不能被写入，但是可以被读取； chan不能被重复close，chan可以不被close；可以被系统自动回收；  make chan  新建channel时调用func makechan(t *chantype, size int) *hchan函数"/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -446,16 +446,25 @@ type hchan struct {qcount uint // 缓冲队列中的元素计数器dataqsiz ui
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Golang]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Golang"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -482,6 +491,9 @@ type hchan struct {qcount uint // 缓冲队列中的元素计数器dataqsiz ui
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -498,9 +510,6 @@ type hchan struct {qcount uint // 缓冲队列中的元素计数器dataqsiz ui
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

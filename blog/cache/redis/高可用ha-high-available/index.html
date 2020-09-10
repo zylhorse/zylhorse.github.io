@@ -29,7 +29,7 @@
 <meta name="twitter:title" content="Redis高可用解决方案"/>
 <meta name="twitter:description" content="高可用扩容  垂直扩容： 提升机器内存配置， 不需要应用程序支持； 水平扩容： 增加节点，需要应用程序支持；  哨兵模式（sentinel） 故障转移后redis客户端将无法感知redis节点的变化；导致无法正常使用；
 哨兵模式高可用客户端流程  客户端获取 sentinel 集合； 客户端获取master 信息； 客户端验证获取的master 为真正的master， 防止故障转移期间主节点的变化； 客户端订阅sentinel节点 相关频道， 时刻获取节点去读写；  问题  不能解决读写分离；  集群模式（cluster）  数据异步复制，不能保证强一致性。复制结构只支持一层，从节点只能复制主节点； key 批量操作限制，目前只支持相同槽的key 批量查询， 不允许跨槽查询； key 事务操作优先，当key在多个槽上分布时， 不支持事务功能；  "/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -256,16 +256,25 @@
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Cache]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Cache"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -292,6 +301,9 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -308,9 +320,6 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

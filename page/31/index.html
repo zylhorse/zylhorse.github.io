@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -179,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/network/tcp/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">TCP-数据传输可靠性</a></h2>
+      <h2><a href="/blog/linux/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BA%90/">linux依赖包的离线打包和安装</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-12-06 00:00:00 &#43;0000 UTC">2014-12-06</time>
+        <time datetime="2015-02-02 00:00:00 &#43;0000 UTC">2015-02-02</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -201,22 +201,20 @@
   <div class="content">
     
     
-    <h2 id="tcp数据传输">TCP数据传输</h2>
-<p>面向字节流， 传输可靠， 面向连接</p>
-<h3 id="问题">问题</h3>
-<p>网络数据不可靠， 丢包， 错包， 重复包， 乱序包；</p>
-<h3 id="滑动窗口">滑动窗口</h3>
-<p>提高数据吞吐量， 传输数据块（包含多组数据）</p>
-<p>滑动窗口本身可以看做是一个协议，&hellip;</p>
+    <h1 id="离线安装步骤">离线安装步骤</h1>
+<h2 id="清理apt-缓冲区">清理apt 缓冲区</h2>
+<p><code>$ sudo rm -rf /var/cache/apt/archives/*</code></p>
+<h2 id="下载所需组件">下载所需组件</h2>
+<p><code>$ sudo apt-get -d install &lt;包名&gt;&hellip;</code></p>
   </div>
   <footer>
-    <a href="/blog/network/tcp/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" class="button big">阅读全文</a>
+    <a href="/blog/linux/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BA%90/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/network/">Network</a></li>
+          <li><a class="article-terms-link" href="/categories/linux/">linux</a></li>
         
       
     </ul>
@@ -225,7 +223,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/tcp/">TCP</a></li>
+          <li><a class="article-terms-link" href="/tags/"></a></li>
         
       
     </ul>
@@ -240,14 +238,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/network/tcp/tcp%E8%BF%9E%E6%8E%A5/">TCP-握手和挥手</a></h2>
+      <h2><a href="/blog/concurrence/%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81/">并发编程-乐观锁和悲观锁</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-12-03 00:00:00 &#43;0000 UTC">2014-12-03</time>
+        <time datetime="2015-01-16 00:00:00 &#43;0000 UTC">2015-01-16</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -262,25 +260,209 @@
   <div class="content">
     
     
-    <h2 id="tcp-状态">tcp 状态</h2>
-<p><code>tcp</code>连接<code>FLAGS</code>字段表示当前连接状态，<code>FLAGS</code>包含一下几个标识：</p>
+    <h2 id="乐观锁">乐观锁</h2>
+<p>乐观锁假设数据一般不会修改， 所以在数据提交修改的时候， 才会对数据冲突进行检查；如果冲突则交给用户决定如何去做；对数据竞争持乐观态度</p>
+<h3 id="乐观锁实现">乐观锁实现</h3>
+<h4 id="cascompare-and-swap">cas（compare and swap）&hellip;</h4>
+  </div>
+  <footer>
+    <a href="/blog/concurrence/%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/concurrence/">Concurrence</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/lock/">Lock</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/concurrence/%E7%BA%BF%E7%A8%8B%E9%94%81/">并发编程-线程锁和死锁</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-01-16 00:00:00 &#43;0000 UTC">2015-01-16</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="锁">锁</h2>
+<p>在多线程编程中， 对共享资源竞争的保护机制；</p>
+<h2 id="锁缺点">锁缺点</h2>
+<ul>
+<li>引起线程阻塞</li>
+<li>申请和释放锁， 增加线程的调度切换， 影响系统性能</li>
+<li>容易造成死锁和活锁等问题</li>
+<li>优先级反转</li>
+<li>不公平</li>
+<li>效率低</li>
+</ul>
+<h2 id="公平锁">公平锁</h2>
+<p>在锁上等待&hellip;</p>
+  </div>
+  <footer>
+    <a href="/blog/concurrence/%E7%BA%BF%E7%A8%8B%E9%94%81/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/concurrence/">Concurrence</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/lock/">Lock</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/concurrence/epoll/">I/O多路复用-select/poll/epoll</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-01-09 00:00:00 &#43;0000 UTC">2015-01-09</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            10分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h3 id="概述">概述</h3>
+<p><code>i/o</code> 多路复用:在单线程中通过记录跟踪多个<code>sock</code> 状态， 来同时管理多路<code>I/O</code>流。用以提高服务器的吞吐能力</p>
+<h3 id="select">select</h3>
+<ul>
+<li><code>select</code>会修改传入的参数数组</li>
+<li>任何<code>sock</code>状态改变，&hellip;</li></ul>
+  </div>
+  <footer>
+    <a href="/blog/concurrence/epoll/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/concurrence/">Concurrence</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/i/o/">I/O</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/linux/ubuntu-%E6%9C%8D%E5%8A%A1/">制作linux系统服务</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-01-08 00:00:00 &#43;0000 UTC">2015-01-08</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h1 id="服务制作">服务制作</h1>
 <ol>
-<li><code>SYN</code>表示建立连接</li>
-<li><code>FIN</code>表示关闭连接</li>
-<li><code>ACK</code>表示响应</li>
-<li><code>PSH</code>表示有 <code>DATA</code>数据传输</li>
-<li><code>RST</code>表示连接重置</li>
-</ol>
-<h2 id="三次握手">三&hellip;</h2>
+<li>
+<p>在<code>/etc/init.d/</code> 下以管理员权限新建文件，在本例中为<code>location_server</code>.</p>
+</li>
+<li>
+<p>使用以下模板修改启动脚本的内容</p>
+<pre><code>#!/bin/bash
+### BEGIN INIT&hellip;</code></pre></li></ol>
   </div>
   <footer>
-    <a href="/blog/network/tcp/tcp%E8%BF%9E%E6%8E%A5/" class="button big">阅读全文</a>
+    <a href="/blog/linux/ubuntu-%E6%9C%8D%E5%8A%A1/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/network/">Network</a></li>
+          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
         
       
     </ul>
@@ -289,182 +471,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/tcp/">TCP</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/database/mysql/sql%E8%AF%AD%E5%8F%A5/">MySQL常用sql语句</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-11-20 00:00:00 &#43;0000 UTC">2014-11-20</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="创建数据库">创建数据库</h2>
-<p><code>mysql&gt; create database &quot;dbname&quot;;</code></p>
-<h2 id="创建用户">创建用户</h2>
-<p><code>mysql&gt; create user&hellip;</code></p>
-  </div>
-  <footer>
-    <a href="/blog/database/mysql/sql%E8%AF%AD%E5%8F%A5/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/mysql/">MySQL</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">MySQL数据库安装配置</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-11-20 00:00:00 &#43;0000 UTC">2014-11-20</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="ubuntu-安装">ubuntu 安装</h2>
-<pre><code>$ sudo rm /var/lib/mysql/ -R
-$ sudo rm /etc/mysql/ -R
-$ sudo apt-get autoremove&hellip;</code></pre>
-  </div>
-  <footer>
-    <a href="/blog/database/mysql/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/mysql/">MySQL</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/database/mysql/%E9%97%AE%E9%A2%98/">MySQL数据库问题集锦</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-11-20 00:00:00 &#43;0000 UTC">2014-11-20</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="登录">登录</h2>
-<p>问题：
-<code>Access denied for user 'root'@'localhost' (using password: YES)</code></p>
-<p>解决办法：</p>
-<pre><code>$ /etc/init.d/mysql&hellip;</code></pre>
-  </div>
-  <footer>
-    <a href="/blog/database/mysql/%E9%97%AE%E9%A2%98/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/mysql/">MySQL</a></li>
+          <li><a class="article-terms-link" href="/tags/"></a></li>
         
       
     </ul>
@@ -507,6 +514,9 @@ $ sudo apt-get autoremove&hellip;</code></pre>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -523,9 +533,6 @@ $ sudo apt-get autoremove&hellip;</code></pre>
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

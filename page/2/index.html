@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -179,14 +179,16 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">分布式锁</a></h2>
+      <h2><a href="/blog/hugo/hugo/">Hugo使用手册</a></h2>
     
+    
+      <p>记录Hugo使用过程中遇到的问题</p>
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2019-10-02 00:00:00 &#43;0000 UTC">2019-10-02</time>
+        <time datetime="2020-03-05 00:00:00 &#43;0000 UTC">2020-03-05</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -201,26 +203,22 @@
   <div class="content">
     
     
-    <h2 id="分布式锁">分布式锁</h2>
-<h2 id="应用场景">应用场景</h2>
-<ol>
-<li>多节点并发的对数据进行操作；</li>
-<li>多节点并发的执行同一个任务， 请求同一接口；</li>
-</ol>
-<h2 id="分布式锁条件">分布式锁条件</h2>
-<ol>
-<li>在分布式系统环境下， 一个资源同时只能被一个线程执行；</li>
-<li>高可用的获取锁和释放锁</li>
-<li>高性&hellip;</li></ol>
+    <h2 id="bind-ip">bind ip</h2>
+<p>使本地可被其他机器访问： <code>hugo --bind x.x.x.x</code></p>
+<blockquote>
+<p>x.x.x.x 可以是0.0.0.0 也可以是本机ip</p>
+</blockquote>
+<h2 id="添加文章引用">添加文章引用</h2>
+<p>Hugo 提供了两种 shortcode 用&hellip;</p>
   </div>
   <footer>
-    <a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="button big">阅读全文</a>
+    <a href="/blog/hugo/hugo/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/distribution-system/">Distribution System</a></li>
+          <li><a class="article-terms-link" href="/categories/hugo/">Hugo</a></li>
         
       
     </ul>
@@ -229,7 +227,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/lock/">Lock</a></li>
+          <li><a class="article-terms-link" href="/tags/"></a></li>
         
       
     </ul>
@@ -244,14 +242,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%80%E8%87%B4%E6%80%A7/">分布式一致性</a></h2>
+      <h2><a href="/blog/distribution-system/%E7%86%94%E6%96%AD%E5%92%8C%E9%99%8D%E7%BA%A7/">服务治理-服务的熔断和降级</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2019-09-30 00:00:00 &#43;0000 UTC">2019-09-30</time>
+        <time datetime="2019-11-11 00:00:00 &#43;0000 UTC">2019-11-11</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -266,13 +264,11 @@
   <div class="content">
     
     
-    <h2 id="一致性算法">一致性算法</h2>
-<p>算法目的是让整个集群的结点对某个值的变更达成一致</p>
-<ol>
-<li>Paxos 算法目的是让整个集群的结点对某个值的变更达成一致。Paxos 算法(强一致性算法)属于多数派——大多数的决定会成个整个集群的&hellip;</li></ol>
+    <p>Hystrix</p>
+
   </div>
   <footer>
-    <a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%80%E8%87%B4%E6%80%A7/" class="button big">阅读全文</a>
+    <a href="/blog/distribution-system/%E7%86%94%E6%96%AD%E5%92%8C%E9%99%8D%E7%BA%A7/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -302,16 +298,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a></h2>
+      <h2><a href="/blog/distribution-system/%E9%99%90%E6%B5%81/">服务治理-限流</a></h2>
     
-    
-      <p>分布式系统的概念、特性</p>
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2019-09-19 00:00:00 &#43;0000 UTC">2019-09-19</time>
+        <time datetime="2019-11-08 00:00:00 &#43;0000 UTC">2019-11-08</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -327,18 +321,14 @@
     
     
     <h2 id="概念">概念</h2>
-<ol>
-<li>建立在网络上的软件系统</li>
-<li>若干独立系统的集合</li>
-</ol>
-<h2 id="特性">特性</h2>
-<ol>
-<li>分布性： 分布式系统由多个节点组成， 地域上分散；</li>
-<li>自治性： 分布式系统的每个节点都包含自己的处理器和内存， 具备独立处理数据能力；</li>
-<li>并行&hellip;</li></ol>
+<p>当接口的访问频率或者并发请求数量超过系统的承受范围时， 需要考虑限流来保证接口的可用性；</p>
+<h2 id="解决方案">解决方案</h2>
+<p>通常策略是拒绝多余的访问或者让多余的访问排队等待；</p>
+<h3 id="令牌桶">令牌桶</h3>
+<p>控制网络上数据的数目， 允许突发流&hellip;</p>
   </div>
   <footer>
-    <a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/" class="button big">阅读全文</a>
+    <a href="/blog/distribution-system/%E9%99%90%E6%B5%81/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -368,14 +358,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/windows/wsl/">Windows Subsystem for Linux</a></h2>
+      <h2><a href="/blog/distribution-system/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">服务治理-负载均衡</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2019-09-03 00:00:00 &#43;0000 UTC">2019-09-03</time>
+        <time datetime="2019-10-20 00:00:00 &#43;0000 UTC">2019-10-20</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -390,26 +380,22 @@
   <div class="content">
     
     
-    <h2 id="概述">概述</h2>
-<p>WSL： Windows Subsystem for Linux</p>
-<h2 id="目的">目的</h2>
-<ol>
-<li>terminal 界面定制</li>
-<li>支持ubuntu terminal</li>
+    <ol>
+<li>随机</li>
+<li>加权随机</li>
+<li>哈希</li>
+<li>最小压力</li>
 </ol>
-<h2 id="wsl安装">WSL安装</h2>
-<p><a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">reference</a></p>
-<ul>
-<li>启用Linux&hellip;</li></ul>
+
   </div>
   <footer>
-    <a href="/blog/windows/wsl/" class="button big">阅读全文</a>
+    <a href="/blog/distribution-system/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/windows/">Windows</a></li>
+          <li><a class="article-terms-link" href="/categories/distribution-system/">Distribution System</a></li>
         
       
     </ul>
@@ -433,14 +419,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/jenkins/jenkins%E5%AE%89%E8%A3%85/">Jenkins部署配置</a></h2>
+      <h2><a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/">分布式事务</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2019-08-22 00:00:00 &#43;0000 UTC">2019-08-22</time>
+        <time datetime="2019-10-11 00:00:00 &#43;0000 UTC">2019-10-11</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -455,23 +441,19 @@
   <div class="content">
     
     
-    <h2 id="docker安装">docker安装</h2>
+    <h2 id="概述">概述</h2>
 <ol>
-<li>docker-compose.yml</li>
-</ol>
-<pre><code>version: '2'
-services:
-  jenkins:
-          image:&hellip;</code></pre>
+<li>分布式事务： 分布式事务涉及到多组操作， 将一个事务的概念扩大到多个分布式操作上</li>
+<li>分布式事务的参与者，资源服务器，&hellip;</li></ol>
   </div>
   <footer>
-    <a href="/blog/jenkins/jenkins%E5%AE%89%E8%A3%85/" class="button big">阅读全文</a>
+    <a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/jenkins/">Jenkins</a></li>
+          <li><a class="article-terms-link" href="/categories/distribution-system/">Distribution System</a></li>
         
       
     </ul>
@@ -523,6 +505,9 @@ services:
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -539,9 +524,6 @@ services:
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

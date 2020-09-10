@@ -26,7 +26,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Erlang顺序编程补遗"/>
 <meta name="twitter:description" content="apply  内置函数apply(mod,func,[arg1,arg2,arg3,&hellip;,argn])。会将参数arg1,arg2,&hellip;,argn应用到模块mod里的函数func上。它等价于：mod:func(arg1,arg2,&hellip;,argn)。 与直接调用函数的区别在于模块名和函数名可以动态的计算得出。 应当尽量避免使用apply。如果使用apply对函数进行调用，许多分析工具就无法得知发生了什么，一些特定的编译器优化也不能进行。  算术表达式  操作符	描述	参数类型	优先级&#43;X	正数	整数	1-X	负数	整数	1X*Y	X乘以Y	整数	2X/Y	X除以Y，浮点数除法	整数	2bnot X	对X执行按位取反	整数	2X div Y	X除以Y的商，整数	整数	2X rem Y	X除以Y的余数	整数	2X band Y	X和Y位与	整数	2X bor Y	X和Y位或	整数	3X bxor Y	X与Y按位异或	整数	3X bsl N	X向左位移N个算术位	整数	3X bsr N	X向右位移N个算术位	整数	3X &#43; Y	X 加 Y	整数	3X - Y	X 减 Y	整数	3 元数  一个函数的元数(arity)是该函数所拥有的参数数量。在Erlang里，同一个模块里的两个名称相同，元数不同的函数是完全不同的函数。 根据惯例Erlang程序员经常将名称相同、元数不同的函数作为辅助函数使用。我们通常通过不导出辅助函数，来隐藏他们。  模块属性  模块属性的语法是 -AtomTag(&hellip;),它们被用来定义文件的某些属性。 模块属性包括预定义型和用户定义型。 预定义型：   模块属性有着预先定义的含义，必须放置在任何函数定义之前。"/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -475,16 +475,25 @@ catch
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Erlang]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Erlang"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -511,6 +520,9 @@ catch
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -527,9 +539,6 @@ catch
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

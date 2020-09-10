@@ -26,7 +26,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Redis高可用方案-集群模式"/>
 <meta name="twitter:description" content="概述  redis cluster 时redis的分布式解决方案， 在3.0 推出； 当遇到单机内存，并发流量等瓶颈时，可以采用cluster架构达到负载均衡的目的； cluster 将整个数据集，按照分区规则映射到多个节点上，每个节点负责整个数据集的一个子集； 节点之间会相互通信， meet操作时节点之间相互通信的基础， meet 操作有一定的频率和规则； 推荐节点小于1000， 因为节点之间meet操作会占用大量带宽；  原理  redis cluster采用哈希分区中的虚拟槽分区。 虚拟槽分区巧妙的使用哈希空间， 使用分散度良好的哈希函数把所有的数据映射到一个固定范围的整数集合（槽）； 槽的范围时0~16383， 槽是集群内数据管理和迁移的基本单位； 把16384槽按照节点数量进行平均分配，由节点进行管理 对每个key按照CRC16规则进行hash运算 把hash结果对16383进行取余 把余数发送给Redis节点 节点接收到数据，验证是否在自己管理的槽编号的范围 如果在自己管理的槽编号范围内，则把数据保存到数据槽中，然后返回执行结果 如果在自己管理的槽编号范围外，则会把数据发送给正确的节点进行moved重定向，由正确的节点来把数据保存在对应的槽中  增加主节点  redis-trib.rb add-node new-node-addr cluster-node-addr redis-trib.rb reshared cluster-node-addr  增加从节点  redis-trib.rb add-node new-node-addr cluster-node-addr cluster replicate new-node-Id  删除从节点  redis-trib.rb del-node cluster-node-addr del-node-id redis-trib.rb reshared cluster-node-addr redis-trib.rb del-node cluster-node-addr del-node-id  部署  至少需要6台机器， 3个master，3个slave； 每个master至少搭配一个slave；  hashtag  hashtag 解决让相关的key 划分到同一个节点上； 原理： 给相关key 使用{}添加同样的标记；  fail 状态必要条件  某个主节点和所有从节点全部挂掉，我们集群就进入faill状态。 如果集群超过半数以上master挂掉，无论是否有slave，集群进入fail状态."/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -285,16 +285,25 @@
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Cache]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Cache"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -321,6 +330,9 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -337,9 +349,6 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

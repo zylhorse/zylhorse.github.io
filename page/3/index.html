@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -179,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/database/oracle/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">Oracle数据库安装配置</a></h2>
+      <h2><a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">分布式锁</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2019-07-15 00:00:00 &#43;0000 UTC">2019-07-15</time>
+        <time datetime="2019-10-02 00:00:00 &#43;0000 UTC">2019-10-02</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -201,131 +201,20 @@
   <div class="content">
     
     
-    <h2 id="docker安装">docker安装</h2>
-<pre><code>sudo docker pull deepdiver/docker-oracle-xe-11g
-sudo docker run -d -p 1522:22 -p 1521:1521&hellip;</code></pre>
-  </div>
-  <footer>
-    <a href="/blog/database/oracle/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/oracle/">Oracle</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/web/ldap/">LDAP协议简介</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2019-07-03 00:00:00 &#43;0000 UTC">2019-07-03</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="概述">概述</h2>
-<p>LDAP: light diretory access protocol, 轻量级目录访问协议；
-LDAP 目录服务，由目录数据库和访问协议组成；</p>
-<h2 id="目录树">目录树</h2>
+    <h2 id="分布式锁">分布式锁</h2>
+<h2 id="应用场景">应用场景</h2>
 <ol>
-<li>目录树： 在目录服务系统中， 整个目&hellip;</li></ol>
-  </div>
-  <footer>
-    <a href="/blog/web/ldap/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/web/">Web</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/ldap/">LDAP</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/distribution-system/cdn/">CDN内容分发网络工作过程和分类</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2019-06-23 00:00:00 &#43;0000 UTC">2019-06-23</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="cdn">CDN</h2>
+<li>多节点并发的对数据进行操作；</li>
+<li>多节点并发的执行同一个任务， 请求同一接口；</li>
+</ol>
+<h2 id="分布式锁条件">分布式锁条件</h2>
 <ol>
-<li>全称 Content Delivery Network，即内容分发网络</li>
-<li>概念始于1996，美国麻省理工学院的研究小组，并于1999年创建CDN服务公司</li>
-<li>CDN构建在现有网络基础上，依靠部署在&hellip;</li></ol>
+<li>在分布式系统环境下， 一个资源同时只能被一个线程执行；</li>
+<li>高可用的获取锁和释放锁</li>
+<li>高性&hellip;</li></ol>
   </div>
   <footer>
-    <a href="/blog/distribution-system/cdn/" class="button big">阅读全文</a>
+    <a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -340,7 +229,7 @@ LDAP 目录服务，由目录数据库和访问协议组成；</p>
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/cdn/">CDN</a></li>
+          <li><a class="article-terms-link" href="/tags/lock/">Lock</a></li>
         
       
     </ul>
@@ -355,14 +244,14 @@ LDAP 目录服务，由目录数据库和访问协议组成；</p>
   <header>
   <div class="title">
     
-      <h2><a href="/blog/linux/%E6%9C%8D%E5%8A%A1%E7%9B%91%E6%8E%A7%E5%8F%8A%E5%91%8A%E8%AD%A6/">Linux系统下服务监控和报警解决方案</a></h2>
+      <h2><a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%80%E8%87%B4%E6%80%A7/">分布式一致性</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2019-06-07 00:00:00 &#43;0000 UTC">2019-06-07</time>
+        <time datetime="2019-09-30 00:00:00 &#43;0000 UTC">2019-09-30</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -377,18 +266,19 @@ LDAP 目录服务，由目录数据库和访问协议组成；</p>
   <div class="content">
     
     
-    <h3 id="zabbix">zabbix</h3>
-<h3 id="prometheus">prometheus</h3>
-
+    <h2 id="一致性算法">一致性算法</h2>
+<p>算法目的是让整个集群的结点对某个值的变更达成一致</p>
+<ol>
+<li>Paxos 算法目的是让整个集群的结点对某个值的变更达成一致。Paxos 算法(强一致性算法)属于多数派——大多数的决定会成个整个集群的&hellip;</li></ol>
   </div>
   <footer>
-    <a href="/blog/linux/%E6%9C%8D%E5%8A%A1%E7%9B%91%E6%8E%A7%E5%8F%8A%E5%91%8A%E8%AD%A6/" class="button big">阅读全文</a>
+    <a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%80%E8%87%B4%E6%80%A7/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
+          <li><a class="article-terms-link" href="/categories/distribution-system/">Distribution System</a></li>
         
       
     </ul>
@@ -412,14 +302,16 @@ LDAP 目录服务，由目录数据库和访问协议组成；</p>
   <header>
   <div class="title">
     
-      <h2><a href="/blog/elk/grafana/">Grafana搭建部署环境和配置</a></h2>
+      <h2><a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a></h2>
     
+    
+      <p>分布式系统的概念、特性</p>
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2019-06-05 00:00:00 &#43;0000 UTC">2019-06-05</time>
+        <time datetime="2019-09-19 00:00:00 &#43;0000 UTC">2019-09-19</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -435,18 +327,151 @@ LDAP 目录服务，由目录数据库和访问协议组成；</p>
     
     
     <h2 id="概念">概念</h2>
-<p>Grafana是一个开源可视化工具，可以在各种不同的数据存储上使用</p>
-<h3 id="详情">详情</h3>
-<p>从本质上讲，它是Graphite-web的一个功能丰富的替代品，可帮助用户轻松创建和编辑仪表板。它包含一个独特&hellip;</p>
+<ol>
+<li>建立在网络上的软件系统</li>
+<li>若干独立系统的集合</li>
+</ol>
+<h2 id="特性">特性</h2>
+<ol>
+<li>分布性： 分布式系统由多个节点组成， 地域上分散；</li>
+<li>自治性： 分布式系统的每个节点都包含自己的处理器和内存， 具备独立处理数据能力；</li>
+<li>并行&hellip;</li></ol>
   </div>
   <footer>
-    <a href="/blog/elk/grafana/" class="button big">阅读全文</a>
+    <a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/elk/">ELK</a></li>
+          <li><a class="article-terms-link" href="/categories/distribution-system/">Distribution System</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/windows/wsl/">Windows Subsystem for Linux</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-09-03 00:00:00 &#43;0000 UTC">2019-09-03</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="概述">概述</h2>
+<p>WSL： Windows Subsystem for Linux</p>
+<h2 id="目的">目的</h2>
+<ol>
+<li>terminal 界面定制</li>
+<li>支持ubuntu terminal</li>
+</ol>
+<h2 id="wsl安装">WSL安装</h2>
+<p><a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">reference</a></p>
+<ul>
+<li>启用Linux&hellip;</li></ul>
+  </div>
+  <footer>
+    <a href="/blog/windows/wsl/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/windows/">Windows</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/jenkins/jenkins%E5%AE%89%E8%A3%85/">Jenkins部署配置</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-08-22 00:00:00 &#43;0000 UTC">2019-08-22</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="docker安装">docker安装</h2>
+<ol>
+<li>docker-compose.yml</li>
+</ol>
+<pre><code>version: '2'
+services:
+  jenkins:
+          image:&hellip;</code></pre>
+  </div>
+  <footer>
+    <a href="/blog/jenkins/jenkins%E5%AE%89%E8%A3%85/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/jenkins/">Jenkins</a></li>
         
       
     </ul>
@@ -498,6 +523,9 @@ LDAP 目录服务，由目录数据库和访问协议组成；</p>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -514,9 +542,6 @@ LDAP 目录服务，由目录数据库和访问协议组成；</p>
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

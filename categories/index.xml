@@ -21,6 +21,24 @@
     </item>
     
     <item>
+      <title>Chrome</title>
+      <link>https://zylhorse.github.io/categories/chrome/</link>
+      <pubDate>Fri, 28 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/chrome/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hugo</title>
+      <link>https://zylhorse.github.io/categories/hugo/</link>
+      <pubDate>Sat, 07 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/hugo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Distribution System</title>
       <link>https://zylhorse.github.io/categories/distribution-system/</link>
       <pubDate>Mon, 11 Nov 2019 00:00:00 +0000</pubDate>
@@ -156,15 +174,6 @@
     </item>
     
     <item>
-      <title>Hugo</title>
-      <link>https://zylhorse.github.io/categories/hugo/</link>
-      <pubDate>Sat, 07 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://zylhorse.github.io/categories/hugo/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>MediaStream</title>
       <link>https://zylhorse.github.io/categories/mediastream/</link>
       <pubDate>Thu, 12 Apr 2018 00:00:00 +0000</pubDate>
@@ -224,6 +233,15 @@
       <pubDate>Tue, 17 May 2016 00:00:00 +0000</pubDate>
       
       <guid>https://zylhorse.github.io/categories/erlang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Markdown</title>
+      <link>https://zylhorse.github.io/categories/markdown/</link>
+      <pubDate>Thu, 07 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/markdown/</guid>
       <description></description>
     </item>
     

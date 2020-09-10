@@ -32,7 +32,7 @@ protobuf 文档  go get -u github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-d
 <meta name="twitter:description" content="reference google protocol-buffers protobuf 描述  语言无关、平台无关。即 ProtoBuf 支持 Java、C&#43;&#43;、Python 等多种语言，支持多个平台 高效。即比 XML 更小（3 ~ 10倍）、更快（20 ~ 100倍）、更为简单 扩展性、兼容性好。你可以更新数据结构，而不影响和破坏原有的旧程序  golang protobuf 配置  go get -u github.com/golang/protobuf/{protoc-gen-go,proto} go install google.golang.org/protobuf/cmd/protoc-gen-go  golang protobuf 结构化 读取proto文件转换成pb.go文件 protoc --proto_path=src --go_out=build/gen --go_opt=paths=source_relative src/foo.proto src/bar/baz.proto
 grpc proto 文件生成 protoc &ndash;go_out=plugins=grpc:. *.proto
 protobuf 文档  go get -u github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc protoc &ndash;doc_out=./doc &ndash;doc_opt=html,index.html proto/*.proto   后续研究protobuf 实现， 借鉴到消息处理模块"/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -258,16 +258,25 @@ protobuf 文档  go get -u github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-d
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Golang]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Golang"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -294,6 +303,9 @@ protobuf 文档  go get -u github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-d
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -310,9 +322,6 @@ protobuf 文档  go get -u github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-d
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

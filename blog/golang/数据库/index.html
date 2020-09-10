@@ -35,7 +35,7 @@ const (FormatTime = &quot;15:04:05&quot;FormatDate = &quot;2006-01-02&quot;Fo
 问题 字段为空 row.scan 遇到字段为空时， 变量赋值异常：can not convert null=&gt; *string 需要在sql语句中添加： ifnull/coalesce 指定默认空值
 添加 sql convert 函数 根据数据类型， 做转换
 const (FormatTime = &quot;15:04:05&quot;FormatDate = &quot;2006-01-02&quot;FormatDateTime = &quot;2006-01-02 15:04:05&quot;)var (Err_NilDests = errors.New(&quot;destinations required&quot;)Err_NilPointerDest = errors.New(&quot;destination not support nil pointer&quot;)Err_NotSupportDest = errors.New(&quot;not support destination&quot;))const Invalid_Id = 0func ConvertRow(row *sql.Row, dests ...interface{}) error {destLen := len(dests)if destLen == 0 {return Err_NilDests}refs := make([]interface{}, destLen)for i := range refs {var ref interface{}refs[i] = &amp;ref}err := row."/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -382,16 +382,25 @@ func convertValueFromDB(dest *reflect.Value, src interface{}) (err error) {
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Golang]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Golang"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -418,6 +427,9 @@ func convertValueFromDB(dest *reflect.Value, src interface{}) (err error) {
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -434,9 +446,6 @@ func convertValueFromDB(dest *reflect.Value, src interface{}) (err error) {
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

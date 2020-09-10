@@ -44,7 +44,7 @@
  不管任何操作都通过操作数栈进行， 可以无视具体的物理结构 指令紧凑，一两个字节即可存储 编译器实现简单 寄存器由硬件直接提供，不用进行寄存器分配 可移植性强  缺点：
  因为无论什么操作都要通过操作数栈， 所以速度慢  寄存器虚拟机 （register vm）  基于寄存器的虚拟机会分配虚拟寄存器，存放数据 进行运算时， 需要指定操作数的寄存器 虚拟机对寄存器进行解析，找出操作数的位置，然后取出操作数进行运算  寄存器虚拟机优缺点 优点：
  没有栈虚拟机在拷贝数据时进行大量的出入栈操作     栈式 VS 寄存器式 对比     指令条数 栈式 &gt; 寄存器式   代码尺寸 栈式 &lt; 寄存器式   移植性 栈式优于寄存器式   指令优化 栈式更不易优化   解释器执行速度 栈式解释器速度稍慢   代码生成难度 栈式简单   简易实现中的数据移动次数 栈式移动次数多    "/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -341,16 +341,25 @@
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Software&#32;Programming]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Software Programming"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -377,6 +386,9 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -393,9 +405,6 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

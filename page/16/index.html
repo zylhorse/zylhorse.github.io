@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -179,6 +179,247 @@
   <header>
   <div class="title">
     
+      <h2><a href="/blog/golang/chan/">Golang源码阅读-chan</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2017-08-11 00:00:00 &#43;0000 UTC">2017-08-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="描述">描述</h2>
+<p>channel 是golang实现CSP理念的重点。channel实现一个进程内不同协程之间的通信方式。</p>
+<h2 id="结构体">结构体</h2>
+<p>channel 实际上是一个环形队列，实际的队列空间就是在这个channel结构&hellip;</p>
+  </div>
+  <footer>
+    <a href="/blog/golang/chan/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/slice/">Golang源码阅读-slice</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2017-07-11 00:00:00 &#43;0000 UTC">2017-07-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="数组array">数组(array)</h2>
+<p>golang 中 array 在函数传参中是值传递， 修改不影响原数组；</p>
+<h2 id="切片slice">切片(slice)</h2>
+<ol>
+<li>切片数据结构很简单， 对底层数组进行了抽象，并提供相关操作方法；</li>
+<li>切片数据结构包含三&hellip;</li></ol>
+  </div>
+  <footer>
+    <a href="/blog/golang/slice/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/map/">Golang源码阅读-map</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2017-07-08 00:00:00 &#43;0000 UTC">2017-07-08</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h1 id="map">map</h1>
+<h2 id="声明">声明</h2>
+<pre><code>var m map[string]string
+</code></pre><p>map声明默认值是nil， 此时取值，返回的是value对应类型的零值</p>
+<h2 id="初始化">初始化</h2>
+<pre><code>// 声明之后必须初始化，才能使用
+m =&hellip;</code></pre>
+  </div>
+  <footer>
+    <a href="/blog/golang/map/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">Golang 代码规范</a></h2>
+    
+    
+      <p>代码编写，命名等规范</p>
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2017-07-07 00:00:00 &#43;0000 UTC">2017-07-07</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="gofmt工具">gofmt工具</h2>
+<p><code>gofmt</code> 格式化Go程序。使用<code>tabs</code>进行缩进，<code>blanks</code>进行对齐。</p>
+<h3 id="gofmt-参数">gofmt 参数</h3>
+<p><code>gofmt [flags] [path...]</code></p>
+<ul>
+<li><code>-cpuprofile</code>: 指定打印<code>cpu&hellip;</code></li></ul>
+  </div>
+  <footer>
+    <a href="/blog/golang/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
       <h2><a href="/blog/golang/%E5%B8%B8%E7%94%A8%E7%BD%91%E5%9D%80/">golang常用网址</a></h2>
     
     
@@ -236,240 +477,6 @@
 </article>
 
       
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/golang/ide/">GoLand激活</a></h2>
-    
-    
-      <p>激活goland</p>
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2017-06-06 00:00:00 &#43;0000 UTC">2017-06-06</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="破解补丁">破解补丁</h2>
-<p>链接：https://pan.baidu.com/s/1TpmrZ0rNMKSaDxhD1t1Jow 
-提取码：mont</p>
-<h3 id="步骤">步骤</h3>
-<ol>
-<li>先关闭golang，并将&hellip;</li></ol>
-  </div>
-  <footer>
-    <a href="/blog/golang/ide/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/ide/">IDE</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/data-structure/huffman/">数据结构-Huffman</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2017-05-28 00:00:00 &#43;0000 UTC">2017-05-28</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    
-  </div>
-  <footer>
-    <a href="/blog/data-structure/huffman/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/data-structure/">Data Structure</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/network/hpack/">HPACK工作原理</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2017-05-27 00:00:00 &#43;0000 UTC">2017-05-27</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="原理">原理</h2>
-<ol>
-<li>HAPCK使用两个索引表（静态索引表和动态索引表）把http的请求头映射到索引值</li>
-<li>如果请求头在静态索引表中不存在， 则对其进行哈夫曼（huffman）编码， 并缓存到动态索引表中， 从而达到压&hellip;</li></ol>
-  </div>
-  <footer>
-    <a href="/blog/network/hpack/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/network/">Network</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/network/http2/">http2协议解析及解决哪些问题</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2017-05-26 00:00:00 &#43;0000 UTC">2017-05-26</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="http超文本传输协议">http超文本传输协议</h2>
-<ol>
-<li>http是简单的请求-响应协议，指定客户端发送数据格式以及服务器响应的数据格式</li>
-<li>http是一次性连接，每次连接处理一个请求</li>
-<li>http是无状态连接，&hellip;</li></ol>
-  </div>
-  <footer>
-    <a href="/blog/network/http2/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/network/">Network</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/http/">HTTP</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
       <div class="pagination">
           
               <a href="/page/15/" class="button left"><span>上页</span></a>
@@ -502,6 +509,9 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -518,9 +528,6 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

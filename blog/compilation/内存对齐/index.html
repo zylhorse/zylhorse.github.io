@@ -26,7 +26,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="struct为什么会有字节对齐这个概念"/>
 <meta name="twitter:description" content="结构体struct  struct 是一种复合数据类型， 它是由基本数据类型组合而成(char, int, float, ...) 编译器将struct中的成员按其alignment分配空间，各个成员在内存中顺序存储 struct中的第一个成员地址为struct的首地址 struct中的每个成员地址具有对齐的特性，如int32其起始地址应该为4的倍数  字节对齐  计算机内存空间按照byte划分 各种类型数据按照规则在内存空间上排列，数据只能从特定的内存地址进行存取  为什么  某些cpu在访问没有进行对齐的变量时，会报错。比如oracle sparc系统 比较常见的没有字节对齐，会损失数据的存取效率。  大部分平台读内存都是从偶地址开始 如果int32存放在偶地址，则一个读周期就可以读出数据 如果放在奇地址，则需要2个读周期    规则  基本类型自身的对齐值  char 1byte short 2byte int/float/double 等 4byte   结构体对齐值 为其成员中对齐值最大的那个 指定/取消对齐值  指定：  #pragma pack (value) __attribute__ ((__packed__))   取消: #pragma pack ()    代码示例 struct A{int a;char b;short c;};struct B{char b;int a;short c;};#pragma pack (2)struct C{char b;int a;short c;};#pragma pack ()#pragma pack (1)struct D{char b;int a;short c;};#pragma pack ()结果是:sizeof(strcut A)值为8sizeof(struct B)的值却是12sizeof(struct C)值是8。sizeof(struct D)值为7。"/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -307,16 +307,25 @@ sizeof(struct D)值为7。
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Compilation]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Compilation"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -343,6 +352,9 @@ sizeof(struct D)值为7。
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -359,9 +371,6 @@ sizeof(struct D)值为7。
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

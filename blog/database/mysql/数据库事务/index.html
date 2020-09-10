@@ -38,7 +38,7 @@
 一致性原理 通过数据库undo log 实现
 持久性原理 通过数据库redo log实现。事务提交前会把新数据备份到redo log中并持久化。 当系统崩溃时，虽然数据没有持久化到数据库， 但是redo log已经持久化。 系统可以根据redo log将数据恢复到最新的。
 隔离性原理  隔离性通过数据库锁机制实现 分为四个级别： 读未提交， 读已提交， 可重复读， 可序列化 mysql 默认为可重复读 oracle 默认为读已提  读未提交（read uncommitted）  事务在读数据的时候并未对数据进行加锁。 事务在发生更新数据的瞬间，必须先对其加行级共享锁，直到事务结束释放。  读已提交（read committed）  事务对当前读取的数据加行级共享锁， 一旦读取完成立即释放该锁。 事务在发生更新数据的瞬间，必须先对其加行级排他锁，直到事务结束释放。  可重复读（repeatable reads）  事务对当前读取的数据加行级共享锁， 直到事务结束才释放。 事务在发生更新数据的瞬间，必须先对其加行级排他锁，直到事务结束释放  可序列化（serializable）  事务在读取数据时，必须先对其加 表级共享锁 ，直到事务结束才释放； 事务在更新数据时，必须先对其加 表级排他锁 ，直到事务结束才释放。  并行事务问题  脏读： 事务A 读取 事务B未提交的修改。 不可重复读： 事务A连续读的过程，事务B写入一次， 导致A前后读取不一致 丢失更新： 事务AB都写入数据，导致A写入数据被B覆盖 幻读： 事务A修改表内数据时，事务B向表内插入一条数据，　A修改完发现表内数据并没有全部被修改。  mvcc　多版本并发控制  mvcc处理并发能力强，但是系统开销大 mvcc存储的基本row包含一些额外的存储信息： DATA_TRX_ID(事务id)， DATA_ROLL_PTR（undo log记录的原数据指针）, DB_ROW_ID（行索引id）, DELETE BIT（标记是否被删除）  "/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -302,16 +302,25 @@
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Database]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Database"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -338,6 +347,9 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -354,9 +366,6 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

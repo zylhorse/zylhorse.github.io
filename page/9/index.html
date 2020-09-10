@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -179,14 +179,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/database/mongo/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">MongoDB数据库安装配置</a></h2>
+      <h2><a href="/blog/log-system/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/">日志业务系统架构设计</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2018-08-02 00:00:00 &#43;0000 UTC">2018-08-02</time>
+        <time datetime="2018-10-27 00:00:00 &#43;0000 UTC">2018-10-27</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -201,18 +201,22 @@
   <div class="content">
     
     
-    <h2 id="远程访问">远程访问</h2>
-<p>修改 /etc/mongod.conf: bindIpAll:true</p>
-
+    <h2 id="日志业务">日志业务</h2>
+<p>两种日志收集架构</p>
+<ol>
+<li>应用产生日志-&gt; 根据大小/时间 写入文件-&gt; rotation 日志文件 -&gt; 定期查看/定期删除</li>
+<li>应用产生日志-&gt; 传输 -&gt; 过滤/转&hellip;</li></ol>
   </div>
   <footer>
-    <a href="/blog/database/mongo/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="button big">阅读全文</a>
+    <a href="/blog/log-system/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
+          <li><a class="article-terms-link" href="/categories/log-system/">Log System</a></li>
+        
+          <li><a class="article-terms-link" href="/categories/elk/">ELK</a></li>
         
       
     </ul>
@@ -221,7 +225,7 @@
     <ul class="tags">
       
         
-          <li><a class="article-terms-link" href="/tags/mongodb/">MongoDB</a></li>
+          <li><a class="article-terms-link" href="/tags/log/">Log</a></li>
         
       
     </ul>
@@ -236,14 +240,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/database/mongo/sql%E8%AF%AD%E5%8F%A5/">MongoDB数据库常用sql语句</a></h2>
+      <h2><a href="/blog/golang/golang-%E8%BF%9B%E9%98%B6/">Golang代码开发需要注意的性能优化问题</a></h2>
     
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2018-08-02 00:00:00 &#43;0000 UTC">2018-08-02</time>
+        <time datetime="2018-10-10 00:00:00 &#43;0000 UTC">2018-10-10</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -258,126 +262,14 @@
   <div class="content">
     
     
-    <h2 id="备份数据库">备份数据库</h2>
-<p>mongodump -h dbhost -d dbname -o dumpdir</p>
-<h2 id="备份数据库表">备份数据库表</h2>
-<pre><code>mongoexport -d dbname -c collectionname -o&hellip;</code></pre>
+    <h2 id="优化">优化</h2>
+<ol>
+<li>string bytes 互转，可以使用unitptr</li>
+<li>map 会按需扩张，需要内存拷贝和重新hash。 尽量预设定容量空间；</li>
+<li>defer 会多次函数调用参数复制，缓存等问题。所以除了异常捕获&hellip;</li></ol>
   </div>
   <footer>
-    <a href="/blog/database/mongo/sql%E8%AF%AD%E5%8F%A5/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/mongodb/">MongoDB</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/network/websocket/">从GW和IM实战描述websocket协议</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2018-07-20 00:00:00 &#43;0000 UTC">2018-07-20</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h3 id="描述">描述</h3>
-<p>用于在单个tcp连接上进行全双工通信的协议；RFC6455标准；</p>
-
-  </div>
-  <footer>
-    <a href="/blog/network/websocket/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/network/">Network</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/websocket/">Websocket</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/golang/graceful/">Golang实现服务优雅的重启</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2018-07-13 00:00:00 &#43;0000 UTC">2018-07-13</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <p><a href="https://grisha.org/blog/2014/06/03/graceful-restart-in-golang/">https://grisha.org/blog/2014/06/03/graceful-restart-in-golang/</a></p>
-
-  </div>
-  <footer>
-    <a href="/blog/golang/graceful/" class="button big">阅读全文</a>
+    <a href="/blog/golang/golang-%E8%BF%9B%E9%98%B6/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
@@ -407,16 +299,14 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/hugo/hugo/">Hugo使用手册</a></h2>
+      <h2><a href="/blog/docker/%E9%97%AE%E9%A2%98/">Docker问题集锦</a></h2>
     
-    
-      <p>记录Hugo使用过程中遇到的问题</p>
     
   </div>
 </header>
   <div class="meta">
     <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2018-07-07 00:00:00 &#43;0000 UTC">2018-07-07</time>
+        <time datetime="2018-09-15 00:00:00 &#43;0000 UTC">2018-09-15</time>
     </p>
     
         <p title="Author" class="fas fa-user">zylhorse
@@ -431,22 +321,146 @@
   <div class="content">
     
     
-    <h2 id="bind-ip">bind ip</h2>
-<p>使本地可被其他机器访问： <code>hugo --bind x.x.x.x</code></p>
-<blockquote>
-<p>x.x.x.x 可以是0.0.0.0 也可以是本机ip</p>
-</blockquote>
-<h2 id="添加文章引用">添加文章引用</h2>
-<p>Hugo 提供了两种 shortcode 用&hellip;</p>
+    <ul>
+<li>docker 解决 x509: certificate signed by unknown authority
+<pre><code># vim /etc/docker/daemon.json
+{&hellip;</code></pre></li></ul>
   </div>
   <footer>
-    <a href="/blog/hugo/hugo/" class="button big">阅读全文</a>
+    <a href="/blog/docker/%E9%97%AE%E9%A2%98/" class="button big">阅读全文</a>
     <div class="stats">
   
     <ul class="categories">
       
         
-          <li><a class="article-terms-link" href="/categories/hugo/">Hugo</a></li>
+          <li><a class="article-terms-link" href="/categories/docker/">Docker</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/docker/docker/">Docker在linux上部署和配置</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2018-09-04 00:00:00 &#43;0000 UTC">2018-09-04</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h1 id="docker">Docker</h1>
+<h2 id="ubuntu安装">Ubuntu安装</h2>
+<p><a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">下载地址</a></p>
+<h2 id="查看容器">查看容器</h2>
+<p><code>$ sudo docker ps -a</code></p>
+<h2 id="查看镜像">查看镜像</h2>
+<p><code>$ sudo docker images</code></p>
+<h2 id="设置容器重启策略">设置容器重启策略</h2>
+<p><code>$ docker run xxx&hellip;</code></p>
+  </div>
+  <footer>
+    <a href="/blog/docker/docker/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/docker/">Docker</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/stories/%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E4%B8%96%E7%95%8C%E8%A7%82/">方法论和世界观</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2018-08-20 00:00:00 &#43;0000 UTC">2018-08-20</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="方法论">方法论</h2>
+<pre><code>是人们认识世界改变世界的的根本方法。
+</code></pre>
+<h2 id="世界观">世界观</h2>
+<pre><code>通俗讲就是”观世界“， 是人们对世界的总体看法和根本观点。
+</code></pre>
+<h1 id="关系">关系</h1>
+<blockquote>
+<p>世界观主要解决世界”是什么“的问题，方法论主要解决”怎么办“的问题。<br>
+&hellip;</p></blockquote>
+  </div>
+  <footer>
+    <a href="/blog/stories/%E6%96%B9%E6%B3%95%E8%AE%BA%E5%92%8C%E4%B8%96%E7%95%8C%E8%A7%82/" class="button big">阅读全文</a>
+    <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/stories/">Stories</a></li>
         
       
     </ul>
@@ -498,6 +512,9 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -514,9 +531,6 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

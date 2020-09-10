@@ -35,7 +35,7 @@ defer 源码 type _defer struct {siz int32 //参数大小started bool // defer
 defer 性能  defer 性能不高，每次defer耗时20ns； defer 会涉及到内存、缓存、多次调用，所以有一定性能问题； 使用注意： 除了需要异常捕获，必须使用defer；其他资源回收，可以在判断失败后，使用goto跳转到资源回收的代码； 对于竞争资源，在使用完成后立刻进行释放，这样才可以最优的使用竞争资源。  defer原理 每一个defer在编译的时候就会转换成deferproc，编译器会在函数return之前插入deferreturn。
  调用deferproc，这里会进行参数拷贝； 执行deferreturn，这里会提取信息；  defer goroutine defer 会被添加到G _defer链表的首部，所以defer时一个后进先出的链表； G 退出时会遍历G上的defer 链表。
 defer 源码 type _defer struct {siz int32 //参数大小started bool // defer是否被调用过的标识sp uintptr // sp at time of deferpc uintptrfn *funcval // defer 后面跟的function_panic *_panic // panic that is running deferlink *_defer // 链表结构}"/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -276,16 +276,25 @@ G 退出时会遍历G上的defer 链表。</p>
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Golang]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Golang"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -312,6 +321,9 @@ G 退出时会遍历G上的defer 链表。</p>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -328,9 +340,6 @@ G 退出时会遍历G上的defer 链表。</p>
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

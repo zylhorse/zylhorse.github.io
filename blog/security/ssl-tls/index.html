@@ -38,7 +38,7 @@
  version： 支持最高TLS协议版本, 从低到高：SSLV1、SSLV3、TLSV1、TLSV1.1、TLSV1.2 cipher suites： 客户端支持的加密套件列表： Kx = Key Exchange 密钥协商算法Au = Authentication 身份认证算法Enc = Encrypt 加密算法Mac = Message Authentication Code 信息摘要算法 compression methods：压缩算法列表，用于后续信息压缩传输 random_C：客户端随机数，用于后续密钥生成 extensions： 扩展字段，支持协议与算法相关参数及辅助信息 session id： 会话id，后续连接到同一台服务器，可以避免完全握手；  如果客户端时第一次连接服务器，则该字段为空。
    服务器ServerHello 服务端返回协商的结果信息， 包含：
  version： 选择使用的TLS协议版本 cipher suite： 选择使用的加密套件 compression method： 选择使用的压缩算法 random_S: 服务器随机数 ，用于后续密钥生成 session id： 会话id  握手成功，服务器会缓存session 参数到tls缓存中， 并生成对应的session id 返回该session id 给客户端，客户端将session id存储在浏览器并设置时限 后续连接到同一台服务器，则发送session id， 服务器验证后， 使用以前使用过的对称密钥来恢复session"/>
-<link rel="stylesheet" href="/css/bundle.min.0289dd227e2b4dca5852f7be610a9010b494ddbb7d72f2153e7b2c8e55d4b462.css" integrity="sha256-AondIn4rTcpYUve&#43;YQqQELSU3bt9cvIVPnssjlXUtGI="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -355,16 +355,25 @@ Mac = Message Authentication Code 信息摘要算法
   
     <hr/>
     
-  <article class="ucomments">
-    <script src="https://utteranc.es/client.js"
-            repo=zylhorse/zylhorse.github.io
-            issue-term=title
-            label=[Security]
-            theme=github-light
-            crossorigin="anonymous"
-            async>
+    <div id="gitalk-container" class="gcomments"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script>
+      const gitalk = new Gitalk({
+        clientID: "299d431ca76eb5de15ea",
+        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
+        repo: "zylhorse/zylhorse.github.io",
+        owner: "zylhorse",
+        admin: ["zylhorse"],
+        id: location.pathname,
+        labels: ["Security"],
+        perPage:  20 ,
+        pagerDirection: "last",
+      });
+
+      gitalk.render('gitalk-container');
     </script>
-  </article>
+
 
 
   
@@ -391,6 +400,9 @@ Mac = Message Authentication Code 信息摘要算法
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
+          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
+          
+        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -407,9 +419,6 @@ Mac = Message Authentication Code 信息摘要算法
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
-          
-        <li>
-          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>
