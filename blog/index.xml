@@ -2229,5 +2229,14 @@ Well behaved,ill behaved  well behaved:如果程序执行不出现forbidden beha
       <description>有一天 你会发现当离开这个有爱的地方时，最后 会再做些什么 。。。</description>
     </item>
     
+    <item>
+      <title>Windows SSH server 配置</title>
+      <link>https://zylhorse.github.io/blog/windows/win-ssh/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/windows/win-ssh/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
