@@ -32,7 +32,7 @@
 <meta name="twitter:description" content="代码搜索路径  Erlang运行时系统使用一种代码自动载入机制，要让它正确工作，必须设置一些搜索路径来找到正确版本代码。 代码的载入是按需进行的，当系统尝试调用的函数属于一个尚未加载的模块时，就会出现异常，系统尝试查找缺失模块代码文件。代码载入器会在代码载入路径所有目录里查找缺失模块代码文件。只要找到相符的文件，搜索停止，载入该文件的目标代码。 以下是两个最常用来操作载入路径的函数：   -spec code::add_patha(Dir) =&gt; true | {error, bad_directory}. 向载入路径的开头添加一个新目录Dir。
   -spec code::add_pathz(Dir) =&gt; true | {error, bad_directory}. 向载入路径的末尾添加一个新目录Dir。
   通常的惯例是将这些命令放到主目录下的一个.erlang文件中。 也可以在启动erl时添加代码搜索路径：  $ erl -pa Dir1 -pa Dir2 ... -pz Dirk1 -pz Dirk2-pa: 把Dir添加到搜索路径的开头-pz:把Dir添加到搜索路径的结尾在系统启动时执行.erlang里的命令  启动erlang时，它会首先读取并执行.erlang中的所有命令。当前目录下的.erlang优先级高于主目录下的.erlang Erlang认为的主目录的位置获取:init:get_argument(home). code:clash()会报告代码搜索路径里面所有重复的模块。  运行程序的不同方式 程序 hello.erl-module(hello).-export([start/0]).start() -&gt; io:format(&quot;Hello World ~n&quot;).在erlang shell里面编译运行： 1&gt;c(hello).2&gt;hello:start().快速脚本编程：  在命令行中执行任意的erlang函数：  erl -eval &#39;io:format(&quot;Memory: ~p~n&quot;, [erlang:memory(total)])."/>
-<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.1e02bb992195ca398d746df5f9dd547068b745164f5e47eab62b93e6f424e2f1.css" integrity="sha256-HgK7mSGVyjmNdG31&#43;d1UcGi3RRZPXkfqtiuT5vQk4vE="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -89,62 +89,13 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
-  
-    <footer>
-      <ul class="socnet-icons">
-        
-
-        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
-
-      </ul>
-    </footer>
   
 </section>
 
@@ -395,24 +346,16 @@ clean:
   
     <hr/>
     
-    <div id="gitalk-container" class="gcomments"></div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-    <script>
-      const gitalk = new Gitalk({
-        clientID: "299d431ca76eb5de15ea",
-        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
-        repo: "zylhorse.github.io",
-        owner: "zylhorse",
-        admin: ["zylhorse"],
-        id: location.pathname,
-        labels: ["Erlang"],
-        perPage:  20 ,
-        pagerDirection: "last",
-      });
-
-      gitalk.render('gitalk-container');
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Erlang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
     </script>
+  </article>
 
 
 
@@ -440,9 +383,6 @@ clean:
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
-          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
-          
-        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -459,6 +399,9 @@ clean:
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>
@@ -494,6 +437,9 @@ clean:
             <a href="/tags/chrome/">chrome<span class="count">1</span></a>
             
           <li>
+            <a href="/tags/diagnostics/">diagnostics<span class="count">2</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -504,9 +450,6 @@ clean:
             
           <li>
             <a href="/tags/kafka/">kafka<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
             
           </li>
         </ul>

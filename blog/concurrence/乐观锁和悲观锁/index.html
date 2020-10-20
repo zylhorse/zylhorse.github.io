@@ -29,7 +29,7 @@
 <meta name="twitter:title" content="并发编程-乐观锁和悲观锁"/>
 <meta name="twitter:description" content="乐观锁 乐观锁假设数据一般不会修改， 所以在数据提交修改的时候， 才会对数据冲突进行检查；如果冲突则交给用户决定如何去做；对数据竞争持乐观态度
 乐观锁实现 cas（compare and swap）  CAS机制当中使用了3个基本操作数：内存地址V，旧的预期值A，要修改的新值B。 更新一个变量的时候，只有当变量的预期值A和内存地址V当中的实际值相同时，才会将内存地址V对应的值修改为B。 CAS一般需要加for循环，实现类似自旋乐观锁。  mvcc（Multi-Version Concurrency Control）  每行数据都增加两个隐藏字段，一个记录创建的版本号，一个记录删除的版本号 在多版本并发控制中，为了保证数据操作在多线程过程中，保证事务隔离的机制，降低锁竞争的压力，保证较高的并发量。 在每开启一个事务时，会生成一个事务的版本号，被操作的数据会生成一条新的数据行（临时），但是在提交前对其他事务是不可见的，对于数据的更新（包括增删改）操作成功，会将这个版本号更新到数据的行中，事务提交成功，将新的版本号更新到此数据行中，这样保证了每个事务操作的数据，都是互不影响的，也不存在锁的问题。  悲观锁 悲观锁具有强烈的独占性和排他性；一般认为数据被并发修改的概率较大，所以需要在修改前先加锁；对数据竞争持态度。"/>
-<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.1e02bb992195ca398d746df5f9dd547068b745164f5e47eab62b93e6f424e2f1.css" integrity="sha256-HgK7mSGVyjmNdG31&#43;d1UcGi3RRZPXkfqtiuT5vQk4vE="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -86,62 +86,13 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
-  
-    <footer>
-      <ul class="socnet-icons">
-        
-
-        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
-
-      </ul>
-    </footer>
   
 </section>
 
@@ -239,7 +190,7 @@
   
   <div class="pagination">
     
-      <a href="/blog/linux/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BA%90/" class="button left"><span>linux依赖包的离线打包和安装</span></a>
+      <a href="/blog/linux/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BA%90/" class="button left"><span>Ubuntu依赖包的离线打包和安装</span></a>
     
     
       <a href="/blog/concurrence/%E7%BA%BF%E7%A8%8B%E9%94%81/" class="button right"><span>并发编程-线程锁和死锁</span></a>
@@ -248,24 +199,16 @@
   
     <hr/>
     
-    <div id="gitalk-container" class="gcomments"></div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-    <script>
-      const gitalk = new Gitalk({
-        clientID: "299d431ca76eb5de15ea",
-        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
-        repo: "zylhorse.github.io",
-        owner: "zylhorse",
-        admin: ["zylhorse"],
-        id: location.pathname,
-        labels: ["Concurrence"],
-        perPage:  20 ,
-        pagerDirection: "last",
-      });
-
-      gitalk.render('gitalk-container');
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Concurrence
+            theme=github-light
+            crossorigin="anonymous"
+            async>
     </script>
+  </article>
 
 
 
@@ -293,9 +236,6 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
-          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
-          
-        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -312,6 +252,9 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>
@@ -347,6 +290,9 @@
             <a href="/tags/chrome/">chrome<span class="count">1</span></a>
             
           <li>
+            <a href="/tags/diagnostics/">diagnostics<span class="count">2</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -357,9 +303,6 @@
             
           <li>
             <a href="/tags/kafka/">kafka<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
             
           </li>
         </ul>

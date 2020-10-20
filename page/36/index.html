@@ -18,48 +18,12 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.1e02bb992195ca398d746df5f9dd547068b745164f5e47eab62b93e6f424e2f1.css" integrity="sha256-HgK7mSGVyjmNdG31&#43;d1UcGi3RRZPXkfqtiuT5vQk4vE="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
     
 
-  <div id="theme-message" style="background-color:#3c3b3b;color:#f4f4f4;margin:auto auto;padding:.25em 2em;width:75%;">
-    <p style="text-align:center;">This message, related to the development of the theme, only displays on the
-      <code>localhost</code> homepage to notify you of any important theme changes.</p>
-      <hr>
-      <h5 style="color:#f4f4f4;text-align:center;"><i class="fas fa-exclamation-triangle"></i>Version 2.0.0 - July 20, 2020<i class="fas fa-exclamation-triangle"></i></h5>
-    <p>Below are the following changes that <em>could</em> be breaking changes for your site. For more details on any change, please refer to <a href="https://github.com/pacollins/hugo-future-imperfect-slim/pull/154">PR #154</a>.</p>
-<p>The major breaking change is:</p>
-<ol>
-<li>Users that have front matter that utilize <code>images</code> (backwards compatibility for <code>featured</code> and associated parameters still remains) <em>will</em> need to adjust from <code>[images]=&quot;SRC&quot;</code> to the new format.</li>
-</ol>
-<pre><code>[[images]]
-    src = &quot;&quot; // Link to image
-    alt = &quot;&quot; // Alt text for image
-    stretch = // Optional: See screenshots for referenced values and outcomes
-</code></pre><p>If you utilize any of the following, there <em>might</em> be a breaking:</p>
-<ol>
-<li>User custom templates <em>may</em> require adjustment.</li>
-<li>User custom i18n languages, or custom templates referencing i18n translations <em>may</em> require adjustment.</li>
-<li>User custom template for comments <em>will</em> require adjustment <em>if</em> it uses the theme&rsquo;s CSS and/or JS.</li>
-<li>User custom CSS <em>may</em> need to adjust due to a variety of class name changes and specificity changes.</li>
-</ol>
-<p>While I realize this is inconvenient, I hope that it is worth it to you in the long run. Thanks for using the theme, and feel free to submit issues as needed.</p>
-
-    <div style="text-align:center;">
-      <button onclick="removeBox()" class="button" style="color:#f4f4f4;margin-bottom:1em;">Close Notification Until Next Update</button>
-    </div>
-    <script>
-      if (window.location.href.indexOf('localhost:') < 1 || window.localStorage.getItem('HFIS-version') == '2.0.0') {
-        document.getElementsByTagName("body")[0].removeChild(document.getElementById("theme-message"));
-      }
-      function removeBox() {
-        window.localStorage.setItem('HFIS-version', '2.0.0');
-        document.getElementsByTagName("body")[0].removeChild(document.getElementById("theme-message"));
-      }
-    </script>
-  </div>
 <header id="site-header">
   <nav id="site-nav">
     <h1 class="nav-title">
@@ -111,62 +75,13 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
-  
-    <footer>
-      <ul class="socnet-icons">
-        
-
-        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
-
-      </ul>
-    </footer>
   
 </section>
 
@@ -179,7 +94,154 @@
   <header>
   <div class="title">
     
-      <h2><a href="/blog/linux/ubuntu-%E5%AE%89%E8%A3%85/">ubutnu本地安装实操</a></h2>
+      <h2><a href="/blog/regexp/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">常用的正则表达式</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2014-05-03 00:00:00 &#43;0000 UTC">2014-05-03</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="替换文件名中非法字符">替换文件名中非法字符</h2>
+<pre><code>#include &lt;regex&gt;
+string fname = regex_replace(filename,&hellip;</code></pre>
+  </div>
+  <footer>
+    <a href="/blog/regexp/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/compilation/makefile/">Makefile是怎样让make工作的</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2014-04-26 00:00:00 &#43;0000 UTC">2014-04-26</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="make版本">make版本</h2>
+<p><code>GNU make 3.8.1</code><br>
+<code>Makefile</code>文件告诉<code>make</code>命令怎样去编译和链接程序</p>
+<h2 id="makefile的规则">Makefile的规则</h2>
+<pre><code>target ... : prerequisites ...&hellip;</code></pre>
+  </div>
+  <footer>
+    <a href="/blog/compilation/makefile/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/software-programming/%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE/">常见的开源许可协议和注意事项</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2014-04-11 00:00:00 &#43;0000 UTC">2014-04-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="gplgnu-general-public-license">GPL(GNU General Public License)</h2>
+<p>GPL 出发点是代码的开源/免费使用和引用/修改/衍生代码的开源/免费使用， 不允许修改/衍生后的代码作为比原的商业软件发布和销售。  &hellip;</p>
+  </div>
+  <footer>
+    <a href="/blog/software-programming/%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/windows/%E6%B8%85%E7%90%86%E7%B3%BB%E7%BB%9F%E7%BC%93%E5%AD%98%E5%9B%BE%E6%A0%87/">Windows中文件的最新图标刷新不出来问题</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2014-03-15 00:00:00 &#43;0000 UTC">2014-03-15</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="磁盘上的图片被覆盖后文件预览还是旧的">磁盘上的图片被覆盖后文件预览还是旧的</h2>
+<p>reseticon.bat</p>
+<pre><code>//rem 关闭Windows外壳程序explorer
+ 
+taskkill /f /im explorer.exe&hellip;</code></pre>
+  </div>
+  <footer>
+    <a href="/blog/windows/%E6%B8%85%E7%90%86%E7%B3%BB%E7%BB%9F%E7%BC%93%E5%AD%98%E5%9B%BE%E6%A0%87/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/linux/%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/">linux磁盘管理和lvm磁盘扩容</a></h2>
     
     
   </div>
@@ -201,281 +263,18 @@
   <div class="content">
     
     
-    <h1 id="ubuntu-u盘安装">ubuntu U盘安装</h1>
-<p>遇到类似加载镜像文件问题，最简单粗暴的解决方案就是把挂载ubuntu server镜像文件至cdrom目录</p>
-<p>具体步骤如下：</p>
-<ol>
+    <p><a href="https://blog.51cto.com/12348890/2092339">reference</a></p>
+<h1 id="磁盘管理">磁盘管理</h1>
+<h2 id="硬盘分区--hard-disk-add-new-partition">硬盘分区 | Hard disk add new partition</h2>
+<ul>
 <li>
-<p>复制安装镜像至U盘</p>
-</li>
-<li>
-<p>进入ubuntu控制台，&hellip;</p></li></ol>
-  </div>
-  <footer>
-    <a href="/blog/linux/ubuntu-%E5%AE%89%E8%A3%85/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/github/git/">git工作原理、常用命令、常见问题及解决方案</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2014-01-28 00:00:00 &#43;0000 UTC">2014-01-28</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h1 id="git">git</h1>
-<h2 id="使用方法">使用方法</h2>
-<h3 id="创建commit-tag">创建commit tag</h3>
-<pre><code>git tag -a &lt;tagname&gt; &lt;commitId&gt; -m &quot;&lt;备注信息&gt;&quot;
-git&hellip;</code></pre>
-  </div>
-  <footer>
-    <a href="/blog/github/git/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/git/">git</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/network/%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/">从每层协议及物理设备了解网络模型</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2013-12-16 00:00:00 &#43;0000 UTC">2013-12-16</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="osi七层模型">OSI七层模型</h2>
-<ol>
-<li>物理层Physical： IEEE 802.1A、IEEE 802.2、IEEE 802.11</li>
-<li>物理链路层Data Link:&hellip;</li></ol>
-  </div>
-  <footer>
-    <a href="/blog/network/%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/network/">Network</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/software-programming/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">软件设计模式详解和代码示例</a></h2>
-    
-    
-      <p>总结软件设计模式，逐渐补充代码示例</p>
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2013-12-01 00:00:00 &#43;0000 UTC">2013-12-01</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="概念">概念</h2>
-<p>设计模式是在面向对象开发设计中反复出现问题的解决方案的总结。</p>
-<h2 id="设计原则">设计原则</h2>
+<p>显示硬盘及所属分区情况。在终端窗口中输入如下命令：
+<code>$ sudo fdisk -l</code></p>
 <ul>
-<li>对接口编程而不是对实现编程</li>
-<li>优先使用对象编程而不是继承</li>
-</ul>
-<h2 id="设计模式原则">设计模式原则</h2>
-<ul>
-<li>针对接口编程而不是对实现编程</li>
-<li>优先使用对象组合&hellip;</li></ul>
+<li>显示当前的&hellip;</li></ul></li></ul>
   </div>
   <footer>
-    <a href="/blog/software-programming/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/software-programming/">Software Programming</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/compilation/%E7%BC%96%E8%AF%91%E4%BC%98%E5%8C%96/">编译器为什么要对代码做自动优化</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2013-11-07 00:00:00 &#43;0000 UTC">2013-11-07</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="概括">概括</h2>
-<ul>
-<li>高级编程语言提供的函数、条件语句、循环这样的抽象编程结构极大的提高了编程效率，然而，这也潜在的使性能显著下降。</li>
-<li>编译器尝试自动优化代码以提高性能，编译器可以转化循环、条件语句和递归函数、消除代&hellip;</li></ul>
-  </div>
-  <footer>
-    <a href="/blog/compilation/%E7%BC%96%E8%AF%91%E4%BC%98%E5%8C%96/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/compilation/">Compilation</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
+    <a href="/blog/linux/%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/" class="button big">阅读全文</a>
   </footer>
 </article>
 
@@ -512,9 +311,6 @@ git&hellip;</code></pre>
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
-          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
-          
-        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -531,6 +327,9 @@ git&hellip;</code></pre>
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>
@@ -566,6 +365,9 @@ git&hellip;</code></pre>
             <a href="/tags/chrome/">chrome<span class="count">1</span></a>
             
           <li>
+            <a href="/tags/diagnostics/">diagnostics<span class="count">2</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -576,9 +378,6 @@ git&hellip;</code></pre>
             
           <li>
             <a href="/tags/kafka/">kafka<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
             
           </li>
         </ul>

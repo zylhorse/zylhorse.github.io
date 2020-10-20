@@ -54,6 +54,26 @@
     </item>
     
     <item>
+      <title>TCP/UDP端口扫描工具</title>
+      <link>https://zylhorse.github.io/blog/network/%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/</link>
+      <pubDate>Tue, 15 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/network/%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/</guid>
+      <description>译注 该Nmap参考指南中文版由Fei Yang fyang1024@gmail.com和Lei Lililei_721@6611.org 从英文版本翻译而来。 我们希望这将使全世界使用中文的人们更了解Nmap，但我们不能保证该译本和官方的 英文版本一样完整，也不能保证同步更新。 它可以在Creative Commons Attribution License下被修改并重新发布。
+选项概要 当Nmap不带选项运行时，该选项概要会被输出，最新的版本在这里 http://www.insecure.org/nmap/data/nmap.usage.txt。
+它帮助人们记住最常用的选项，但不能替代本手册其余深入的文档，一些晦涩的选项甚至不在这里。
+Usage: nmap [Scan Type(s)] [Options] {target specification} TARGET SPECIFICATION:
+Can pass hostnames, IP addresses, networks, etc.
+Ex: scanme.nmap.org, microsoft.com/24, 192.168.0.1; 10.0-255.0-255.1-254
+-iL : Input from list of hosts/networks
+-iR : Choose random targets
+&amp;ndash;exclude &amp;lt;host1[,host2][,host3],&amp;hellip;&amp;gt;: Exclude hosts/networks
+&amp;ndash;excludefile &amp;lt;exclude_file&amp;gt;: Exclude list from file
+HOST DISCOVERY:
+-sL: List Scan - simply list targets to scan</description>
+    </item>
+    
+    <item>
       <title>TCP-数据传输可靠性</title>
       <link>https://zylhorse.github.io/blog/network/tcp/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/</link>
       <pubDate>Sat, 06 Dec 2014 00:00:00 +0000</pubDate>

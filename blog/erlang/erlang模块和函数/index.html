@@ -35,7 +35,7 @@
   erlang虚拟机执行代码的原理：http://www.mamicode.com/info-detail-671999.html  函数  函数由子句构成，子句以分号分隔，最后一条子语句以句号结束。每一个函数由函数头和函数体组成，函数头由函数名和随后以括号括起来的模式组成，函数体由一系列表达式组成。 shell中编译模块文件： c(文件名） 引用模块中函数： moduleName:funcName(模式）。 模块中函数调用是顺序的从第一个子句开始进行模式匹配。 在erlang中做相同的事情，只需要编写模式及表达式，erlang编译器会自动生成优化的模式匹配代码。  同名不同目的函数  在Erlang中，同一个模块的两个函数，如果同名但是参数不同，则这两个函数被认为完全不同。 为了方便同名不同目的函数经常被用来作为辅助函数使用。  fun fun就是匿名函数,fun可以有任意参数（目：arity）。
 高阶函数（high-order function） 这些能返回fun或接受fun作为参数的函数，被称作高阶函数。
 什么时候使用高阶函数  编写返回fun的高阶函数不容易调试 高阶函数可以用来解决延迟求值、可重入的解析器、解析组合子等问题。  -import 和 -export 声明  声明 -import(lists,[map/2,sum/1]) 意味着函数 map/2,sum/1是从lists模块中导入。 声明 -export([total/1]) 意味着total/1能够在模块之外被调用。只有从一个模块中导出的函数才能在模块外调用。  简单的列表处理  lists:map(Fun,List): 将方法Fun应用到列表List的每一个元素中，输出操作后的元素列表。 lists:member(Ele,List): 判断元素Ele是否是列表List中的元素，输出true/false。 lists:filter(Fun,List): 用方法Fun过滤列表List中的每一个元素，输出符合要求的元素列表。 lists: sum(List):计算列表中所有元素的和。 lists: seq(1,N): 返回一个包含1到N的整数列表。 lists:reverse(L) : 将列表中元素顺序反转。  列表推导  列表推导无需使用fun、map或filter等表达式来创建列表。  1&gt;L= [1,2,3,4]."/>
-<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.1e02bb992195ca398d746df5f9dd547068b745164f5e47eab62b93e6f424e2f1.css" integrity="sha256-HgK7mSGVyjmNdG31&#43;d1UcGi3RRZPXkfqtiuT5vQk4vE="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -92,62 +92,13 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
-  
-    <footer>
-      <ul class="socnet-icons">
-        
-
-        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
-
-      </ul>
-    </footer>
   
 </section>
 
@@ -358,24 +309,16 @@ L ++ [H] 此方法易读，效率低。
   
     <hr/>
     
-    <div id="gitalk-container" class="gcomments"></div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-    <script>
-      const gitalk = new Gitalk({
-        clientID: "299d431ca76eb5de15ea",
-        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
-        repo: "zylhorse.github.io",
-        owner: "zylhorse",
-        admin: ["zylhorse"],
-        id: location.pathname,
-        labels: ["Erlang"],
-        perPage:  20 ,
-        pagerDirection: "last",
-      });
-
-      gitalk.render('gitalk-container');
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Erlang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
     </script>
+  </article>
 
 
 
@@ -403,9 +346,6 @@ L ++ [H] 此方法易读，效率低。
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
-          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
-          
-        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -422,6 +362,9 @@ L ++ [H] 此方法易读，效率低。
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>
@@ -457,6 +400,9 @@ L ++ [H] 此方法易读，效率低。
             <a href="/tags/chrome/">chrome<span class="count">1</span></a>
             
           <li>
+            <a href="/tags/diagnostics/">diagnostics<span class="count">2</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -467,9 +413,6 @@ L ++ [H] 此方法易读，效率低。
             
           <li>
             <a href="/tags/kafka/">kafka<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
             
           </li>
         </ul>

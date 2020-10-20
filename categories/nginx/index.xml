@@ -27,7 +27,8 @@
       
       <guid>https://zylhorse.github.io/blog/nginx/%E8%AF%81%E4%B9%A6%E9%85%8D%E7%BD%AE/</guid>
       <description>  nginx 配置
-$ vim /etc/nginx/config.dlisten 443 ssl;listen [::]:443 ssl;ssl_certificate /etc/nginx/fullchain1.pem;ssl_certificate_key /etc/nginx/privkey1.pem;  </description>
+$ vim /etc/nginx/config.dlisten 443 ssl;listen [::]:443 ssl;ssl_certificate /etc/nginx/fullchain1.pem;ssl_certificate_key /etc/nginx/privkey1.pem;  配置生效 $ nginx -s reload
+  </description>
     </item>
     
   </channel>

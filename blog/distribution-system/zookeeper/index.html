@@ -35,7 +35,7 @@
  ZookKeeper是一个分布式小文件系统，且被设计为高可用。通过选举算法和集群复制来避免单点故障。 因为是基于文件系统设计， 即使所有ZooKeeper节点全部挂掉， 数据也会持久化， 重启服务器后， 可恢复数据。 ZooKeeper通过mvvc（多版本控制）实现乐观锁，节点更新是原子的，所以不是成功就是失败。  功能简介 分布式系统基于ZooKeeper可以实现诸如： 数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群管理、Master选举、配置维护、名字服务、分布式同步、分布式锁、分布式队列
 基本概念 集群角色 一个ZooKeeper集群同一时刻只能有一个Leader， 其他都是Follower或Observer
  Leader Follower Observer  "/>
-<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.1e02bb992195ca398d746df5f9dd547068b745164f5e47eab62b93e6f424e2f1.css" integrity="sha256-HgK7mSGVyjmNdG31&#43;d1UcGi3RRZPXkfqtiuT5vQk4vE="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -92,62 +92,13 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
-  
-    <footer>
-      <ul class="socnet-icons">
-        
-
-        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
-
-      </ul>
-    </footer>
   
 </section>
 
@@ -255,24 +206,16 @@
   
     <hr/>
     
-    <div id="gitalk-container" class="gcomments"></div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-    <script>
-      const gitalk = new Gitalk({
-        clientID: "299d431ca76eb5de15ea",
-        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
-        repo: "zylhorse.github.io",
-        owner: "zylhorse",
-        admin: ["zylhorse"],
-        id: location.pathname,
-        labels: ["Distribution System"],
-        perPage:  20 ,
-        pagerDirection: "last",
-      });
-
-      gitalk.render('gitalk-container');
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Distribution&#32;System
+            theme=github-light
+            crossorigin="anonymous"
+            async>
     </script>
+  </article>
 
 
 
@@ -300,9 +243,6 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
-          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
-          
-        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -319,6 +259,9 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>
@@ -354,6 +297,9 @@
             <a href="/tags/chrome/">chrome<span class="count">1</span></a>
             
           <li>
+            <a href="/tags/diagnostics/">diagnostics<span class="count">2</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -364,9 +310,6 @@
             
           <li>
             <a href="/tags/kafka/">kafka<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
             
           </li>
         </ul>

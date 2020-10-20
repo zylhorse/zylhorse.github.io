@@ -41,7 +41,7 @@
 滑动窗口本身可以看做是一个协议，适合于数据传输过程中要求有严格顺序处理的场景
 滑动窗口将时间轴上的数据分成了4个部分:
  数据发送且被确认 数据发送但未被确认 数据能够被发送 数据不能发送，等待滑动窗口右移  TCP报文字段 win  报文中win用来描述窗口大小。 接收方窗口大小由接收方控制, 默认4096字节 如果窗口中有未来得及读取的数据， 则响应报文中的win就会减少 如果窗口中的数据被读取， 可能会出现携带ack 但不确认任何数据 而仅仅win变大的包， 这种情况用来更新窗口大小；  确保可靠性方式  校验和  数据发送时， 将数据段当作16位整数， 并将所有数据段相加。 且相加后的进位不丢弃，补到末位， 最后取反，得到校验和； 接收方收到数据后， 以同样方式计算校验和， 与发送方的进行对比；如果校验和不一致则数据传输一定有误。 但是校验和一致，数据传输不一定无误；   序列号  数据传输的每个数据段都进行了编号； 有了序列号， 就能对数据包进行排序和排重；   确认应答  数据传输的每次发送， 接收方都会进行应答， 即发送ack确认报文；   超时重传  基于序列号和确认应答机制，发送方都会等待接收方的ack确认报文。 如果发送方迟迟接收不到ack响应， 则会重新发送该报文，直到达到重传次数限制， 则认为tcp传输异常， 强制关闭； 超时的时间以500ms 为基准， 以指数方式增加； （第一次： 500ms， 第二次： 2*500ms &hellip;);    "/>
-<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.1e02bb992195ca398d746df5f9dd547068b745164f5e47eab62b93e6f424e2f1.css" integrity="sha256-HgK7mSGVyjmNdG31&#43;d1UcGi3RRZPXkfqtiuT5vQk4vE="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -98,62 +98,13 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
-  
-    <footer>
-      <ul class="socnet-icons">
-        
-
-        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
-
-      </ul>
-    </footer>
   
 </section>
 
@@ -282,7 +233,7 @@
   
   <div class="pagination">
     
-      <a href="/blog/linux/ubuntu-%E6%9C%8D%E5%8A%A1/" class="button left"><span>制作linux系统服务</span></a>
+      <a href="/blog/linux/ubuntu%E6%9C%8D%E5%8A%A1/" class="button left"><span>制作linux系统服务</span></a>
     
     
       <a href="/blog/network/tcp/tcp%E8%BF%9E%E6%8E%A5/" class="button right"><span>TCP-握手和挥手</span></a>
@@ -291,24 +242,16 @@
   
     <hr/>
     
-    <div id="gitalk-container" class="gcomments"></div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-    <script>
-      const gitalk = new Gitalk({
-        clientID: "299d431ca76eb5de15ea",
-        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
-        repo: "zylhorse.github.io",
-        owner: "zylhorse",
-        admin: ["zylhorse"],
-        id: location.pathname,
-        labels: ["Network"],
-        perPage:  20 ,
-        pagerDirection: "last",
-      });
-
-      gitalk.render('gitalk-container');
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Network
+            theme=github-light
+            crossorigin="anonymous"
+            async>
     </script>
+  </article>
 
 
 
@@ -336,9 +279,6 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
-          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
-          
-        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -355,6 +295,9 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>
@@ -390,6 +333,9 @@
             <a href="/tags/chrome/">chrome<span class="count">1</span></a>
             
           <li>
+            <a href="/tags/diagnostics/">diagnostics<span class="count">2</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -400,9 +346,6 @@
             
           <li>
             <a href="/tags/kafka/">kafka<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
             
           </li>
         </ul>

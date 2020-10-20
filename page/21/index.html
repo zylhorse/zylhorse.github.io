@@ -18,48 +18,12 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.1e02bb992195ca398d746df5f9dd547068b745164f5e47eab62b93e6f424e2f1.css" integrity="sha256-HgK7mSGVyjmNdG31&#43;d1UcGi3RRZPXkfqtiuT5vQk4vE="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
     
 
-  <div id="theme-message" style="background-color:#3c3b3b;color:#f4f4f4;margin:auto auto;padding:.25em 2em;width:75%;">
-    <p style="text-align:center;">This message, related to the development of the theme, only displays on the
-      <code>localhost</code> homepage to notify you of any important theme changes.</p>
-      <hr>
-      <h5 style="color:#f4f4f4;text-align:center;"><i class="fas fa-exclamation-triangle"></i>Version 2.0.0 - July 20, 2020<i class="fas fa-exclamation-triangle"></i></h5>
-    <p>Below are the following changes that <em>could</em> be breaking changes for your site. For more details on any change, please refer to <a href="https://github.com/pacollins/hugo-future-imperfect-slim/pull/154">PR #154</a>.</p>
-<p>The major breaking change is:</p>
-<ol>
-<li>Users that have front matter that utilize <code>images</code> (backwards compatibility for <code>featured</code> and associated parameters still remains) <em>will</em> need to adjust from <code>[images]=&quot;SRC&quot;</code> to the new format.</li>
-</ol>
-<pre><code>[[images]]
-    src = &quot;&quot; // Link to image
-    alt = &quot;&quot; // Alt text for image
-    stretch = // Optional: See screenshots for referenced values and outcomes
-</code></pre><p>If you utilize any of the following, there <em>might</em> be a breaking:</p>
-<ol>
-<li>User custom templates <em>may</em> require adjustment.</li>
-<li>User custom i18n languages, or custom templates referencing i18n translations <em>may</em> require adjustment.</li>
-<li>User custom template for comments <em>will</em> require adjustment <em>if</em> it uses the theme&rsquo;s CSS and/or JS.</li>
-<li>User custom CSS <em>may</em> need to adjust due to a variety of class name changes and specificity changes.</li>
-</ol>
-<p>While I realize this is inconvenient, I hope that it is worth it to you in the long run. Thanks for using the theme, and feel free to submit issues as needed.</p>
-
-    <div style="text-align:center;">
-      <button onclick="removeBox()" class="button" style="color:#f4f4f4;margin-bottom:1em;">Close Notification Until Next Update</button>
-    </div>
-    <script>
-      if (window.location.href.indexOf('localhost:') < 1 || window.localStorage.getItem('HFIS-version') == '2.0.0') {
-        document.getElementsByTagName("body")[0].removeChild(document.getElementById("theme-message"));
-      }
-      function removeBox() {
-        window.localStorage.setItem('HFIS-version', '2.0.0');
-        document.getElementsByTagName("body")[0].removeChild(document.getElementById("theme-message"));
-      }
-    </script>
-  </div>
 <header id="site-header">
   <nav id="site-nav">
     <h1 class="nav-title">
@@ -111,62 +75,13 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
-  
-    <footer>
-      <ul class="socnet-icons">
-        
-
-        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
-
-      </ul>
-    </footer>
   
 </section>
 
@@ -174,6 +89,128 @@
         
   
       
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/cache/redis/%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/">Redis高可用方案-哨兵模式</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-11-12 00:00:00 &#43;0000 UTC">2016-11-12</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h3 id="哨兵模式">哨兵模式</h3>
+<p>哨兵是一个独立的进程， 通过和redis各个节点的通信，监听各节点的状态；并互相监控；
+备注： 
+sentinel节点需要2n+1(n&gt;=1)个</p>
+<h4 id="sentinel监听">sentinel监听</h4>
+<ol>
+<li>每10&hellip;</li></ol>
+  </div>
+  <footer>
+    <a href="/blog/cache/redis/%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/cache/redis/%E9%AB%98%E5%8F%AF%E7%94%A8ha-high-available/">Redis高可用解决方案</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-11-08 00:00:00 &#43;0000 UTC">2016-11-08</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h3 id="高可用扩容">高可用扩容</h3>
+<ol>
+<li>垂直扩容： 提升机器内存配置， 不需要应用程序支持；</li>
+<li>水平扩容： 增加节点，需要应用程序支持；</li>
+</ol>
+<h3 id="哨兵模式sentinel">哨兵模式（sentinel）</h3>
+<p>故障转移后redis客户端将无法感知redis节点的变化；&hellip;</p>
+  </div>
+  <footer>
+    <a href="/blog/cache/redis/%E9%AB%98%E5%8F%AF%E7%94%A8ha-high-available/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/cache/redis/hotkeybigkey/">Redis的hotkey和bigkey监控和处理</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-10-23 00:00:00 &#43;0000 UTC">2016-10-23</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="bigkey">bigkey</h2>
+<ol>
+<li>单个key 存储value很大</li>
+<li>hash set list zset 等存储元素过多</li>
+</ol>
+<h3 id="如何发现">如何发现</h3>
+<ol>
+<li>redis-cli &ndash;bigkeys</li>
+<li>rdbtools 分析rdb&hellip;</li></ol>
+  </div>
+  <footer>
+    <a href="/blog/cache/redis/hotkeybigkey/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
       
           <article class="post">
   <header>
@@ -207,27 +244,6 @@
   </div>
   <footer>
     <a href="/blog/stories/%E4%BB%80%E4%B9%88%E4%BA%BA%E9%83%BD%E6%9C%89/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/stories/">Stories</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
   </footer>
 </article>
 
@@ -263,199 +279,6 @@
   </div>
   <footer>
     <a href="/blog/stories/%E5%BF%AB%E4%B9%90%E6%98%AF%E4%B8%80%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/stories/">Stories</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/cache/redis/ziplist/">Redis源码阅读-ziplist</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-10-10 00:00:00 &#43;0000 UTC">2016-10-10</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="定义">定义</h2>
-<p>ziplist由一系列特殊编码的连续内存块组成的顺序存储结构，类似数组， 但是ziplist每个元素占用内存大小不同。</p>
-<h2 id="数据结构">数据结构</h2>
-<pre><code>type ziplist struct {&hellip;</code></pre>
-  </div>
-  <footer>
-    <a href="/blog/cache/redis/ziplist/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/cache/redis/skiplist/">Redis源码阅读-skiplist</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-09-20 00:00:00 &#43;0000 UTC">2016-09-20</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    
-  </div>
-  <footer>
-    <a href="/blog/cache/redis/skiplist/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/cache/redis/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/">Redis自带性能测试命令</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2016-09-06 00:00:00 &#43;0000 UTC">2016-09-06</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h2 id="性能测试">性能测试</h2>
-<p>redis-benchmark options options value</p>
-<pre><code>序号	选项	描述	默认值
-1	-h	指定服务器主机名	127.0.0.1
-2	-p	指定服务器端口	6379&hellip;</code></pre>
-  </div>
-  <footer>
-    <a href="/blog/cache/redis/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
-        
-      
-    </ul>
-  
-</div>
-
   </footer>
 </article>
 
@@ -492,9 +315,6 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
-          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
-          
-        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -511,6 +331,9 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>
@@ -546,6 +369,9 @@
             <a href="/tags/chrome/">chrome<span class="count">1</span></a>
             
           <li>
+            <a href="/tags/diagnostics/">diagnostics<span class="count">2</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -556,9 +382,6 @@
             
           <li>
             <a href="/tags/kafka/">kafka<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
             
           </li>
         </ul>

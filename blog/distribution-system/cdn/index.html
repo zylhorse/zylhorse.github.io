@@ -35,7 +35,7 @@
  运维只需要将网站内容注入到CDN系统，就可以同通过CDN系统部署在各个物理位置的服务器进行全网分发，实现跨运营商、跨地域的用户覆盖 由于CDN将内容推送到网络边缘，大量用户访问被分散到网络边缘  不在构成网站出口、互联互通点的资源挤占 也不需要跨越长距离的IP路由    实现原理 关键字：
  CNAME：即：别名记录。这种记录允许您将多个名字映射到同一台计算机。 GSLB： Global Server Load Balance, 全局负载均衡。 实现在广域网上不同地域服务器间的流量调配，保证使用最佳的服务器服务离自己最近的客户。  今天我们看到的网站系统基本上基于B/S架构，具体流程如下：
  未使用CDN，用户访问网站过程：    用户在自己的浏览器中输入要访问的网站域名 浏览器向本地的DNS服务器请求对该域名解析  本地DNS服务器中如果有缓存该域名的解析结果，则直接响应用户的解析请求 本地DNS服务器中如果没有缓存该域名的解析结果， 则以递归的方式向整个DNS系统请求解析，获得应答后将结果反馈给浏览器   浏览器得到域名的解析结果，就是该域名对应的服务器设备IP 浏览器向服务器请求内容 服务器将用户请求内容传输给浏览器     使用CDN，用户访问网站过程    当用户加载网站上的内容和资源URL时 经过本地DNS系统解析，DNS系统会将域名的解析权交给CNAME指向的CDN专用DNS服务器 CDN的专属DNS服务器将CDN的全局负载均衡设备IP返回给用户 用户向CDN的全局负载均衡设备发起内容URL的访问请求 CDN全局负载均衡设备根据用户IP和用户请求内容URL，选择一台用户所在区域的区域负载均衡设备， 告诉用户向这台设备发起请求 区域负载均衡设备会为用户选择一台合适的缓存服务器提供服务。选择依据：  判断哪台服务器距离用户最近 根据请求URL携带内容，判断哪一台服务器上有用户所需内容 查询当前服务器负载情况，判断哪一台有服务能力。 基于以上条件的综合分析后， 区域负载均衡设备会向全局负载均衡设备返回一台缓存服务器IP   全局负载均衡设备把缓存服务器的IP返回给用户 用户向缓存服务器发起请求，缓存服务器响应用户需求，返回用户请求内容  如果这台缓存服务器没有请求内容，而区域负载均衡设备依然将其分配给用户 这台缓存服务器会向它的上级缓存服务器请求内容，直到追溯到网站的源服务器将内容缓存到自身        CDN基于内容分类 关键字："/>
-<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.1e02bb992195ca398d746df5f9dd547068b745164f5e47eab62b93e6f424e2f1.css" integrity="sha256-HgK7mSGVyjmNdG31&#43;d1UcGi3RRZPXkfqtiuT5vQk4vE="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -92,62 +92,13 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
-  
-    <footer>
-      <ul class="socnet-icons">
-        
-
-        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
-
-      </ul>
-    </footer>
   
 </section>
 
@@ -420,24 +371,16 @@
   
     <hr/>
     
-    <div id="gitalk-container" class="gcomments"></div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-    <script>
-      const gitalk = new Gitalk({
-        clientID: "299d431ca76eb5de15ea",
-        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
-        repo: "zylhorse.github.io",
-        owner: "zylhorse",
-        admin: ["zylhorse"],
-        id: location.pathname,
-        labels: ["Distribution System"],
-        perPage:  20 ,
-        pagerDirection: "last",
-      });
-
-      gitalk.render('gitalk-container');
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Distribution&#32;System
+            theme=github-light
+            crossorigin="anonymous"
+            async>
     </script>
+  </article>
 
 
 
@@ -465,9 +408,6 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
-          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
-          
-        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -484,6 +424,9 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>
@@ -519,6 +462,9 @@
             <a href="/tags/chrome/">chrome<span class="count">1</span></a>
             
           <li>
+            <a href="/tags/diagnostics/">diagnostics<span class="count">2</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -529,9 +475,6 @@
             
           <li>
             <a href="/tags/kafka/">kafka<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
             
           </li>
         </ul>

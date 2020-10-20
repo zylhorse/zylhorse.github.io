@@ -41,7 +41,7 @@ examples : 样例测试
 sub: 子模式
 Benchmarks(基准测试) func BenchmarkXxx(b *testing.B)
  benchmarks方法需要以Benchmark开头 benchmarks方法，在go test命令添加-bench时才执行 benchmarks中，需要目标代码被执行b.N次 func BenchmarkXxx(b *testing.B) {for i := 0; i &lt; b.N; i&#43;&#43; {Xxx()}} benchmarks在执行过程中会调整b.N，直到benchmarks函数持续足够长的时间，可以可靠的计时为止 执行结果： BenchmarkXxx 68453040	17.8 ns/op  单次执行目标代码耗时17.8ns,目标代码执行68453040次   benchmarks目标代码执行前，如果有比较耗时的准备操作，benchmarks的时间可以重置 func BenchmarkXxx(b *testing."/>
-<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.cbea2f50a4d23d052be7735e4a7c0c3b067b186fa29225fb3e82f66c3a953cbf.css" integrity="sha256-y&#43;ovUKTSPQUr53NeSnwMOwZ7GG&#43;ikiX7PoL2bDqVPL8="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -409,24 +409,16 @@ Benchmarks(基准测试) func BenchmarkXxx(b *testing.B)
   
     <hr/>
     
-    <div id="gitalk-container" class="gcomments"></div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-    <script>
-      const gitalk = new Gitalk({
-        clientID: "299d431ca76eb5de15ea",
-        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
-        repo: "zylhorse.github.io",
-        owner: "zylhorse",
-        admin: ["zylhorse"],
-        id: location.pathname,
-        labels: ["Golang"],
-        perPage:  20 ,
-        pagerDirection: "last",
-      });
-
-      gitalk.render('gitalk-container');
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
     </script>
+  </article>
 
 
 
@@ -454,9 +446,6 @@ Benchmarks(基准测试) func BenchmarkXxx(b *testing.B)
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
-          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
-          
-        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -473,6 +462,9 @@ Benchmarks(基准测试) func BenchmarkXxx(b *testing.B)
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>

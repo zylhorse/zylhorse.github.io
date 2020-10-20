@@ -26,7 +26,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Golang源码阅读-sync.map"/>
 <meta name="twitter:description" content="sync.map  runtime中go的基本类型 map 不支持并发的读写， 会报错：fatal error: concurrent map writes 为了支持并发， 我们直接对整个map加读写锁，相当低效， 因此官方实现了sync.map  高效的原理和思路  用空间换时间，降低锁的区域 用两个map来存储数据  虽然两个map存储有冗余，但是底层数据类型都是指针，所以冗余的空间还是有限的。    总结  如果对map的读操作大于写操作， 则sync.map能大大提升性能； 写操作需要加锁， 且操作两个map 写操作也会触发， 两个map之间的切换。  源码解析 基础结构  Map type Map struct {mu Mutex // 互斥锁，用于锁定dirty map， 写锁read atomic.Value // 优先读， 支持原子操作。相当于dirty的缓存dirty map[interface{}]*entry // dirty保存最新写入数据， 允许读写misses int // 记录在read中读取不到数据，去dirty中查询的次数} readonly type readOnly struct {m map[interface{}]*entryamended bool // 当key不在read中而在dirty中时， 为true} entry type entry struct {//可见value是个指针类型，虽然read和dirty存在冗余情况（amended=false），但是由于是指针类型，存储的空间应该不是问题p unsafe."/>
-<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.1e02bb992195ca398d746df5f9dd547068b745164f5e47eab62b93e6f424e2f1.css" integrity="sha256-HgK7mSGVyjmNdG31&#43;d1UcGi3RRZPXkfqtiuT5vQk4vE="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -83,62 +83,13 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
-  
-    <footer>
-      <ul class="socnet-icons">
-        
-
-        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
-
-      </ul>
-    </footer>
   
 </section>
 
@@ -453,7 +404,7 @@ func (m *Map) missLocked() {
   
   <div class="pagination">
     
-      <a href="/blog/golang/context%E6%9C%BA%E5%88%B6/" class="button left"><span>Golang源码阅读-Context</span></a>
+      <a href="/blog/golang/context/" class="button left"><span>Golang源码阅读-Context</span></a>
     
     
       <a href="/blog/golang/godoc/" class="button right"><span>Golang doc使用细则</span></a>
@@ -462,24 +413,16 @@ func (m *Map) missLocked() {
   
     <hr/>
     
-    <div id="gitalk-container" class="gcomments"></div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-    <script>
-      const gitalk = new Gitalk({
-        clientID: "299d431ca76eb5de15ea",
-        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
-        repo: "zylhorse.github.io",
-        owner: "zylhorse",
-        admin: ["zylhorse"],
-        id: location.pathname,
-        labels: ["Golang"],
-        perPage:  20 ,
-        pagerDirection: "last",
-      });
-
-      gitalk.render('gitalk-container');
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
     </script>
+  </article>
 
 
 
@@ -507,9 +450,6 @@ func (m *Map) missLocked() {
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
-          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
-          
-        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -526,6 +466,9 @@ func (m *Map) missLocked() {
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>
@@ -561,6 +504,9 @@ func (m *Map) missLocked() {
             <a href="/tags/chrome/">chrome<span class="count">1</span></a>
             
           <li>
+            <a href="/tags/diagnostics/">diagnostics<span class="count">2</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -571,9 +517,6 @@ func (m *Map) missLocked() {
             
           <li>
             <a href="/tags/kafka/">kafka<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
             
           </li>
         </ul>

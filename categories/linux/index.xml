@@ -21,25 +21,35 @@
     </item>
     
     <item>
-      <title>linux依赖包的离线打包和安装</title>
+      <title>Ubuntu Hotspot配置</title>
+      <link>https://zylhorse.github.io/blog/linux/ubuntu-hotspot/</link>
+      <pubDate>Wed, 11 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/linux/ubuntu-hotspot/</guid>
+      <description>背景 配置瘦客户机，进行自组网，摒弃复杂的网络环境
+环境配置   网卡Master模式
+ 安装 $ apt install iw 检查 iw list  Supported interface modes:* IBSS* managed //作为客户端接入AP* AP // 作为无线接入点使用* AP/VLAN* monitor* P2P-client* P2P-GO* P2P-device 如果显示以上内容，则该网卡支持作为无线AP使用
+   Wlan Interface
+ 查看: ifconfig -a enp2s0: flags=4163&amp;lt;UP,BROADCAST,RUNNING,MULTICAST&amp;gt; mtu 1500inet 172.16.3.173 netmask 255.255.255.0 broadcast 172.16.3.255inet6 fe80::6600:6aff:fe02:755a prefixlen 64 scopeid 0x20&amp;lt;link&amp;gt;ether 64:00:6a:02:75:5a txqueuelen 1000 (Ethernet)RX packets 63949 bytes 79546938 (79.</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu依赖包的离线打包和安装</title>
       <link>https://zylhorse.github.io/blog/linux/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BA%90/</link>
       <pubDate>Mon, 02 Feb 2015 00:00:00 +0000</pubDate>
       
       <guid>https://zylhorse.github.io/blog/linux/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BA%90/</guid>
-      <description>离线安装步骤 清理apt 缓冲区 $ sudo rm -rf /var/cache/apt/archives/*
-下载所需组件 $ sudo apt-get -d install &amp;lt;包名&amp;gt;
-创建目录，并拷贝 $ mkdir &amp;lt;your-path&amp;gt;$ cp -r /var/cache/apt/archives &amp;lt;your-path&amp;gt;修改名目权限 $ chmod 777 -R &amp;lt;your-path&amp;gt;
-建立依赖关系 $ sudo touch &amp;lt;your-path&amp;gt;/Packages.gz$ cd &amp;lt;your-path&amp;gt;$ sudo dpkg-scanpackages ./ /dev/null | gzip &amp;gt; &amp;lt;your-path&amp;gt;/Packages.gz拷贝Packages.gz 到 deb 同目录下 $ cp &amp;lt;your-path&amp;gt;/Packages.gz &amp;lt;your-path&amp;gt;/archives/Packages.gz
-拷贝目录到离线系统 $ scp -r &amp;lt;your-path&amp;gt; &amp;lt;离线系统&amp;gt;
-离线系统步骤 修改apt源 $ vi /etc/apt/sources.list清空并添加deb file:///&amp;lt;your-path&amp;gt; archives/安装指定组件 $ apt-get update $ apt-get install &amp;lt;包名&amp;gt;</description>
+      <description>Ubuntu 16.04离线安装步骤 宿主机打包  清理apt 缓冲区$ sudo rm -rf /var/cache/apt/archives/* 下载所需组件$ sudo apt-get -d install &amp;lt;包名&amp;gt; 创建目录，并拷贝 $ mkdir &amp;lt;your-path&amp;gt;$ cp -r /var/cache/apt/archives &amp;lt;your-path&amp;gt;  修改名目权限 $ chown -R &amp;lt;your-path&amp;gt;
+建立依赖关系 $ sudo apt install dpkg-dev$ cd &amp;lt;your-path&amp;gt;$ sudo dpkg-scanpackages archives /dev/null | gzip &amp;gt; &amp;lt;your-path&amp;gt;/archives/Packages.gz拷贝目录到离线系统 $ scp -r &amp;lt;your-path&amp;gt; &amp;lt;离线系统&amp;gt;
+离线系统步骤 修改apt源 $ sudo vi /etc/apt/sources.list清空并添加deb file:///&amp;lt;your-path&amp;gt; archives/安装指定组件 $ sudo apt-get update $ sudo apt-get install &amp;lt;包名&amp;gt;</description>
     </item>
     
     <item>
       <title>制作linux系统服务</title>
-      <link>https://zylhorse.github.io/blog/linux/ubuntu-%E6%9C%8D%E5%8A%A1/</link>
+      <link>https://zylhorse.github.io/blog/linux/ubuntu%E6%9C%8D%E5%8A%A1/</link>
       <pubDate>Thu, 08 Jan 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://zylhorse.github.io/blog/linux/ubuntu-%E6%9C%8D%E5%8A%A1/</guid>
+      <guid>https://zylhorse.github.io/blog/linux/ubuntu%E6%9C%8D%E5%8A%A1/</guid>
       <description>服务制作   在/etc/init.d/ 下以管理员权限新建文件，在本例中为location_server.
   使用以下模板修改启动脚本的内容
 #!/bin/bash### BEGIN INIT INFO## Provides: location_server# Required-Start: $local_fs $remote_fs# Required-Stop: $local_fs $remote_fs# Default-Start: 2 3 4 5# Default-Stop: 0 1 6# Short-Description: initscript# Description: This file should be used to construct scripts to be placed in /etc/init.d.#### END INIT INFO## Fill in name of program here.PROG=&amp;quot;location_server&amp;quot;PROG_PATH=&amp;quot;/opt/location_server&amp;quot; ## Not need, but sometimes helpful (if $PROG resides in /opt for example).</description>
@@ -89,12 +99,27 @@ wlan 工具 $ apt-get install wpasupplicant
     </item>
     
     <item>
+      <title>Linux Shell 常用命令记录</title>
+      <link>https://zylhorse.github.io/blog/linux/shell/</link>
+      <pubDate>Sun, 08 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/linux/shell/</guid>
+      <description>命令 grep 作用: 查询匹配条件的文件
+使用: grep [OPTION]... PATTERN [FILE]...
+OPTION: -r #递归查询目录-n #打印匹配行号-l #打印匹配文件-L #打印不匹配文件-c #打印匹配数量-I #过滤二进制文件 --binary-files=without-match-a #只查询文本文件 --binary-files=text--binary-files=Type # Type: binary,text,without-matchsed 作用: 替换文本内容
+使用: sed [OPTION]... {script-only-if-no-other-script} [input-file]...
+OPTION:-e # 使用脚本处理文本内容-i # 直接将处理结果写入文件script:a # 在下一行增加内容c # 替换当前行内容d # 删除当前行内容i # 在上一行增加内容s # 替换匹配内容示例   查找目录下所有包含查找内容的文件
+$ grep -rnI &amp;quot;查找内容&amp;quot; ./  替换新的内容到目录下所有包含查找内容的文件</description>
+    </item>
+    
+    <item>
       <title>记录linux常规问题和解决方案</title>
       <link>https://zylhorse.github.io/blog/linux/%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</link>
       <pubDate>Sun, 08 Jun 2014 00:00:00 +0000</pubDate>
       
       <guid>https://zylhorse.github.io/blog/linux/%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</guid>
-      <description>桌面版菜单栏消失  查看系统桌面环境  $ pgrep -l &amp;quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&amp;quot; $ ps -A | egrep -i &amp;quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&amp;quot; $ ls /usr/bin/*session* in GNOME returns /usr/bin/gnome-session (and more)in MATE returns /usr/bin/mate-session (and more)in LXDE returns /usr/bin/lxsession (and more)in JWM returns /usr/bin/icewm-session (should be jwm-session, not?!)   重置compiz后，重启Unity：$ setsid unity  Unity 是基于GNOME桌面环境的用户界面,由Canonical公司开发，主要用于Ubuntu操作系统
+      <description>Ubuntu国内源 清华大学 https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/
+桌面版菜单栏消失  查看系统桌面环境  $ pgrep -l &amp;quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&amp;quot; $ ps -A | egrep -i &amp;quot;gnome|kde|mate|cinnamon|lxde|xfce|jwm&amp;quot; $ ls /usr/bin/*session* in GNOME returns /usr/bin/gnome-session (and more)in MATE returns /usr/bin/mate-session (and more)in LXDE returns /usr/bin/lxsession (and more)in JWM returns /usr/bin/icewm-session (should be jwm-session, not?!)   重置compiz后，重启Unity：$ setsid unity  Unity 是基于GNOME桌面环境的用户界面,由Canonical公司开发，主要用于Ubuntu操作系统
    中文安装  查看当前语言: $ locale 查看系统语言包: $ locale -a 安装中文语言: $ apt-get install language-pack-zh-hans 添加中文支持: $ locale-gen zh_CN.</description>
     </item>
     
@@ -113,10 +138,10 @@ wlan 工具 $ apt-get install wpasupplicant
     
     <item>
       <title>ubutnu本地安装实操</title>
-      <link>https://zylhorse.github.io/blog/linux/ubuntu-%E5%AE%89%E8%A3%85/</link>
+      <link>https://zylhorse.github.io/blog/linux/ubuntu%E5%AE%89%E8%A3%85/</link>
       <pubDate>Tue, 11 Mar 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://zylhorse.github.io/blog/linux/ubuntu-%E5%AE%89%E8%A3%85/</guid>
+      <guid>https://zylhorse.github.io/blog/linux/ubuntu%E5%AE%89%E8%A3%85/</guid>
       <description>ubuntu U盘安装 遇到类似加载镜像文件问题，最简单粗暴的解决方案就是把挂载ubuntu server镜像文件至cdrom目录
 具体步骤如下：
   复制安装镜像至U盘

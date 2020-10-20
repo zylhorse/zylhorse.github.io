@@ -56,8 +56,7 @@
       <guid>https://zylhorse.github.io/blog/hugo/comments/</guid>
       <description>评论系统 Hugo自带Disqus评论系统，无法在国内加载。本系统采用Utterances。国内推荐以下评论系统：
    名称 简介 优缺点     Valine 诞生于2017年8月7日，是一款基于LeanCloud的无后端评论系统 1.样式简洁,有回复功能 2. LeanCloud免费容器无法24小时在线，需要配置定时器，防止服务休眠3. Valine-Admin 可以实现评论管理，配置复杂度较高   Utterances 基于Github Issue的评论系统 1. 配置简单 2. 无回复功能 3. 基于Github Issue，可以进行评论管理   Gitalk 基于GitHub Issue和Preact开发的评论插件 1. 配置简单
-2. 有回复功能 3. 基于Github Issue，可以进行评论管理     Gitalk 会申请授权者所有公共仓库的读写权限 静态网站会暴露该OAuth Application的ID和密钥
- </description>
+2. 有回复功能 3. 基于Github Issue，可以进行评论管理    </description>
     </item>
     
     <item>

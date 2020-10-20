@@ -29,7 +29,7 @@
 <meta name="twitter:title" content="Erlang二进制语法"/>
 <meta name="twitter:description" content="二进制型（binary）  用一种节省空间的方式来保存大批量的无结构原始数据。 多数情况二进制型的位数都是8的整数倍，因此对应一个字节串。如果位数不是8的整数倍，我们叫这段数据为位串（bitstring）。 将二进制型、位串、位级模式匹配引入Erlang 是为了简化网络编程。  格式  &laquo;5,9,10&raquo; : 二进制型的编写和打印形式。 在二进制型里面使用整数时，整数范围0~255.  操作二进制型  list_to_binary(L) -&gt; Bin: 将io列表（iolist）L中的所有元素转换成二进制型。 split_binary(Bin, Pos) -&gt; {Bin1, Bin2}: 将二进制型Bin一分为二。 term_to_binary(Term) -&gt; Bin :将任意Erlang数据类型转换成二进制型。此方法使用了所谓的外部数据格式（external term format）。 binary_to_term(Bin) -&gt; Term : 这是term_to_binary的逆向函数。 byte_size(Bin) -&gt; Size: 返回二进制型里面的字节数。  位语法 位语法是一种表示法，用于从二进制数据里提取或加入单独的位或者位串。开发位语法是为了进行协议编程，以及生成操作二进制数据的高效代码。
 位语法表达式 &lt;&lt; E1,E2,...,E3&gt;&gt;每个Ei元素都标示出二进制型或位串里的一个片段。单个Ei元素可以有四种形式：Ei = Value |Value:Size |Value/TypeSpecifierList |Value:Size/TypeSpecifierList 如果表达式的总位数是８的倍数则会构建一个二进制型，否则构建一个位串。　 当构建二进制型时，Value必须是已绑定变量、字符串，或是能够得出整数、浮点数或二进制型的表达式。　当它被用来模式匹配时，Value可以是绑定或未绑定的。 Size必须是一个能得出整数的表达式。在模式匹配里，Size必须是一个整数，或是值为整数的已绑定变量。 Size的值指明了片段的位数大小。它的默认值取决于不同的数据类型：  整数：8浮点数：64binary: 1 在模式匹配里面，默认值只对最后的元素有效，如果未指定大小，就采用默认值。 TypeSpecifierList(类型指定列表)是一个用连字符分割的列表，形式是End-Sign-Type-Unit。 End可以是 big | little | native : 机器的字节顺序，默认big。这一项只和从二进制型里面打包和解包整数和浮点数有关。term_to_binary 和 binary_to_term可以解决打包和解包整数的问题。 Sign可以是signed | unsigned, 这个参数只用于模式匹配，默认值是unsigned。 Type可以是integer | float | binary | bytes | bitstring | bits | utf8 | utf16 | utf32,默认值是integer。　 Unit的写法是unit:1|2|&hellip;256 : integer、float和bitstring的Unit默认值是１，binary则是８。utf8、utf16、utf32类型无需提供值。 一个片段的总长度是Size * Unit字节。  "/>
-<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.1e02bb992195ca398d746df5f9dd547068b745164f5e47eab62b93e6f424e2f1.css" integrity="sha256-HgK7mSGVyjmNdG31&#43;d1UcGi3RRZPXkfqtiuT5vQk4vE="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -86,62 +86,13 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
-  
-    <footer>
-      <ul class="socnet-icons">
-        
-
-        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
-
-      </ul>
-    </footer>
   
 </section>
 
@@ -258,30 +209,22 @@ binary: 1
       <a href="/blog/web/%E9%97%AE%E9%A2%98/" class="button left"><span>记录web开发遇到的问题和详细解决方案</span></a>
     
     
-      <a href="/blog/cache/redis/pipeline/" class="button right"><span>Redis怎么减少RRT-Pipeline</span></a>
+      <a href="/blog/network/%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/" class="button right"><span>TCP/UDP端口扫描工具</span></a>
     
   </div>
   
     <hr/>
     
-    <div id="gitalk-container" class="gcomments"></div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-    <script>
-      const gitalk = new Gitalk({
-        clientID: "299d431ca76eb5de15ea",
-        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
-        repo: "zylhorse.github.io",
-        owner: "zylhorse",
-        admin: ["zylhorse"],
-        id: location.pathname,
-        labels: ["Erlang"],
-        perPage:  20 ,
-        pagerDirection: "last",
-      });
-
-      gitalk.render('gitalk-container');
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Erlang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
     </script>
+  </article>
 
 
 
@@ -309,9 +252,6 @@ binary: 1
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
-          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
-          
-        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -328,6 +268,9 @@ binary: 1
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>
@@ -363,6 +306,9 @@ binary: 1
             <a href="/tags/chrome/">chrome<span class="count">1</span></a>
             
           <li>
+            <a href="/tags/diagnostics/">diagnostics<span class="count">2</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -373,9 +319,6 @@ binary: 1
             
           <li>
             <a href="/tags/kafka/">kafka<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
             
           </li>
         </ul>

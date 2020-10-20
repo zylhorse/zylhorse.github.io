@@ -2,46 +2,37 @@
 <html lang="zh-cn">
   <head>
   <meta charset="utf-8">
-<title>linux依赖包的离线打包和安装 - zylhorse blog</title>
+<title>Ubuntu依赖包的离线打包和安装 - zylhorse blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
   <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
 
-<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="linux依赖包的离线打包和安装">
-<meta itemprop="description" content="离线安装步骤 清理apt 缓冲区 $ sudo rm -rf /var/cache/apt/archives/*
-下载所需组件 $ sudo apt-get -d install &lt;包名&gt;
-创建目录，并拷贝 $ mkdir &lt;your-path&gt;$ cp -r /var/cache/apt/archives &lt;your-path&gt;修改名目权限 $ chmod 777 -R &lt;your-path&gt;
-建立依赖关系 $ sudo touch &lt;your-path&gt;/Packages.gz$ cd &lt;your-path&gt;$ sudo dpkg-scanpackages ./ /dev/null | gzip &gt; &lt;your-path&gt;/Packages.gz拷贝Packages.gz 到 deb 同目录下 $ cp &lt;your-path&gt;/Packages.gz &lt;your-path&gt;/archives/Packages.gz
-拷贝目录到离线系统 $ scp -r &lt;your-path&gt; &lt;离线系统&gt;
-离线系统步骤 修改apt源 $ vi /etc/apt/sources.list清空并添加deb file:///&lt;your-path&gt; archives/安装指定组件 $ apt-get update $ apt-get install &lt;包名&gt;">
+<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Ubuntu依赖包的离线打包和安装">
+<meta itemprop="description" content="Ubuntu 16.04离线安装步骤 宿主机打包  清理apt 缓冲区$ sudo rm -rf /var/cache/apt/archives/* 下载所需组件$ sudo apt-get -d install &lt;包名&gt; 创建目录，并拷贝 $ mkdir &lt;your-path&gt;$ cp -r /var/cache/apt/archives &lt;your-path&gt;  修改名目权限 $ chown -R &lt;your-path&gt;
+建立依赖关系 $ sudo apt install dpkg-dev$ cd &lt;your-path&gt;$ sudo dpkg-scanpackages archives /dev/null | gzip &gt; &lt;your-path&gt;/archives/Packages.gz拷贝目录到离线系统 $ scp -r &lt;your-path&gt; &lt;离线系统&gt;
+离线系统步骤 修改apt源 $ sudo vi /etc/apt/sources.list清空并添加deb file:///&lt;your-path&gt; archives/安装指定组件 $ sudo apt-get update $ sudo apt-get install &lt;包名&gt;">
 <meta itemprop="datePublished" content="2015-02-02T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2015-02-02T00:00:00+00:00" />
-<meta itemprop="wordCount" content="78">
+<meta itemprop="wordCount" content="73">
 
 
 
 <meta itemprop="keywords" content="," />
-<meta property="og:title" content="linux依赖包的离线打包和安装" />
-<meta property="og:description" content="离线安装步骤 清理apt 缓冲区 $ sudo rm -rf /var/cache/apt/archives/*
-下载所需组件 $ sudo apt-get -d install &lt;包名&gt;
-创建目录，并拷贝 $ mkdir &lt;your-path&gt;$ cp -r /var/cache/apt/archives &lt;your-path&gt;修改名目权限 $ chmod 777 -R &lt;your-path&gt;
-建立依赖关系 $ sudo touch &lt;your-path&gt;/Packages.gz$ cd &lt;your-path&gt;$ sudo dpkg-scanpackages ./ /dev/null | gzip &gt; &lt;your-path&gt;/Packages.gz拷贝Packages.gz 到 deb 同目录下 $ cp &lt;your-path&gt;/Packages.gz &lt;your-path&gt;/archives/Packages.gz
-拷贝目录到离线系统 $ scp -r &lt;your-path&gt; &lt;离线系统&gt;
-离线系统步骤 修改apt源 $ vi /etc/apt/sources.list清空并添加deb file:///&lt;your-path&gt; archives/安装指定组件 $ apt-get update $ apt-get install &lt;包名&gt;" />
+<meta property="og:title" content="Ubuntu依赖包的离线打包和安装" />
+<meta property="og:description" content="Ubuntu 16.04离线安装步骤 宿主机打包  清理apt 缓冲区$ sudo rm -rf /var/cache/apt/archives/* 下载所需组件$ sudo apt-get -d install &lt;包名&gt; 创建目录，并拷贝 $ mkdir &lt;your-path&gt;$ cp -r /var/cache/apt/archives &lt;your-path&gt;  修改名目权限 $ chown -R &lt;your-path&gt;
+建立依赖关系 $ sudo apt install dpkg-dev$ cd &lt;your-path&gt;$ sudo dpkg-scanpackages archives /dev/null | gzip &gt; &lt;your-path&gt;/archives/Packages.gz拷贝目录到离线系统 $ scp -r &lt;your-path&gt; &lt;离线系统&gt;
+离线系统步骤 修改apt源 $ sudo vi /etc/apt/sources.list清空并添加deb file:///&lt;your-path&gt; archives/安装指定组件 $ sudo apt-get update $ sudo apt-get install &lt;包名&gt;" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://zylhorse.github.io/blog/linux/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BA%90/" />
 <meta property="article:published_time" content="2015-02-02T00:00:00+00:00" />
 <meta property="article:modified_time" content="2015-02-02T00:00:00+00:00" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="linux依赖包的离线打包和安装"/>
-<meta name="twitter:description" content="离线安装步骤 清理apt 缓冲区 $ sudo rm -rf /var/cache/apt/archives/*
-下载所需组件 $ sudo apt-get -d install &lt;包名&gt;
-创建目录，并拷贝 $ mkdir &lt;your-path&gt;$ cp -r /var/cache/apt/archives &lt;your-path&gt;修改名目权限 $ chmod 777 -R &lt;your-path&gt;
-建立依赖关系 $ sudo touch &lt;your-path&gt;/Packages.gz$ cd &lt;your-path&gt;$ sudo dpkg-scanpackages ./ /dev/null | gzip &gt; &lt;your-path&gt;/Packages.gz拷贝Packages.gz 到 deb 同目录下 $ cp &lt;your-path&gt;/Packages.gz &lt;your-path&gt;/archives/Packages.gz
-拷贝目录到离线系统 $ scp -r &lt;your-path&gt; &lt;离线系统&gt;
-离线系统步骤 修改apt源 $ vi /etc/apt/sources.list清空并添加deb file:///&lt;your-path&gt; archives/安装指定组件 $ apt-get update $ apt-get install &lt;包名&gt;"/>
-<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
+<meta name="twitter:title" content="Ubuntu依赖包的离线打包和安装"/>
+<meta name="twitter:description" content="Ubuntu 16.04离线安装步骤 宿主机打包  清理apt 缓冲区$ sudo rm -rf /var/cache/apt/archives/* 下载所需组件$ sudo apt-get -d install &lt;包名&gt; 创建目录，并拷贝 $ mkdir &lt;your-path&gt;$ cp -r /var/cache/apt/archives &lt;your-path&gt;  修改名目权限 $ chown -R &lt;your-path&gt;
+建立依赖关系 $ sudo apt install dpkg-dev$ cd &lt;your-path&gt;$ sudo dpkg-scanpackages archives /dev/null | gzip &gt; &lt;your-path&gt;/archives/Packages.gz拷贝目录到离线系统 $ scp -r &lt;your-path&gt; &lt;离线系统&gt;
+离线系统步骤 修改apt源 $ sudo vi /etc/apt/sources.list清空并添加deb file:///&lt;your-path&gt; archives/安装指定组件 $ sudo apt-get update $ sudo apt-get install &lt;包名&gt;"/>
+<link rel="stylesheet" href="/css/bundle.min.1e02bb992195ca398d746df5f9dd547068b745164f5e47eab62b93e6f424e2f1.css" integrity="sha256-HgK7mSGVyjmNdG31&#43;d1UcGi3RRZPXkfqtiuT5vQk4vE="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -98,62 +89,13 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
-  
-    <footer>
-      <ul class="socnet-icons">
-        
-
-        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
-
-      </ul>
-    </footer>
   
 </section>
 
@@ -163,7 +105,7 @@
     <header>
   <div class="title">
     
-      <h2><a href="/blog/linux/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BA%90/">linux依赖包的离线打包和安装</a></h2>
+      <h2><a href="/blog/linux/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BA%90/">Ubuntu依赖包的离线打包和安装</a></h2>
     
     
   </div>
@@ -190,33 +132,33 @@
 </div>
     <div class="content">
       
-      <h1 id="离线安装步骤">离线安装步骤</h1>
-<h2 id="清理apt-缓冲区">清理apt 缓冲区</h2>
-<p><code>$ sudo rm -rf /var/cache/apt/archives/*</code></p>
-<h2 id="下载所需组件">下载所需组件</h2>
-<p><code>$ sudo apt-get -d install &lt;包名&gt;</code></p>
-<h2 id="创建目录并拷贝">创建目录，并拷贝</h2>
+      <h2 id="ubuntu-1604离线安装步骤">Ubuntu 16.04离线安装步骤</h2>
+<h3 id="宿主机打包">宿主机打包</h3>
+<ol>
+<li>清理apt 缓冲区<code>$ sudo rm -rf /var/cache/apt/archives/*</code></li>
+<li>下载所需组件<code>$ sudo apt-get -d install &lt;包名&gt;</code></li>
+<li>创建目录，并拷贝
 <pre><code>$ mkdir &lt;your-path&gt;
 $ cp -r /var/cache/apt/archives &lt;your-path&gt;
-</code></pre><h2 id="修改名目权限">修改名目权限</h2>
-<p><code>$ chmod 777 -R &lt;your-path&gt;</code></p>
-<h2 id="建立依赖关系">建立依赖关系</h2>
-<pre><code>$ sudo touch &lt;your-path&gt;/Packages.gz
+</code></pre></li>
+</ol>
+<h3 id="修改名目权限">修改名目权限</h3>
+<p><code>$ chown -R &lt;your-path&gt;</code></p>
+<h3 id="建立依赖关系">建立依赖关系</h3>
+<pre><code>$ sudo apt install dpkg-dev
 $ cd &lt;your-path&gt;
-$ sudo dpkg-scanpackages ./ /dev/null  | gzip &gt; &lt;your-path&gt;/Packages.gz
+$ sudo dpkg-scanpackages archives /dev/null  | gzip &gt; &lt;your-path&gt;/archives/Packages.gz
 
-</code></pre><h2 id="拷贝packagesgz-到-deb-同目录下">拷贝Packages.gz 到 deb 同目录下</h2>
-<p><code>$ cp &lt;your-path&gt;/Packages.gz &lt;your-path&gt;/archives/Packages.gz</code></p>
-<h2 id="拷贝目录到离线系统">拷贝目录到离线系统</h2>
+</code></pre><h3 id="拷贝目录到离线系统">拷贝目录到离线系统</h3>
 <p><code>$ scp -r &lt;your-path&gt; &lt;离线系统&gt;</code></p>
-<h1 id="离线系统步骤">离线系统步骤</h1>
-<h2 id="修改apt源">修改apt源</h2>
-<pre><code>$ vi /etc/apt/sources.list
+<h3 id="离线系统步骤">离线系统步骤</h3>
+<h3 id="修改apt源">修改apt源</h3>
+<pre><code>$ sudo vi /etc/apt/sources.list
 清空并添加
 deb file:///&lt;your-path&gt; archives/
-</code></pre><h2 id="安装指定组件">安装指定组件</h2>
-<pre><code>$ apt-get update 
-$ apt-get install &lt;包名&gt;
+</code></pre><h3 id="安装指定组件">安装指定组件</h3>
+<pre><code>$ sudo apt-get update 
+$ sudo apt-get install &lt;包名&gt;
 </code></pre>
       
     </div>
@@ -249,18 +191,17 @@ $ apt-get install &lt;包名&gt;
       <div class="toc-title">目录</div>
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#清理apt-缓冲区">清理apt 缓冲区</a></li>
-    <li><a href="#下载所需组件">下载所需组件</a></li>
-    <li><a href="#创建目录并拷贝">创建目录，并拷贝</a></li>
-    <li><a href="#修改名目权限">修改名目权限</a></li>
-    <li><a href="#建立依赖关系">建立依赖关系</a></li>
-    <li><a href="#拷贝packagesgz-到-deb-同目录下">拷贝Packages.gz 到 deb 同目录下</a></li>
-    <li><a href="#拷贝目录到离线系统">拷贝目录到离线系统</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#修改apt源">修改apt源</a></li>
-    <li><a href="#安装指定组件">安装指定组件</a></li>
+    <li><a href="#ubuntu-1604离线安装步骤">Ubuntu 16.04离线安装步骤</a>
+      <ul>
+        <li><a href="#宿主机打包">宿主机打包</a></li>
+        <li><a href="#修改名目权限">修改名目权限</a></li>
+        <li><a href="#建立依赖关系">建立依赖关系</a></li>
+        <li><a href="#拷贝目录到离线系统">拷贝目录到离线系统</a></li>
+        <li><a href="#离线系统步骤">离线系统步骤</a></li>
+        <li><a href="#修改apt源">修改apt源</a></li>
+        <li><a href="#安装指定组件">安装指定组件</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
     </aside>
@@ -276,24 +217,16 @@ $ apt-get install &lt;包名&gt;
   
     <hr/>
     
-    <div id="gitalk-container" class="gcomments"></div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-    <script>
-      const gitalk = new Gitalk({
-        clientID: "299d431ca76eb5de15ea",
-        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
-        repo: "zylhorse.github.io",
-        owner: "zylhorse",
-        admin: ["zylhorse"],
-        id: location.pathname,
-        labels: ["linux"],
-        perPage:  20 ,
-        pagerDirection: "last",
-      });
-
-      gitalk.render('gitalk-container');
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=linux
+            theme=github-light
+            crossorigin="anonymous"
+            async>
     </script>
+  </article>
 
 
 
@@ -321,9 +254,6 @@ $ apt-get install &lt;包名&gt;
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
-          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
-          
-        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -340,6 +270,9 @@ $ apt-get install &lt;包名&gt;
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>
@@ -375,6 +308,9 @@ $ apt-get install &lt;包名&gt;
             <a href="/tags/chrome/">chrome<span class="count">1</span></a>
             
           <li>
+            <a href="/tags/diagnostics/">diagnostics<span class="count">2</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -385,9 +321,6 @@ $ apt-get install &lt;包名&gt;
             
           <li>
             <a href="/tags/kafka/">kafka<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
             
           </li>
         </ul>

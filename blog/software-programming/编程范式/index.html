@@ -29,7 +29,7 @@
 <meta name="twitter:title" content="编程的基本风格或典范模式(programming paradigm)"/>
 <meta name="twitter:description" content="编程范式（programming paradigm） 概念  编程的基本风格或典范模式，是如何编写程序的方法论。 哲学观点：编程者在创造虚拟世界，而编程范式就是他们置身其中不自觉采用的世界观和方法论。 编程是为了解决问题，而解决问题可以有多种视角和思路，其中普适且行之有效的模式被归结为范式。 由于着眼点和思维方式不同，相应的范式有自己的侧重和偏向，因此范式常用&rsquo;oriented&rsquo;描述。换言之每种范式都引导编程者带着某种倾向去分析问题、解决问题，这不就是‘导向’吗？ 编程范式是抽象的，必须通过具体的编程语言来体现。任何编程语言在设计中都会倾向于某些编程范式，一种编程范式可以在不同的编程语言中体现，一种编程语言也可以适用多种范式。  常见编程范式  命令式（Imperative Programming）
 命令“机器”如何去做(how)，这样不管你想要的是什么(what)，它都会按照命令实现。 声明式（Declarative Programming) 告诉“机器”你想要的是什么(what)，让“机器”推导如何去做(how).  函数式（Function Programming） 将机器运算当作是函数运算，并且避免使用程序状态及易变对象 逻辑编程（Logic programming） 设置答案需要匹配的规则解决问题，而不是设置步骤解决问题。编程语言：Prolog 过程式（Procedural Programming) 主要采用程序调用（Procedure call）或函数调用（Function call）来进行流程控制。 面向对象(Object Programming） 对象作为程序的单元，将程序和数据封装其中。对象是相互独立和相互调用。 "/>
-<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.1e02bb992195ca398d746df5f9dd547068b745164f5e47eab62b93e6f424e2f1.css" integrity="sha256-HgK7mSGVyjmNdG31&#43;d1UcGi3RRZPXkfqtiuT5vQk4vE="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -86,62 +86,13 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
-  
-    <footer>
-      <ul class="socnet-icons">
-        
-
-        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
-
-      </ul>
-    </footer>
   
 </section>
 
@@ -262,24 +213,16 @@
   
     <hr/>
     
-    <div id="gitalk-container" class="gcomments"></div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-    <script>
-      const gitalk = new Gitalk({
-        clientID: "299d431ca76eb5de15ea",
-        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
-        repo: "zylhorse.github.io",
-        owner: "zylhorse",
-        admin: ["zylhorse"],
-        id: location.pathname,
-        labels: ["Software Programming"],
-        perPage:  20 ,
-        pagerDirection: "last",
-      });
-
-      gitalk.render('gitalk-container');
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Software&#32;Programming
+            theme=github-light
+            crossorigin="anonymous"
+            async>
     </script>
+  </article>
 
 
 
@@ -307,9 +250,6 @@
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
-          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
-          
-        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -326,6 +266,9 @@
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>
@@ -361,6 +304,9 @@
             <a href="/tags/chrome/">chrome<span class="count">1</span></a>
             
           <li>
+            <a href="/tags/diagnostics/">diagnostics<span class="count">2</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -371,9 +317,6 @@
             
           <li>
             <a href="/tags/kafka/">kafka<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
             
           </li>
         </ul>

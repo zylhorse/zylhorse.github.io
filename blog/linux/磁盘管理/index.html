@@ -38,7 +38,7 @@
  显示当前的硬盘及所属分区的情况。 系统提示：DIsk /dev/sdb doesn&rsquo;t contain a valid partition table。 如图所示    对硬盘进行分区。在终端窗口中输入如下命令： $ sudo fdisk /dev/sdb
  在Command (m for help)提示符后面输入m显示一个帮助菜单， 如图所示。 在Command (m for help)提示符后面输入n，执行 add a new partition指令给硬盘增加一个新分区。 出现Command action时，输入e，指定分区为扩展分区（extended）。 出现Partition number(1-4)时，输入１表示只分一个区。 后续指定起启柱面（cylinder）号完成分区, 如图所示。    在Command (m for help)提示符后面输入p，显示分区表。
  系统提示如图所示：  Device Boot Start End Blocks Id System/dev/sdb1 1 26108 209712478&#43; 5 Extended  在Command (m for help)提示符后面输入w，保存分区表。"/>
-<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.1e02bb992195ca398d746df5f9dd547068b745164f5e47eab62b93e6f424e2f1.css" integrity="sha256-HgK7mSGVyjmNdG31&#43;d1UcGi3RRZPXkfqtiuT5vQk4vE="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
@@ -95,62 +95,13 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
-  
-    <footer>
-      <ul class="socnet-icons">
-        
-
-        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
-
-      </ul>
-    </footer>
   
 </section>
 
@@ -327,30 +278,22 @@ resize2fs -p /dev/mapper/ubuntu--vg-ubuntu--lv
       <a href="/blog/windows/%E6%B8%85%E7%90%86%E7%B3%BB%E7%BB%9F%E7%BC%93%E5%AD%98%E5%9B%BE%E6%A0%87/" class="button left"><span>Windows中文件的最新图标刷新不出来问题</span></a>
     
     
-      <a href="/blog/linux/ubuntu-%E5%AE%89%E8%A3%85/" class="button right"><span>ubutnu本地安装实操</span></a>
+      <a href="/blog/linux/ubuntu%E5%AE%89%E8%A3%85/" class="button right"><span>ubutnu本地安装实操</span></a>
     
   </div>
   
     <hr/>
     
-    <div id="gitalk-container" class="gcomments"></div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-    <script>
-      const gitalk = new Gitalk({
-        clientID: "299d431ca76eb5de15ea",
-        clientSecret: "24ec0cbe250f5bbee187cbc26b01117d0c9f99d5",
-        repo: "zylhorse.github.io",
-        owner: "zylhorse",
-        admin: ["zylhorse"],
-        id: location.pathname,
-        labels: ["Linux"],
-        perPage:  20 ,
-        pagerDirection: "last",
-      });
-
-      gitalk.render('gitalk-container');
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Linux
+            theme=github-light
+            crossorigin="anonymous"
+            async>
     </script>
+  </article>
 
 
 
@@ -378,9 +321,6 @@ resize2fs -p /dev/mapper/ubuntu--vg-ubuntu--lv
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
-          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
-          
-        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -397,6 +337,9 @@ resize2fs -p /dev/mapper/ubuntu--vg-ubuntu--lv
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>
@@ -432,6 +375,9 @@ resize2fs -p /dev/mapper/ubuntu--vg-ubuntu--lv
             <a href="/tags/chrome/">chrome<span class="count">1</span></a>
             
           <li>
+            <a href="/tags/diagnostics/">diagnostics<span class="count">2</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -442,9 +388,6 @@ resize2fs -p /dev/mapper/ubuntu--vg-ubuntu--lv
             
           <li>
             <a href="/tags/kafka/">kafka<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
             
           </li>
         </ul>

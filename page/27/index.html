@@ -18,48 +18,12 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.1e02bb992195ca398d746df5f9dd547068b745164f5e47eab62b93e6f424e2f1.css" integrity="sha256-HgK7mSGVyjmNdG31&#43;d1UcGi3RRZPXkfqtiuT5vQk4vE="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
     
 
-  <div id="theme-message" style="background-color:#3c3b3b;color:#f4f4f4;margin:auto auto;padding:.25em 2em;width:75%;">
-    <p style="text-align:center;">This message, related to the development of the theme, only displays on the
-      <code>localhost</code> homepage to notify you of any important theme changes.</p>
-      <hr>
-      <h5 style="color:#f4f4f4;text-align:center;"><i class="fas fa-exclamation-triangle"></i>Version 2.0.0 - July 20, 2020<i class="fas fa-exclamation-triangle"></i></h5>
-    <p>Below are the following changes that <em>could</em> be breaking changes for your site. For more details on any change, please refer to <a href="https://github.com/pacollins/hugo-future-imperfect-slim/pull/154">PR #154</a>.</p>
-<p>The major breaking change is:</p>
-<ol>
-<li>Users that have front matter that utilize <code>images</code> (backwards compatibility for <code>featured</code> and associated parameters still remains) <em>will</em> need to adjust from <code>[images]=&quot;SRC&quot;</code> to the new format.</li>
-</ol>
-<pre><code>[[images]]
-    src = &quot;&quot; // Link to image
-    alt = &quot;&quot; // Alt text for image
-    stretch = // Optional: See screenshots for referenced values and outcomes
-</code></pre><p>If you utilize any of the following, there <em>might</em> be a breaking:</p>
-<ol>
-<li>User custom templates <em>may</em> require adjustment.</li>
-<li>User custom i18n languages, or custom templates referencing i18n translations <em>may</em> require adjustment.</li>
-<li>User custom template for comments <em>will</em> require adjustment <em>if</em> it uses the theme&rsquo;s CSS and/or JS.</li>
-<li>User custom CSS <em>may</em> need to adjust due to a variety of class name changes and specificity changes.</li>
-</ol>
-<p>While I realize this is inconvenient, I hope that it is worth it to you in the long run. Thanks for using the theme, and feel free to submit issues as needed.</p>
-
-    <div style="text-align:center;">
-      <button onclick="removeBox()" class="button" style="color:#f4f4f4;margin-bottom:1em;">Close Notification Until Next Update</button>
-    </div>
-    <script>
-      if (window.location.href.indexOf('localhost:') < 1 || window.localStorage.getItem('HFIS-version') == '2.0.0') {
-        document.getElementsByTagName("body")[0].removeChild(document.getElementById("theme-message"));
-      }
-      function removeBox() {
-        window.localStorage.setItem('HFIS-version', '2.0.0');
-        document.getElementsByTagName("body")[0].removeChild(document.getElementById("theme-message"));
-      }
-    </script>
-  </div>
 <header id="site-header">
   <nav id="site-nav">
     <h1 class="nav-title">
@@ -111,62 +75,13 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
-  
-    <footer>
-      <ul class="socnet-icons">
-        
-
-        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
-
-      </ul>
-    </footer>
   
 </section>
 
@@ -174,6 +89,155 @@
         
   
       
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5/">Erlang类型检查</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-12-15 00:00:00 &#43;0000 UTC">2015-12-15</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h1 id="类型检测">类型检测</h1>
+<pre><code>9.3　dialyzer(待补充)</code></pre>
+
+  </div>
+  <footer>
+    <a href="/blog/erlang/%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/%E7%B1%BB%E5%9E%8B/">Erlang类型表示法</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-12-01 00:00:00 &#43;0000 UTC">2015-12-01</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="类型">类型</h2>
+<p>Erlang有一种类型表示法，可以用来定义新的数据类型并给代码添加类型注解。类型注解让代码更容易理解和维护，还可以在编译时检测错误。</p>
+<h2 id="指定数据和函数类型">指定数据和函数类型</h2>
+<pre><code>-module(...).&hellip;</code></pre>
+  </div>
+  <footer>
+    <a href="/blog/erlang/%E7%B1%BB%E5%9E%8B/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B%E6%9C%AA%E5%AE%8C/">Erlang套接字编程</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-11-11 00:00:00 &#43;0000 UTC">2015-11-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="客户端">客户端</h2>
+<ul>
+<li>gen_tcp:connect(Host, Port, [Options]) -&gt; {ok, Socket} | {error, Reason}</li>
+</ul>
+<pre><code>与指定域名、端口号的服务器建立连接。&hellip;</code></pre>
+  </div>
+  <footer>
+    <a href="/blog/erlang/%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B%E6%9C%AA%E5%AE%8C/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/cache/redis/%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/">Redis安装和配置</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-11-06 00:00:00 &#43;0000 UTC">2015-11-06</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="安全">安全</h2>
+<pre><code>语法： 
+    config get requirepass
+    config set requirepass password
+    auth password&hellip;</code></pre>
+  </div>
+  <footer>
+    <a href="/blog/cache/redis/%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
       
           <article class="post">
   <header>
@@ -207,269 +271,6 @@ eunit使用了很多预处理宏，这些宏被设计成非入侵式的，不会
   </div>
   <footer>
     <a href="/blog/erlang/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95eunit/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/erlang/%E6%96%87%E6%9C%AC%E7%BC%96%E7%A8%8B/">Erlang文本编程</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-10-07 00:00:00 &#43;0000 UTC">2015-10-07</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h1 id="文本编程">文本编程</h1>
-<h2 id="操作文件的模块">操作文件的模块</h2>
-<ul>
-<li>file</li>
-</ul>
-<blockquote>
-<p>包含打开、关闭、读写文件的方法。</p>
-</blockquote>
-<ul>
-<li>filename</li>
-</ul>
-<blockquote>
-<p>这个模块的方法能够跨平台的操作文件名，这样可以在不同的操作系统上运行相同的代码。&hellip;</p></blockquote>
-  </div>
-  <footer>
-    <a href="/blog/erlang/%E6%96%87%E6%9C%AC%E7%BC%96%E7%A8%8B/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E8%A1%A5%E9%81%97/">Erlang顺序编程补遗</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-09-21 00:00:00 &#43;0000 UTC">2015-09-21</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h1 id="apply">apply</h1>
-<ul>
-<li>内置函数apply(mod,func,[arg1,arg2,arg3,&hellip;,argn])。会将参数arg1,arg2,&hellip;,argn应用到模块mod里的函&hellip;</li></ul>
-  </div>
-  <footer>
-    <a href="/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E8%A1%A5%E9%81%97/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/">Erlang顺序编程错误处理</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-09-11 00:00:00 &#43;0000 UTC">2015-09-11</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h1 id="概括">概括</h1>
-<ul>
-<li>Erlang中当错误出现时，需要发现并纠正，然后继续。</li>
-<li>构建真正容错的系统，需要不止一台计算机，毕竟可能整台机器崩溃。因此故障检测和别处重启计算的概念需要扩展到联网的计算机上。</li>
-</ul>
-<h1 id="顺序代码里面的错误处理">顺序代码里面&hellip;</h1>
-  </div>
-  <footer>
-    <a href="/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
-  </footer>
-</article>
-
-      
-          <article class="post">
-  <header>
-  <div class="title">
-    
-      <h2><a href="/blog/software-programming/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">编程范式-函数式编程</a></h2>
-    
-    
-  </div>
-</header>
-  <div class="meta">
-    <p title="Created" class="fas fa-calendar-plus">
-        <time datetime="2015-09-01 00:00:00 &#43;0000 UTC">2015-09-01</time>
-    </p>
-    
-        <p title="Author" class="fas fa-user">zylhorse
-        </p>
-    
-    
-        <p title="ReadingTime" class="fas fa-stopwatch">
-            5分钟
-        </p>
-    
-</div>
-  <div class="content">
-    
-    
-    <h1 id="函数式编程function-programming">函数式编程（Function Programming）</h1>
-<ul>
-<li>函数式编程将电脑运算看作是函数运算。 函数式编程的基础是λ 演算（ lambda caculus）。函数可以作为输入（参数）输出（返回值）。</li>
-<li>&hellip;</li></ul>
-  </div>
-  <footer>
-    <a href="/blog/software-programming/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/software-programming/">Software Programming</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/"></a></li>
-        
-      
-    </ul>
-  
-</div>
-
   </footer>
 </article>
 
@@ -506,9 +307,6 @@ eunit使用了很多预处理宏，这些宏被设计成非入侵式的，不会
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
-          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
-          
-        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -525,6 +323,9 @@ eunit使用了很多预处理宏，这些宏被设计成非入侵式的，不会
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>
@@ -560,6 +361,9 @@ eunit使用了很多预处理宏，这些宏被设计成非入侵式的，不会
             <a href="/tags/chrome/">chrome<span class="count">1</span></a>
             
           <li>
+            <a href="/tags/diagnostics/">diagnostics<span class="count">2</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -570,9 +374,6 @@ eunit使用了很多预处理宏，这些宏被设计成非入侵式的，不会
             
           <li>
             <a href="/tags/kafka/">kafka<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
             
           </li>
         </ul>

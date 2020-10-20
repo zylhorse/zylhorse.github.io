@@ -18,48 +18,12 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="zylhorse blog"/>
 <meta name="twitter:description" content=""/>
-<link rel="stylesheet" href="/css/bundle.min.f9c0e0ecda9c9cd5729f963950c15b9049ec5b9d99593ffd20d11f77ec27b849.css" integrity="sha256-&#43;cDg7NqcnNVyn5Y5UMFbkEnsW52ZWT/9INEfd&#43;wnuEk="><link rel="stylesheet" href="/css/add-on.css">
+<link rel="stylesheet" href="/css/bundle.min.1e02bb992195ca398d746df5f9dd547068b745164f5e47eab62b93e6f424e2f1.css" integrity="sha256-HgK7mSGVyjmNdG31&#43;d1UcGi3RRZPXkfqtiuT5vQk4vE="><link rel="stylesheet" href="/css/add-on.css">
 </head>
 
   <body>
     
 
-  <div id="theme-message" style="background-color:#3c3b3b;color:#f4f4f4;margin:auto auto;padding:.25em 2em;width:75%;">
-    <p style="text-align:center;">This message, related to the development of the theme, only displays on the
-      <code>localhost</code> homepage to notify you of any important theme changes.</p>
-      <hr>
-      <h5 style="color:#f4f4f4;text-align:center;"><i class="fas fa-exclamation-triangle"></i>Version 2.0.0 - July 20, 2020<i class="fas fa-exclamation-triangle"></i></h5>
-    <p>Below are the following changes that <em>could</em> be breaking changes for your site. For more details on any change, please refer to <a href="https://github.com/pacollins/hugo-future-imperfect-slim/pull/154">PR #154</a>.</p>
-<p>The major breaking change is:</p>
-<ol>
-<li>Users that have front matter that utilize <code>images</code> (backwards compatibility for <code>featured</code> and associated parameters still remains) <em>will</em> need to adjust from <code>[images]=&quot;SRC&quot;</code> to the new format.</li>
-</ol>
-<pre><code>[[images]]
-    src = &quot;&quot; // Link to image
-    alt = &quot;&quot; // Alt text for image
-    stretch = // Optional: See screenshots for referenced values and outcomes
-</code></pre><p>If you utilize any of the following, there <em>might</em> be a breaking:</p>
-<ol>
-<li>User custom templates <em>may</em> require adjustment.</li>
-<li>User custom i18n languages, or custom templates referencing i18n translations <em>may</em> require adjustment.</li>
-<li>User custom template for comments <em>will</em> require adjustment <em>if</em> it uses the theme&rsquo;s CSS and/or JS.</li>
-<li>User custom CSS <em>may</em> need to adjust due to a variety of class name changes and specificity changes.</li>
-</ol>
-<p>While I realize this is inconvenient, I hope that it is worth it to you in the long run. Thanks for using the theme, and feel free to submit issues as needed.</p>
-
-    <div style="text-align:center;">
-      <button onclick="removeBox()" class="button" style="color:#f4f4f4;margin-bottom:1em;">Close Notification Until Next Update</button>
-    </div>
-    <script>
-      if (window.location.href.indexOf('localhost:') < 1 || window.localStorage.getItem('HFIS-version') == '2.0.0') {
-        document.getElementsByTagName("body")[0].removeChild(document.getElementById("theme-message"));
-      }
-      function removeBox() {
-        window.localStorage.setItem('HFIS-version', '2.0.0');
-        document.getElementsByTagName("body")[0].removeChild(document.getElementById("theme-message"));
-      }
-    </script>
-  </div>
 <header id="site-header">
   <nav id="site-nav">
     <h1 class="nav-title">
@@ -111,62 +75,13 @@
 
     <div id="wrapper">
       <section id="site-intro" >
-  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  
   <header>
-    <h1>张勇良</h1>
+    
   </header>
   <main>
-    <p>不念过往，不负当下</p>
+    
   </main>
-  
-    <footer>
-      <ul class="socnet-icons">
-        
-
-        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
-
-      </ul>
-    </footer>
   
 </section>
 
@@ -207,27 +122,6 @@
   </div>
   <footer>
     <a href="/blog/elk/elk/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/elk/">ELK</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/log/">Log</a></li>
-        
-      
-    </ul>
-  
-</div>
-
   </footer>
 </article>
 
@@ -266,27 +160,6 @@ nsqbeat:
   </div>
   <footer>
     <a href="/blog/log-system/docker%E5%AE%89%E8%A3%85nsqbeat/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/log-system/">Log System</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/nsq/">NSQ</a></li>
-        
-      
-    </ul>
-  
-</div>
-
   </footer>
 </article>
 
@@ -326,27 +199,6 @@ services:
   </div>
   <footer>
     <a href="/blog/message-queue/nsq/docker-%E5%AE%89%E8%A3%85nsq/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/message-queue/">Message Queue</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/nsq/">NSQ</a></li>
-        
-      
-    </ul>
-  
-</div>
-
   </footer>
 </article>
 
@@ -384,27 +236,6 @@ services:
   </div>
   <footer>
     <a href="/blog/message-queue/nsq/nsqd/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/message-queue/">Message Queue</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/nsq/">NSQ</a></li>
-        
-      
-    </ul>
-  
-</div>
-
   </footer>
 </article>
 
@@ -440,27 +271,6 @@ services:
   </div>
   <footer>
     <a href="/blog/message-queue/kafka/kafka/" class="button big">阅读全文</a>
-    <div class="stats">
-  
-    <ul class="categories">
-      
-        
-          <li><a class="article-terms-link" href="/categories/message-queue/">Message Queue</a></li>
-        
-      
-    </ul>
-  
-  
-    <ul class="tags">
-      
-        
-          <li><a class="article-terms-link" href="/tags/kafka/">Kafka</a></li>
-        
-      
-    </ul>
-  
-</div>
-
   </footer>
 </article>
 
@@ -497,9 +307,6 @@ services:
           <a href="/categories/cache/">cache<span class="count">23</span></a>
           
         <li>
-          <a href="/categories/chrome/">chrome<span class="count">1</span></a>
-          
-        <li>
           <a href="/categories/compilation/">compilation<span class="count">5</span></a>
           
         <li>
@@ -516,6 +323,9 @@ services:
           
         <li>
           <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
           
         </li>
       </ul>
@@ -551,6 +361,9 @@ services:
             <a href="/tags/chrome/">chrome<span class="count">1</span></a>
             
           <li>
+            <a href="/tags/diagnostics/">diagnostics<span class="count">2</span></a>
+            
+          <li>
             <a href="/tags/http/">http<span class="count">1</span></a>
             
           <li>
@@ -561,9 +374,6 @@ services:
             
           <li>
             <a href="/tags/kafka/">kafka<span class="count">1</span></a>
-            
-          <li>
-            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
             
           </li>
         </ul>
