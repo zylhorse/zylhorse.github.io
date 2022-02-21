@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Erlang基本数据结构 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Erlang基本数据结构">
+<meta itemprop="description" content="Erlang Erlang 创始人Joe Armstrong，基于Prolog开发。Erlang 是通用的面向并发的编程语言，由瑞典电信设备制造商爱立信所辖CS-Lab开发。于1987年开发，1988年开源。Erlang是运行于虚拟机上的解释型语言。 Erlang 编写的程序运行时通常由大量的轻量级进程组成，并通过消息传递进行通讯。Erlang 目前包含 乌普萨拉大学的高性能计划（Hipe）开发的本地代码编译器，自R11B04版本开始erlang 支持脚本式解释器。 注： erlang 的hipe 相当于jit（Just-in-time compilation），根据语言评测有hipe支持的erlang运算上快2-3倍。
+Shell 启动：$&gt; erl停止(受控方式)：1&gt;q().init:stop().立即停止： erlang:halt().切换erl 中shell命令： CTRL &#43; P ， CTRL &#43; N。shell 只能对erlang 的表达式求值，不能在shell中输入Erlang文件中代码（.erl文件中的句法形式不是表达式），不能输入模块注释（如：-module，-export）。编写分布式程序时，集群中会有许多正运行的erlang系统节点，可以将shell随意附着在他们中的任何一个上， 甚至可以用ssh向一个运行着erlang系统的计算机上发起一个直连接，通过这个方法，在erlang 的节点集群中你能与其中的任何节点上的任意一个程序打交道 注释 % ： 代表一行注释的开始，被erlang 和 shell 忽略。 整数运算： 采用不定长整数进行运算，整数运算没有误差不会溢出。 进制表达： 进制#值： 16#1(16进制1)， 2#111(2进制111)。 变量 变量首字母大写变量是单一赋值，只能一次性给定，重复赋值是错误的。一个变量如果被赋值，则被称为绑定变量，否则为自由变量。一开始所有的变量都是自由变量。下划线（_） 是匿名变量，与常规变量不同，在同一模式下_可以绑定不同的值。f() 会释放shell之前进行过绑定的变量。 等号（=） =是一个模式匹配运算符，当变量是自由变量时，其行为相当于赋值运算。 变量绑定表： 变量经过赋值，shell就会形成一个变量绑定表。形如： {X |-&gt; 111, Y |-&gt; 222} 原子 原子是全局有效的，无需使用宏定义或者包含文件。 原子是以小写字母开头，后面跟数字、字母、下划线、邮件符号（@）的字符。使用单引号的字符也是原子。这种形式使得我们可以用大些字母开头或者包含特殊字符。原子的值是原子本身。 元组（tuple） 将若干个以逗号分割的值用一对花括号括起来就形成一个元组。元组是匿名的，元组中的字段没有名字，因此推荐元组的第一个元素用原子来表明这个元组所代表的含义。eg:  Person={person, {name,zyl}, {age,27}, {height,1."><meta itemprop="datePublished" content="2015-07-19T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2015-07-19T00:00:00+00:00" />
+<meta itemprop="wordCount" content="119">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Erlang基本数据结构" />
+<meta property="og:description" content="Erlang Erlang 创始人Joe Armstrong，基于Prolog开发。Erlang 是通用的面向并发的编程语言，由瑞典电信设备制造商爱立信所辖CS-Lab开发。于1987年开发，1988年开源。Erlang是运行于虚拟机上的解释型语言。 Erlang 编写的程序运行时通常由大量的轻量级进程组成，并通过消息传递进行通讯。Erlang 目前包含 乌普萨拉大学的高性能计划（Hipe）开发的本地代码编译器，自R11B04版本开始erlang 支持脚本式解释器。 注： erlang 的hipe 相当于jit（Just-in-time compilation），根据语言评测有hipe支持的erlang运算上快2-3倍。
+Shell 启动：$&gt; erl停止(受控方式)：1&gt;q().init:stop().立即停止： erlang:halt().切换erl 中shell命令： CTRL &#43; P ， CTRL &#43; N。shell 只能对erlang 的表达式求值，不能在shell中输入Erlang文件中代码（.erl文件中的句法形式不是表达式），不能输入模块注释（如：-module，-export）。编写分布式程序时，集群中会有许多正运行的erlang系统节点，可以将shell随意附着在他们中的任何一个上， 甚至可以用ssh向一个运行着erlang系统的计算机上发起一个直连接，通过这个方法，在erlang 的节点集群中你能与其中的任何节点上的任意一个程序打交道 注释 % ： 代表一行注释的开始，被erlang 和 shell 忽略。 整数运算： 采用不定长整数进行运算，整数运算没有误差不会溢出。 进制表达： 进制#值： 16#1(16进制1)， 2#111(2进制111)。 变量 变量首字母大写变量是单一赋值，只能一次性给定，重复赋值是错误的。一个变量如果被赋值，则被称为绑定变量，否则为自由变量。一开始所有的变量都是自由变量。下划线（_） 是匿名变量，与常规变量不同，在同一模式下_可以绑定不同的值。f() 会释放shell之前进行过绑定的变量。 等号（=） =是一个模式匹配运算符，当变量是自由变量时，其行为相当于赋值运算。 变量绑定表： 变量经过赋值，shell就会形成一个变量绑定表。形如： {X |-&gt; 111, Y |-&gt; 222} 原子 原子是全局有效的，无需使用宏定义或者包含文件。 原子是以小写字母开头，后面跟数字、字母、下划线、邮件符号（@）的字符。使用单引号的字符也是原子。这种形式使得我们可以用大些字母开头或者包含特殊字符。原子的值是原子本身。 元组（tuple） 将若干个以逗号分割的值用一对花括号括起来就形成一个元组。元组是匿名的，元组中的字段没有名字，因此推荐元组的第一个元素用原子来表明这个元组所代表的含义。eg:  Person={person, {name,zyl}, {age,27}, {height,1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/erlang/erlang%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2015-07-19T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-07-19T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Erlang基本数据结构"/>
+<meta name="twitter:description" content="Erlang Erlang 创始人Joe Armstrong，基于Prolog开发。Erlang 是通用的面向并发的编程语言，由瑞典电信设备制造商爱立信所辖CS-Lab开发。于1987年开发，1988年开源。Erlang是运行于虚拟机上的解释型语言。 Erlang 编写的程序运行时通常由大量的轻量级进程组成，并通过消息传递进行通讯。Erlang 目前包含 乌普萨拉大学的高性能计划（Hipe）开发的本地代码编译器，自R11B04版本开始erlang 支持脚本式解释器。 注： erlang 的hipe 相当于jit（Just-in-time compilation），根据语言评测有hipe支持的erlang运算上快2-3倍。
+Shell 启动：$&gt; erl停止(受控方式)：1&gt;q().init:stop().立即停止： erlang:halt().切换erl 中shell命令： CTRL &#43; P ， CTRL &#43; N。shell 只能对erlang 的表达式求值，不能在shell中输入Erlang文件中代码（.erl文件中的句法形式不是表达式），不能输入模块注释（如：-module，-export）。编写分布式程序时，集群中会有许多正运行的erlang系统节点，可以将shell随意附着在他们中的任何一个上， 甚至可以用ssh向一个运行着erlang系统的计算机上发起一个直连接，通过这个方法，在erlang 的节点集群中你能与其中的任何节点上的任意一个程序打交道 注释 % ： 代表一行注释的开始，被erlang 和 shell 忽略。 整数运算： 采用不定长整数进行运算，整数运算没有误差不会溢出。 进制表达： 进制#值： 16#1(16进制1)， 2#111(2进制111)。 变量 变量首字母大写变量是单一赋值，只能一次性给定，重复赋值是错误的。一个变量如果被赋值，则被称为绑定变量，否则为自由变量。一开始所有的变量都是自由变量。下划线（_） 是匿名变量，与常规变量不同，在同一模式下_可以绑定不同的值。f() 会释放shell之前进行过绑定的变量。 等号（=） =是一个模式匹配运算符，当变量是自由变量时，其行为相当于赋值运算。 变量绑定表： 变量经过赋值，shell就会形成一个变量绑定表。形如： {X |-&gt; 111, Y |-&gt; 222} 原子 原子是全局有效的，无需使用宏定义或者包含文件。 原子是以小写字母开头，后面跟数字、字母、下划线、邮件符号（@）的字符。使用单引号的字符也是原子。这种形式使得我们可以用大些字母开头或者包含特殊字符。原子的值是原子本身。 元组（tuple） 将若干个以逗号分割的值用一对花括号括起来就形成一个元组。元组是匿名的，元组中的字段没有名字，因此推荐元组的第一个元素用原子来表明这个元组所代表的含义。eg:  Person={person, {name,zyl}, {age,27}, {height,1."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/erlang%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">Erlang基本数据结构</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-07-19 00:00:00 &#43;0000 UTC">2015-07-19</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h1 id="erlang">Erlang</h1>
+<pre><code>Erlang 创始人Joe Armstrong，基于Prolog开发。
+Erlang 是通用的面向并发的编程语言，由瑞典电信设备制造商爱立信所辖CS-Lab开发。于1987年开发，1988年开源。
+Erlang是运行于虚拟机上的解释型语言。     
+Erlang 编写的程序运行时通常由大量的轻量级进程组成，并通过消息传递进行通讯。
+Erlang 目前包含 乌普萨拉大学的高性能计划（Hipe）开发的本地代码编译器，自R11B04版本开始erlang 支持脚本式解释器。
+</code></pre>
+<p>注： erlang 的hipe 相当于jit（Just-in-time compilation），根据语言评测有hipe支持的erlang运算上快2-3倍。</p>
+<h1 id="shell">Shell</h1>
+<pre><code>启动：$&gt; erl
+停止(受控方式)：1&gt;q().
+            init:stop().
+立即停止： erlang:halt().
+切换erl 中shell命令： CTRL + P ， CTRL + N。
+shell 只能对erlang 的表达式求值，不能在shell中输入Erlang文件中代码（.erl文件中的句法形式不是表达式），不能输入模块注释（如：-module，-export）。
+编写分布式程序时，集群中会有许多正运行的erlang系统节点，可以将shell随意附着在他们中的任何一个上， 甚至可以用ssh向一个运行着erlang系统的计算机上发起一个直连接，通过这个方法，在erlang 的节点集群中你能与其中的任何节点上的任意一个程序打交道
+</code></pre>
+<h1 id="注释">注释</h1>
+<pre><code>% ： 代表一行注释的开始，被erlang 和 shell 忽略。
+</code></pre>
+<h1 id="整数运算">整数运算：</h1>
+<pre><code>采用不定长整数进行运算，整数运算没有误差不会溢出。
+</code></pre>
+<h1 id="进制表达">进制表达：</h1>
+<pre><code>进制#值： 16#1(16进制1)， 2#111(2进制111)。
+</code></pre>
+<h1 id="变量">变量</h1>
+<pre><code>变量首字母大写
+变量是单一赋值，只能一次性给定，重复赋值是错误的。
+一个变量如果被赋值，则被称为绑定变量，否则为自由变量。一开始所有的变量都是自由变量。
+下划线（_） 是匿名变量，与常规变量不同，在同一模式下_可以绑定不同的值。
+f() 会释放shell之前进行过绑定的变量。
+</code></pre>
+<h1 id="等号">等号（=）</h1>
+<pre><code>=是一个模式匹配运算符，当变量是自由变量时，其行为相当于赋值运算。
+</code></pre>
+<h1 id="变量绑定表">变量绑定表：</h1>
+<pre><code>变量经过赋值，shell就会形成一个变量绑定表。
+形如： {X |-&gt; 111, Y |-&gt; 222}
+</code></pre>
+<h1 id="原子">原子</h1>
+<pre><code>原子是全局有效的，无需使用宏定义或者包含文件。 
+原子是以小写字母开头，后面跟数字、字母、下划线、邮件符号（@）的字符。
+使用单引号的字符也是原子。这种形式使得我们可以用大些字母开头或者包含特殊字符。
+原子的值是原子本身。
+</code></pre>
+<h1 id="元组tuple">元组（tuple）</h1>
+<pre><code>将若干个以逗号分割的值用一对花括号括起来就形成一个元组。
+元组是匿名的，元组中的字段没有名字，因此推荐元组的第一个元素用原子来表明这个元组所代表的含义。
+eg: 
+</code></pre>
+<p>Person={person,
+{name,zyl},
+{age,27},
+{height,1.80}
+}</p>
+<h2 id="怎样获取元组的值">怎样获取元组的值：</h2>
+<pre><code>使用模式匹配将元组匹配到具有相同数量元素及结构的未绑定变量的元组中。
+</code></pre>
+<h1 id="列表">列表</h1>
+<pre><code>将若干个以逗号分割的值用一对对号括起来就形成了一个列表。
+列表头（head)：列表的第一个元素，所有的列表函数处理都是从提取头开始的。
+列表尾（tail)：剩下的就是列表尾，列表尾必须也是个列表。
+</code></pre>
+<h2 id="列表运算">列表运算</h2>
+<pre><code>    如果T是一个列表，那么[H|T]也是一个列表，这个列表以H为头，以T结尾。| 可以将列表的头和尾分开。 当我们用[...|T]构造列表时，都应该保证T是个列表，那么新列表是正规列表，否者为不正规列表。
+</code></pre>
+<h2 id="提取列表元素">提取列表元素</h2>
+<pre><code>用模式匹配操作从列表中提取元素。
+[X|Y] = L : 将列表L 的头提取到X ， 将列表的尾提取到Y。
+</code></pre>
+<h1 id="字符串">字符串</h1>
+<pre><code>严格讲Erlang没有字符串， 字符串实际上是一个整数列表，用双引号将一串字符括起来就是一个字符串，eg: Name=&quot;zhangyongliang&quot;。
+当列表中所有数字都是可打印字符时，才会将列表打印成字符串形式。
+无需死记硬背哪个整数表示特定的字符（ASCII码表），可以使用$符号表示字符的整数值。eg: $a 实际表示a的ascii 数字 97. $A表示65.
+erlang所关心的只是 以某种编码方式编码的一串整数值列表。
+</code></pre>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#怎样获取元组的值">怎样获取元组的值：</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#列表运算">列表运算</a></li>
+    <li><a href="#提取列表元素">提取列表元素</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/erlang/%E8%AE%B0%E5%BD%95%E5%92%8C%E6%98%A0%E5%B0%84%E7%BB%84/" class="button left"><span>Erlang记录和映射组</span></a>
+    
+    
+      <a href="/blog/erlang/%E7%BC%96%E8%AF%91%E5%92%8C%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F/" class="button right"><span>Erlang编译和运行</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Erlang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

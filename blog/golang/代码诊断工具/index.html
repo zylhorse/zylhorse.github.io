@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang代码诊断工具 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Golang代码诊断工具">
+<meta itemprop="description" content="Diagnostics Go生态系统提供了大量的接口套件和工具来诊断Go程序的业务和性能问题
+ 这些工具之间会互相干扰，因此需要单独使用工具来获取精确数据
+ Profiling Profiling分析Go程序的复杂性和成本，例如内存占用和函数调用，来确定Go程序的开销。
+Tracing  Tracing检测代码用于分析一个调用或用户请求在整个生命周期中的执行时间; Tracing提供每个组件影响整个系统执行时间的概览； Tracing可以跨越多个Go进程  Debugging Debugging允许暂停一个Go程序并检测它的执行，验证程序的状态和流程
+Runtime statistics and events  收集和分析运行时状态和事件提供Go程序运行状况的高级概览； 指标的变化帮助我们识别吞吐量、利用率和性能的变化。  使用： go tool pprof -http=:port http://localhost:port/debug/pprof/heap
+import (_ &quot;net/http/pprof&quot;)http.ListenAndServe(lisAddr, nil)堆内存和GC Alloc uint64 //golang语言框架堆空间分配的字节数TotalAlloc uint64 //从服务开始运行至今分配器为分配的堆空间总 和，只有增加，释放的时候不减少Sys uint64 //服务现在系统使用的内存Lookups uint64 //被runtime监视的指针数Mallocs uint64 //服务malloc heap objects的次数Frees uint64 //服务回收的heap objects的次数HeapAlloc uint64 //服务分配的堆内存字节数HeapSys uint64 //系统分配的作为运行栈的内存HeapIdle uint64 //申请但是未分配的堆内存或者回收了的堆内存（空闲）字节数HeapInuse uint64 //正在使用的堆内存字节数HeapReleased uint64 //返回给OS的堆内存，类似C/C&#43;&#43;中的free。HeapObjects uint64 //堆内存块申请的量StackInuse uint64 //正在使用的栈字节数StackSys uint64 //系统分配的作为运行栈的内存MSpanInuse uint64 //用于测试用的结构体使用的字节数MSpanSys uint64 //系统为测试用的结构体分配的字节数MCacheInuse uint64 //mcache结构体申请的字节数(不会被视为垃圾回收)MCacheSys uint64 //操作系统申请的堆空间用于mcache的字节数BuckHashSys uint64 //用于剖析桶散列表的堆空间GCSys uint64 //垃圾回收标记元信息使用的内存OtherSys uint64 //golang系统架构占用的额外空间NextGC uint64 //垃圾回收器检视的内存大小LastGC uint64 // 垃圾回收器最后一次执行时间。PauseTotalNs uint64 // 垃圾回收或者其他信息收集导致服务暂停的次数。PauseNs [256]uint64 //一个循环队列，记录最近垃圾回收系统中断的时间PauseEnd [256]uint64 //一个循环队列，记录最近垃圾回收系统中断的时间开始点。NumForcedGC uint32 //服务调用runtime.">
+<meta itemprop="datePublished" content="2017-10-11T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2017-10-11T00:00:00+00:00" />
+<meta itemprop="wordCount" content="205">
+
+
+
+<meta itemprop="keywords" content="," />
+<meta property="og:title" content="Golang代码诊断工具" />
+<meta property="og:description" content="Diagnostics Go生态系统提供了大量的接口套件和工具来诊断Go程序的业务和性能问题
+ 这些工具之间会互相干扰，因此需要单独使用工具来获取精确数据
+ Profiling Profiling分析Go程序的复杂性和成本，例如内存占用和函数调用，来确定Go程序的开销。
+Tracing  Tracing检测代码用于分析一个调用或用户请求在整个生命周期中的执行时间; Tracing提供每个组件影响整个系统执行时间的概览； Tracing可以跨越多个Go进程  Debugging Debugging允许暂停一个Go程序并检测它的执行，验证程序的状态和流程
+Runtime statistics and events  收集和分析运行时状态和事件提供Go程序运行状况的高级概览； 指标的变化帮助我们识别吞吐量、利用率和性能的变化。  使用： go tool pprof -http=:port http://localhost:port/debug/pprof/heap
+import (_ &quot;net/http/pprof&quot;)http.ListenAndServe(lisAddr, nil)堆内存和GC Alloc uint64 //golang语言框架堆空间分配的字节数TotalAlloc uint64 //从服务开始运行至今分配器为分配的堆空间总 和，只有增加，释放的时候不减少Sys uint64 //服务现在系统使用的内存Lookups uint64 //被runtime监视的指针数Mallocs uint64 //服务malloc heap objects的次数Frees uint64 //服务回收的heap objects的次数HeapAlloc uint64 //服务分配的堆内存字节数HeapSys uint64 //系统分配的作为运行栈的内存HeapIdle uint64 //申请但是未分配的堆内存或者回收了的堆内存（空闲）字节数HeapInuse uint64 //正在使用的堆内存字节数HeapReleased uint64 //返回给OS的堆内存，类似C/C&#43;&#43;中的free。HeapObjects uint64 //堆内存块申请的量StackInuse uint64 //正在使用的栈字节数StackSys uint64 //系统分配的作为运行栈的内存MSpanInuse uint64 //用于测试用的结构体使用的字节数MSpanSys uint64 //系统为测试用的结构体分配的字节数MCacheInuse uint64 //mcache结构体申请的字节数(不会被视为垃圾回收)MCacheSys uint64 //操作系统申请的堆空间用于mcache的字节数BuckHashSys uint64 //用于剖析桶散列表的堆空间GCSys uint64 //垃圾回收标记元信息使用的内存OtherSys uint64 //golang系统架构占用的额外空间NextGC uint64 //垃圾回收器检视的内存大小LastGC uint64 // 垃圾回收器最后一次执行时间。PauseTotalNs uint64 // 垃圾回收或者其他信息收集导致服务暂停的次数。PauseNs [256]uint64 //一个循环队列，记录最近垃圾回收系统中断的时间PauseEnd [256]uint64 //一个循环队列，记录最近垃圾回收系统中断的时间开始点。NumForcedGC uint32 //服务调用runtime." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/%E4%BB%A3%E7%A0%81%E8%AF%8A%E6%96%AD%E5%B7%A5%E5%85%B7/" />
+<meta property="article:published_time" content="2017-10-11T00:00:00+00:00" />
+<meta property="article:modified_time" content="2017-10-11T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang代码诊断工具"/>
+<meta name="twitter:description" content="Diagnostics Go生态系统提供了大量的接口套件和工具来诊断Go程序的业务和性能问题
+ 这些工具之间会互相干扰，因此需要单独使用工具来获取精确数据
+ Profiling Profiling分析Go程序的复杂性和成本，例如内存占用和函数调用，来确定Go程序的开销。
+Tracing  Tracing检测代码用于分析一个调用或用户请求在整个生命周期中的执行时间; Tracing提供每个组件影响整个系统执行时间的概览； Tracing可以跨越多个Go进程  Debugging Debugging允许暂停一个Go程序并检测它的执行，验证程序的状态和流程
+Runtime statistics and events  收集和分析运行时状态和事件提供Go程序运行状况的高级概览； 指标的变化帮助我们识别吞吐量、利用率和性能的变化。  使用： go tool pprof -http=:port http://localhost:port/debug/pprof/heap
+import (_ &quot;net/http/pprof&quot;)http.ListenAndServe(lisAddr, nil)堆内存和GC Alloc uint64 //golang语言框架堆空间分配的字节数TotalAlloc uint64 //从服务开始运行至今分配器为分配的堆空间总 和，只有增加，释放的时候不减少Sys uint64 //服务现在系统使用的内存Lookups uint64 //被runtime监视的指针数Mallocs uint64 //服务malloc heap objects的次数Frees uint64 //服务回收的heap objects的次数HeapAlloc uint64 //服务分配的堆内存字节数HeapSys uint64 //系统分配的作为运行栈的内存HeapIdle uint64 //申请但是未分配的堆内存或者回收了的堆内存（空闲）字节数HeapInuse uint64 //正在使用的堆内存字节数HeapReleased uint64 //返回给OS的堆内存，类似C/C&#43;&#43;中的free。HeapObjects uint64 //堆内存块申请的量StackInuse uint64 //正在使用的栈字节数StackSys uint64 //系统分配的作为运行栈的内存MSpanInuse uint64 //用于测试用的结构体使用的字节数MSpanSys uint64 //系统为测试用的结构体分配的字节数MCacheInuse uint64 //mcache结构体申请的字节数(不会被视为垃圾回收)MCacheSys uint64 //操作系统申请的堆空间用于mcache的字节数BuckHashSys uint64 //用于剖析桶散列表的堆空间GCSys uint64 //垃圾回收标记元信息使用的内存OtherSys uint64 //golang系统架构占用的额外空间NextGC uint64 //垃圾回收器检视的内存大小LastGC uint64 // 垃圾回收器最后一次执行时间。PauseTotalNs uint64 // 垃圾回收或者其他信息收集导致服务暂停的次数。PauseNs [256]uint64 //一个循环队列，记录最近垃圾回收系统中断的时间PauseEnd [256]uint64 //一个循环队列，记录最近垃圾回收系统中断的时间开始点。NumForcedGC uint32 //服务调用runtime."/>
+<link rel="stylesheet" href="/css/bundle.min.cbea2f50a4d23d052be7735e4a7c0c3b067b186fa29225fb3e82f66c3a953cbf.css" integrity="sha256-y&#43;ovUKTSPQUr53NeSnwMOwZ7GG&#43;ikiX7PoL2bDqVPL8="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="https://zylhorse.github.io/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <header>
+    <h1>张勇良</h1>
+  </header>
+  <main>
+    <p>不念过往，不负当下</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/zylhorse" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="/img/main/wechat.jpg" target="_blank" rel="noopener" title="WeChat" class="fab fa-weixin"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:zylhorse@126.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/%E4%BB%A3%E7%A0%81%E8%AF%8A%E6%96%AD%E5%B7%A5%E5%85%B7/">Golang代码诊断工具</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2017-10-11 00:00:00 &#43;0000 UTC">2017-10-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="diagnostics">Diagnostics</h2>
+<p><code>Go</code>生态系统提供了大量的接口套件和工具来诊断<code>Go</code>程序的业务和性能问题</p>
+<blockquote>
+<p>这些工具之间会互相干扰，因此需要单独使用工具来获取精确数据</p>
+</blockquote>
+<h3 id="profiling">Profiling</h3>
+<p><code>Profiling</code>分析<code>Go</code>程序的复杂性和成本，例如内存占用和函数调用，来确定<code>Go</code>程序的开销。</p>
+<h3 id="tracing">Tracing</h3>
+<ul>
+<li><code>Tracing</code>检测代码用于分析一个调用或用户请求在整个生命周期中的执行时间;</li>
+<li><code>Tracing</code>提供每个组件影响整个系统执行时间的概览；</li>
+<li><code>Tracing</code>可以跨越多个<code>Go</code>进程</li>
+</ul>
+<h3 id="debugging">Debugging</h3>
+<p><code>Debugging</code>允许暂停一个<code>Go</code>程序并检测它的执行，验证程序的状态和流程</p>
+<h3 id="runtime-statistics-and-events">Runtime statistics and events</h3>
+<ul>
+<li>收集和分析运行时状态和事件提供<code>Go</code>程序运行状况的高级概览；</li>
+<li>指标的变化帮助我们识别吞吐量、利用率和性能的变化。</li>
+</ul>
+<p>使用： <code>go tool pprof -http=:port http://localhost:port/debug/pprof/heap</code></p>
+<pre><code>import (
+	_ &quot;net/http/pprof&quot;
+)
+
+http.ListenAndServe(lisAddr, nil)
+
+</code></pre><h3 id="堆内存和gc">堆内存和GC</h3>
+<pre><code>Alloc uint64 //golang语言框架堆空间分配的字节数
+TotalAlloc uint64 //从服务开始运行至今分配器为分配的堆空间总 和，只有增加，释放的时候不减少
+Sys uint64 //服务现在系统使用的内存
+Lookups uint64 //被runtime监视的指针数
+Mallocs uint64 //服务malloc heap objects的次数
+Frees uint64 //服务回收的heap objects的次数
+HeapAlloc uint64 //服务分配的堆内存字节数
+HeapSys uint64 //系统分配的作为运行栈的内存
+HeapIdle uint64 //申请但是未分配的堆内存或者回收了的堆内存（空闲）字节数
+HeapInuse uint64 //正在使用的堆内存字节数
+HeapReleased uint64 //返回给OS的堆内存，类似C/C++中的free。
+HeapObjects uint64 //堆内存块申请的量
+StackInuse uint64 //正在使用的栈字节数
+StackSys uint64 //系统分配的作为运行栈的内存
+MSpanInuse uint64 //用于测试用的结构体使用的字节数
+MSpanSys uint64 //系统为测试用的结构体分配的字节数
+MCacheInuse uint64 //mcache结构体申请的字节数(不会被视为垃圾回收)
+MCacheSys uint64 //操作系统申请的堆空间用于mcache的字节数
+BuckHashSys uint64 //用于剖析桶散列表的堆空间
+GCSys uint64 //垃圾回收标记元信息使用的内存
+OtherSys uint64 //golang系统架构占用的额外空间
+NextGC uint64 //垃圾回收器检视的内存大小
+LastGC uint64 // 垃圾回收器最后一次执行时间。
+PauseTotalNs uint64 // 垃圾回收或者其他信息收集导致服务暂停的次数。
+PauseNs [256]uint64 //一个循环队列，记录最近垃圾回收系统中断的时间
+PauseEnd [256]uint64 //一个循环队列，记录最近垃圾回收系统中断的时间开始点。
+NumForcedGC uint32 //服务调用runtime.GC()强制使用垃圾回收的次数。
+GCCPUFraction float64 //垃圾回收占用服务CPU工作的时间总和。如果有100个goroutine，垃圾回收的时间为1S,那么就占用了100S。
+BySize //内存分配器使用情况
+</code></pre><h2 id="trace">trace</h2>
+<pre><code>set GOGCTRACE=1
+set GODEBUG=gctrace=1
+</code></pre><pre><code>gc 1 @0.005s 0%: 0+11+0.99 ms clock, 0+0/15/0+7.9 ms cpu, 25-&gt;25-&gt;24 MB, 26 MB goal, 8 P
+gc 1：说明gc过程，不做解释，1 表示第几次执行gc操作
+@0.005s：表示程序执行的总时间
+0%:表示gc时时间和程序运行总时间的百分比
+0+11+0.99 ms clock：wall-clock (还不清楚什么意思)
+0+0/15/0+7.9 ms cpu：CPU times for the phases of the GC (还不清楚什么意思)
+25-&gt;25-&gt;24 MB：gc开始时的堆大小；GC结束时的堆大小；存活的堆大小
+26 MB goal：整体堆的大小
+8 P：使用的处理器的数量
+
+说明 scvg4: inuse: 143, idle: 70, sys: 213, released: 0, consumed: 213 (MB)
+
+inuse: 143：使用多少M内存
+idle: 70： 剩下要清除的内存
+sys: 213： 系统映射的内存
+released: 0： 释放的系统内存
+consumed: 213： 申请的系统内存
+</code></pre><p>问题:</p>
+<ul>
+<li>web 白屏bug<a href="https://github.com/golang/go/issues/34374">#34374</a></li>
+<li>暂时解决方案: <code>chrome.exe --enable-blink-features=ShadowDOMV0,CustomElementsV0,HTMLImports</code></li>
+</ul>
+
+      
+    <h2>参考</h2>
+    <ul>
+        
+            
+                <li><a target="_blank" href="https://golang.org/doc/diagnostics.html/">Go Disgnostics</a></li>
+            
+        
+    </ul>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#diagnostics">Diagnostics</a>
+      <ul>
+        <li><a href="#profiling">Profiling</a></li>
+        <li><a href="#tracing">Tracing</a></li>
+        <li><a href="#debugging">Debugging</a></li>
+        <li><a href="#runtime-statistics-and-events">Runtime statistics and events</a></li>
+        <li><a href="#堆内存和gc">堆内存和GC</a></li>
+      </ul>
+    </li>
+    <li><a href="#trace">trace</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/golang/protobuf/" class="button left"><span>Golang中protobuf应用实战</span></a>
+    
+    
+      <a href="/blog/golang/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="button right"><span>Golang进程管理工具</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      </main>
+      <section id="site-sidebar">
+  
+
+  
+    <section id="categories">
+      <header>
+        <h1><a href="/categories">分类</a></h1>
+      </header>
+      <ul>
+        
+        
+        <li>
+          <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/cache/">cache<span class="count">23</span></a>
+          
+        <li>
+          <a href="/categories/compilation/">compilation<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/concurrence/">concurrence<span class="count">4</span></a>
+          
+        <li>
+          <a href="/categories/data-structure/">data-structure<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/database/">database<span class="count">9</span></a>
+          
+        <li>
+          <a href="/categories/distribution-system/">distribution-system<span class="count">10</span></a>
+          
+        <li>
+          <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
+          
+        </li>
+      </ul>
+      
+        <footer class="see-more">
+          <a href="/categories" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+        </footer>
+      
+    </section>
+  
+
+  
+      <section id="tags">
+        <header>
+          <h1><a href="/tags">标签</a></h1>
+        </header>
+        <ul>
+          
+          
+          <li>
+            <a href="/tags/algorithm/">algorithm<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/audio/">audio<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/cdn/">cdn<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/certificate/">certificate<span class="count">4</span></a>
+            
+          <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/http/">http<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/i/o/">i/o<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/ide/">ide<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/kafka/">kafka<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/ldap/">ldap<span class="count">1</span></a>
+            
+          </li>
+        </ul>
+        
+          <footer class="see-more">
+            <a href="/tags" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+          </footer>
+        
+      </section>
+  
+
+  
+</section>
+      <footer id="site-footer">
+  
+  <p class="copyright">
+      
+      <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
+      <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
+      <br/>© 2020 zylhorse
+      <br>
+    由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.7e8b85fb814aa446375b535c9ecd0857b9de7637062ea359390ae8675c7761d8.js" integrity="sha256-fouF&#43;4FKpEY3W1Ncns0IV7nedjcGLqNZOQroZ1x3Ydg="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>IDE on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/ide/</link>
+    <description>Recent content in IDE on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 05 Jun 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/ide/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>lua编译环境搭建和IDE配置</title>
+      <link>https://zylhorse.github.io/blog/lua/ide/</link>
+      <pubDate>Fri, 05 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/lua/ide/</guid>
+      <description>lua 编译环境安装   linux:
+$ curl -R -O http://www.lua.org/ftp/lua-5.3.0.tar.gz$ tar zxf lua-5.3.0.tar.gz$ cd lua-5.3.0$ make linux test$ make install  macos:
+$ curl -R -O http://www.lua.org/ftp/lua-5.3.0.tar.gz$ tar zxf lua-5.3.0.tar.gz$ cd lua-5.3.0$ make macosx test$ make install  windows:
+下载地址
+  sublime text 3 设置tools -&amp;gt; build system -&amp;gt; lua</description>
+    </item>
+    
+  </channel>
+</rss>

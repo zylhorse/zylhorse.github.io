@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="zylhorse blog">
+<meta itemprop="description" content=""><meta property="og:title" content="zylhorse blog" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://zylhorse.github.io/" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="zylhorse blog"/>
+<meta name="twitter:description" content=""/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  
+      
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/security/%E7%94%9F%E6%88%90%E5%85%AC%E7%A7%81%E9%92%A5/">生成公私钥</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-06-03 00:00:00 &#43;0000 UTC">2015-06-03</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <pre tabindex="0"><code>$ openssl genrsa -out privatekey.pem 1024
+$ openssl pkcs8 -topk8 -inform PEM -in privatekey.pem&hellip;</code></pre>
+  </div>
+  <footer>
+    <a href="/blog/security/%E7%94%9F%E6%88%90%E5%85%AC%E7%A7%81%E9%92%A5/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/browser/download/">不同平台常用浏览器的离线下载地址</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-04-02 00:00:00 &#43;0000 UTC">2015-04-02</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <ul>
+<li>
+<p><a href="https://www.microsoftedgeinsider.com/en-us/download">edge</a></p>
+</li>
+<li>
+<p><a href="https://www.google.cn/chrome/thank-you.html?platform=mac&standalone=1">chrome-mac</a></p>
+</li>
+<li>
+<p><a href="https://www.google.cn/chrome/thank-you.html?platform=win64&standalone=1">chrome-win64</a></p>
+</li>
+</ul>
+
+  </div>
+  <footer>
+    <a href="/blog/browser/download/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/software-programming/%E6%B2%99%E7%AE%B1/">Sandboxie（沙箱）网络编程虚拟执行环境</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-03-22 00:00:00 &#43;0000 UTC">2015-03-22</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="关键字">关键字</h2>
+<p><code>Sandboxie</code>（沙箱）网络编程虚拟执行环境</p>
+<h2 id="概念">概念</h2>
+<p>沙箱是一个虚拟系统程序， 允许程序在沙箱环境中独立运行， 限制沙箱中程序对宿主系统的修改和影响。</p>
+<h3 id="有哪些限制">有哪些限制</h3>
+<p>在沙箱中运行的程序，</p>
+<ol>
+<li>不能&hellip;</li></ol>
+  </div>
+  <footer>
+    <a href="/blog/software-programming/%E6%B2%99%E7%AE%B1/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/linux/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BA%90/">Ubuntu依赖包的离线打包和安装</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-02-02 00:00:00 &#43;0000 UTC">2015-02-02</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="ubuntu-1604离线安装步骤">Ubuntu 16.04离线安装步骤</h2>
+<h3 id="宿主机打包">宿主机打包</h3>
+<ol>
+<li>
+<p>清理apt 缓冲区<br>
+<code>$ sudo rm -rf /var/cache/apt/archives/*</code></p>
+</li>
+<li>
+<p>下载所需组件<br>
+<code>$ sudo apt-get&hellip;</code></p></li></ol>
+  </div>
+  <footer>
+    <a href="/blog/linux/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BA%90/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/concurrence/%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81/">并发编程-乐观锁和悲观锁</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-01-16 00:00:00 &#43;0000 UTC">2015-01-16</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="乐观锁">乐观锁</h2>
+<p>乐观锁假设数据一般不会修改， 所以在数据提交修改的时候， 才会对数据冲突进行检查；如果冲突则交给用户决定如何去做；对数据竞争持乐观态度</p>
+<h3 id="乐观锁实现">乐观锁实现</h3>
+<h4 id="cascompare-and-swap">cas（compare and swap）&hellip;</h4>
+  </div>
+  <footer>
+    <a href="/blog/concurrence/%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+      <div class="pagination">
+          
+              <a href="/page/39/" class="button left"><span>上页</span></a>
+          
+          
+              <a href="/page/41/" class="button right"><span>下页</span></a>
+          
+      </div>
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

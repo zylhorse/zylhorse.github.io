@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="zylhorse blog">
+<meta itemprop="description" content=""><meta property="og:title" content="zylhorse blog" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://zylhorse.github.io/" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="zylhorse blog"/>
+<meta name="twitter:description" content=""/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  
+      
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/chan/">Golang源码阅读-chan</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-08-11 00:00:00 &#43;0000 UTC">2019-08-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="描述">描述</h2>
+<p>channel 是golang实现CSP理念的重点。channel实现一个进程内不同协程之间的通信方式。</p>
+<h2 id="结构体">结构体</h2>
+<p>channel 实际上是一个环形队列，实际的队列空间就是在这个channel结构&hellip;</p>
+  </div>
+  <footer>
+    <a href="/blog/golang/chan/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/database/oracle/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">Oracle数据库安装配置</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-07-15 00:00:00 &#43;0000 UTC">2019-07-15</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="docker安装">docker安装</h2>
+<pre tabindex="0"><code>sudo docker pull deepdiver/docker-oracle-xe-11g
+sudo docker run -d -p 1522:22 -p 1521:1521&hellip;</code></pre>
+  </div>
+  <footer>
+    <a href="/blog/database/oracle/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/slice/">Golang源码阅读-slice</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-07-11 00:00:00 &#43;0000 UTC">2019-07-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="数组array">数组(array)</h2>
+<p>golang 中 array 在函数传参中是值传递， 修改不影响原数组；</p>
+<h2 id="切片slice">切片(slice)</h2>
+<ol>
+<li>切片数据结构很简单， 对底层数组进行了抽象，并提供相关操作方法；</li>
+<li>切片数据结构包含三&hellip;</li></ol>
+  </div>
+  <footer>
+    <a href="/blog/golang/slice/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/map/">Golang源码阅读-map</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-07-08 00:00:00 &#43;0000 UTC">2019-07-08</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h1 id="map">map</h1>
+<h2 id="声明">声明</h2>
+<pre tabindex="0"><code>var m map[string]string
+</code></pre><p>map声明默认值是nil， 此时取值，返回的是value对应类型的零值</p>
+<h2 id="初始化">初始化</h2>
+<pre tabindex="0"><code>// 声明之后必须初始化，才能使用
+m =&hellip;</code></pre>
+  </div>
+  <footer>
+    <a href="/blog/golang/map/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">Golang 代码规范</a></h2>
+    
+    
+      <p>代码编写，命名等规范</p>
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-07-07 00:00:00 &#43;0000 UTC">2019-07-07</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="gofmt工具">gofmt工具</h2>
+<p><code>gofmt</code> 格式化Go程序。使用<code>tabs</code>进行缩进，<code>blanks</code>进行对齐。</p>
+<h3 id="gofmt-参数">gofmt 参数</h3>
+<p><code>gofmt [flags] [path...]</code></p>
+<ul>
+<li><code>-cpuprofile</code>: 指定打印<code>cpu&hellip;</code></li></ul>
+  </div>
+  <footer>
+    <a href="/blog/golang/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+      <div class="pagination">
+          
+              <a href="/page/16/" class="button left"><span>上页</span></a>
+          
+          
+              <a href="/page/18/" class="button right"><span>下页</span></a>
+          
+      </div>
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

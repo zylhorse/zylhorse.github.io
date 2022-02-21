@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang代码诊断工具-Tracing - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Golang代码诊断工具-Tracing">
+<meta itemprop="description" content="Tracing  Tracing通过检测代码来分析一个调用链在整个生命周期中的开销。 Go提供了一个执行追踪器来追踪一个时间间隔内的运行时事件  Tracing作用  测量和分析Go P中程序的开销 精确测量某个调用在调用链中的开销 通过追踪数据来找出利用率和性能瓶颈  分布式Tracing  在单进程模式，收集诊断数据相对容易。所有的模块都在一个进程，并且通过共享公共资源来报告日志、错误和其他诊断信息 当系统扩展成分布式后，追踪一个完整的调用(从前端web服务器及其后端所有调用，直到响应返回给用户)将会非常困难 当分布式系统需要分析用户请求和RPC的性能时，就需要用到分布式Tracing Go为需要追踪的系统和后台无关的系统提供了大量的分布式Tracing库  分布式Tracing作用   测量和分析在大型系统中程序的开销
+  追踪用户请求周期中的所有RPC调用，并且发现线上服务的集成问题
+  通过追踪数据来找出系统的利用率和性能瓶颈
+  Go 没有提供自动拦截函数调用并创建追踪范围的方法，需要手动的注入代码来创建/结束/注释追踪 可以使用context.Context传递追踪标识和标签 Go可以Tracing部分内部库或运行时的底层事件，eg: httptrace.ClientTrace     httptrace net/http/httptrace包提供追踪单个HTTP请求过程中事件的机制， 事件包含：
+ Connection creation Connection reuse DNS lookups Writing the request to the wire Reading the response  使用实例：
+req, _ := http.NewRequest(&quot;GET&quot;, &quot;http://example.com&quot;, nil)trace := &amp;httptrace.ClientTrace{DNSDone: func(dnsInfo httptrace."><meta itemprop="datePublished" content="2019-10-12T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-10-12T00:00:00+00:00" />
+<meta itemprop="wordCount" content="347">
+<meta itemprop="keywords" content="Diagnostics," /><meta property="og:title" content="Golang代码诊断工具-Tracing" />
+<meta property="og:description" content="Tracing  Tracing通过检测代码来分析一个调用链在整个生命周期中的开销。 Go提供了一个执行追踪器来追踪一个时间间隔内的运行时事件  Tracing作用  测量和分析Go P中程序的开销 精确测量某个调用在调用链中的开销 通过追踪数据来找出利用率和性能瓶颈  分布式Tracing  在单进程模式，收集诊断数据相对容易。所有的模块都在一个进程，并且通过共享公共资源来报告日志、错误和其他诊断信息 当系统扩展成分布式后，追踪一个完整的调用(从前端web服务器及其后端所有调用，直到响应返回给用户)将会非常困难 当分布式系统需要分析用户请求和RPC的性能时，就需要用到分布式Tracing Go为需要追踪的系统和后台无关的系统提供了大量的分布式Tracing库  分布式Tracing作用   测量和分析在大型系统中程序的开销
+  追踪用户请求周期中的所有RPC调用，并且发现线上服务的集成问题
+  通过追踪数据来找出系统的利用率和性能瓶颈
+  Go 没有提供自动拦截函数调用并创建追踪范围的方法，需要手动的注入代码来创建/结束/注释追踪 可以使用context.Context传递追踪标识和标签 Go可以Tracing部分内部库或运行时的底层事件，eg: httptrace.ClientTrace     httptrace net/http/httptrace包提供追踪单个HTTP请求过程中事件的机制， 事件包含：
+ Connection creation Connection reuse DNS lookups Writing the request to the wire Reading the response  使用实例：
+req, _ := http.NewRequest(&quot;GET&quot;, &quot;http://example.com&quot;, nil)trace := &amp;httptrace.ClientTrace{DNSDone: func(dnsInfo httptrace." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/tracing/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-10-12T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-10-12T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang代码诊断工具-Tracing"/>
+<meta name="twitter:description" content="Tracing  Tracing通过检测代码来分析一个调用链在整个生命周期中的开销。 Go提供了一个执行追踪器来追踪一个时间间隔内的运行时事件  Tracing作用  测量和分析Go P中程序的开销 精确测量某个调用在调用链中的开销 通过追踪数据来找出利用率和性能瓶颈  分布式Tracing  在单进程模式，收集诊断数据相对容易。所有的模块都在一个进程，并且通过共享公共资源来报告日志、错误和其他诊断信息 当系统扩展成分布式后，追踪一个完整的调用(从前端web服务器及其后端所有调用，直到响应返回给用户)将会非常困难 当分布式系统需要分析用户请求和RPC的性能时，就需要用到分布式Tracing Go为需要追踪的系统和后台无关的系统提供了大量的分布式Tracing库  分布式Tracing作用   测量和分析在大型系统中程序的开销
+  追踪用户请求周期中的所有RPC调用，并且发现线上服务的集成问题
+  通过追踪数据来找出系统的利用率和性能瓶颈
+  Go 没有提供自动拦截函数调用并创建追踪范围的方法，需要手动的注入代码来创建/结束/注释追踪 可以使用context.Context传递追踪标识和标签 Go可以Tracing部分内部库或运行时的底层事件，eg: httptrace.ClientTrace     httptrace net/http/httptrace包提供追踪单个HTTP请求过程中事件的机制， 事件包含：
+ Connection creation Connection reuse DNS lookups Writing the request to the wire Reading the response  使用实例：
+req, _ := http.NewRequest(&quot;GET&quot;, &quot;http://example.com&quot;, nil)trace := &amp;httptrace.ClientTrace{DNSDone: func(dnsInfo httptrace."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/tracing/">Golang代码诊断工具-Tracing</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-10-12 00:00:00 &#43;0000 UTC">2019-10-12</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="tracing">Tracing</h2>
+<ul>
+<li><code>Tracing</code>通过检测代码来分析一个调用链在整个生命周期中的开销。</li>
+<li><code>Go</code>提供了一个执行追踪器来追踪一个时间间隔内的运行时事件</li>
+</ul>
+<h2 id="tracing作用">Tracing作用</h2>
+<ul>
+<li>测量和分析<code>Go P</code>中程序的开销</li>
+<li>精确测量某个调用在调用链中的开销</li>
+<li>通过追踪数据来找出利用率和性能瓶颈</li>
+</ul>
+<h2 id="分布式tracing">分布式Tracing</h2>
+<ul>
+<li>在单进程模式，收集诊断数据相对容易。所有的模块都在一个进程，并且通过共享公共资源来报告日志、错误和其他诊断信息</li>
+<li>当系统扩展成分布式后，追踪一个完整的调用(从前端web服务器及其后端所有调用，直到响应返回给用户)将会非常困难</li>
+<li>当分布式系统需要分析用户请求和<code>RPC</code>的性能时，就需要用到分布式<code>Tracing</code></li>
+<li><code>Go</code>为需要追踪的系统和<code>后台无关</code>的系统提供了大量的分布式<code>Tracing</code>库</li>
+</ul>
+<h2 id="分布式tracing作用">分布式Tracing作用</h2>
+<ul>
+<li>
+<p>测量和分析在大型系统中程序的开销</p>
+</li>
+<li>
+<p>追踪用户请求周期中的所有RPC调用，并且发现线上服务的集成问题</p>
+</li>
+<li>
+<p>通过追踪数据来找出系统的利用率和性能瓶颈</p>
+<blockquote>
+<ul>
+<li>Go 没有提供自动拦截函数调用并创建追踪范围的方法，需要手动的注入代码来创建/结束/注释追踪</li>
+<li>可以使用<a href="https://golang.org/pkg/context/#Context">context.Context</a>传递追踪标识和标签</li>
+<li>Go可以Tracing部分内部库或运行时的底层事件，eg: <a href="https://golang.org/pkg/net/http/httptrace/#ClientTrace">httptrace.ClientTrace</a></li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h2 id="httptrace">httptrace</h2>
+<p><code>net/http/httptrace</code>包提供追踪单个HTTP请求过程中事件的机制， 事件包含：</p>
+<ul>
+<li>Connection creation</li>
+<li>Connection reuse</li>
+<li>DNS lookups</li>
+<li>Writing the request to the wire</li>
+<li>Reading the response</li>
+</ul>
+<p>使用实例：</p>
+<pre tabindex="0"><code>req, _ := http.NewRequest(&quot;GET&quot;, &quot;http://example.com&quot;, nil)
+trace := &amp;httptrace.ClientTrace{
+    DNSDone: func(dnsInfo httptrace.DNSDoneInfo) {
+        fmt.Printf(&quot;DNS Info: %+v\n&quot;, dnsInfo)
+    },
+    GotConn: func(connInfo httptrace.GotConnInfo) {
+        fmt.Printf(&quot;Got Conn: %+v\n&quot;, connInfo)
+    },
+}
+req = req.WithContext(httptrace.WithClientTrace(req.Context(), trace))
+if _, err := http.DefaultTransport.RoundTrip(req); err != nil {
+    log.Fatal(err)
+}
+</code></pre><h2 id="收集数据文件">收集数据文件</h2>
+<h3 id="test数据生成">Test数据生成</h3>
+<p>生成命令： <br>
+<code>$ go test -trace=trace.out pkg</code> // pkg为可选项，当前目录或指定目录</p>
+<p>可视化命令：<br>
+<code>$ go tool trace trace.out </code></p>
+<h3 id="profile数据转换">Profile数据转换</h3>
+<p>生成命令(转换<code>trace.out</code>为<code>pprof</code>格式)：</p>
+<pre tabindex="0"><code>$ wget -O trace.out http://localhost:6060/debug/pprof/trace?seconds=5  // seconds指定采集时间段
+$ go tool trace -pprof=TYPE trace.out &gt; TYPE.pprof // TYPE 
+</code></pre><blockquote>
+<p>支持的TYPE:</p>
+<ul>
+<li>net: network blocking profile</li>
+<li>sync: synchronization blocking profile</li>
+<li>syscall: syscall blocking profile</li>
+<li>sched: scheduler latency profile</li>
+</ul>
+</blockquote>
+<p>可视化命令:<br>
+<code>$ go tool pprof TYPE.pprof</code></p>
+<h2 id="可视化界面">可视化界面</h2>
+<p><code>View trace</code>：查看跟踪<br>
+<code>Goroutine analysis</code>：Goroutine 分析<br>
+<code>Network blocking profile</code>：网络阻塞概况<br>
+<code>Synchronization blocking profile</code>：同步阻塞概况<br>
+<code>Syscall blocking profile</code>：系统调用阻塞概况<br>
+<code>Scheduler latency profile</code>：调度延迟概况<br>
+<code>User defined tasks</code>：用户自定义任务<br>
+<code>User defined regions</code>：用户自定义区域<br>
+<code>Minimum mutator utilization</code>：最低 Mutator 利用率</p>
+<h3 id="view-trace">View trace</h3>
+<p><img src="/screenshot/go_trace.png" alt="View trace"></p>
+<ol>
+<li>时间线，显示程序执行的时长</li>
+<li>STATS</li>
+</ol>
+<ul>
+<li>Goroutines 程序执行期间Goroutines的状态(GCWaiting/Runnable/Running)</li>
+<li>Heap 程序执行期间内存分配和释放情况(NextGC/Allocated)</li>
+<li>Threads 程序执行期间OS线程的数量及状态(InSyscall/Running)</li>
+</ul>
+<ol start="3">
+<li>PROCS 虚拟处理器</li>
+</ol>
+<ul>
+<li>GC 程序执行期间GC状况</li>
+<li>Network 程序执行期间网络请求状况</li>
+<li>Syscalls
+<ul>
+<li>Procs 进程中所有虚拟处理器详情</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li>Goroutine 协程详细信息 <br>
+点击后可以看到以下详细信息
+<img src="/screenshot/goroutine_trace_summary.png" alt="Goroutine Summary"> 
+Title： Goroutine概要<br>
+Start：开始时间<br>
+Wall Duration：持续时间<br>
+Self Time：执行时间<br>
+Start Stack Trace：开始时的堆栈信息<br>
+End Stack Trace：结束时的堆栈信息<br>
+Incoming flow：输入流<br>
+Outgoing flow：输出流<br>
+Preceding events：之前的事件<br>
+Following events：之后的事件<br>
+All connected：所有连接的事件 // 点击Flow Events勾选，可显示关联事件追踪。如下图：
+<img src="/screenshot/go_trace_events.png" alt="Follow Events"></li>
+</ol>
+<h3 id="goroutine-analysis">Goroutine analysis</h3>
+<ul>
+<li>统计整个运行过程中，每个函数创建Goroutine个数
+<img src="/screenshot/goroutines_trace.png" alt="Goroutines"></li>
+<li>统计函数中每个Goroutine各个阶段的开销，来确定哪个阶段开销大
+<img src="/screenshot/goroutine_trace_time.png" alt="Goroutine"></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Goroutine</td>
+<td>Goroutine 序号</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>总时间开销</td>
+</tr>
+<tr>
+<td>Execution Time</td>
+<td>执行时间</td>
+</tr>
+<tr>
+<td>Network Wait Time</td>
+<td>网络等待时间</td>
+</tr>
+<tr>
+<td>Sync Block Time</td>
+<td>同步阻塞时间</td>
+</tr>
+<tr>
+<td>Blocking Syscall Time</td>
+<td>调用阻塞时间</td>
+</tr>
+<tr>
+<td>Scheduler Wait Time</td>
+<td>调度等待时间</td>
+</tr>
+<tr>
+<td>GC Sweeping</td>
+<td>GC 清扫</td>
+</tr>
+<tr>
+<td>GC Pause</td>
+<td>GC 暂停</td>
+</tr>
+</tbody>
+</table>
+<h3 id="network-blocking-profile">Network blocking profile</h3>
+<p>网络阻塞概要分析</p>
+<h3 id="synchronization-blocking-profile">Synchronization blocking profile</h3>
+<p>同步阻塞概要分析</p>
+<h3 id="syscall-blocking-profile">Syscall blocking profile</h3>
+<p>系统调用阻塞概要分析</p>
+<h3 id="scheduler-latency-profile">Scheduler latency profile</h3>
+<p>调度延时概要分析</p>
+<h2 id="gc-tracing">GC Tracing</h2>
+<pre tabindex="0"><code>set GOGCTRACE=1
+set GODEBUG=gctrace=1
+</code></pre><pre tabindex="0"><code>gc 1 @0.005s 0%: 0+11+0.99 ms clock, 0+0/15/0+7.9 ms cpu, 25-&gt;25-&gt;24 MB, 26 MB goal, 8 P
+gc 1：说明gc过程，1 表示第几次执行gc操作
+@0.005s：表示程序执行的总时间
+0%:表示gc时时间和程序运行总时间的百分比
+0+11+0.99 ms clock：GC的时间，分为：STW时间+并发标记和扫描时间+STW标记时间
+0+0/15/0+7.9 ms cpu：垃圾回收占用CPU时间 
+25-&gt;25-&gt;24 MB：gc开始时的堆大小；GC结束时的堆大小；存活的堆大小
+26 MB goal：整体堆的大小
+8 P：使用的处理器的数量
+
+说明 scvg4: inuse: 143, idle: 70, sys: 213, released: 0, consumed: 213 (MB)
+
+inuse: 143：使用多少M内存
+idle: 70： 剩下要清除的内存
+sys: 213： 系统映射的内存
+released: 0： 释放的系统内存
+consumed: 213： 申请的系统内存
+</code></pre><p>问题:</p>
+<ul>
+<li>web 白屏bug<a href="https://github.com/golang/go/issues/34374">#34374</a></li>
+<li>暂时解决方案: <code>chrome.exe --enable-blink-features=ShadowDOMV0,CustomElementsV0,HTMLImports</code></li>
+</ul>
+
+      
+    <h2>参考</h2>
+    <ul>
+        
+            
+                <li><a target="_blank" href="https://golang.org/doc/diagnostics.html#tracing">Diagnostics Tracing</a></li>
+            
+        
+            
+                <li><a target="_blank" href="https://about.sourcegraph.com/go/an-introduction-to-go-tool-trace-rhys-hiltner/">Go Tool Trace Introduction</a></li>
+            
+        
+    </ul>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/diagnostics/">Diagnostics</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tracing">Tracing</a></li>
+    <li><a href="#tracing作用">Tracing作用</a></li>
+    <li><a href="#分布式tracing">分布式Tracing</a></li>
+    <li><a href="#分布式tracing作用">分布式Tracing作用</a></li>
+    <li><a href="#httptrace">httptrace</a></li>
+    <li><a href="#收集数据文件">收集数据文件</a>
+      <ul>
+        <li><a href="#test数据生成">Test数据生成</a></li>
+        <li><a href="#profile数据转换">Profile数据转换</a></li>
+      </ul>
+    </li>
+    <li><a href="#可视化界面">可视化界面</a>
+      <ul>
+        <li><a href="#view-trace">View trace</a></li>
+        <li><a href="#goroutine-analysis">Goroutine analysis</a></li>
+        <li><a href="#network-blocking-profile">Network blocking profile</a></li>
+        <li><a href="#synchronization-blocking-profile">Synchronization blocking profile</a></li>
+        <li><a href="#syscall-blocking-profile">Syscall blocking profile</a></li>
+        <li><a href="#scheduler-latency-profile">Scheduler latency profile</a></li>
+      </ul>
+    </li>
+    <li><a href="#gc-tracing">GC Tracing</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/distribution-system/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" class="button left"><span>服务治理-负载均衡</span></a>
+    
+    
+      <a href="/blog/golang/diagnostics/" class="button right"><span>Golang代码诊断工具-Diagnostics</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

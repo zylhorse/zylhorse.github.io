@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>OpenTracing-示例练习 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="OpenTracing-示例练习">
+<meta itemprop="description" content="Tracing函数 func TopLevelFunc() {span1 := opentracing.GlobalTracer().StartSpan(&quot;TopLevelFunc&quot;)defer span1.Finish()... // 业务逻辑} 后续，作为上述业务逻辑一部分，我们调用了function2，也想tracing。为了将此函数也附着在正在进行的trace上， 我们需要一个获取span1的方法，后续我们再讨论如何实现，现在我们假设有这样一个方法GetCurrentSpan可以获取span1:
+func function2(){span1 := GetCurrentSpan()if span1 != nil {span2 := opentracing.GlobalTracer().StartSpan(&quot;function2&quot;, opentracing.ChildOf(span1.Context())) defer span2.Finish() } ... //业务逻辑} 假设调用者没有启动tracing，也不想在function2中创建新的tracing，需要考虑GetCurrentSpan可能返回nil
+ 通常情况下，开发者不希望追踪的代码混在业务代码中，而是用其他方式。 如：注解. 参考function decorator in Python: @traced_functiondef top_level_function():... # business logic
+Tracing服务端 当服务想tracing一个请求的执行，需要以下几步:
+ 尝试从request中获取SpanContext(防止tracing已经在客户端开始)，如果无法获取request中的SpanContext则新开始一个tracing 将新创建的Span保存到request context中，request context会跟随应用程序代码或RPC框架在整个系统中传播。 最后，当服务完成请求处理后，使用span.finish()关闭Span  从请求中提取SpanContext 假设我们有一个HTTP服务，并且SpanContext已经通过HTTP headers，从客户端传递到服务器，可以通过req.Headers访问到:
+extractedCtx := opentracing.GlobalTracer().Extract(opentracing.HTTP_HEADER_FORMAT, opentracing.HTTPHeadersCarrier(req.Headers) 这里我们使用headers作为载体，Tracer对象知道读取哪些headers，并将tracer数据和Baggage解构。"><meta itemprop="datePublished" content="2021-02-25T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-02-25T00:00:00+00:00" />
+<meta itemprop="wordCount" content="378">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="OpenTracing-示例练习" />
+<meta property="og:description" content="Tracing函数 func TopLevelFunc() {span1 := opentracing.GlobalTracer().StartSpan(&quot;TopLevelFunc&quot;)defer span1.Finish()... // 业务逻辑} 后续，作为上述业务逻辑一部分，我们调用了function2，也想tracing。为了将此函数也附着在正在进行的trace上， 我们需要一个获取span1的方法，后续我们再讨论如何实现，现在我们假设有这样一个方法GetCurrentSpan可以获取span1:
+func function2(){span1 := GetCurrentSpan()if span1 != nil {span2 := opentracing.GlobalTracer().StartSpan(&quot;function2&quot;, opentracing.ChildOf(span1.Context())) defer span2.Finish() } ... //业务逻辑} 假设调用者没有启动tracing，也不想在function2中创建新的tracing，需要考虑GetCurrentSpan可能返回nil
+ 通常情况下，开发者不希望追踪的代码混在业务代码中，而是用其他方式。 如：注解. 参考function decorator in Python: @traced_functiondef top_level_function():... # business logic
+Tracing服务端 当服务想tracing一个请求的执行，需要以下几步:
+ 尝试从request中获取SpanContext(防止tracing已经在客户端开始)，如果无法获取request中的SpanContext则新开始一个tracing 将新创建的Span保存到request context中，request context会跟随应用程序代码或RPC框架在整个系统中传播。 最后，当服务完成请求处理后，使用span.finish()关闭Span  从请求中提取SpanContext 假设我们有一个HTTP服务，并且SpanContext已经通过HTTP headers，从客户端传递到服务器，可以通过req.Headers访问到:
+extractedCtx := opentracing.GlobalTracer().Extract(opentracing.HTTP_HEADER_FORMAT, opentracing.HTTPHeadersCarrier(req.Headers) 这里我们使用headers作为载体，Tracer对象知道读取哪些headers，并将tracer数据和Baggage解构。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/opentracing/practices/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-02-25T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-02-25T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="OpenTracing-示例练习"/>
+<meta name="twitter:description" content="Tracing函数 func TopLevelFunc() {span1 := opentracing.GlobalTracer().StartSpan(&quot;TopLevelFunc&quot;)defer span1.Finish()... // 业务逻辑} 后续，作为上述业务逻辑一部分，我们调用了function2，也想tracing。为了将此函数也附着在正在进行的trace上， 我们需要一个获取span1的方法，后续我们再讨论如何实现，现在我们假设有这样一个方法GetCurrentSpan可以获取span1:
+func function2(){span1 := GetCurrentSpan()if span1 != nil {span2 := opentracing.GlobalTracer().StartSpan(&quot;function2&quot;, opentracing.ChildOf(span1.Context())) defer span2.Finish() } ... //业务逻辑} 假设调用者没有启动tracing，也不想在function2中创建新的tracing，需要考虑GetCurrentSpan可能返回nil
+ 通常情况下，开发者不希望追踪的代码混在业务代码中，而是用其他方式。 如：注解. 参考function decorator in Python: @traced_functiondef top_level_function():... # business logic
+Tracing服务端 当服务想tracing一个请求的执行，需要以下几步:
+ 尝试从request中获取SpanContext(防止tracing已经在客户端开始)，如果无法获取request中的SpanContext则新开始一个tracing 将新创建的Span保存到request context中，request context会跟随应用程序代码或RPC框架在整个系统中传播。 最后，当服务完成请求处理后，使用span.finish()关闭Span  从请求中提取SpanContext 假设我们有一个HTTP服务，并且SpanContext已经通过HTTP headers，从客户端传递到服务器，可以通过req.Headers访问到:
+extractedCtx := opentracing.GlobalTracer().Extract(opentracing.HTTP_HEADER_FORMAT, opentracing.HTTPHeadersCarrier(req.Headers) 这里我们使用headers作为载体，Tracer对象知道读取哪些headers，并将tracer数据和Baggage解构。"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/opentracing/practices/">OpenTracing-示例练习</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2021-02-25 00:00:00 &#43;0000 UTC">2021-02-25</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            &lt;no value&gt;分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="tracing函数">Tracing函数</h2>
+<pre tabindex="0"><code>func TopLevelFunc() {
+  span1 := opentracing.GlobalTracer().StartSpan(&quot;TopLevelFunc&quot;)
+  defer span1.Finish()
+  ... // 业务逻辑
+} 
+</code></pre><p>后续，作为上述业务逻辑一部分，我们调用了<code>function2</code>，也想tracing。为了将此函数也附着在正在进行的trace上，
+我们需要一个获取<code>span1</code>的方法，后续我们再讨论如何实现，现在我们假设有这样一个方法<code>GetCurrentSpan</code>可以获取<code>span1</code>:</p>
+<pre tabindex="0"><code>func function2(){
+  span1 := GetCurrentSpan()
+  if span1 != nil {
+     span2 := opentracing.GlobalTracer().StartSpan(&quot;function2&quot;, opentracing.ChildOf(span1.Context())) 
+     defer span2.Finish()  
+  }  
+  ... //业务逻辑
+}
+</code></pre><blockquote>
+<p>假设调用者没有启动tracing，也不想在function2中创建新的tracing，需要考虑GetCurrentSpan可能返回nil</p>
+</blockquote>
+<p>通常情况下，开发者不希望追踪的代码混在业务代码中，而是用其他方式。
+如：注解. 参考<a href="https://github.com/uber-common/opentracing-python-instrumentation/blob/master/opentracing_instrumentation/local_span.py#L59">function decorator in Python:</a>
+<code> @traced_function def top_level_function(): ... # business logic </code></p>
+<h2 id="tracing服务端">Tracing服务端</h2>
+<p>当服务想tracing一个请求的执行，需要以下几步:</p>
+<ol>
+<li>尝试从request中获取SpanContext(防止tracing已经在客户端开始)，如果无法获取request中的SpanContext则新开始一个tracing</li>
+<li>将新创建的Span保存到request context中，request context会跟随应用程序代码或RPC框架在整个系统中传播。</li>
+<li>最后，当服务完成请求处理后，使用<code>span.finish()</code>关闭<code>Span</code></li>
+</ol>
+<h3 id="从请求中提取spancontext">从请求中提取SpanContext</h3>
+<p>假设我们有一个HTTP服务，并且SpanContext已经通过HTTP headers，从客户端传递到服务器，可以通过<code>req.Headers</code>访问到:</p>
+<pre tabindex="0"><code>extractedCtx := opentracing.GlobalTracer().Extract(
+                        opentracing.HTTP_HEADER_FORMAT, 
+                        opentracing.HTTPHeadersCarrier(req.Headers)
+</code></pre><blockquote>
+<p>这里我们使用headers作为载体，Tracer对象知道读取哪些headers，并将tracer数据和Baggage解构。</p>
+</blockquote>
+<h3 id="继续请求中已经存在的trace或者创建新的trace">继续请求中已经存在的trace或者创建新的trace</h3>
+<p>由于request client没有发起trace，上述提取的extractedCtx对象有可能为空，此情况需要考虑创建新的trace。</p>
+<pre tabindex="0"><code>var span opentracing.Span
+extractedCtx := opentracing.GlobalTracer().Extract(
+                            opentracing.HTTP_HEADER_FORMAT, 
+                            opentracing.HTTPHeadersCarrier(req.Headers)
+if extractedCtx === nil {
+  span = opentracing.GlobalTracer().StartSpan(&quot;operation_name&quot;)
+} else {
+  span = opentracing.GlobalTracer().StartSpan(&quot;operation_name&quot;, opentracing.ChildOf(extractedCtx))
+}
+span.SetTag(&quot;http.method&quot;, req.Method)
+span.SetTag(&quot;http.url&quot;, req.URL)
+</code></pre><blockquote>
+<p>SetTag 在Span上记录关于request的附加信息</p>
+</blockquote>
+<p>上述operation_name是Span的名称。例如: 一个HTTP POST请求(url:/save_user/123), operation_name可以命名为<code>post:/save_user/</code>。
+实际OpenTracing没有规定此命名规则。</p>
+<h2 id="进程内context传递">进程内Context传递</h2>
+<p>request context传递指的是应用程序将某个context与请求绑定，这样应用中在同一进程中的所有层都可以访问这个context。<br>
+通过context，提供某些指定值给应用层，例如:userId, token, timestamp。当然也可以传递当前的trace span。</p>
+<p>目前有两种context传递方式:</p>
+<ul>
+<li>隐式传递<br>
+在隐式传递技术中，context存储在平台特定的位置，允许在应用程序的任何位置检索。 
+通常RPC框架利用<code>thread-local</code>或<code>continuation-local</code>存储,或者全局变量(单线程进程)等机制来使用context。</li>
+<li>显示传递
+在显示传递技术中，程序代码显示的传递context对象。
+<pre tabindex="0"><code>func HandleHttp(w http.ResponseWriter, req *http.Request) {
+  ctx := context.Background()
+  ...
+  BusinessFunction1(ctx, arg1, ...)
+}
+
+func BusinessFunction1(ctx context.Context, arg1...) {
+  ...
+  BusinessFunction2(ctx, arg1, ...)
+}
+
+func BusinessFunction2(ctx context.Context, arg1...) {
+  parentSpan := opentracing.SpanFromContext(ctx)
+  childSpan := opentracing.StartSpan(
+  &quot;...&quot;, opentracing.ChildOf(parentSpan.Context()), ...)
+  ...
+}
+</code></pre><blockquote>
+<p>context显示传递的缺点是，它会将基础设施的问题泄漏到程序代码中。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="tracing客户端">Tracing客户端</h2>
+<p>一个RPC client，在发起request之前，将发起一个新的tracing，并将Span绑定到该request上：</p>
+<pre tabindex="0"><code>func makeSomeRequest()  {
+span := opentracing.StartSpan(&quot;makeSomeRequest&quot;, opentracing.StartTime(time.Now()))
+defer span.Finish()
+httpClient := &amp;http.Client{}
+httpReq, _ := http.NewRequest(&quot;GET&quot;, &quot;http://myservice/xxx/&quot;, nil)
+ext.HTTPMethod.Set(span, http.MethodGet)
+ext.HTTPUrl.Set(span, &quot;/xxx/&quot;)
+span.SetBaggageItem(&quot;reqId&quot;, &quot;snowId&quot;)
+span.BaggageItem(&quot;reqId&quot;)
+// Transmit the span's TraceContext as HTTP headers on our
+// outbound request.
+opentracing.GlobalTracer().Inject(
+  span.Context(),
+  opentracing.HTTPHeaders,
+  opentracing.HTTPHeadersCarrier(httpReq.Header))
+  
+  resp, err := httpClient.Do(httpReq)
+  if err != nil {
+    ext.LogError(span, err)
+  } else {
+    ext.HTTPStatusCode.Set(span, uint16(resp.StatusCode))
+    if resp.StatusCode != http.StatusOK {
+    ext.LogError(span, errors.New(resp.Status))
+    }
+  }
+}
+</code></pre><blockquote>
+<p>如果请求出错，我们在span中记录错误</p>
+</blockquote>
+<h3 id="baggagespancontext应用">Baggage/SpanContext应用</h3>
+<p>以上示例中的client和server通过request传递Span/Trace,包括Baggage。 client使用Baggage传递附加数据到server及其下游所有server:<br>
+```
+// client side
+snowId := &hellip;
+span.SetBaggageItem(&ldquo;reqId&rdquo;, snowId)</p>
+<pre><code>// server side (多级服务)
+reqId := span.BaggageItem(&quot;reqId&quot;)
+```
+</code></pre>
+<h2 id="logging-event">Logging Event</h2>
+<p>我们已经在上述client Span应用示例中使用log功能。在Span中log，不会产生额外的负载，而且可以在Span创建或结束之外的流程执行log。
+例如，应用在业务执行的过程中，通过获取当前的Span，记录事件：</p>
+<pre tabindex="0"><code>span := get_current_span()
+ext.LogError(span, errors.New(&quot;cache-miss&quot;))
+</code></pre><blockquote>
+<ul>
+<li>log自动记录事件发生的时间戳， 这点和tags不同</li>
+<li>log允许事件设置外部时间戳， e.g. <a href="https://github.com/opentracing/opentracing-go/blob/ca5c92cf/span.go#L53">Log(Go)</a></li>
+</ul>
+</blockquote>
+<h2 id="设置span的外部时间戳">设置Span的外部时间戳</h2>
+<pre tabindex="0"><code>span := opentracing.StartSpan(&quot;operation_name&quot;, opentracing.StartTime(time.Now()))
+defer func() {
+    span.FinishWithOptions(opentracing.FinishOptions{
+		FinishTime:  time.Now(),
+	})
+}
+</code></pre><h2 id="设置采样优先级">设置采样优先级</h2>
+<p>多数分布式系统，通过采样来降低trace的数据量。有时，研发人员需要一种方式来确定指定的流程被trace，
+e.g. 可以在HTTP请求参数中添加特殊参数，如： debug=true。<br>
+OpenTracing API标准化一些有用的tag，其中sampling priority：精确的语义由实现者决定， 但是任何大于0(默认)的值都表示当前trace的高优先级。<br>
+为了将debug属性应用到追踪系统，需要在trace开始前，做以下预处理:</p>
+<pre tabindex="0"><code>if query.get(&quot;debug&quot;) == &quot;true&quot; {
+  span := opentracing.StartSpan(&quot;operation_name&quot;, opentracing.StartTime(time.Now()))
+  ext.SamplingPriority.Set(span, 1)
+}
+</code></pre><h2 id="tracing-消息总线">Tracing 消息总线</h2>
+<p>消息总线的类型分为两种： 消息队列和发布/订阅。<br>
+从Tracing角度出发，只关注与producer绑定的SpanContext被传递到多个consumers。<br>
+consumer负责创建Span，用以记录消息的处理并且创建SpanContext的FollowsFrom引用</p>
+<p>与RPC client相同， producer在发送消息前创建新的Span，并且SpanContext跟随消息进行传递。
+此Span，将会在消息被发布后结束。具体看下面示例：</p>
+<pre tabindex="0"><code>def traced_send(message, operation):
+    # retrieve current span from propagated message context
+    parent_span = get_current_span()
+
+    # start a new span to represent the message producer
+    span = tracer.start_span(
+        operation_name=operation,
+        child_of=parent_span.context,
+        tags={'message.destination': message.destination}
+    )
+
+    # propagate the Span via message headers
+    tracer.inject(
+        span.context,
+        format=opentracing.TEXT_MAP_FORMAT,
+        carrier=message.headers)
+
+    with span:
+        messaging_client.send(message)
+    except Exception e:
+        ...
+        raise
+</code></pre><p>consumer检查输入消息是否包含SpanContext，如果存在，则关联该Span：</p>
+<pre tabindex="0"><code>extracted_context = tracer.extract(
+    format=opentracing.TEXT_MAP_FORMAT,
+    carrier=message.headers
+)
+span = tracer.start_span(operation_name=operation, references=follows_from(extracted_context))
+span.set_tag('message.destination', message.destination)
+</code></pre><h3 id="消息队列的同步请求-响应">消息队列的同步请求-响应</h3>
+<p>一些消息队列的平台，支持消息头包含应答地址。当consumer处理完消息后，需要给消息队列返回应答。<br>
+这种模式可以模拟同步请求-响应，在这种情况下，consumer和producer的Span关系是互为ChildOf。<br>
+从跟踪的角度，建议忽略该模式(请求-响应)， 将其作为两个独立的消息交换，即两个Span。</p>
+
+      
+    <h2>参考</h2>
+    <ul>
+        
+            
+                <li><a target="_blank" href="https://opentracing.io/specification/">OpenTracing</a></li>
+            
+        
+            
+                <li><a target="_blank" href="https://github.com/opentracing/opentracing-go/">OpenTracing-Go</a></li>
+            
+        
+    </ul>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/opentracing/">Opentracing</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tracing函数">Tracing函数</a></li>
+    <li><a href="#tracing服务端">Tracing服务端</a>
+      <ul>
+        <li><a href="#从请求中提取spancontext">从请求中提取SpanContext</a></li>
+        <li><a href="#继续请求中已经存在的trace或者创建新的trace">继续请求中已经存在的trace或者创建新的trace</a></li>
+      </ul>
+    </li>
+    <li><a href="#进程内context传递">进程内Context传递</a></li>
+    <li><a href="#tracing客户端">Tracing客户端</a>
+      <ul>
+        <li><a href="#baggagespancontext应用">Baggage/SpanContext应用</a></li>
+      </ul>
+    </li>
+    <li><a href="#logging-event">Logging Event</a></li>
+    <li><a href="#设置span的外部时间戳">设置Span的外部时间戳</a></li>
+    <li><a href="#设置采样优先级">设置采样优先级</a></li>
+    <li><a href="#tracing-消息总线">Tracing 消息总线</a>
+      <ul>
+        <li><a href="#消息队列的同步请求-响应">消息队列的同步请求-响应</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/opentracing/concepts/" class="button left"><span>OpenTracing-概念和关键字</span></a>
+    
+    
+      <a href="/blog/opentracing/introduction/" class="button right"><span>OpenTracing-简介</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Opentracing
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

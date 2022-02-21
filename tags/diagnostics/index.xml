@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Diagnostics on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/diagnostics/</link>
+    <description>Recent content in Diagnostics on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 12 Oct 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/diagnostics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang代码诊断工具-Tracing</title>
+      <link>https://zylhorse.github.io/blog/golang/tracing/</link>
+      <pubDate>Sat, 12 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/golang/tracing/</guid>
+      <description>Tracing  Tracing通过检测代码来分析一个调用链在整个生命周期中的开销。 Go提供了一个执行追踪器来追踪一个时间间隔内的运行时事件  Tracing作用  测量和分析Go P中程序的开销 精确测量某个调用在调用链中的开销 通过追踪数据来找出利用率和性能瓶颈  分布式Tracing  在单进程模式，收集诊断数据相对容易。所有的模块都在一个进程，并且通过共享公共资源来报告日志、错误和其他诊断信息 当系统扩展成分布式后，追踪一个完整的调用(从前端web服务器及其后端所有调用，直到响应返回给用户)将会非常困难 当分布式系统需要分析用户请求和RPC的性能时，就需要用到分布式Tracing Go为需要追踪的系统和后台无关的系统提供了大量的分布式Tracing库  分布式Tracing作用   测量和分析在大型系统中程序的开销
+  追踪用户请求周期中的所有RPC调用，并且发现线上服务的集成问题
+  通过追踪数据来找出系统的利用率和性能瓶颈
+  Go 没有提供自动拦截函数调用并创建追踪范围的方法，需要手动的注入代码来创建/结束/注释追踪 可以使用context.Context传递追踪标识和标签 Go可以Tracing部分内部库或运行时的底层事件，eg: httptrace.ClientTrace     httptrace net/http/httptrace包提供追踪单个HTTP请求过程中事件的机制， 事件包含：
+ Connection creation Connection reuse DNS lookups Writing the request to the wire Reading the response  使用实例：
+req, _ := http.NewRequest(&amp;quot;GET&amp;quot;, &amp;quot;http://example.com&amp;quot;, nil)trace := &amp;amp;httptrace.ClientTrace{DNSDone: func(dnsInfo httptrace.</description>
+    </item>
+    
+    <item>
+      <title>Golang代码诊断工具-Profiling</title>
+      <link>https://zylhorse.github.io/blog/golang/profiling/</link>
+      <pubDate>Fri, 11 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/golang/profiling/</guid>
+      <description>概述 Profiling对于识别昂贵的和经常调用的代码段非常有用。
+Go 运行时以pprof工具可以识别的格式提供概要数据，这些概要数据可以通过go test测试或引入net/http/pprof时被收集。
+概要数据内容 runtime/pprof包，以pprof visualization tool可以识别的格式生成概要数据
+数据包含以下内容：
+ cpu: 报告程序在消耗CPU周期时将时间花费在何处(与睡眠和等待I/O相反) heap: 报告内存分配; 用来监视当前和历史内存使用情况，并且检查内存泄漏 threadcreate: 报告程序中哪些部分导致创建新的系统线程(OS threads) goroutine: 报告所有goroutine的堆栈跟踪 block: 报告哪些goroutine阻塞等待(包括定时器)。默认关闭该项，使用runtime.SetBlockProfileRate来启用。 mutex: 报告琐竞争。当你认为由于锁竞争导致CPU没有充分利用时，开启该项。 默认关闭该项，使用runtime.SetMutexProfileFraction来启用。  收集概要数据 Benchmarks数据 go test 内置了对Benchmarks进行Profiling的支持。
+以下示例：go test -cpuprofile cpu.prof -memprofile mem.prof -bench .
+ 执行当前目录下的benchmarks并将CPU和memory概要数据写入到文件中：
+ 应用程序数据   生成概要文件
+ var cpuprofile = flag.String(&amp;quot;cpuprofile&amp;quot;, &amp;quot;&amp;quot;, &amp;quot;write cpu profile to `file`&amp;quot;)var memprofile = flag.String(&amp;quot;memprofile&amp;quot;, &amp;quot;&amp;quot;, &amp;quot;write memory profile to `file`&amp;quot;)func main() {flag.</description>
+    </item>
+    
+  </channel>
+</rss>

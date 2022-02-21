@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Algorithm on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/algorithm/</link>
+    <description>Recent content in Algorithm on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 23 Aug 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LRU(Least Recently Used)算法原理和代码实现</title>
+      <link>https://zylhorse.github.io/blog/algorithm/lru%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Tue, 23 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/algorithm/lru%E7%AE%97%E6%B3%95/</guid>
+      <description>概述 least recently used ： 淘汰最近最少使用页面
+技术实现 hashmap + linked list</description>
+    </item>
+    
+  </channel>
+</rss>

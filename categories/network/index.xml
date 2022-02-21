@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Network on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/network/</link>
+    <description>Recent content in Network on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 20 Jul 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/network/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>从GW和IM实战描述websocket协议</title>
+      <link>https://zylhorse.github.io/blog/network/websocket/</link>
+      <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/network/websocket/</guid>
+      <description>描述 用于在单个tcp连接上进行全双工通信的协议；RFC6455标准；</description>
+    </item>
+    
+    <item>
+      <title>HPACK工作原理</title>
+      <link>https://zylhorse.github.io/blog/network/hpack/</link>
+      <pubDate>Sat, 27 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/network/hpack/</guid>
+      <description>原理  HAPCK使用两个索引表（静态索引表和动态索引表）把http的请求头映射到索引值 如果请求头在静态索引表中不存在， 则对其进行哈夫曼（huffman）编码， 并缓存到动态索引表中， 从而达到压缩headers的效果  </description>
+    </item>
+    
+    <item>
+      <title>http2协议解析及解决哪些问题</title>
+      <link>https://zylhorse.github.io/blog/network/http2/</link>
+      <pubDate>Fri, 26 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/network/http2/</guid>
+      <description>http超文本传输协议  http是简单的请求-响应协议，指定客户端发送数据格式以及服务器响应的数据格式 http是一次性连接，每次连接处理一个请求 http是无状态连接，服务器不保留客户信息  http 报文格式  请求报文：  请求行\r\n通用信息头\r\n请求头\r\n实体头\r\n报文主体响应报文：  状态行\r\n通用信息头\r\n响应头\r\n实体头\r\n报文主体http1.1 缺陷 高延迟 网络延迟问题主要由队头阻塞（head-of-line blocking）导致带宽无法被充分利用；
+ 队头阻塞指当顺序请求序列中的一个请求因为某种原因被阻塞时，后面排队的请求也一并阻塞，导致客户端迟迟收不到数据。
+ 解决办法：
+ 合并多张小图为一张大图（雪碧图），前端利用算法进行切割使用 内联： 防止发送很多小图请求， 将图片原始数据嵌入在css的URL中 拼接： 将体量小的js文件使用webpack打包成一个js文件 将同一页面资源分散到不同域名，提升连接上限： 浏览器限制同一域名最多建立6个tcp连接。  无状态 由于http是无状态连接，为了服务器识别同一用户请求，报文header中一般会携带 User Agent、Cookie、Accept、Server等许多固定头字段。header携带内容过大，一定层度上增加传输成本。
+不支持服务器推送消息 明文传输的不安全性 HTTP/2 二进制传输  将原来的header+body消息，打散为数个小片的二进制帧（Frame），用HEADERS帧存放头数据，用DATA帧存放主体数据 同域名下所有通信都在单个连接下完成， 该连接可以承载任意数量的双向数据流 每个数据流都是以消息的形式发送，而消息由一个或多个帧组成 多个帧可以乱序发送，根据帧首部的流标识进行重新组装  Header 压缩  建立HPACK索引表， 由客户端和服务器共同渐进更新； 相同的报文头不用每次请求都发送 采用哈夫曼编码来压缩报文头  多路复用  对于同一域名下的多个请求连接，复用一个tcp连接， 消除了tcp建立连接带来的延迟和内存消耗 单个连接可以承载任意数量的双向数据流， 并行交错发送和响应请求， 请求之间互不影响； 每个请求可以携带一个31bit的优先值， 数值越大优先级越低。 客户端和服务器根据优先级采用不同的策略处理流；  server push 服务器可以新建流，主动向客户端发送消息。</description>
+    </item>
+    
+    <item>
+      <title>Reactor模式深入浅出</title>
+      <link>https://zylhorse.github.io/blog/network/reactor/</link>
+      <pubDate>Fri, 26 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/network/reactor/</guid>
+      <description>Reactor设计模式是一种事件处理模式，用于Service Handler处理由一个或多个输入发送的并发请求。 Service Handler将传入的请求进行Demultiplex，并将它们同步的分发到关联的Event Handler。
+模块 Handle
+任何可以提供输入或者消费系统输出的资源,它可以是打开的文件，一个网络连接(socket)等。
+Synchronous Event Demultiplexer 使用一个event loop来阻塞所有的Handle. 当可以在一个Handle上非阻塞的开始 同步操作时，Demultiplexer将该Handle发送到Dispatcher上。
+ e.g.: 如果Handle没有数据可读时,read()同步调用会阻塞。demultiplexer在Handle上使用select()， 它会阻塞,直到Handle有数据可以读。这种情况下，对read()的同步调用不会阻塞， 并且Demultiplexer可以将Handle发送给Dispatcher。
+ Dispatcher
+管理对Event Handler的注册和移除。分发从Demultiplexer来的Handle到关联的Event Handler。
+Event Handler
+事件处理器，以供Dispatcher回调使用。
+Concrete Event Handler 具体的Event Handler实现。
+下面使用一张图来表现以上各个模块之间的关系:</description>
+    </item>
+    
+    <item>
+      <title>讲诉互联网的概念，区分广义互联网和侠义互联网</title>
+      <link>https://zylhorse.github.io/blog/network/%E4%BA%92%E8%81%94%E7%BD%91/</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/network/%E4%BA%92%E8%81%94%E7%BD%91/</guid>
+      <description>广义互联网 大家所说的互联网一般指广义互联网，由两层组成
+ 核心层： TCP/IP网络传输层(侠义互联网) 上层： 万维网WWW为代表的应用层  这一层包含多种类型的流量和应用：邮件、软件、在线影视、游戏、电子商务、移动应用 所有的SP(service provider, 服务提供商)提供的都是用户看的见的应用    互联网拥堵问题 关键字：
+ ISDN： 综合业务数字网（Integrated Services Digital Network，ISDN）是一个数字电话网络国际标准 ADSL：非对称数字用户线路（ADSL，Asymmetric Digital Subscriber Line）是数字用户线路（xDSL，Digital Subscriber Line）服务中最流行的一种 IDC：互联网数据中心（Internet Data Center，简称IDC）是指一种拥有完善的设备（包括高速互联网接入带宽、高性能局域网络、安全可靠的机房环境等）、专业化的管理、完善的应用的服务平台 收敛比： 就是N对应到M的一个过程,当N&amp;gt;M时被称作收敛.鉴于排队论的原理,当有N个顾客按其概率到达要求服务时,如果在一定的服务质量(收敛条件)被约定,则本系统仅需要有M(M&amp;lt;N)个服务员就够了. 相当于输入的比输出的多   &amp;ldquo;第一公里&amp;rdquo;  万维网流量向用户传送的第一个出口，即网站服务器接入互联网的链路所能提供的带宽。 这个带宽决定了网站能为用户提供的访问速度和并发访问量 一个网站，其服务的用户越多，对其出口带宽要求越大   &amp;ldquo;最后一公里&amp;rdquo;  万维网流量向用户传输的最后一段接入链路，即用户接入带宽 用户的平均接入带宽，是影响互联网上层应用发展的决定性因素之一 互联网初期  主要上网方式为拨号上网和ISDN()等，网络接入速度低。 主要内容是占用带宽非常小的文字为主，主流应用是Telnet、BBS等   万维网出现  多媒体内容开始在互联网上传播 用户接入带宽成为制约用户使用互联网的主要瓶颈 2001年开始，各大电信运营商发展ADSL等带宽服务，随着带宽提升和接入手段丰富(光纤入户、wifi，4G等)，&amp;ldquo;最后一公里&amp;quot;问题得以解决     对等互联关口  不同基础运营商之间的互联互通 一般运营商之间只有两三个互联互通点， 可以想象这两三个点上会产生多大流量 如：  当某个网站部署在运营商A的IDC机房中 运营商B的用户要访问该网站，就必须经过A，B之间的互联互通点进行跨网访问。   不同网络间的互联互通带宽，对于任何一个运营商网络流量来水，占比都比较小，收敛比高，因此这里通常是互联网传输中的拥堵点   长途骨干传输  长距离传输时延问题 从网站服务器到用户之间要经过网站所在的IDC、骨干网、用户所在的城域网、用户所在的接入网等 距离非常遥远，因此不可避免的带来较长的传输时延 由于互联网上的绝大部分流量需要经过骨干网进行传输，所以需要骨干网络的承载能力必须与互联网的应用同步发展  实际两者并不同步，当骨干网络升级和扩容滞后于互联网上应用的发展，就会阶段性的使得大型骨干网的承载能力成为影响互联网性能的瓶颈      8秒定律  当用户访问一个网站时， 如果网页打开等待时间超过8秒，就会由30%用户放弃等待 一个网站10秒后网页打不开，会有40% 的用户跳出该页面。 大部分手机用户愿意等待时间为6-10秒 一秒延迟会导致转化率下降7%  </description>
+    </item>
+    
+    <item>
+      <title>TCP/UDP端口扫描工具</title>
+      <link>https://zylhorse.github.io/blog/network/%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/</link>
+      <pubDate>Tue, 15 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/network/%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/</guid>
+      <description>译注 该Nmap参考指南中文版由Fei Yang fyang1024@gmail.com和Lei Lililei_721@6611.org 从英文版本翻译而来。 我们希望这将使全世界使用中文的人们更了解Nmap，但我们不能保证该译本和官方的 英文版本一样完整，也不能保证同步更新。 它可以在Creative Commons Attribution License下被修改并重新发布。
+选项概要 当Nmap不带选项运行时，该选项概要会被输出，最新的版本在这里 http://www.insecure.org/nmap/data/nmap.usage.txt。
+它帮助人们记住最常用的选项，但不能替代本手册其余深入的文档，一些晦涩的选项甚至不在这里。
+Usage: nmap [Scan Type(s)] [Options] {target specification} TARGET SPECIFICATION:
+Can pass hostnames, IP addresses, networks, etc.
+Ex: scanme.nmap.org, microsoft.com/24, 192.168.0.1; 10.0-255.0-255.1-254
+-iL : Input from list of hosts/networks
+-iR : Choose random targets
+&amp;ndash;exclude &amp;lt;host1[,host2][,host3],&amp;hellip;&amp;gt;: Exclude hosts/networks
+&amp;ndash;excludefile &amp;lt;exclude_file&amp;gt;: Exclude list from file
+HOST DISCOVERY:
+-sL: List Scan - simply list targets to scan</description>
+    </item>
+    
+    <item>
+      <title>TCP-数据传输可靠性</title>
+      <link>https://zylhorse.github.io/blog/network/tcp/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/</link>
+      <pubDate>Sat, 06 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/network/tcp/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/</guid>
+      <description>TCP数据传输 面向字节流， 传输可靠， 面向连接
+问题 网络数据不可靠， 丢包， 错包， 重复包， 乱序包；
+滑动窗口 提高数据吞吐量， 传输数据块（包含多组数据）
+滑动窗口本身可以看做是一个协议，适合于数据传输过程中要求有严格顺序处理的场景
+滑动窗口将时间轴上的数据分成了4个部分:
+ 数据发送且被确认 数据发送但未被确认 数据能够被发送 数据不能发送，等待滑动窗口右移  TCP报文字段 win  报文中win用来描述窗口大小。 接收方窗口大小由接收方控制, 默认4096字节 如果窗口中有未来得及读取的数据， 则响应报文中的win就会减少 如果窗口中的数据被读取， 可能会出现携带ack 但不确认任何数据 而仅仅win变大的包， 这种情况用来更新窗口大小；  确保可靠性方式  校验和  数据发送时， 将数据段当作16位整数， 并将所有数据段相加。 且相加后的进位不丢弃，补到末位， 最后取反，得到校验和； 接收方收到数据后， 以同样方式计算校验和， 与发送方的进行对比；如果校验和不一致则数据传输一定有误。 但是校验和一致，数据传输不一定无误；   序列号  数据传输的每个数据段都进行了编号； 有了序列号， 就能对数据包进行排序和排重；   确认应答  数据传输的每次发送， 接收方都会进行应答， 即发送ack确认报文；   超时重传  基于序列号和确认应答机制，发送方都会等待接收方的ack确认报文。 如果发送方迟迟接收不到ack响应， 则会重新发送该报文，直到达到重传次数限制， 则认为tcp传输异常， 强制关闭； 超时的时间以500ms 为基准， 以指数方式增加； （第一次： 500ms， 第二次： 2*500ms &amp;hellip;);    </description>
+    </item>
+    
+    <item>
+      <title>TCP-IP连接限制</title>
+      <link>https://zylhorse.github.io/blog/network/tcp/maxport/</link>
+      <pubDate>Wed, 03 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/network/tcp/maxport/</guid>
+      <description>在一台系统上，连接到一个远程服务时的本地端口(local_addr)是有限的。根据TCP/IP协议，由于端口是16位整数，也就只能是0到 65535，而0到1023是预留端口， 所以能分配的端口只是1024到65534，也就是64511个。也就是说，一个IP只能创建六万多个长连接。</description>
+    </item>
+    
+    <item>
+      <title>TCP-握手和挥手</title>
+      <link>https://zylhorse.github.io/blog/network/tcp/handshake/</link>
+      <pubDate>Wed, 03 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/network/tcp/handshake/</guid>
+      <description>tcp 状态 tcp连接FLAGS字段表示当前连接状态，FLAGS包含一下几个标识：
+ SYN表示建立连接 FIN表示关闭连接 ACK表示响应 PSH表示有 DATA数据传输 RST表示连接重置  三次握手 tcp建立连接的过程，需要三次握手；
+ 客户端打开连接，主动结束CLOSED阶段； 服务器连接，被动结束CLOSED阶段， 进入LISTEN阶段； 开始握手：   客户端向服务器发送tcp报文
+1.1 标记位为SYN， 表示请求建立连接
+1.2 序号seq=x (x一般为0)
+1.3 客户端进入SYN-SENT 阶段
+  服务器接收来自客户端的tcp报文，结束LISTEN阶段，并发送一段tcp报文
+2.1 标志位为SYN和ACK， 表示确认客户端报文seq有效，同意创建连接
+2.2 序号seq=y（y一般为0）， 确认号ack=x+1, 表示收到客户端序号seq并将其值加1作为自己的确认号ack的值
+2.3 服务端进入SYN-RECVD阶段
+  客户端接收来自服务器的确认报文后， 结束SYN-SENT阶段，并返回一段tcp报文
+3.1 标志位为ACK， 表示确认收到服务器同意连接的信号；
+3.2 序号seq=x+1， 表示收到服务器的确认号ack， 并将其作为自己的序号
+3.3 确认号ack=y+1， 表示收到服务器的序号seq并将其值加1作为自己的确认号ack的值
+3.4 客户端进入ESTABLISHED阶段
+  服务器接收到来自客户端的确认报文后， 明确从服务器到客户端的数据传输时正常的
+4.1 服务器结束SYN-RECVD阶段， 进入ESTABLISHED阶段
+    为什么三次握手  防止服务器开启无用连接，增加服务器开销； 防止失效的请求连接报文传输到服务端， 产生错误；  四次挥手 tcp释放连接，需要四次挥手</description>
+    </item>
+    
+    <item>
+      <title>Bind-ubuntu部署配置</title>
+      <link>https://zylhorse.github.io/blog/network/dns/bind/</link>
+      <pubDate>Wed, 03 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/network/dns/bind/</guid>
+      <description>本文主要讲解bind部署以及配置应用。
+docker部署  拉取镜像: docker pull sameersbn/bind:latest 启动容器: mkdir -p ~/bind \docker run --name=&#39;bind&#39; -d --restart=always -p 53:53/udp -p 10000:10000/tcp \-e WEBMIN_ENABLED=true \-v ~/bind:/data \sameersbn/bind:latest参数说明:  -p 53:53/udp DNS默认端口 -p 10000:1000 Webmin图形化管理页面端口 -e WEBMIN_ENABLED=true 开启图形化界面管理器 -v ~/bind:/data 配置DNS存储目录   备注: 确认53端口不被占用。ubuntu系统中容器启动前需要禁用system-resolved服务。 sudo systemctl disable systemd-resolvedsudo systemctl stop systemd-resolved
+  检查服务端口状态  检查53端口 $ ss -lnupState Recv-Q Send-Q Local Address:Port Peer Address:Port Process UNCONN 0 0 0.</description>
+    </item>
+    
+    <item>
+      <title>从每层协议及物理设备了解网络模型</title>
+      <link>https://zylhorse.github.io/blog/network/%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/</link>
+      <pubDate>Mon, 16 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/network/%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B/</guid>
+      <description>OSI七层模型  物理层Physical： IEEE 802.1A、IEEE 802.2、IEEE 802.11 物理链路层Data Link: FDDI、Ethernet、Arpanet、PDN、SLP、PPP 网络层Network：IP、ICMP、ARP、RARP、AKP、UUCP 传输层Transport：TCP、UDP 会话层Session：SMTP、DNS 表示层Presentation：Telnet、rlogin、SNMP、Gopher 应用层Application：TFTP、FTP、NFS、WAIS、HTTP  TCP/IP 五层模型  物理层：中继器，集线器 数据链路层： 二层交换机 网络层： 路由器，三层交换机 传输层： 四层交换机 应用层  </description>
+    </item>
+    
+  </channel>
+</rss>

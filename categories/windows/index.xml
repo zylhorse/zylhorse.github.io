@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Windows on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/windows/</link>
+    <description>Recent content in Windows on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 03 Sep 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/windows/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Windows Subsystem for Linux</title>
+      <link>https://zylhorse.github.io/blog/windows/wsl/</link>
+      <pubDate>Tue, 03 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/windows/wsl/</guid>
+      <description>概述 WSL： Windows Subsystem for Linux
+目的  terminal 界面定制 支持ubuntu terminal  WSL安装 reference
+ 启用Linux的windows子系统 功能  仅安装WSL1 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart 重启电脑 windows store 下载安装 linux 发行版   windows terminal 安装  windows store 下载安装 windows terminal    </description>
+    </item>
+    
+    <item>
+      <title>Windows系统删除U盘EFI分区</title>
+      <link>https://zylhorse.github.io/blog/windows/u-efi/</link>
+      <pubDate>Mon, 05 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/windows/u-efi/</guid>
+      <description> 管理员权限启动CMD 输入磁盘分区命令： diskpart C:\Users\Administrator&amp;gt;diskpart DISKPART&amp;gt; 查看所有磁盘： list disk DISKPART&amp;gt; list disk磁盘 ### 状态 大小 可用 Dyn Gpt-------- ------------- ------- ------- --- ---磁盘 0 联机 111 GB 0 B磁盘 1 联机 465 GB 0 B磁盘 2 联机 111 GB 0 B磁盘 3 联机 7648 MB 809 MB 选择要进行操作的磁盘： select disk 3 DISKPART&amp;gt; select disk 3磁盘 3 现在是所选磁盘。 清理磁盘： clean  DISKPART&amp;gt; cleanDiskPart 成功地清除了磁盘。 重新挂载U盘： 进入计算机管理 -&amp;gt; 磁盘管理 -&amp;gt; 找到相应U盘，右键新加卷  </description>
+    </item>
+    
+    <item>
+      <title>下载安装Visual Studio历史版本</title>
+      <link>https://zylhorse.github.io/blog/windows/visual-studio/</link>
+      <pubDate>Wed, 10 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/windows/visual-studio/</guid>
+      <description>下载安装 历史版本
+2017 激活码   professional
+KBJFW-NXHK6-W4WJM-CRMQB-G3CDH
+  enterprise
+NJVYC-BMHX2-G77MM-4XJMR-6Q8QF
+  </description>
+    </item>
+    
+    <item>
+      <title>Windows系统配置CMD网络代理</title>
+      <link>https://zylhorse.github.io/blog/windows/proxy/</link>
+      <pubDate>Fri, 05 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/windows/proxy/</guid>
+      <description>cmd 设置代理 x:&amp;gt;netshnetsh&amp;gt;winhttpnetsh winhttp&amp;gt;netsh winhttp&amp;gt;set proxy 127.0.0.1:1080设置http\https代理 x:&amp;gt;set http_proxy=http://http.proxy.com:12345x:&amp;gt;set https_proxy=http://https.proxy.com:23456x:&amp;gt;set socks5_proxy=socks5://https.proxy.com:23456</description>
+    </item>
+    
+    <item>
+      <title>Windows下Wireshark抓包问题</title>
+      <link>https://zylhorse.github.io/blog/windows/%E6%9C%AC%E5%9C%B0%E6%8A%93%E5%8C%85/</link>
+      <pubDate>Wed, 03 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/windows/%E6%9C%AC%E5%9C%B0%E6%8A%93%E5%8C%85/</guid>
+      <description>windows 本地抓包 在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。 但是wireshark此时是无法抓取到数据包的，需要通过简单的设置才可以。
+具体方法如下：
+  方法一
+ 以管理员身份运行cmd route add 本机ip mask 255.255.255.255 网关ip 如：route add 172.16.51.115 mask 255.255.255.255 172.16.1.1 使用完毕后用route delete 172.16.51.115 mask 255.255.255.255 172.16.1.1删除，否则所有本机报文都经过网卡出去走一圈回来很耗性能。 此时再利用wireshark进行抓包便可以抓到本机自己同自己的通信包，这样配置的原因是将发往本机的包发送到网关，而此时wireshark可以捕获到网卡驱动的报文实现抓包。   但这样有一个缺点，那就是本地请求的URL的IP只能写本地的IP地址，不能写localhost或127.0.0.1，写localhost或127.0.0.1还是抓不到包。
+   方法二
+windows系统没有提供本地回环网络的接口，用wireshark监控网络的话只能看到经过网卡的流量，看不到访问localhost的流量， 因为wireshark在windows系统上默认使用的是WinPcap来抓包的，现在可以用Npcap来替换掉WinPcap， Npcap是基于WinPcap 4.1.3开发的，api兼容WinPcap。
+ 下载安装包 Npcap项目主页，它采用的是MIT开源协议，Npcap下载 安装 安装时要勾选 Use DLT_NULL protocol sa Loopback &amp;hellip; 和 install npcap in winpcap api-compat mode，如下所示。    方法三
+RawCap
+  </description>
+    </item>
+    
+    <item>
+      <title>Windows中文件的最新图标刷新不出来问题</title>
+      <link>https://zylhorse.github.io/blog/windows/%E6%B8%85%E7%90%86%E7%B3%BB%E7%BB%9F%E7%BC%93%E5%AD%98%E5%9B%BE%E6%A0%87/</link>
+      <pubDate>Sat, 15 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/windows/%E6%B8%85%E7%90%86%E7%B3%BB%E7%BB%9F%E7%BC%93%E5%AD%98%E5%9B%BE%E6%A0%87/</guid>
+      <description>磁盘上的图片被覆盖后文件预览还是旧的 reseticon.bat
+//rem 关闭Windows外壳程序explorertaskkill /f /im explorer.exe//rem 清理系统图标缓存数据库attrib -h -s -r &amp;quot;%userprofile%AppDataLocalIconCache.db&amp;quot;del /f &amp;quot;%userprofile%AppDataLocalIconCache.db&amp;quot;attrib /s /d -h -s -r &amp;quot;%userprofile%AppDataLocalMicrosoftWindowsExplorer*&amp;quot;del /f &amp;quot;%userprofile%AppDataLocalMicrosoftWindowsExplorerthumbcache_32.db&amp;quot;del /f &amp;quot;%userprofile%AppDataLocalMicrosoftWindowsExplorerthumbcache_96.db&amp;quot;del /f &amp;quot;%userprofile%AppDataLocalMicrosoftWindowsExplorerthumbcache_102.db&amp;quot;del /f &amp;quot;%userprofile%AppDataLocalMicrosoftWindowsExplorerthumbcache_256.db&amp;quot;del /f &amp;quot;%userprofile%AppDataLocalMicrosoftWindowsExplorerthumbcache_1024.db&amp;quot;del /f &amp;quot;%userprofile%AppDataLocalMicrosoftWindowsExplorerthumbcache_idx.db&amp;quot;del /f &amp;quot;%userprofile%AppDataLocalMicrosoftWindowsExplorerthumbcache_sr.db&amp;quot;//rem 清理 系统托盘记忆的图标echo y|reg delete &amp;quot;HKEY_CLASSES_ROOTLocal SettingsSoftwareMicrosoftWindowsCurrentVersionTrayNotify&amp;quot; /v IconStreamsecho y|reg delete &amp;quot;HKEY_CLASSES_ROOTLocal SettingsSoftwareMicrosoftWindowsCurrentVersionTrayNotify&amp;quot; /v PastIconsStream//rem 重启Windows外壳程序explorerstart explorer</description>
+    </item>
+    
+  </channel>
+</rss>

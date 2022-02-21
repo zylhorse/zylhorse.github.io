@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>多类型I/O操作流程 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="多类型I/O操作流程">
+<meta itemprop="description" content="I/O IO分为两个阶段：
+ 数据准备阶段 内核空间复制数据到用户进程缓冲区（用户空间）阶段  IO类型   阻塞IO 用户线程进行IO读写操作时发生阻塞，等待数据准备就绪
+  非阻塞IO 用户线程进行IO读写操作时不阻塞，但是循环询问内核数据是否就绪
+  多路复用IO
+ 轮询多个IO连接， 只有当真正的事件发生时，采取调用实际的IO操作； 轮询多个IO状态，发生在内核空间；    信号驱动IO
+ 用户线程发起sigaction 系统调用， 给socket注册信号函数后， 继续执行 内核数据准备就绪后，发送信号给用户线程 用户线程收到信号，再发起recvfrom系统调用，将数据复制到用户空间； 用户下线程操作数据；    异步IO
+ 用户线程发起aio_read 系统调用后继续执行 内核处理完IO操作，发送信号给用户线程 IO操作完成； 用户线程直接操作数据；    阻塞IO和非阻塞IO 区别在于第一步数据准备阶段是否阻塞；即IO请求是否阻塞；
+同步IO和异步IO 区别在于第二部内核空间到用户空间进行数据拷贝都会阻塞用户线程；">
+<meta itemprop="datePublished" content="2014-10-03T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2014-10-03T00:00:00+00:00" />
+<meta itemprop="wordCount" content="31">
+
+
+
+<meta itemprop="keywords" content="I/O," />
+<meta property="og:title" content="多类型I/O操作流程" />
+<meta property="og:description" content="I/O IO分为两个阶段：
+ 数据准备阶段 内核空间复制数据到用户进程缓冲区（用户空间）阶段  IO类型   阻塞IO 用户线程进行IO读写操作时发生阻塞，等待数据准备就绪
+  非阻塞IO 用户线程进行IO读写操作时不阻塞，但是循环询问内核数据是否就绪
+  多路复用IO
+ 轮询多个IO连接， 只有当真正的事件发生时，采取调用实际的IO操作； 轮询多个IO状态，发生在内核空间；    信号驱动IO
+ 用户线程发起sigaction 系统调用， 给socket注册信号函数后， 继续执行 内核数据准备就绪后，发送信号给用户线程 用户线程收到信号，再发起recvfrom系统调用，将数据复制到用户空间； 用户下线程操作数据；    异步IO
+ 用户线程发起aio_read 系统调用后继续执行 内核处理完IO操作，发送信号给用户线程 IO操作完成； 用户线程直接操作数据；    阻塞IO和非阻塞IO 区别在于第一步数据准备阶段是否阻塞；即IO请求是否阻塞；
+同步IO和异步IO 区别在于第二部内核空间到用户空间进行数据拷贝都会阻塞用户线程；" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/concurrence/io/" />
+<meta property="article:published_time" content="2014-10-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2014-10-03T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="多类型I/O操作流程"/>
+<meta name="twitter:description" content="I/O IO分为两个阶段：
+ 数据准备阶段 内核空间复制数据到用户进程缓冲区（用户空间）阶段  IO类型   阻塞IO 用户线程进行IO读写操作时发生阻塞，等待数据准备就绪
+  非阻塞IO 用户线程进行IO读写操作时不阻塞，但是循环询问内核数据是否就绪
+  多路复用IO
+ 轮询多个IO连接， 只有当真正的事件发生时，采取调用实际的IO操作； 轮询多个IO状态，发生在内核空间；    信号驱动IO
+ 用户线程发起sigaction 系统调用， 给socket注册信号函数后， 继续执行 内核数据准备就绪后，发送信号给用户线程 用户线程收到信号，再发起recvfrom系统调用，将数据复制到用户空间； 用户下线程操作数据；    异步IO
+ 用户线程发起aio_read 系统调用后继续执行 内核处理完IO操作，发送信号给用户线程 IO操作完成； 用户线程直接操作数据；    阻塞IO和非阻塞IO 区别在于第一步数据准备阶段是否阻塞；即IO请求是否阻塞；
+同步IO和异步IO 区别在于第二部内核空间到用户空间进行数据拷贝都会阻塞用户线程；"/>
+<link rel="stylesheet" href="/css/bundle.min.1e02bb992195ca398d746df5f9dd547068b745164f5e47eab62b93e6f424e2f1.css" integrity="sha256-HgK7mSGVyjmNdG31&#43;d1UcGi3RRZPXkfqtiuT5vQk4vE="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  
+  <header>
+    
+  </header>
+  <main>
+    
+  </main>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/concurrence/io/">多类型I/O操作流程</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2014-10-03 00:00:00 &#43;0000 UTC">2014-10-03</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            10分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h3 id="io">I/O</h3>
+<p><code>IO</code>分为两个阶段：</p>
+<ol>
+<li>数据准备阶段</li>
+<li>内核空间复制数据到用户进程缓冲区（用户空间）阶段</li>
+</ol>
+<h4 id="io类型">IO类型</h4>
+<ul>
+<li>
+<p>阻塞IO
+用户线程进行IO读写操作时发生阻塞，等待数据准备就绪</p>
+</li>
+<li>
+<p>非阻塞IO
+用户线程进行IO读写操作时不阻塞，但是循环询问内核数据是否就绪</p>
+</li>
+<li>
+<p>多路复用IO</p>
+<ul>
+<li>轮询多个<code>IO</code>连接， 只有当真正的事件发生时，采取调用实际的IO操作；</li>
+<li>轮询多个<code>IO</code>状态，发生在内核空间；</li>
+</ul>
+</li>
+<li>
+<p>信号驱动IO</p>
+<ul>
+<li>用户线程发起<code>sigaction</code> 系统调用， 给<code>socket</code>注册信号函数后， 继续执行</li>
+<li>内核数据准备就绪后，发送信号给用户线程</li>
+<li>用户线程收到信号，再发起<code>recvfrom</code>系统调用，将数据复制到用户空间；</li>
+<li>用户下线程操作数据；</li>
+</ul>
+</li>
+<li>
+<p>异步IO</p>
+<ul>
+<li>用户线程发起<code>aio_read</code> 系统调用后继续执行</li>
+<li>内核处理完IO操作，发送信号给用户线程 IO操作完成；</li>
+<li>用户线程直接操作数据；</li>
+</ul>
+</li>
+</ul>
+<h4 id="阻塞io和非阻塞io">阻塞IO和非阻塞IO</h4>
+<p>区别在于第一步数据准备阶段是否阻塞；即IO请求是否阻塞；</p>
+<h4 id="同步io和异步io">同步IO和异步IO</h4>
+<p>区别在于第二部内核空间到用户空间进行数据拷贝都会阻塞用户线程；</p>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/concurrence/">Concurrence</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/i/o/">I/O</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#io">I/O</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/memory/mmap/" class="button left"><span>mmap实现原理简述及使用场景</span></a>
+    
+    
+      <a href="/blog/windows/visual-studio/" class="button right"><span>下载安装Visual Studio历史版本</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Concurrence
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      </main>
+      <section id="site-sidebar">
+  
+
+  
+    <section id="categories">
+      <header>
+        <h1><a href="/categories">分类</a></h1>
+      </header>
+      <ul>
+        
+        
+        <li>
+          <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/cache/">cache<span class="count">23</span></a>
+          
+        <li>
+          <a href="/categories/compilation/">compilation<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/concurrence/">concurrence<span class="count">4</span></a>
+          
+        <li>
+          <a href="/categories/data-structure/">data-structure<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/database/">database<span class="count">9</span></a>
+          
+        <li>
+          <a href="/categories/distribution-system/">distribution-system<span class="count">10</span></a>
+          
+        <li>
+          <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
+          
+        </li>
+      </ul>
+      
+        <footer class="see-more">
+          <a href="/categories" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+        </footer>
+      
+    </section>
+  
+
+  
+      <section id="tags">
+        <header>
+          <h1><a href="/tags">标签</a></h1>
+        </header>
+        <ul>
+          
+          
+          <li>
+            <a href="/tags/algorithm/">algorithm<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/audio/">audio<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/cdn/">cdn<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/certificate/">certificate<span class="count">4</span></a>
+            
+          <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/diagnostics/">diagnostics<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/http/">http<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/i/o/">i/o<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/ide/">ide<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/kafka/">kafka<span class="count">1</span></a>
+            
+          </li>
+        </ul>
+        
+          <footer class="see-more">
+            <a href="/tags" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+          </footer>
+        
+      </section>
+  
+
+  
+</section>
+      <footer id="site-footer">
+  
+  <p class="copyright">
+      
+      <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
+      <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
+      <br/>© 2020 zylhorse
+      <br>
+    由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.7e8b85fb814aa446375b535c9ecd0857b9de7637062ea359390ae8675c7761d8.js" integrity="sha256-fouF&#43;4FKpEY3W1Ncns0IV7nedjcGLqNZOQroZ1x3Ydg="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </div>
+  </body>
+</html>

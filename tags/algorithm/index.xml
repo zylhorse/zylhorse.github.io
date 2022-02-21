@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Algorithm on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/algorithm/</link>
+    <description>Recent content in Algorithm on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 05 May 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一致性哈希特性和使用场景</title>
+      <link>https://zylhorse.github.io/blog/distribution-system/%E4%B8%80%E8%87%B4%E6%80%A7%E5%93%88%E5%B8%8C/</link>
+      <pubDate>Sun, 05 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/distribution-system/%E4%B8%80%E8%87%B4%E6%80%A7%E5%93%88%E5%B8%8C/</guid>
+      <description>概念  一种hash算法 简单说： 移除和添加一台服务器是， 此算法能够尽可能小的改变已存在的服务请求和处理请求服务器之间的映射关系；  特性 考虑到分布式系统每个节点都可能失效， 且新的节点有可能加入进来。 一致性哈希需要保证以下特性
+平衡性 hash的结果尽可能的分配到所有的节点去，是的所有节点都能得到利用
+分散性  分散性： 客户端请求可能不知道所有的节点存在， 部分客户端将部分节点作为一个完整的hash环；导致同一请求不能映射到同一个节点； 一致性哈希 应降低分散性；  单调性  增加或删除节点，原有的请求应该被映射到原有的节点或新的节点中去； 增加或删除节点 不应造成大量的哈希重定向  工作原理  一致性哈希算法， 将整个hash空间映射成一个虚拟的圆环，取值范围为0-uint32max； 整个空间按顺时针方向组织； 将请求对应的hash映射到圆环上， 沿圆环做顺时针查找， 分配到最近的节点上； 增加节点只会影响新的节点和逆时针节点之间得请求；  </description>
+    </item>
+    
+  </channel>
+</rss>

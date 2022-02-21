@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>NSQ on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/nsq/</link>
+    <description>Recent content in NSQ on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 03 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/nsq/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker部署和配置nsqbeat</title>
+      <link>https://zylhorse.github.io/blog/log-system/docker%E5%AE%89%E8%A3%85nsqbeat/</link>
+      <pubDate>Thu, 03 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/log-system/docker%E5%AE%89%E8%A3%85nsqbeat/</guid>
+      <description>############################# Nsqbeat ######################################nsqbeat:# A list of NSQ Lookup Daemons to connect tolookupdhttpaddrs: [&amp;quot;192.168.20.99:4161&amp;quot;]# a Topic to sucscribe totopic: &amp;quot;logic.log&amp;quot;# The channel name to joinchannel: &amp;quot;nsqbeat&amp;quot;# How many in Flightsmaxinflight: 200# If data in the topic is Json then use the decoder, if not set to something else like plaincodec: &amp;quot;text&amp;quot;# use Golang time format layout to define if @timestamp exists and has a different formattimelayout: &amp;quot;2006-01-02T15:04:05.</description>
+    </item>
+    
+    <item>
+      <title>Docker部署和配置nsq集群</title>
+      <link>https://zylhorse.github.io/blog/message-queue/nsq/docker-%E5%AE%89%E8%A3%85nsq/</link>
+      <pubDate>Sun, 25 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/message-queue/nsq/docker-%E5%AE%89%E8%A3%85nsq/</guid>
+      <description>nsq.yml version: &#39;3&#39;services:nsqlookupd:image: nsqio/nsqcommand: /nsqlookupdports:- 4160:4160- 4161:4161nsqd:image: nsqio/nsqcommand: /nsqd --lookupd-tcp-address=192.168.20.99:4160 --broadcast-address=192.168.20.99depends_on:- nsqlookupdports:- 4150:4150- 4151:4151nsqadmin:image: nsqio/nsqcommand: /nsqadmin --lookupd-http-address=192.168.20.99:4161depends_on:- nsqlookupdports:- 4171:4171</description>
+    </item>
+    
+    <item>
+      <title>NSQ简介</title>
+      <link>https://zylhorse.github.io/blog/message-queue/nsq/nsqd/</link>
+      <pubDate>Fri, 23 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/message-queue/nsq/nsqd/</guid>
+      <description>描述 是一个守护进程，负责接收，排队，投递消息给客户端
+参数 -lookupd-tcp-address=: nslookup tcp 监听地址 -broadcast-address=&amp;quot;&amp;quot;: 注册到nslookup地址， 需要显示指定</description>
+    </item>
+    
+  </channel>
+</rss>

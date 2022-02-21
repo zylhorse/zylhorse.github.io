@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang进程管理工具 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Golang进程管理工具">
+<meta itemprop="description" content="简介 Go 生态系统提供了一套API和工具来检测程序的逻辑和性能问题。本章总结了可用的工具，并帮助用户在遇到问题时，选择正确的工具。
+gops gops: Golang进程管理工具，支持远程调用
+ 安装：go get -u github.com/google/gops 项目启动代理： package mainimport (&quot;log&quot;&quot;time&quot;&quot;github.com/google/gops/agent&quot;)func main() {if err := agent.Listen(agent.Options{}); err != nil {log.Fatal(err)}time.Sleep(time.Hour)} agent.Options{} type Options struct {// gops agent 监听地址// 格式： host:portAddr string// 配置文件保存目录// 保存内容： gops pid，filename， port，contentConfigDir string// 设置是否自动清理资源// true: 进程接收到终端信号后，会自动清理// false：进程关闭前用户需要调用 CloseShutdownCleanup bool}   命令行使用：  打印所有Go进程： $ gopspid ppid 进程名 go 版本 关联进程的位置983 980 docc * go1."><meta itemprop="datePublished" content="2019-10-01T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-10-01T00:00:00+00:00" />
+<meta itemprop="wordCount" content="251">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Golang进程管理工具" />
+<meta property="og:description" content="简介 Go 生态系统提供了一套API和工具来检测程序的逻辑和性能问题。本章总结了可用的工具，并帮助用户在遇到问题时，选择正确的工具。
+gops gops: Golang进程管理工具，支持远程调用
+ 安装：go get -u github.com/google/gops 项目启动代理： package mainimport (&quot;log&quot;&quot;time&quot;&quot;github.com/google/gops/agent&quot;)func main() {if err := agent.Listen(agent.Options{}); err != nil {log.Fatal(err)}time.Sleep(time.Hour)} agent.Options{} type Options struct {// gops agent 监听地址// 格式： host:portAddr string// 配置文件保存目录// 保存内容： gops pid，filename， port，contentConfigDir string// 设置是否自动清理资源// true: 进程接收到终端信号后，会自动清理// false：进程关闭前用户需要调用 CloseShutdownCleanup bool}   命令行使用：  打印所有Go进程： $ gopspid ppid 进程名 go 版本 关联进程的位置983 980 docc * go1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-10-01T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-10-01T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang进程管理工具"/>
+<meta name="twitter:description" content="简介 Go 生态系统提供了一套API和工具来检测程序的逻辑和性能问题。本章总结了可用的工具，并帮助用户在遇到问题时，选择正确的工具。
+gops gops: Golang进程管理工具，支持远程调用
+ 安装：go get -u github.com/google/gops 项目启动代理： package mainimport (&quot;log&quot;&quot;time&quot;&quot;github.com/google/gops/agent&quot;)func main() {if err := agent.Listen(agent.Options{}); err != nil {log.Fatal(err)}time.Sleep(time.Hour)} agent.Options{} type Options struct {// gops agent 监听地址// 格式： host:portAddr string// 配置文件保存目录// 保存内容： gops pid，filename， port，contentConfigDir string// 设置是否自动清理资源// true: 进程接收到终端信号后，会自动清理// false：进程关闭前用户需要调用 CloseShutdownCleanup bool}   命令行使用：  打印所有Go进程： $ gopspid ppid 进程名 go 版本 关联进程的位置983 980 docc * go1."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">Golang进程管理工具</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-10-01 00:00:00 &#43;0000 UTC">2019-10-01</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="简介">简介</h2>
+<p><code>Go</code> 生态系统提供了一套<code>API</code>和工具来检测程序的逻辑和性能问题。本章总结了可用的工具，并帮助用户在遇到问题时，选择正确的工具。</p>
+<h2 id="gopshttpsgithubcomgooglegops"><a href="https://github.com/google/gops">gops</a></h2>
+<p><code>gops</code>:  <code>Golang</code>进程管理工具，支持远程调用</p>
+<ul>
+<li>安装：<code>go get -u github.com/google/gops</code></li>
+<li>项目启动代理：
+<pre tabindex="0"><code>package main
+
+import (
+    &quot;log&quot;
+    &quot;time&quot;
+
+    &quot;github.com/google/gops/agent&quot;
+)
+
+func main() {
+    if err := agent.Listen(agent.Options{}); err != nil {
+        log.Fatal(err)
+    }
+    time.Sleep(time.Hour)
+}
+
+</code></pre><ul>
+<li><code>agent.Options{}</code>
+<pre tabindex="0"><code>type Options struct {
+  // gops agent 监听地址
+  // 格式： host:port
+	Addr string
+
+  // 配置文件保存目录
+  // 保存内容： gops pid，filename， port，content
+	ConfigDir string
+
+  // 设置是否自动清理资源
+  // true: 进程接收到终端信号后，会自动清理
+  // false：进程关闭前用户需要调用 Close
+	ShutdownCleanup bool
+}
+</code></pre></li>
+</ul>
+</li>
+<li>命令行使用：
+<ul>
+<li>打印所有<code>Go</code>进程：
+<pre tabindex="0"><code>$ gops
+pid   ppid   进程名         go 版本  关联进程的位置
+983   980    docc    *      go1.11  ~/code/godev/docc
+52697 52695  gops           go1.10  /Users/jbd/bin/gops
+</code></pre><blockquote>
+<p>如果进程运行了<code>agent</code>则进程名后会标记<code>*</code></p>
+</blockquote>
+</li>
+<li>打印进程更多信息
+<pre tabindex="0"><code>$ gops &lt;pid&gt;
+parent PID:	5985
+threads:	27
+memory usage:	0.199%
+cpu usage:	0.139%
+username:	jbd
+cmd+args:	/Applications/Splice.app/Contents/Resources/Splice Helper.app/Contents/MacOS/Splice Helper -pid 5985
+local/remote:	127.0.0.1:56765 &lt;-&gt; :0 (LISTEN)
+local/remote:	127.0.0.1:56765 &lt;-&gt; 127.0.0.1:50955 (ESTABLISHED)
+local/remote:	100.76.175.164:52353 &lt;-&gt; 54.241.191.232:443 (ESTABLISHED)
+</code></pre></li>
+<li>获取进程树
+<pre tabindex="0"><code>$ gops tree
+
+...
+├── 1
+│   └── 13962 [gocode] {go1.9}
+├── 557
+│   └── 635 [com.docker.supervisor] {go1.9.2}
+│       └── 638 [com.docker.driver.amd64-linux] {go1.9.2}
+└── 13744
+    └── 67243 [gops] {go1.10}
+</code></pre></li>
+<li>获取进程堆栈
+<pre tabindex="0"><code>$ gops stack (&lt;pid&gt;|&lt;addr&gt;)
+gops stack 85709
+goroutine 8 [running]:
+runtime/pprof.writeGoroutineStacks(0x13c7bc0, 0xc42000e008, 0xc420ec8520, 0xc420ec8520)
+	/Users/jbd/go/src/runtime/pprof/pprof.go:603 +0x79
+runtime/pprof.writeGoroutine(0x13c7bc0, 0xc42000e008, 0x2, 0xc428f1c048, 0xc420ec8608)
+	/Users/jbd/go/src/runtime/pprof/pprof.go:592 +0x44
+runtime/pprof.(*Profile).WriteTo(0x13eeda0, 0x13c7bc0, 0xc42000e008, 0x2, 0xc42000e008, 0x0)
+	/Users/jbd/go/src/runtime/pprof/pprof.go:302 +0x3b5
+github.com/google/gops/agent.handle(0x13cd560, 0xc42000e008, 0xc420206000, 0x1, 0x1, 0x0, 0x0)
+	/Users/jbd/src/github.com/google/gops/agent/agent.go:150 +0x1b3
+github.com/google/gops/agent.listen()
+	/Users/jbd/src/github.com/google/gops/agent/agent.go:113 +0x2b2
+created by github.com/google/gops/agent.Listen
+	/Users/jbd/src/github.com/google/gops/agent/agent.go:94 +0x480
+# ...
+</code></pre></li>
+<li>获取进程当前内存<br>
+<code>$ gops memstats &lt;pid&gt; | &lt;addr&gt;</code></li>
+<li><code>GC</code> 当前进程<br>
+<code>$ gops gc (&lt;pid&gt;|&lt;addr&gt;)</code></li>
+<li>设置当前进程gc百分比<br>
+<code>$ gops setgc (&lt;pid&gt;|&lt;addr&gt;) 10</code></li>
+<li>打印构建目标程序的go版本<br>
+<code>$ gops version (&lt;pid&gt;|&lt;addr&gt;)</code></li>
+<li>打印运行时统计信息<br>
+<code>$ gops stats (&lt;pid&gt;|&lt;addr&gt;)</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="gops-pprof">gops pprof</h3>
+<ul>
+<li><code>gops pprof-cpu (&lt;pid&gt;|&lt;addr&gt;)</code></li>
+<li><code>gops pprof-heap (&lt;pid&gt;|&lt;addr&gt;)</code></li>
+</ul>
+<h3 id="gops-trace">gops trace</h3>
+<p><code>gops trace (&lt;pid&gt;|&lt;addr&gt;)</code></p>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#gopshttpsgithubcomgooglegops"><a href="https://github.com/google/gops">gops</a></a>
+      <ul>
+        <li><a href="#gops-pprof">gops pprof</a></li>
+        <li><a href="#gops-trace">gops trace</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="button left"><span>分布式锁</span></a>
+    
+    
+      <a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%80%E8%87%B4%E6%80%A7/" class="button right"><span>分布式一致性</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Ubuntu依赖包的离线打包和安装 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Ubuntu依赖包的离线打包和安装">
+<meta itemprop="description" content="Ubuntu 16.04离线安装步骤 宿主机打包   清理apt 缓冲区
+$ sudo rm -rf /var/cache/apt/archives/*
+  下载所需组件
+$ sudo apt-get -d install &lt;包名&gt;
+  创建目录，并拷贝
+$ mkdir &lt;your-path&gt;$ cp -r /var/cache/apt/archives &lt;your-path&gt;  修改目录权限
+$ chown -R &lt;your-path&gt;
+  建立依赖关系
+$ sudo apt install dpkg-dev$ cd &lt;your-path&gt;$ sudo dpkg-scanpackages archives /dev/null | gzip &gt; &lt;your-path&gt;/archives/Packages.gz  拷贝到离线系统
+$ scp -r &lt;your-path&gt; &lt;离线系统&gt;
+  离线系统安装   修改apt源"><meta itemprop="datePublished" content="2015-02-02T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2015-02-02T00:00:00+00:00" />
+<meta itemprop="wordCount" content="76">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Ubuntu依赖包的离线打包和安装" />
+<meta property="og:description" content="Ubuntu 16.04离线安装步骤 宿主机打包   清理apt 缓冲区
+$ sudo rm -rf /var/cache/apt/archives/*
+  下载所需组件
+$ sudo apt-get -d install &lt;包名&gt;
+  创建目录，并拷贝
+$ mkdir &lt;your-path&gt;$ cp -r /var/cache/apt/archives &lt;your-path&gt;  修改目录权限
+$ chown -R &lt;your-path&gt;
+  建立依赖关系
+$ sudo apt install dpkg-dev$ cd &lt;your-path&gt;$ sudo dpkg-scanpackages archives /dev/null | gzip &gt; &lt;your-path&gt;/archives/Packages.gz  拷贝到离线系统
+$ scp -r &lt;your-path&gt; &lt;离线系统&gt;
+  离线系统安装   修改apt源" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/linux/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BA%90/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2015-02-02T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-02-02T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ubuntu依赖包的离线打包和安装"/>
+<meta name="twitter:description" content="Ubuntu 16.04离线安装步骤 宿主机打包   清理apt 缓冲区
+$ sudo rm -rf /var/cache/apt/archives/*
+  下载所需组件
+$ sudo apt-get -d install &lt;包名&gt;
+  创建目录，并拷贝
+$ mkdir &lt;your-path&gt;$ cp -r /var/cache/apt/archives &lt;your-path&gt;  修改目录权限
+$ chown -R &lt;your-path&gt;
+  建立依赖关系
+$ sudo apt install dpkg-dev$ cd &lt;your-path&gt;$ sudo dpkg-scanpackages archives /dev/null | gzip &gt; &lt;your-path&gt;/archives/Packages.gz  拷贝到离线系统
+$ scp -r &lt;your-path&gt; &lt;离线系统&gt;
+  离线系统安装   修改apt源"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/linux/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BA%90/">Ubuntu依赖包的离线打包和安装</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-02-02 00:00:00 &#43;0000 UTC">2015-02-02</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="ubuntu-1604离线安装步骤">Ubuntu 16.04离线安装步骤</h2>
+<h3 id="宿主机打包">宿主机打包</h3>
+<ol>
+<li>
+<p>清理apt 缓冲区<br>
+<code>$ sudo rm -rf /var/cache/apt/archives/*</code></p>
+</li>
+<li>
+<p>下载所需组件<br>
+<code>$ sudo apt-get -d install &lt;包名&gt;</code></p>
+</li>
+<li>
+<p>创建目录，并拷贝</p>
+<pre tabindex="0"><code>$ mkdir &lt;your-path&gt;
+$ cp -r /var/cache/apt/archives &lt;your-path&gt;
+</code></pre></li>
+<li>
+<p>修改目录权限<br>
+<code>$ chown -R &lt;your-path&gt;</code></p>
+</li>
+<li>
+<p>建立依赖关系</p>
+<pre tabindex="0"><code>$ sudo apt install dpkg-dev
+$ cd &lt;your-path&gt;
+$ sudo dpkg-scanpackages archives /dev/null  | gzip &gt; &lt;your-path&gt;/archives/Packages.gz
+
+</code></pre></li>
+<li>
+<p>拷贝到离线系统<br>
+<code>$ scp -r &lt;your-path&gt; &lt;离线系统&gt;</code></p>
+</li>
+</ol>
+<h3 id="离线系统安装">离线系统安装</h3>
+<ol>
+<li>
+<p>修改apt源</p>
+<pre tabindex="0"><code>$ sudo vi /etc/apt/sources.list
+# 清空并添加
+deb file:///&lt;your-path&gt; archives/
+</code></pre></li>
+<li>
+<p>安装指定组件</p>
+<pre tabindex="0"><code>$ sudo apt-get update 
+$ sudo apt-get install &lt;包名&gt;
+</code></pre></li>
+</ol>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/linux/">linux</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ubuntu-1604离线安装步骤">Ubuntu 16.04离线安装步骤</a>
+      <ul>
+        <li><a href="#宿主机打包">宿主机打包</a></li>
+        <li><a href="#离线系统安装">离线系统安装</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/software-programming/%E6%B2%99%E7%AE%B1/" class="button left"><span>Sandboxie（沙箱）网络编程虚拟执行环境</span></a>
+    
+    
+      <a href="/blog/concurrence/%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81/" class="button right"><span>并发编程-乐观锁和悲观锁</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=linux
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

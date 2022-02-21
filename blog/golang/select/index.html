@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang源码阅读-select - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Golang源码阅读-select">
+<meta itemprop="description" content="描述 select就是用来监听和channel有关的IO操作，当 IO 操作发生时，触发相应的动作。
+执行步骤  构建select对象：  type hselect struct {tcase unit16 // total count of scase[]ncase unit16 // currently field scase[]pollorder *unit16 // case poll orderlockorder *uint16 // channel lock orderscase [1]scase //one per scase }注册case  所有channel表达式都会被求值、所有被发送的表达式都会被求值。求值顺序：自上而下、从左到右.1. 注册写chan case2. 注册读chan case3. 注册default case执行select  1. 对case洗牌，排序 获取locking order2. 对lockorder里的元素进行枷锁3. 顺序遍历case，等待某个case 被解锁唤醒4. 将未唤醒的case 踢出队列5. 对lockorder里的元素进行解锁释放select  问题  select default 谨慎操作； default 阻塞导致select 不退出； 当chan被触发时，select随机挑选执行；  "><meta itemprop="datePublished" content="2019-08-23T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-08-23T00:00:00+00:00" />
+<meta itemprop="wordCount" content="76">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Golang源码阅读-select" />
+<meta property="og:description" content="描述 select就是用来监听和channel有关的IO操作，当 IO 操作发生时，触发相应的动作。
+执行步骤  构建select对象：  type hselect struct {tcase unit16 // total count of scase[]ncase unit16 // currently field scase[]pollorder *unit16 // case poll orderlockorder *uint16 // channel lock orderscase [1]scase //one per scase }注册case  所有channel表达式都会被求值、所有被发送的表达式都会被求值。求值顺序：自上而下、从左到右.1. 注册写chan case2. 注册读chan case3. 注册default case执行select  1. 对case洗牌，排序 获取locking order2. 对lockorder里的元素进行枷锁3. 顺序遍历case，等待某个case 被解锁唤醒4. 将未唤醒的case 踢出队列5. 对lockorder里的元素进行解锁释放select  问题  select default 谨慎操作； default 阻塞导致select 不退出； 当chan被触发时，select随机挑选执行；  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/select/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-08-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-08-23T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang源码阅读-select"/>
+<meta name="twitter:description" content="描述 select就是用来监听和channel有关的IO操作，当 IO 操作发生时，触发相应的动作。
+执行步骤  构建select对象：  type hselect struct {tcase unit16 // total count of scase[]ncase unit16 // currently field scase[]pollorder *unit16 // case poll orderlockorder *uint16 // channel lock orderscase [1]scase //one per scase }注册case  所有channel表达式都会被求值、所有被发送的表达式都会被求值。求值顺序：自上而下、从左到右.1. 注册写chan case2. 注册读chan case3. 注册default case执行select  1. 对case洗牌，排序 获取locking order2. 对lockorder里的元素进行枷锁3. 顺序遍历case，等待某个case 被解锁唤醒4. 将未唤醒的case 踢出队列5. 对lockorder里的元素进行解锁释放select  问题  select default 谨慎操作； default 阻塞导致select 不退出； 当chan被触发时，select随机挑选执行；  "/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/select/">Golang源码阅读-select</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-08-23 00:00:00 &#43;0000 UTC">2019-08-23</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h1 id="描述">描述</h1>
+<p>select就是用来监听和channel有关的IO操作，当 IO 操作发生时，触发相应的动作。</p>
+<h1 id="执行步骤">执行步骤</h1>
+<ol>
+<li>构建select对象：</li>
+</ol>
+<pre tabindex="0"><code>type hselect struct {
+    tcase unit16 // total count of scase[]
+    ncase unit16 // currently field scase[]
+    pollorder *unit16 // case poll order
+    lockorder *uint16 // channel lock order
+    scase [1]scase //one per scase 
+}
+</code></pre><ol start="2">
+<li>注册case</li>
+</ol>
+<pre tabindex="0"><code>所有channel表达式都会被求值、所有被发送的表达式都会被求值。求值顺序：自上而下、从左到右.
+1. 注册写chan case
+2. 注册读chan case
+3. 注册default case
+</code></pre><ol start="3">
+<li>执行select</li>
+</ol>
+<pre tabindex="0"><code>1. 对case洗牌，排序 获取locking order
+2. 对lockorder里的元素进行枷锁
+3. 顺序遍历case，等待某个case 被解锁唤醒
+4. 将未唤醒的case 踢出队列
+5. 对lockorder里的元素进行解锁
+</code></pre><ol start="4">
+<li>释放select</li>
+</ol>
+<pre tabindex="0"><code>
+</code></pre><h2 id="问题">问题</h2>
+<ul>
+<li>select default 谨慎操作； default 阻塞导致select 不退出；</li>
+<li>当chan被触发时，select随机挑选执行；</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#问题">问题</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/windows/wsl/" class="button left"><span>Windows Subsystem for Linux</span></a>
+    
+    
+      <a href="/blog/jenkins/jenkins%E5%AE%89%E8%A3%85/" class="button right"><span>Jenkins部署配置</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

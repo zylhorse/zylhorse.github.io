@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>VMWare on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/vmware/</link>
+    <description>Recent content in VMWare on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 11 Jul 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/vmware/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>VMWare之Linux系统磁盘扩容</title>
+      <link>https://zylhorse.github.io/blog/vmware/vmware-ubuntu-%E6%89%A9%E5%AE%B9%E7%A3%81%E7%9B%98/</link>
+      <pubDate>Fri, 11 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/vmware/vmware-ubuntu-%E6%89%A9%E5%AE%B9%E7%A3%81%E7%9B%98/</guid>
+      <description>在VMWARE中扩容虚拟机磁盘大小 需要删除快照， 最好先克隆备份；
+查看扩容磁盘 调整完后，重新打开虚拟机，使用fdisk -l查看，可以看到我们刚刚扩容的空间已经可以看到，但没有分区，还不能使用。/dev/sda已经拥有了扩大的空间。
+分区 使用Linux的fdisk分区工具给磁盘/dev/sda分区，更可以根据提示输入m查看帮助信息，再输入n(表示增加分区)，回车后输入p(创建主分区)， 回车后partition number输入3(因为上面已经有两个分区sda1和sda2)，回车会提示输入分区的start值(通过fdisk -l 可以看出sda2的end值为3917)， 我们可以根据提示指定start值为3917，end值为默认即可(即当前最大值)，回车后输入W进行保存，分区划分完毕。
+修改分区ID 可以看到/dev/sda3的Id号为83，我们要将其改成8e(LVM卷文件系统的Id)，具体方法同上根上部中的磁盘分区大同小异，输入fdisk /dev/sda, 选择t(change a partition&#39;s system id 改变一个分区的系统ID)回车，然后选择分区3回车，然后输入L回车。然后输入8e回车，然后输入w，保存修改的分区信息。 最后输入fdisk -l ,查看ID是否修改成功。修改成功后必须重新启动linux系统才能进行后面的操作。
+格式化分区 系统重启后，格式化新的分区为ext4格式。
+初始化物理卷 格式化后，创建PV. 用pvdisplay查看当前的物理卷。然后用pvcreate指令用于将物理硬盘分区初始化为物理卷，以便被LVM使用。 要创建物理卷必须首先对硬盘进行分区，并且将硬盘分区的类型设置为8e后，才能使用pvcreat指令将分区初始化为物理卷。pvcreate /dev/sda3,创建完后， 我们可以再用pvdisplay查看到新创建的物理卷。
+扩展VG 扩展VG：当前需要查看扩充的lvm组名，可以通过vgdisplay查看，在此例中我们的组名为 VolGroup,并可以看到里面的空间只有20多G。 然后用vgextend指令用于动态的扩展卷组，它通过向卷组中添加物理卷来增加卷组的容量。vgextend VolGroup /dev/sda3,添加成功后， 我们可以用vgdisplay再次查看，容量已经添加进去。
+扩容root lvextend -L+269.95G /dev/VolGroup/lv_root /dev/sda3命令扩展空间到root下，扩容的空间要略小于VG的free空间，因此这里只输入了269.95G. 然后通过df -h查看，root空间还是没变，因为我们差最后最关键的一部。
+扩容文件系统 使用使用resize2fs命令，用于扩大或者缩小未挂载的ext2,ext3或者是ext4文件系统。具体命令为：resize2fs -p /dev/mapper/VolGroup-lv_root 290G 。 然后再用df -h查看，扩容成功。</description>
+    </item>
+    
+  </channel>
+</rss>

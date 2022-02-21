@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Extended Backus–Naur form - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Extended Backus–Naur form">
+<meta itemprop="description" content="扩展巴科斯 诺尔 范式"><meta itemprop="datePublished" content="2015-06-22T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2015-06-22T00:00:00+00:00" />
+<meta itemprop="wordCount" content="810">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Extended Backus–Naur form" />
+<meta property="og:description" content="扩展巴科斯 诺尔 范式" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/software-programming/ebnf/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2015-06-22T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-06-22T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Extended Backus–Naur form"/>
+<meta name="twitter:description" content="扩展巴科斯 诺尔 范式"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/software-programming/ebnf/">Extended Backus–Naur form</a></h2>
+    
+    
+      <p>扩展巴科斯 诺尔 范式</p>
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-06-22 00:00:00 &#43;0000 UTC">2015-06-22</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            &lt;no value&gt;分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <p>计算机科学中， EBNF是一组元语法，表达上下文无关的语法。EBNF是用于对正规语言的语法进行描述， 例如计算机编程语言的语法。它是BNF的扩充。</p>
+<h2 id="基本要素">基本要素</h2>
+<p>EBNF是一种表达正规语言语法的代码。一条EBNF由终结符号和非终结符产生规则组成，规则控制了终结符号如何组成合法的序列。例如：
+终端符号包含：字母数字字符，标点符号，空白字符。</p>
+<p>EBNF定义了把符号序列分配给非终端的产生规则：</p>
+<pre tabindex="0"><code>digit excluding zero = &quot;1&quot; | &quot;2&quot; | &quot;3&quot; | &quot;4&quot; | &quot;5&quot; | &quot;6&quot; | &quot;7&quot; | &quot;8&quot; | &quot;9&quot; ;
+digit                = &quot;0&quot; | digit excluding zero ;
+</code></pre><blockquote>
+<p>这条产生规则定义了在表达式左边的非终结符<code>digist</code>。竖线<code>|</code>表示一种替代，终结符使用双引号<code>&quot;&quot;</code>包起来，后跟分号<code>;</code>作为终结字符。
+因此<code>digit</code> 可以是<code>0</code>或者<code>digit excluding zero</code>(1或2或3，等等，直到9)</p>
+</blockquote>
+<p>产生规则可以包含一系列的终结符和非终结符，每个都用逗号(<code>,</code>)隔开:</p>
+<pre tabindex="0"><code>twelve                          = &quot;1&quot;, &quot;2&quot; ;
+two hundred one                 = &quot;2&quot;, &quot;0&quot;, &quot;1&quot; ;
+three hundred twelve            = &quot;3&quot;, twelve ;
+twelve thousand two hundred one = twelve, two hundred one ;
+</code></pre><p>可以省略或重复的表达式，用花括号<code>{...}</code>表示：</p>
+<pre tabindex="0"><code>natural number = digit excluding zero, { digit } ;
+</code></pre><blockquote>
+<p>本例中，<code>natural number</code>表示<code>1,2,...,10,...,10000, ...</code>, 
+为了表示<code>natural number</code>，花括号内设置的所有内容都可以被任意复制或者不复制。</p>
+</blockquote>
+<p>可选的表达式，用方括号<code>[...]</code>表示，方括号内设置的内容可能出现一次或者根本不出现:</p>
+<pre tabindex="0"><code>integer = &quot;0&quot; | [ &quot;-&quot; ], natural number ;
+</code></pre><blockquote>
+<p><code>integer</code>表示0或者前面有一个可选减号(<code>-</code>)的<code>natural number</code></p>
+</blockquote>
+<p>除了这些功能，ENBF语法还可以描述重复(指定次数),排除产品某些部分以及在EBNF的语法中插入注释。</p>
+<h2 id="符号表">符号表</h2>
+<p>以下是R.S.Scowen在ISO/IEC 14977标准的第7页,表1中提出：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">符号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">definition</td>
+<td style="text-align:left">=</td>
+</tr>
+<tr>
+<td style="text-align:left">concatenation</td>
+<td style="text-align:left">,</td>
+</tr>
+<tr>
+<td style="text-align:left">termination</td>
+<td style="text-align:left">;</td>
+</tr>
+<tr>
+<td style="text-align:left">alternation</td>
+<td style="text-align:left">\</td>
+</tr>
+<tr>
+<td style="text-align:left">optional</td>
+<td style="text-align:left">[ &hellip; ]</td>
+</tr>
+<tr>
+<td style="text-align:left">repetition</td>
+<td style="text-align:left">{ &hellip; }</td>
+</tr>
+<tr>
+<td style="text-align:left">grouping</td>
+<td style="text-align:left">( &hellip; )</td>
+</tr>
+<tr>
+<td style="text-align:left">terminal string</td>
+<td style="text-align:left">&quot; &hellip; &quot;</td>
+</tr>
+<tr>
+<td style="text-align:left">terminal string</td>
+<td style="text-align:left">' &hellip; '</td>
+</tr>
+<tr>
+<td style="text-align:left">comment</td>
+<td style="text-align:left">(* &hellip; *)</td>
+</tr>
+<tr>
+<td style="text-align:left">special sequence</td>
+<td style="text-align:left">? &hellip; ?</td>
+</tr>
+<tr>
+<td style="text-align:left">exception</td>
+<td style="text-align:left">-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="示例">示例</h2>
+<p>甚至可以使用EBNF描述其自身。考虑以下语法略图：</p>
+<pre tabindex="0"><code>letter = &quot;A&quot; | &quot;B&quot; | &quot;C&quot; | &quot;D&quot; | &quot;E&quot; | &quot;F&quot; | &quot;G&quot;
+       | &quot;H&quot; | &quot;I&quot; | &quot;J&quot; | &quot;K&quot; | &quot;L&quot; | &quot;M&quot; | &quot;N&quot;
+       | &quot;O&quot; | &quot;P&quot; | &quot;Q&quot; | &quot;R&quot; | &quot;S&quot; | &quot;T&quot; | &quot;U&quot;
+       | &quot;V&quot; | &quot;W&quot; | &quot;X&quot; | &quot;Y&quot; | &quot;Z&quot; | &quot;a&quot; | &quot;b&quot;
+       | &quot;c&quot; | &quot;d&quot; | &quot;e&quot; | &quot;f&quot; | &quot;g&quot; | &quot;h&quot; | &quot;i&quot;
+       | &quot;j&quot; | &quot;k&quot; | &quot;l&quot; | &quot;m&quot; | &quot;n&quot; | &quot;o&quot; | &quot;p&quot;
+       | &quot;q&quot; | &quot;r&quot; | &quot;s&quot; | &quot;t&quot; | &quot;u&quot; | &quot;v&quot; | &quot;w&quot;
+       | &quot;x&quot; | &quot;y&quot; | &quot;z&quot; ;
+digit = &quot;0&quot; | &quot;1&quot; | &quot;2&quot; | &quot;3&quot; | &quot;4&quot; | &quot;5&quot; | &quot;6&quot; | &quot;7&quot; | &quot;8&quot; | &quot;9&quot; ;
+symbol = &quot;[&quot; | &quot;]&quot; | &quot;{&quot; | &quot;}&quot; | &quot;(&quot; | &quot;)&quot; | &quot;&lt;&quot; | &quot;&gt;&quot;
+       | &quot;'&quot; | '&quot;' | &quot;=&quot; | &quot;|&quot; | &quot;.&quot; | &quot;,&quot; | &quot;;&quot; ;
+character = letter | digit | symbol | &quot;_&quot; ;
+ 
+identifier = letter , { letter | digit | &quot;_&quot; } ;
+terminal = &quot;'&quot; , character , { character } , &quot;'&quot; 
+         | '&quot;' , character , { character } , '&quot;' ;
+ 
+lhs = identifier ;
+rhs = identifier
+     | terminal
+     | &quot;[&quot; , rhs , &quot;]&quot;
+     | &quot;{&quot; , rhs , &quot;}&quot;
+     | &quot;(&quot; , rhs , &quot;)&quot;
+     | rhs , &quot;|&quot; , rhs
+     | rhs , &quot;,&quot; , rhs ;
+
+rule = lhs , &quot;=&quot; , rhs , &quot;;&quot; ;
+grammar = { rule } ;
+</code></pre><blockquote>
+<ol>
+<li><code>letter</code> = 是26个字母的任意一个;</li>
+<li><code>digit</code> = 0-9数字中的任意一个;</li>
+<li><code>symbol</code> = [或]或{或}或(或)或&lt;或&gt;或&rsquo;或&quot;或=或|或.或,或; ;</li>
+<li><code>character</code> = <code>letter</code>或<code>digit</code>或<code>symbol</code>或<code>_</code>;</li>
+<li><code>identifier</code> = <code>letter</code> + 任意重复(<code>letter</code>或<code>digit</code>或<code>_</code>);</li>
+<li><code>terminal</code> = &lsquo;<code>character</code>+ 任意重复(<code>character</code>)&rsquo; 或者&quot;<code>character</code>+ 任意重复(<code>character</code>)&quot;;</li>
+<li><code>lhs</code> = <code>identifier</code>;</li>
+<li><code>rhs</code> = <code>identifier</code> 或 <code>terminal</code> 或 <code>[rhs]</code> 或 <code>{rhs}</code> 或 <code>(rhs)</code> 或 <code>rhs|rhs</code> 或 <code>rhs,rhs</code>;</li>
+<li><code>rule</code> = <code>lhs=rhs;</code>;</li>
+<li><code>grammar</code> = <code>{rule}</code></li>
+</ol>
+</blockquote>
+<p>一个只允许赋值的类Pascal的编程语言，可以用EBNF定义，如下：</p>
+<pre tabindex="0"><code>(* a simple program syntax in EBNF − Wikipedia *)
+ program = 'PROGRAM', white_space, identifier, white_space, 
+            'BEGIN', white_space, 
+            { assignment, &quot;;&quot;, white_space }, 
+            'END.' ;
+ identifier = alphabetic_character, { alphabetic_character | digit } ;
+ number = [ &quot;-&quot; ], digit, { digit } ;
+ string = '&quot;' , { all_characters - '&quot;' }, '&quot;' ;
+ assignment = identifier , &quot;:=&quot; , ( number | identifier | string ) ;
+ alphabetic_character = &quot;A&quot; | &quot;B&quot; | &quot;C&quot; | &quot;D&quot; | &quot;E&quot; | &quot;F&quot; | &quot;G&quot;
+                      | &quot;H&quot; | &quot;I&quot; | &quot;J&quot; | &quot;K&quot; | &quot;L&quot; | &quot;M&quot; | &quot;N&quot;
+                      | &quot;O&quot; | &quot;P&quot; | &quot;Q&quot; | &quot;R&quot; | &quot;S&quot; | &quot;T&quot; | &quot;U&quot;
+                      | &quot;V&quot; | &quot;W&quot; | &quot;X&quot; | &quot;Y&quot; | &quot;Z&quot; ;
+ digit = &quot;0&quot; | &quot;1&quot; | &quot;2&quot; | &quot;3&quot; | &quot;4&quot; | &quot;5&quot; | &quot;6&quot; | &quot;7&quot; | &quot;8&quot; | &quot;9&quot; ;
+ white_space = ? white_space characters ? ;
+ all_characters = ? all visible characters ? ;
+</code></pre><p>那么语法正确的程序代码如下：</p>
+<pre tabindex="0"><code>PROGRAM DEMO1
+ BEGIN
+   A:=3;
+   B:=45;
+   H:=-100023;
+   C:=A;
+   D123:=B34A;
+   BABOON:=GIRAFFE;
+   TEXT:=&quot;Hello world!&quot;;
+ END.
+</code></pre><p>这种语言可以很简单的扩展到控制流，算术表达式和输入输出指令。 这样就设计出来一个小型的、可用的编程语言。</p>
+<h2 id="优势">优势</h2>
+<p>EBNF中的任何语法都可以用BNF表达，尽管后者的表达方法会更长。E.g., <code>options</code>和<code>repetitions</code>不能在BNF中直接表达。 <br>
+BNF使用这些字符(&lt;,&gt;,|,::=),但是在终结字符周围不包含引号。在EBNF中，终结字符被引号括起来(&quot;&hellip;&ldquo;或'&hellip;')。<br>
+BNF语法只能在一行中表示一条规则，而在EBNF中，分号字符“;”标志着规则的结束。<br>
+此外，EBNF还包括增强机制、定义重复次数、排除替代方案、注释等</p>
+<h2 id="约定">约定</h2>
+<ol>
+<li>使用以下规则：</li>
+</ol>
+<ul>
+<li>EBNF的每个元标识符都被写成一个或多个用连接符连接在一起的单词。</li>
+<li>以-symbol结尾的元标识符是EBNF的终端符号的名称。</li>
+</ul>
+<ol start="2">
+<li>表示EBNF的每个操作符及其隐含优先级的字符是：</li>
+</ol>
+<pre tabindex="0"><code>* repetition-symbol
+ - except-symbol
+ , concatenate-symbol
+ | definition-separator-symbol
+ = defining-symbol
+ ; terminator-symbol
+ . terminator-symbol
+</code></pre><ol start="3">
+<li>正常的优先级被以下括号对覆盖:</li>
+</ol>
+<pre tabindex="0"><code>(* start-comment-symbol          end-comment-symbol *)
+ '  first-quote-symbol            first-quote-symbol  '
+ (  start-group-symbol              end-group-symbol  )
+ [  start-option-symbol            end-option-symbol  ]
+ {  start-repeat-symbol            end-repeat-symbol  }
+ ?  special-sequence-symbol  special-sequence-symbol  ?
+ &quot;  second-quote-symbol          second-quote-symbol  &quot;
+</code></pre><p>作为示例，下面的语法规则演示了表达重复的工具:</p>
+<pre tabindex="0"><code>aa = &quot;A&quot;;
+bb = 3 * aa, &quot;B&quot;;
+cc = 3 * [aa], &quot;C&quot;;
+dd = {aa}, &quot;D&quot;;
+ee = aa, {aa}, &quot;E&quot;;
+ff = 3 * aa, 3 * [aa], &quot;F&quot;;
+gg = {3 * aa}, &quot;G&quot;;
+</code></pre><p>这些规则定义的终结字符如下：</p>
+<pre tabindex="0"><code>aa: A
+bb: AAAB
+cc: C AC AAC AAAC
+dd: D AD AAD AAAD AAAAD etc.
+ee: AE AAE AAAE AAAAE AAAAAE etc.
+ff: AAAF AAAAF AAAAAF AAAAAAF
+gg: G AAAG AAAAAAG etc.
+</code></pre><h2 id="扩展">扩展</h2>
+<p>根据ISO 14977标准，EBNF是可扩展的， 并且提到了两个设施。<br>
+<code>special sequence</code>:</p>
+<ul>
+<li>它是被问号包含的任意文本</li>
+<li>对<code>special sequence</code> 中的文本的解释超出了EBNF标准的范围</li>
+<li>例如, 空格字符可以用以下规则定义：
+<code>space = ? ASCII character 32 ?;</code></li>
+</ul>
+<p><code>grouping</code>:</p>
+<ul>
+<li><code>()</code> 不能放到标识符的旁边(它们必须相连接)
+<ul>
+<li>有效格式: <code>something = foo, ( bar );</code></li>
+<li>无效格式: <code>something = foo ( bar );</code></li>
+</ul>
+</li>
+<li>因此EBNF扩展可以使用该符号。例如，使用该符号定义函数：<br>
+<code>function application = list( symbol, { expression } );</code></li>
+</ul>
+
+      
+    <h2>参考</h2>
+    <ul>
+        
+            
+                <li><a target="_blank" href="https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form">Extended Backus–Naur form</a></li>
+            
+        
+    </ul>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/software-programming/">Software Programming</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#基本要素">基本要素</a></li>
+    <li><a href="#符号表">符号表</a></li>
+    <li><a href="#示例">示例</a></li>
+    <li><a href="#优势">优势</a></li>
+    <li><a href="#约定">约定</a></li>
+    <li><a href="#扩展">扩展</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/security/ssl-tls/" class="button left"><span>详解安全传输协议SSL TLS</span></a>
+    
+    
+      <a href="/blog/security/%E7%94%9F%E6%88%90%E8%AF%81%E4%B9%A6/" class="button right"><span>生成自签名SSL证书</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Software&#32;Programming
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

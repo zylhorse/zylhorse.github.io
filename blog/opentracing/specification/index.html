@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>OpenTracing-语义规范 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="OpenTracing-语义规范">
+<meta itemprop="description" content="OpenTracing Data Model 在OpenTracing中，Trace是由Span隐式定义的。 Trace可以看作是Spans的有向无环图(DAG)，Spans之间的边界称之为References.
+例如以下的Trace由8个Spans组成：
+Causal relationships between Spans in a single Trace[Span A] ←←←(the root span)|&#43;------&#43;------&#43;| |[Span B] [Span C] ←←←(Span C is a `ChildOf` Span A)| |[Span D] &#43;---&#43;-------&#43;| |[Span E] [Span F] &gt;&gt;&gt; [Span G] &gt;&gt;&gt; [Span H]↑↑↑(Span G `FollowsFrom` Span F)使用时间轴对Trace进行可视化表示看起来更直观些:
+Temporal relationships between Spans in a single Trace––|–––––––|–––––––|–––––––|–––––––|–––––––|–––––––|–––––––|–&gt; time[Span A···················································][Span B··············································][Span D··········································][Span C········································][Span E·······] [Span F··] [Span G··] [Span H··]Span Reference Span可以被其他Span引用， 因此多个Span存在因果关系。 OpenTracing定义了以下两种关系:"><meta itemprop="datePublished" content="2021-02-24T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-02-24T00:00:00+00:00" />
+<meta itemprop="wordCount" content="190">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="OpenTracing-语义规范" />
+<meta property="og:description" content="OpenTracing Data Model 在OpenTracing中，Trace是由Span隐式定义的。 Trace可以看作是Spans的有向无环图(DAG)，Spans之间的边界称之为References.
+例如以下的Trace由8个Spans组成：
+Causal relationships between Spans in a single Trace[Span A] ←←←(the root span)|&#43;------&#43;------&#43;| |[Span B] [Span C] ←←←(Span C is a `ChildOf` Span A)| |[Span D] &#43;---&#43;-------&#43;| |[Span E] [Span F] &gt;&gt;&gt; [Span G] &gt;&gt;&gt; [Span H]↑↑↑(Span G `FollowsFrom` Span F)使用时间轴对Trace进行可视化表示看起来更直观些:
+Temporal relationships between Spans in a single Trace––|–––––––|–––––––|–––––––|–––––––|–––––––|–––––––|–––––––|–&gt; time[Span A···················································][Span B··············································][Span D··········································][Span C········································][Span E·······] [Span F··] [Span G··] [Span H··]Span Reference Span可以被其他Span引用， 因此多个Span存在因果关系。 OpenTracing定义了以下两种关系:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/opentracing/specification/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-02-24T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-02-24T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="OpenTracing-语义规范"/>
+<meta name="twitter:description" content="OpenTracing Data Model 在OpenTracing中，Trace是由Span隐式定义的。 Trace可以看作是Spans的有向无环图(DAG)，Spans之间的边界称之为References.
+例如以下的Trace由8个Spans组成：
+Causal relationships between Spans in a single Trace[Span A] ←←←(the root span)|&#43;------&#43;------&#43;| |[Span B] [Span C] ←←←(Span C is a `ChildOf` Span A)| |[Span D] &#43;---&#43;-------&#43;| |[Span E] [Span F] &gt;&gt;&gt; [Span G] &gt;&gt;&gt; [Span H]↑↑↑(Span G `FollowsFrom` Span F)使用时间轴对Trace进行可视化表示看起来更直观些:
+Temporal relationships between Spans in a single Trace––|–––––––|–––––––|–––––––|–––––––|–––––––|–––––––|–––––––|–&gt; time[Span A···················································][Span B··············································][Span D··········································][Span C········································][Span E·······] [Span F··] [Span G··] [Span H··]Span Reference Span可以被其他Span引用， 因此多个Span存在因果关系。 OpenTracing定义了以下两种关系:"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/opentracing/specification/">OpenTracing-语义规范</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2021-02-24 00:00:00 &#43;0000 UTC">2021-02-24</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            &lt;no value&gt;分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="opentracing-data-model">OpenTracing Data Model</h2>
+<p>在OpenTracing中，Trace是由Span隐式定义的。 Trace可以看作是Spans的有向无环图(DAG)，Spans之间的边界称之为References.<br>
+例如以下的Trace由8个Spans组成：</p>
+<pre tabindex="0"><code>Causal relationships between Spans in a single Trace
+
+
+        [Span A]  ←←←(the root span)
+            |
+     +------+------+
+     |             |
+ [Span B]      [Span C] ←←←(Span C is a `ChildOf` Span A)
+     |             |
+ [Span D]      +---+-------+
+               |           |
+           [Span E]    [Span F] &gt;&gt;&gt; [Span G] &gt;&gt;&gt; [Span H]
+                                       ↑
+                                       ↑
+                                       ↑
+                         (Span G `FollowsFrom` Span F)
+</code></pre><p>使用时间轴对Trace进行可视化表示看起来更直观些:</p>
+<pre tabindex="0"><code>Temporal relationships between Spans in a single Trace
+
+
+––|–––––––|–––––––|–––––––|–––––––|–––––––|–––––––|–––––––|–&gt; time
+
+ [Span A···················································]
+   [Span B··············································]
+      [Span D··········································]
+    [Span C········································]
+         [Span E·······]        [Span F··] [Span G··] [Span H··]
+</code></pre><h2 id="span-reference">Span Reference</h2>
+<p>Span可以被其他Span引用， 因此多个Span存在因果关系。 OpenTracing定义了以下两种关系:</p>
+<ul>
+<li>
+<p>ChildOf<br>
+新创建的Span可以指定其Parent Span， 并且Parent Span依赖于新Span， 则新Span和Parent Span是ChildOf关系。<br>
+以下时序图简单表述Spans ChildOf关系：</p>
+<pre tabindex="0"><code> [-Parent Span---------]
+     [-Child Span----]
+
+ [-Parent Span--------------]
+     [-Child Span A----]
+      [-Child Span B----]
+    [-Child Span C----]
+      [-Child Span D---------------]
+      [-Child Span E----]
+</code></pre></li>
+<li>
+<p>FollowFrom<br>
+用以表示新Span独立于Parent Span， 例如：在异步进程中<br>
+以下时序图可以简单的表述Spans FollowFrom关系:</p>
+<pre tabindex="0"><code>[-Parent Span-]  [-Child Span-]
+
+
+[-Parent Span--]
+ [-Child Span-]
+
+
+[-Parent Span-]
+          [-Child Span-]
+</code></pre></li>
+</ul>
+<h2 id="the-opentracing-api">The OpenTracing API</h2>
+<h3 id="tracer-interface">Tracer interface</h3>
+<p>创建Spans并且实现注入和提取跨进程传递的元素据。有以下功能:</p>
+<ul>
+<li>创建新的Span</li>
+<li>注入SpanContext到进程间数据的载体中</li>
+<li>从进程间数据的载体中提取SpanContext</li>
+</ul>
+<p>Injection/Extration 编码格式
+OpenTracing规定SpanContext在注入载体和从载体提取时，需要确定其编码格式。有以下几种:</p>
+<ol>
+<li>Text Map: 任意的string-to-string map结构</li>
+<li>HTTP Headers: 适合在HTTP Headers中使用的string-to-string map结构</li>
+<li>Binary: SpanContext的二进制编码</li>
+</ol>
+<h4 id="一个端到端的injector和extractor示例">一个端到端的injector和extractor示例</h4>
+<p>为了让描述更具体，考虑如下的流程：</p>
+<ol>
+<li>一个客户端进程有一个SpanContext实例，并准备进行通过自制的HTTP协议，进行一次RPC调用</li>
+<li>客户端进程调用Tracer.Inject(&hellip;)，传入SpanContext实例，Format, 载体实例，三个参数</li>
+<li>根据Format对SpanContext进行编码，并将数据注入到载体中（如：添加到HTTP头中）</li>
+<li>进行HTTP调用，将数据进行跨进程传输</li>
+<li>服务端进程调用Tracer.Extract(&hellip;)，传入需要的操作名（operation name），Format，以及载体数据</li>
+<li>不考虑数据丢失，和其他错误，服务端现在有了和客户端追踪上下文中，一样的SpanContext。</li>
+</ol>
+<h3 id="span-interface">Span Interface</h3>
+<p>Span 接口功能:</p>
+<ul>
+<li>Get SpanContext</li>
+<li>Finish Span</li>
+<li>Set Tag</li>
+<li>Add Log</li>
+<li>Set Baggage Item</li>
+<li>Get Baggage Item</li>
+</ul>
+
+      
+    <h2>参考</h2>
+    <ul>
+        
+            
+                <li><a target="_blank" href="https://opentracing.io/specification/">OpenTracing</a></li>
+            
+        
+    </ul>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/opentracing/">Opentracing</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#opentracing-data-model">OpenTracing Data Model</a></li>
+    <li><a href="#span-reference">Span Reference</a></li>
+    <li><a href="#the-opentracing-api">The OpenTracing API</a>
+      <ul>
+        <li><a href="#tracer-interface">Tracer interface</a></li>
+        <li><a href="#span-interface">Span Interface</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/opentracing/introduction/" class="button left"><span>OpenTracing-简介</span></a>
+    
+    
+      <a href="/blog/grpc/protocol-http2/" class="button right"><span>gRPC over HTTP2</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Opentracing
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

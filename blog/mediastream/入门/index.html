@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>流媒体学习-流媒体名词解释 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="流媒体学习-流媒体名词解释">
+<meta itemprop="description" content="了解流媒体技术常用名称"><meta itemprop="datePublished" content="2018-04-10T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2018-04-10T00:00:00+00:00" />
+<meta itemprop="wordCount" content="180">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="流媒体学习-流媒体名词解释" />
+<meta property="og:description" content="了解流媒体技术常用名称" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/mediastream/%E5%85%A5%E9%97%A8/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2018-04-10T00:00:00+00:00" />
+<meta property="article:modified_time" content="2018-04-10T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="流媒体学习-流媒体名词解释"/>
+<meta name="twitter:description" content="了解流媒体技术常用名称"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/mediastream/%E5%85%A5%E9%97%A8/">流媒体学习-流媒体名词解释</a></h2>
+    
+    
+      <p>了解流媒体技术常用名称</p>
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2018-04-10 00:00:00 &#43;0000 UTC">2018-04-10</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h1 id="入门">入门</h1>
+<h2 id="封装格式">封装格式</h2>
+<p>将音频、视频打包成一个文件的规范，主要是把视频码流和音频码流按一定格式存储在一个文件中。</p>
+<blockquote>
+<p>mp4,flv,mkv,avi,rmvb,mkv<br>
+不同封装格式差距不大，支持的音视频编码标准也不一样。如：mkv封装格式支持的音视频编码标准十分广泛；<br>
+rmvb封装格式制车的音视频编码标准比较少。</p>
+</blockquote>
+<p>查看音视频文件信息工具： mediainfo（https://github.com/MediaArea/MediaInfo）。</p>
+<h3 id="常见封装格式">常见封装格式</h3>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>推出机构</th>
+<th>流媒体</th>
+<th>支持的视频编码</th>
+<th>支持的音频编码</th>
+<th>应用领域</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AVI</td>
+<td>Microsoft Inc.</td>
+<td>不支持</td>
+<td>几乎所有格式</td>
+<td>几乎所有格式</td>
+<td>BT下载影视</td>
+</tr>
+<tr>
+<td>MP4</td>
+<td>MPEG</td>
+<td>支持</td>
+<td>MPEG-2,MPEG-4,H.264,H.263等</td>
+<td>AAC,MPEG-1 Layers I,II,III,AC-3等</td>
+<td>互联网视频网站</td>
+</tr>
+<tr>
+<td>TS</td>
+<td>MPEG</td>
+<td>支持</td>
+<td>MPEG-1,MPEG-2,MPEG-4,H.264</td>
+<td>AAC,MPEG-1 Layers I,II,III</td>
+<td>IPTV,数字电视</td>
+</tr>
+<tr>
+<td>FLV</td>
+<td>Adobe Inc.</td>
+<td>支持</td>
+<td>Sorenson,VP6,H.264</td>
+<td>MP3,ADPCM,Linear PCM,AAC等</td>
+<td>互联网视频网站</td>
+</tr>
+<tr>
+<td>MKV</td>
+<td>CoreCodec Inc.</td>
+<td>支持</td>
+<td>几乎所有格式</td>
+<td>几乎所有格式</td>
+<td>互联网视频网站</td>
+</tr>
+<tr>
+<td>RMVB</td>
+<td>Real Networks Inc.</td>
+<td>支持</td>
+<td>RealVideo 8,9,10</td>
+<td>AAC,Cook Codec, RealAudio Lossless</td>
+<td>BT下载影视</td>
+</tr>
+</tbody>
+</table>
+<h2 id="视频编码">视频编码</h2>
+<p>将视频像素数据（RGB,YUV）按算法压缩成视频码流，降低视频的数据量。</p>
+<blockquote>
+<p>视频数据不经过压缩会非常巨大，一部电影可能就要上百G。视频码流占了音视频数据的绝大部分。</p>
+</blockquote>
+<h3 id="常见视频编码">常见视频编码</h3>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>推出机构</th>
+<th>时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H.265</td>
+<td>MPEG/ITU-T</td>
+<td>2013</td>
+</tr>
+<tr>
+<td>H.264</td>
+<td>MPEG/ITU-T</td>
+<td>2003</td>
+</tr>
+<tr>
+<td>MPEG4</td>
+<td>MPEG</td>
+<td>2001</td>
+</tr>
+<tr>
+<td>MPEG2</td>
+<td>MPEG</td>
+<td>1994</td>
+</tr>
+<tr>
+<td>VP9</td>
+<td>Google</td>
+<td>2013</td>
+</tr>
+<tr>
+<td>VP8</td>
+<td>Google</td>
+<td>2008</td>
+</tr>
+<tr>
+<td>VC-1</td>
+<td>Microsoft Inc.</td>
+<td>2006</td>
+</tr>
+</tbody>
+</table>
+<h4 id="编码标准">编码标准</h4>
+<p>H.264 等仅仅是编码标准，而不是具体编码器，只是给编码器的实现提供具体参考。</p>
+<blockquote>
+<p>国产视频编码标准：AVS。</p>
+</blockquote>
+<h2 id="音频编码">音频编码</h2>
+<p>将音频采样数据（PCM）压缩成音频码流，降低音频数据量。</p>
+<blockquote>
+<p>一般情况音频的数据量要远小于视频的数据量。</p>
+</blockquote>
+<h3 id="常见音频编码">常见音频编码</h3>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>推出机构</th>
+<th>时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AAC</td>
+<td>MPEG</td>
+<td>1997</td>
+</tr>
+<tr>
+<td>AC-3</td>
+<td>Dolby Inc.</td>
+<td>1992</td>
+</tr>
+<tr>
+<td>MP3</td>
+<td>Mpeg</td>
+<td>1993</td>
+</tr>
+<tr>
+<td>WMA</td>
+<td>Microsoft Inc.</td>
+<td>1999</td>
+</tr>
+</tbody>
+</table>
+<h2 id="流媒体协议">流媒体协议</h2>
+<p>流媒体协议是服务器和客户端在音视频数据传输过程中应遵循的规定。</p>
+<h3 id="常见流媒体协议">常见流媒体协议</h3>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>推出机构</th>
+<th>传输成协议</th>
+<th>客户端</th>
+<th>使用领域</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RTSP+RTP</td>
+<td>IETF</td>
+<td>TCP+UDP</td>
+<td>VLC,WMP</td>
+<td>IPTV</td>
+</tr>
+<tr>
+<td>RTMP</td>
+<td>Adobe Inc.</td>
+<td>Tcp</td>
+<td>Flash</td>
+<td>互联网直播</td>
+</tr>
+<tr>
+<td>RTMFP</td>
+<td>Adobe Inc.</td>
+<td>UDP</td>
+<td>Flash</td>
+<td>互联网直播</td>
+</tr>
+<tr>
+<td>MMS</td>
+<td>Microsoft Inc.</td>
+<td>TCP/UDP</td>
+<td>WMP</td>
+<td>互联网直播,点播</td>
+</tr>
+<tr>
+<td>HTTP</td>
+<td>WWW+IETF</td>
+<td>TCP</td>
+<td>Flash</td>
+<td>互联网点播</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>RTSP+RTP 采用UDP传输音视频，支持组播，效率高，用于IPTV领域。但是网络不好情况容易丢包。</li>
+<li>RTMP/HTTP/MMS 采用TCP协议，不会发生丢包，可以保证视频质量，多用于互联网音视频服务中。但是传输效率相对较低。</li>
+<li>RTMFP是一种比较新的流媒体协议，特点是支持P2P。</li>
+</ol>
+<blockquote>
+<p>流媒体协议在传输音视频数据的同时，也传输信令数据以及网络状态。信令数据包包含对播放的控制（播放、暂停、停止）。</p>
+</blockquote>
+<h2 id="现有网络音视频平台对比">现有网络音视频平台对比</h2>
+<p>现有网络视频服务主要有：点播和直播。<br>
+点播：根据用户需要播放响应视频节目；<br>
+直播：互联网音视频平台将内容直接实时发送给用户。</p>
+<h3 id="直播平台参数">直播平台参数</h3>
+<p>直播平台普遍采用RTMP作为流媒体协议，FLV作为封装格式，H.264作为视频编码格式，AAC作为音频编码格式。</p>
+<blockquote>
+<p>RTMP 协议被Flash支持，由此可以实现流媒体直播平台的“无插件播放”。<br>
+FLV 是RTMP的封装格式。</p>
+</blockquote>
+<h3 id="点播平台参数">点播平台参数</h3>
+<p>点播平台普遍采用HTTP作为流媒体协议，H.264作为视频编码格式，AAC作为音频编码格式。</p>
+<blockquote>
+<p>HTTP点播，不会出现丢包现象而且HTTP被大多数web服务器支持。</p>
+</blockquote>
+<h2 id="视频播放器原理">视频播放器原理</h2>
+<p>视频播放器播放一个互联网上的视频文件，需要经过以下步骤：</p>
+<ol>
+<li>解协议:将流媒体协议的数据，解析为标准的封装格式数据。解析过程会去除信令数据只保留音视频数据。</li>
+<li>解封装：将封装格式的数据分离成音频流和视频流压缩编码数据。</li>
+<li>解码音视频：将音视频压缩编码数据解码成非压缩的音视频原始数据。</li>
+<li>音视频同步：根据解封装模块获取的参数信息，同步解码出来的音视频数据，并将音视频数据传输到显卡和声卡播放。</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/mediastream/">MediaStream</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#封装格式">封装格式</a>
+      <ul>
+        <li><a href="#常见封装格式">常见封装格式</a></li>
+      </ul>
+    </li>
+    <li><a href="#视频编码">视频编码</a>
+      <ul>
+        <li><a href="#常见视频编码">常见视频编码</a></li>
+      </ul>
+    </li>
+    <li><a href="#音频编码">音频编码</a>
+      <ul>
+        <li><a href="#常见音频编码">常见音频编码</a></li>
+      </ul>
+    </li>
+    <li><a href="#流媒体协议">流媒体协议</a>
+      <ul>
+        <li><a href="#常见流媒体协议">常见流媒体协议</a></li>
+      </ul>
+    </li>
+    <li><a href="#现有网络音视频平台对比">现有网络音视频平台对比</a>
+      <ul>
+        <li><a href="#直播平台参数">直播平台参数</a></li>
+        <li><a href="#点播平台参数">点播平台参数</a></li>
+      </ul>
+    </li>
+    <li><a href="#视频播放器原理">视频播放器原理</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/mediastream/%E9%9F%B3%E9%A2%91%E9%87%87%E6%A0%B7%E6%95%B0%E6%8D%AE/" class="button left"><span>流媒体学习-音频采样格式</span></a>
+    
+    
+      <a href="/blog/data-structure/ringbuffer/" class="button right"><span>数据结构-RingBuffer</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=MediaStream
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

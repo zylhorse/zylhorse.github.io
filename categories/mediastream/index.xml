@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MediaStream on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/mediastream/</link>
+    <description>Recent content in MediaStream on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 12 Apr 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/mediastream/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>流媒体学习-Flv视频封装格式</title>
+      <link>https://zylhorse.github.io/blog/mediastream/flv%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Thu, 12 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/mediastream/flv%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90/</guid>
+      <description>简介 FLV(Flash Video) 是Adobe公司开发的一种流媒体格式，由其封装的视频文件体积小、封装简单。FLV可以使用Flash Player播放。FLV封装的视频文件后缀通常为.flv。
+ FLV包含两部分，文件头(file header)和文件体(file body)。文件体由一系列Tag组成。
+ FLV Header    字段名 字段大小 字段描述     Signature 3Byte 文件标识(FLV)   Version 1Byte 版本号（0x01)   Flags 1Byte 前5位保留为0，第6位表示是否有音频Tag，第7位保留为0，第8位表示是否有视频Tag。   HeaderSize 4Byte 表示从file header开始到file body开始的字节数，版本1总为9。    FLV Body  间隔包含Previous Tag Size字段，标识前一个Tag大小。
+    Previous Tag Size Tag1 &amp;hellip; Previous Tag Size Tagn    Tag    Tag Header Tag Data    Tag Header    字段 字段大小 字段描述     Type 1Byte 标识Tag类型，音频(0x08)、视频(0x09)、script data(0x12),其他值保留   Datasize 3Byte 标识Tag Data数据大小   Timestamp 3Byte 标识Tag时间戳   Timestamp_ex 1Byte 时间戳扩展字节，24字节数值不够时，该字节最高位将时间戳扩展为32位数。   StreamID 3Byte stream id 总是0    Tag Data 不同类型Tag的data部分结构不同；</description>
+    </item>
+    
+    <item>
+      <title>流媒体学习-H264视频编解码</title>
+      <link>https://zylhorse.github.io/blog/mediastream/h264%E8%A7%86%E9%A2%91%E7%A0%81%E6%B5%81%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Thu, 12 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/mediastream/h264%E8%A7%86%E9%A2%91%E7%A0%81%E6%B5%81%E8%A7%A3%E6%9E%90/</guid>
+      <description>H.264 H.264原始码流（“裸流”）的基本单元是NALU。
+ NALU之间通过startcode（起始码）分隔。
+起始码分为0x000001(3Byte)或0x00000001(4Byte)。
+H.264码流的解析步骤就是首先从码流中搜索起始码，分离出NALU，然后在分析NALU的各个字段。
+ </description>
+    </item>
+    
+    <item>
+      <title>流媒体学习-音频码流格式</title>
+      <link>https://zylhorse.github.io/blog/mediastream/aac%E9%9F%B3%E9%A2%91%E7%A0%81%E6%B5%81%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Thu, 12 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/mediastream/aac%E9%9F%B3%E9%A2%91%E7%A0%81%E6%B5%81%E8%A7%A3%E6%9E%90/</guid>
+      <description>AAC AAC原始码流（“裸流”）的基本单元是ADTS frame。
+ 其中每个ADTS frame之间通过syncword（同步字）分隔。
+同步字为0xfff。
+AAC码流解析的步骤就是从码流中搜索syncword,分离出ADTS frame，然后再解析ADTS frame 字段。
+ </description>
+    </item>
+    
+    <item>
+      <title>流媒体学习-开源网站</title>
+      <link>https://zylhorse.github.io/blog/mediastream/%E5%BC%80%E6%BA%90%E7%BD%91%E7%AB%99/</link>
+      <pubDate>Wed, 11 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/mediastream/%E5%BC%80%E6%BA%90%E7%BD%91%E7%AB%99/</guid>
+      <description>golang webrtc https://github.com/pion</description>
+    </item>
+    
+    <item>
+      <title>流媒体学习-视频像素格式</title>
+      <link>https://zylhorse.github.io/blog/mediastream/%E8%A7%86%E9%A2%91%E5%83%8F%E7%B4%A0%E6%95%B0%E6%8D%AE/</link>
+      <pubDate>Wed, 11 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/mediastream/%E8%A7%86%E9%A2%91%E5%83%8F%E7%B4%A0%E6%95%B0%E6%8D%AE/</guid>
+      <description>视频像素数据 格式 数据格式为
+ Planar(YUV):分量分块存储； Packed(RGB):分量连续村粗。   注：像素的采样位数根据图像不同获取。本文默认采样位数为8bit，所以一个像素采样值为1Byte。
+ YUV 分离Y、U、V分量 一帧YUV像素数据得宽和高为w 和 h，那么一帧YUV像素数据大小为:w*h*3/2 Byte;
+ Y分量：前w*h Byte
+U分量：中间w*h/4 Byte
+V分量：后面w*h/4 Byte
+ Y、U、V分量功能 更改图像灰度 只需将U、V分量设置为128（无色）
+ U、V是图像的色度分量。由于色度分量会进行偏置处理（-128）所以这里的无色为128；
+ 更改图像亮度 只需将Y分量每个像素点除以2；
+ Y是图像的亮度分量。
+ PSNR PSNR是最基本的视频质量评价方法。
+RGB 分离R、G、B分量 一帧RGB像素数据的宽和高为w和h,那么一帧RGB像素数据大小为w*h*3Byte；
+ R、G、B分量连续存储， 存储格式为：R1,G1,B1,&amp;hellip;,Rn,Gn,Bn。
+ RGB转换成BMP BMP采用小端存储方式（B、G、R），因此将RGB像素数据中的R和B分量顺序进行交换。
+RGB和YUV转换 Y= 0.299*R+0.587*G+0.114*BU=-0.147*R-0.289*G+0.463*BV= 0.615*R-0.515*G-0.100*B</description>
+    </item>
+    
+    <item>
+      <title>流媒体学习-音频采样格式</title>
+      <link>https://zylhorse.github.io/blog/mediastream/%E9%9F%B3%E9%A2%91%E9%87%87%E6%A0%B7%E6%95%B0%E6%8D%AE/</link>
+      <pubDate>Wed, 11 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/mediastream/%E9%9F%B3%E9%A2%91%E9%87%87%E6%A0%B7%E6%95%B0%E6%8D%AE/</guid>
+      <description>音频采样数据 保存格式：pcm文件
+格式  左声道数据 右声道数据   注：左声道和右声道数据间隔存储，声道的每个样值大小根据采样格式决定。
+ 增、降音量值 将声道的每个样值做加、减法。
+提高速度 根据速度间隔获取样值。
+截取音频 从指定采样点截取指定长度的音频
+采样数据格式转换 将PCM16LE双声道音频采样数据转换为WAVE格式音频数据  wave格式音频实在pcm文件的前面添加一个文件头，从而封装成wave格式音频。
+ </description>
+    </item>
+    
+    <item>
+      <title>流媒体学习-流媒体名词解释</title>
+      <link>https://zylhorse.github.io/blog/mediastream/%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Tue, 10 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/mediastream/%E5%85%A5%E9%97%A8/</guid>
+      <description>入门 封装格式 将音频、视频打包成一个文件的规范，主要是把视频码流和音频码流按一定格式存储在一个文件中。
+ mp4,flv,mkv,avi,rmvb,mkv
+不同封装格式差距不大，支持的音视频编码标准也不一样。如：mkv封装格式支持的音视频编码标准十分广泛；
+rmvb封装格式制车的音视频编码标准比较少。
+ 查看音视频文件信息工具： mediainfo（https://github.com/MediaArea/MediaInfo）。
+常见封装格式    名称 推出机构 流媒体 支持的视频编码 支持的音频编码 应用领域     AVI Microsoft Inc. 不支持 几乎所有格式 几乎所有格式 BT下载影视   MP4 MPEG 支持 MPEG-2,MPEG-4,H.264,H.263等 AAC,MPEG-1 Layers I,II,III,AC-3等 互联网视频网站   TS MPEG 支持 MPEG-1,MPEG-2,MPEG-4,H.264 AAC,MPEG-1 Layers I,II,III IPTV,数字电视   FLV Adobe Inc. 支持 Sorenson,VP6,H.264 MP3,ADPCM,Linear PCM,AAC等 互联网视频网站   MKV CoreCodec Inc. 支持 几乎所有格式 几乎所有格式 互联网视频网站   RMVB Real Networks Inc.</description>
+    </item>
+    
+  </channel>
+</rss>

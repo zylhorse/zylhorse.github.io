@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Audio on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/audio/</link>
+    <description>Recent content in Audio on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 12 Apr 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/audio/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>流媒体学习-音频码流格式</title>
+      <link>https://zylhorse.github.io/blog/mediastream/aac%E9%9F%B3%E9%A2%91%E7%A0%81%E6%B5%81%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Thu, 12 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/mediastream/aac%E9%9F%B3%E9%A2%91%E7%A0%81%E6%B5%81%E8%A7%A3%E6%9E%90/</guid>
+      <description>AAC AAC原始码流（“裸流”）的基本单元是ADTS frame。
+ 其中每个ADTS frame之间通过syncword（同步字）分隔。
+同步字为0xfff。
+AAC码流解析的步骤就是从码流中搜索syncword,分离出ADTS frame，然后再解析ADTS frame 字段。
+ </description>
+    </item>
+    
+    <item>
+      <title>流媒体学习-音频采样格式</title>
+      <link>https://zylhorse.github.io/blog/mediastream/%E9%9F%B3%E9%A2%91%E9%87%87%E6%A0%B7%E6%95%B0%E6%8D%AE/</link>
+      <pubDate>Wed, 11 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/mediastream/%E9%9F%B3%E9%A2%91%E9%87%87%E6%A0%B7%E6%95%B0%E6%8D%AE/</guid>
+      <description>音频采样数据 保存格式：pcm文件
+格式  左声道数据 右声道数据   注：左声道和右声道数据间隔存储，声道的每个样值大小根据采样格式决定。
+ 增、降音量值 将声道的每个样值做加、减法。
+提高速度 根据速度间隔获取样值。
+截取音频 从指定采样点截取指定长度的音频
+采样数据格式转换 将PCM16LE双声道音频采样数据转换为WAVE格式音频数据  wave格式音频实在pcm文件的前面添加一个文件头，从而封装成wave格式音频。
+ </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang跨平台之交叉编译 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Golang跨平台之交叉编译">
+<meta itemprop="description" content="概述 交叉编译： 在一个平台生成另一个平台的可执行代码。
+golang 交叉编译变量  GOOS:目标系统 GOARCH:目标架构 CGO_ENABLED: 开启cgo  支持的编译平台 查看命令：go tool dist list
+   GOOS(目标系统) GOARCH(目标架构)     aix ppc64   android 386   android amd64   android arm   android arm64   darwin 386   darwin amd64   darwin arm   darwin arm64   dragonfly amd64   freebsd 386   freebsd amd64   freebsd arm   illumos amd64   js wasm   linux 386   linux amd64   linux arm   linux arm64   linux mips   linux mips64   linux mips64le   linux mipsle   linux ppc64   linux ppc64le   linux s390x   nacl 386   nacl amd64p32   nacl arm   netbsd 386   netbsd amd64   netbsd arm   netbsd arm64   openbsd 386   openbsd amd64   openbsd arm   openbsd arm64   plan9 386   plan9 amd64   plan9 arm   solaris amd64   windows 386   windows amd64   windows arm    条件编译 golang 采用Tag标记和文件后缀方式实现条件编译；"><meta itemprop="datePublished" content="2020-01-23T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-01-23T00:00:00+00:00" />
+<meta itemprop="wordCount" content="177">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Golang跨平台之交叉编译" />
+<meta property="og:description" content="概述 交叉编译： 在一个平台生成另一个平台的可执行代码。
+golang 交叉编译变量  GOOS:目标系统 GOARCH:目标架构 CGO_ENABLED: 开启cgo  支持的编译平台 查看命令：go tool dist list
+   GOOS(目标系统) GOARCH(目标架构)     aix ppc64   android 386   android amd64   android arm   android arm64   darwin 386   darwin amd64   darwin arm   darwin arm64   dragonfly amd64   freebsd 386   freebsd amd64   freebsd arm   illumos amd64   js wasm   linux 386   linux amd64   linux arm   linux arm64   linux mips   linux mips64   linux mips64le   linux mipsle   linux ppc64   linux ppc64le   linux s390x   nacl 386   nacl amd64p32   nacl arm   netbsd 386   netbsd amd64   netbsd arm   netbsd arm64   openbsd 386   openbsd amd64   openbsd arm   openbsd arm64   plan9 386   plan9 amd64   plan9 arm   solaris amd64   windows 386   windows amd64   windows arm    条件编译 golang 采用Tag标记和文件后缀方式实现条件编译；" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2020-01-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-01-23T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang跨平台之交叉编译"/>
+<meta name="twitter:description" content="概述 交叉编译： 在一个平台生成另一个平台的可执行代码。
+golang 交叉编译变量  GOOS:目标系统 GOARCH:目标架构 CGO_ENABLED: 开启cgo  支持的编译平台 查看命令：go tool dist list
+   GOOS(目标系统) GOARCH(目标架构)     aix ppc64   android 386   android amd64   android arm   android arm64   darwin 386   darwin amd64   darwin arm   darwin arm64   dragonfly amd64   freebsd 386   freebsd amd64   freebsd arm   illumos amd64   js wasm   linux 386   linux amd64   linux arm   linux arm64   linux mips   linux mips64   linux mips64le   linux mipsle   linux ppc64   linux ppc64le   linux s390x   nacl 386   nacl amd64p32   nacl arm   netbsd 386   netbsd amd64   netbsd arm   netbsd arm64   openbsd 386   openbsd amd64   openbsd arm   openbsd arm64   plan9 386   plan9 amd64   plan9 arm   solaris amd64   windows 386   windows amd64   windows arm    条件编译 golang 采用Tag标记和文件后缀方式实现条件编译；"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">Golang跨平台之交叉编译</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2020-01-23 00:00:00 &#43;0000 UTC">2020-01-23</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="概述">概述</h2>
+<p>交叉编译： 在一个平台生成另一个平台的可执行代码。</p>
+<h2 id="golang-交叉编译变量">golang 交叉编译变量</h2>
+<ol>
+<li>GOOS:目标系统</li>
+<li>GOARCH:目标架构</li>
+<li>CGO_ENABLED: 开启cgo</li>
+</ol>
+<h2 id="支持的编译平台">支持的编译平台</h2>
+<p>查看命令：<code>go tool dist list</code></p>
+<table>
+<thead>
+<tr>
+<th>GOOS(目标系统)</th>
+<th>GOARCH(目标架构)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aix</td>
+<td>ppc64</td>
+</tr>
+<tr>
+<td>android</td>
+<td>386</td>
+</tr>
+<tr>
+<td>android</td>
+<td>amd64</td>
+</tr>
+<tr>
+<td>android</td>
+<td>arm</td>
+</tr>
+<tr>
+<td>android</td>
+<td>arm64</td>
+</tr>
+<tr>
+<td>darwin</td>
+<td>386</td>
+</tr>
+<tr>
+<td>darwin</td>
+<td>amd64</td>
+</tr>
+<tr>
+<td>darwin</td>
+<td>arm</td>
+</tr>
+<tr>
+<td>darwin</td>
+<td>arm64</td>
+</tr>
+<tr>
+<td>dragonfly</td>
+<td>amd64</td>
+</tr>
+<tr>
+<td>freebsd</td>
+<td>386</td>
+</tr>
+<tr>
+<td>freebsd</td>
+<td>amd64</td>
+</tr>
+<tr>
+<td>freebsd</td>
+<td>arm</td>
+</tr>
+<tr>
+<td>illumos</td>
+<td>amd64</td>
+</tr>
+<tr>
+<td>js</td>
+<td>wasm</td>
+</tr>
+<tr>
+<td>linux</td>
+<td>386</td>
+</tr>
+<tr>
+<td>linux</td>
+<td>amd64</td>
+</tr>
+<tr>
+<td>linux</td>
+<td>arm</td>
+</tr>
+<tr>
+<td>linux</td>
+<td>arm64</td>
+</tr>
+<tr>
+<td>linux</td>
+<td>mips</td>
+</tr>
+<tr>
+<td>linux</td>
+<td>mips64</td>
+</tr>
+<tr>
+<td>linux</td>
+<td>mips64le</td>
+</tr>
+<tr>
+<td>linux</td>
+<td>mipsle</td>
+</tr>
+<tr>
+<td>linux</td>
+<td>ppc64</td>
+</tr>
+<tr>
+<td>linux</td>
+<td>ppc64le</td>
+</tr>
+<tr>
+<td>linux</td>
+<td>s390x</td>
+</tr>
+<tr>
+<td>nacl</td>
+<td>386</td>
+</tr>
+<tr>
+<td>nacl</td>
+<td>amd64p32</td>
+</tr>
+<tr>
+<td>nacl</td>
+<td>arm</td>
+</tr>
+<tr>
+<td>netbsd</td>
+<td>386</td>
+</tr>
+<tr>
+<td>netbsd</td>
+<td>amd64</td>
+</tr>
+<tr>
+<td>netbsd</td>
+<td>arm</td>
+</tr>
+<tr>
+<td>netbsd</td>
+<td>arm64</td>
+</tr>
+<tr>
+<td>openbsd</td>
+<td>386</td>
+</tr>
+<tr>
+<td>openbsd</td>
+<td>amd64</td>
+</tr>
+<tr>
+<td>openbsd</td>
+<td>arm</td>
+</tr>
+<tr>
+<td>openbsd</td>
+<td>arm64</td>
+</tr>
+<tr>
+<td>plan9</td>
+<td>386</td>
+</tr>
+<tr>
+<td>plan9</td>
+<td>amd64</td>
+</tr>
+<tr>
+<td>plan9</td>
+<td>arm</td>
+</tr>
+<tr>
+<td>solaris</td>
+<td>amd64</td>
+</tr>
+<tr>
+<td>windows</td>
+<td>386</td>
+</tr>
+<tr>
+<td>windows</td>
+<td>amd64</td>
+</tr>
+<tr>
+<td>windows</td>
+<td>arm</td>
+</tr>
+</tbody>
+</table>
+<h2 id="条件编译">条件编译</h2>
+<p>golang 采用Tag标记和文件后缀方式实现条件编译；</p>
+<h3 id="构建约束">构建约束</h3>
+<p>规则：</p>
+<ol>
+<li>build tag必须在文件顶部，可以有多个， 之间是AND关系 ：</li>
+</ol>
+<pre tabindex="0"><code>// +build linux darwin
+// +build arm 
+</code></pre><ol start="2">
+<li>空格位或， 逗号为且， 叹号为非</li>
+</ol>
+<pre tabindex="0"><code>// +build A,B !C,D
+// 翻译： (A&amp;&amp;B) || ((!C) &amp;&amp; D)
+</code></pre><ol start="3">
+<li>build tag和package xxx 语句之间需要空行分隔：</li>
+</ol>
+<pre tabindex="0"><code>// +build linux,arm
+
+package main
+</code></pre><p>使用: 
+<code>go build -tags ...</code></p>
+<h3 id="文件后缀">文件后缀</h3>
+<p>规则：</p>
+<blockquote>
+<p>以<code>_$GOOS.go</code> 为后缀的文件只能在指定平台编译，其他平台忽略该文件。</p>
+</blockquote>
+<pre tabindex="0"><code>syscall_linux_amd64.go：只在 Linux/amd64 下编译
+syscall_windows_386.go：只在 Windows/i386 下编译
+syscall_windows.go：    只在 Windows 下编译
+</code></pre><h2 id="cgo-交叉编译">cgo 交叉编译</h2>
+<p><a href="https://note.youdao.com/">karalabe/xgo</a></p>
+<p>问题：</p>
+<ol>
+<li>不支持 go mod 模式</li>
+<li>不能 (完整支持) 编译本地代码</li>
+<li>不支持最新的 golang 版本</li>
+<li>项目维护热度不足</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#概述">概述</a></li>
+    <li><a href="#golang-交叉编译变量">golang 交叉编译变量</a></li>
+    <li><a href="#支持的编译平台">支持的编译平台</a></li>
+    <li><a href="#条件编译">条件编译</a>
+      <ul>
+        <li><a href="#构建约束">构建约束</a></li>
+        <li><a href="#文件后缀">文件后缀</a></li>
+      </ul>
+    </li>
+    <li><a href="#cgo-交叉编译">cgo 交叉编译</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/golang/%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4/" class="button left"><span>Golang-编译指令</span></a>
+    
+    
+      <a href="/blog/golang/%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%BC%8F/" class="button right"><span>Golang线程调度模型</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

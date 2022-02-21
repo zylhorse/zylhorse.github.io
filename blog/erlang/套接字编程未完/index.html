@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Erlang套接字编程 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Erlang套接字编程">
+<meta itemprop="description" content="客户端  gen_tcp:connect(Host, Port, [Options]) -&gt; {ok, Socket} | {error, Reason}  与指定域名、端口号的服务器建立连接。  gen_tcp: send(Socket, Msg) -&gt; ok | {error, Reason}
+向Socket发送消息（二进制字节流）
+  接受服务器传递消息
+  receive{tcp,Socket, Bin} -&gt; ...;{tcp_closed, Socket} -&gt;...end. gen_tcp:close(Socket) -&gt; ok
+关闭Socket  服务器  gen_tcp:listen(Port, [Options]) -&gt; {ok, Listen} | {error, Reason} 监听端口Port。 gen_tcp:accept(Listen) -&gt; {ok, Socket} | {error, Reason}
+接受监听的Socket连接，返回当前连接Socket。 gen_tcp:close(Listen) -&gt; ok 关闭监听，不再接受新的连接。  并发套接字编程 注意："><meta itemprop="datePublished" content="2015-11-11T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2015-11-11T00:00:00+00:00" />
+<meta itemprop="wordCount" content="169">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Erlang套接字编程" />
+<meta property="og:description" content="客户端  gen_tcp:connect(Host, Port, [Options]) -&gt; {ok, Socket} | {error, Reason}  与指定域名、端口号的服务器建立连接。  gen_tcp: send(Socket, Msg) -&gt; ok | {error, Reason}
+向Socket发送消息（二进制字节流）
+  接受服务器传递消息
+  receive{tcp,Socket, Bin} -&gt; ...;{tcp_closed, Socket} -&gt;...end. gen_tcp:close(Socket) -&gt; ok
+关闭Socket  服务器  gen_tcp:listen(Port, [Options]) -&gt; {ok, Listen} | {error, Reason} 监听端口Port。 gen_tcp:accept(Listen) -&gt; {ok, Socket} | {error, Reason}
+接受监听的Socket连接，返回当前连接Socket。 gen_tcp:close(Listen) -&gt; ok 关闭监听，不再接受新的连接。  并发套接字编程 注意：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/erlang/%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B%E6%9C%AA%E5%AE%8C/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2015-11-11T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-11-11T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Erlang套接字编程"/>
+<meta name="twitter:description" content="客户端  gen_tcp:connect(Host, Port, [Options]) -&gt; {ok, Socket} | {error, Reason}  与指定域名、端口号的服务器建立连接。  gen_tcp: send(Socket, Msg) -&gt; ok | {error, Reason}
+向Socket发送消息（二进制字节流）
+  接受服务器传递消息
+  receive{tcp,Socket, Bin} -&gt; ...;{tcp_closed, Socket} -&gt;...end. gen_tcp:close(Socket) -&gt; ok
+关闭Socket  服务器  gen_tcp:listen(Port, [Options]) -&gt; {ok, Listen} | {error, Reason} 监听端口Port。 gen_tcp:accept(Listen) -&gt; {ok, Socket} | {error, Reason}
+接受监听的Socket连接，返回当前连接Socket。 gen_tcp:close(Listen) -&gt; ok 关闭监听，不再接受新的连接。  并发套接字编程 注意："/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B%E6%9C%AA%E5%AE%8C/">Erlang套接字编程</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-11-11 00:00:00 &#43;0000 UTC">2015-11-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="客户端">客户端</h2>
+<ul>
+<li>gen_tcp:connect(Host, Port, [Options]) -&gt; {ok, Socket} | {error, Reason}</li>
+</ul>
+<pre tabindex="0"><code>与指定域名、端口号的服务器建立连接。
+</code></pre><ul>
+<li>
+<p>gen_tcp: send(Socket, Msg) -&gt; ok | {error, Reason}<br>
+向Socket发送消息（二进制字节流）</p>
+</li>
+<li>
+<p>接受服务器传递消息</p>
+</li>
+</ul>
+<pre tabindex="0"><code>receive
+    {tcp,Socket, Bin} -&gt; 
+        ...;
+    {tcp_closed, Socket} -&gt;
+        ...
+end.
+
+</code></pre><ul>
+<li>gen_tcp:close(Socket) -&gt; ok<br>
+<code>关闭Socket</code></li>
+</ul>
+<h2 id="服务器">服务器</h2>
+<ul>
+<li>gen_tcp:listen(Port, [Options]) -&gt; {ok, Listen} | {error, Reason}  <br>
+监听端口Port。</li>
+<li>gen_tcp:accept(Listen) -&gt; {ok, Socket} | {error, Reason}<br>
+接受监听的Socket连接，返回当前连接Socket。</li>
+<li>gen_tcp:close(Listen) -&gt; ok
+关闭监听，不再接受新的连接。</li>
+</ul>
+<h2 id="并发套接字编程">并发套接字编程</h2>
+<p>注意：</p>
+<ol>
+<li>创建套接字（通过调用gen_tcp:accept或gen_tcp:connect）的进程被称为该套接字的控制进程。所有来自套接字的信息都会被发送到控制进程，如果控制进程挂了，套接字就会关闭。某个套接字的控制进程可以通过gen_tcp:controlling_process(Socket, NewPid)修改成NewPid。</li>
+<li>我们的并行服务器可能创建很多连接，可以通过计数器限制最大同时连接数。</li>
+<li>接受一个连接后，显示设置必要的套接字选项是一个很好的做法，如：</li>
+</ol>
+<pre tabindex="0"><code>{ok, Socket} = gen_tcp:accept(Listen),
+inet:setopts(Socket, [{packet, 4}, binary, {active, true}, {nodelay, true}]),
+loop(Socket).
+</code></pre><ol start="4">
+<li>允许多个进程对同一个监听套接字调用gen_tcp:accept/1。这让编写并行服务器变得简单，因此可以生成一个预先分裂好的进程池，让它们都处于gen_tcp:accept/1的等待状态。</li>
+</ol>
+<h2 id="主动和被动套接字">主动和被动套接字</h2>
+<p>Erlang的套接字可以有三种打开方式：主动（active）、单次主动（active once)或被动（passive）。这是通过gen_tcp:connect(Address, Port, [Options]),gen_tcp:Listen(Port, [Options]) 的Options参数加入[{active, true/false/once}]设置的。<br>
+指定{active,once}创建的套接字，只会主动接收一个消息，接收完之后必须重新启用才能接收下一个消息。<br>
+主动和被动套接字的主要区别是套接字在接受消息后所发生的事。</p>
+<ul>
+<li>当主动套接字被创建后，它会在收到数据时向控制进程发送{tcp, Socket, Data}消息。控制进程无法控制这些数据流。</li>
+<li>如果套接字是被动模式打开，控制进程必须通过调用gen_tcp:recv(Socket, N)来从这个套接字尝试收取N个字节，如果N=0套接字就会返回所有可用字节。</li>
+<li>被动套接字用来控制通往服务器的数据流。</li>
+</ul>
+<h2 id="主动消息接收非阻塞">主动消息接收（非阻塞）</h2>
+<pre tabindex="0"><code>receive 
+    {tcp, Socket, Data} -&gt;
+        ...;
+    {tcp_closed, Socket} -&gt;
+        ...
+end
+</code></pre><h2 id="被动消息接收阻塞式">被动消息接收（阻塞式）</h2>
+<pre tabindex="0"><code>loop(Socket) -&gt;
+    case gen_tcp:recv(Socket, N) of
+        {ok, Data} -&gt;
+            ...,
+            loop(Socket);
+        {error, closed} -&gt;
+            ...
+    end.
+</code></pre><h2 id="混合消息接收部分阻塞式">混合消息接收（部分阻塞式）</h2>
+<pre tabindex="0"><code>receive 
+    {tcp, Socket, Data} -&gt;
+        ...,
+        %% 当你准备好启动下一个消息接收时
+        inet:setopts(Socket, [{active, once}]),
+        loop(Socket);
+    {tcp_closed, Socket} -&gt;
+        ...
+end
+</code></pre><p>使用{active,once}选项，用户可以实现高级形式流量控制（有时被称为流量整形），防止服务器被过多消息淹没。</p>
+<h2 id="找出连接的来源">找出连接的来源</h2>
+<p>在线服务器发现连接来源，调用inet:peername(Socket)。</p>
+<pre tabindex="0"><code>@spec inet:peername(Socket) -&gt; {ok, {IP_ADDRESS, PORT}} | {error, Why}
+</code></pre><p>IP_ADDRESS 由整数元组组成：<br>
+{N1, N2, N3, N4}代表IPV4地址,这里的Ni是0-255之间的整数。<br>
+{K1, k2, k3, k4, k5, k6}代表IPV6地址，这里的Ki是0-65535之间的整数。</p>
+<h2 id="套接字错误处理">套接字错误处理</h2>
+<p>套接字错误处理极其简单，每个套接字都有控制进程，如果控制进程挂了，套接字被自动关闭。</p>
+<h2 id="udp">UDP</h2>
+<p>UDP是一种无连接协议，客户端向服务器发送消息之前不必建立连接。这意味着UDP非常适合大量客户端向服务器发送简短消息。<br>
+用Erlang编写UDP客户端和服务器，要比编写TCP程序简单,无需担心服务器连接的维护工作。</p>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#客户端">客户端</a></li>
+    <li><a href="#服务器">服务器</a></li>
+    <li><a href="#并发套接字编程">并发套接字编程</a></li>
+    <li><a href="#主动和被动套接字">主动和被动套接字</a></li>
+    <li><a href="#主动消息接收非阻塞">主动消息接收（非阻塞）</a></li>
+    <li><a href="#被动消息接收阻塞式">被动消息接收（阻塞式）</a></li>
+    <li><a href="#混合消息接收部分阻塞式">混合消息接收（部分阻塞式）</a></li>
+    <li><a href="#找出连接的来源">找出连接的来源</a></li>
+    <li><a href="#套接字错误处理">套接字错误处理</a></li>
+    <li><a href="#udp">UDP</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/erlang/%E7%B1%BB%E5%9E%8B/" class="button left"><span>Erlang类型表示法</span></a>
+    
+    
+      <a href="/blog/cache/redis/%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/" class="button right"><span>Redis安装和配置</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Erlang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

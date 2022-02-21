@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang数据库-数据类型转换 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Golang数据库-数据类型转换">
+<meta itemprop="description" content="#数据库
+问题 字段为空 row.scan 遇到字段为空时， 变量赋值异常：can not convert null=&gt; *string 需要在sql语句中添加： ifnull/coalesce 指定默认空值
+添加 sql convert 函数 根据数据类型， 做转换
+const (FormatTime = &quot;15:04:05&quot;FormatDate = &quot;2006-01-02&quot;FormatDateTime = &quot;2006-01-02 15:04:05&quot;)var (Err_NilDests = errors.New(&quot;destinations required&quot;)Err_NilPointerDest = errors.New(&quot;destination not support nil pointer&quot;)Err_NotSupportDest = errors.New(&quot;not support destination&quot;))const Invalid_Id = 0func ConvertRow(row *sql.Row, dests ...interface{}) error {destLen := len(dests)if destLen == 0 {return Err_NilDests}refs := make([]interface{}, destLen)for i := range refs {var ref interface{}refs[i] = &amp;ref}err := row."><meta itemprop="datePublished" content="2020-05-23T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-05-23T00:00:00+00:00" />
+<meta itemprop="wordCount" content="412">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Golang数据库-数据类型转换" />
+<meta property="og:description" content="#数据库
+问题 字段为空 row.scan 遇到字段为空时， 变量赋值异常：can not convert null=&gt; *string 需要在sql语句中添加： ifnull/coalesce 指定默认空值
+添加 sql convert 函数 根据数据类型， 做转换
+const (FormatTime = &quot;15:04:05&quot;FormatDate = &quot;2006-01-02&quot;FormatDateTime = &quot;2006-01-02 15:04:05&quot;)var (Err_NilDests = errors.New(&quot;destinations required&quot;)Err_NilPointerDest = errors.New(&quot;destination not support nil pointer&quot;)Err_NotSupportDest = errors.New(&quot;not support destination&quot;))const Invalid_Id = 0func ConvertRow(row *sql.Row, dests ...interface{}) error {destLen := len(dests)if destLen == 0 {return Err_NilDests}refs := make([]interface{}, destLen)for i := range refs {var ref interface{}refs[i] = &amp;ref}err := row." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/%E6%95%B0%E6%8D%AE%E5%BA%93/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2020-05-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-23T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang数据库-数据类型转换"/>
+<meta name="twitter:description" content="#数据库
+问题 字段为空 row.scan 遇到字段为空时， 变量赋值异常：can not convert null=&gt; *string 需要在sql语句中添加： ifnull/coalesce 指定默认空值
+添加 sql convert 函数 根据数据类型， 做转换
+const (FormatTime = &quot;15:04:05&quot;FormatDate = &quot;2006-01-02&quot;FormatDateTime = &quot;2006-01-02 15:04:05&quot;)var (Err_NilDests = errors.New(&quot;destinations required&quot;)Err_NilPointerDest = errors.New(&quot;destination not support nil pointer&quot;)Err_NotSupportDest = errors.New(&quot;not support destination&quot;))const Invalid_Id = 0func ConvertRow(row *sql.Row, dests ...interface{}) error {destLen := len(dests)if destLen == 0 {return Err_NilDests}refs := make([]interface{}, destLen)for i := range refs {var ref interface{}refs[i] = &amp;ref}err := row."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/%E6%95%B0%E6%8D%AE%E5%BA%93/">Golang数据库-数据类型转换</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2020-05-23 00:00:00 &#43;0000 UTC">2020-05-23</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <p>#数据库</p>
+<h2 id="问题">问题</h2>
+<h2 id="字段为空">字段为空</h2>
+<p>row.scan 遇到字段为空时， 变量赋值异常：can not convert null=&gt; *string
+需要在sql语句中添加： ifnull/coalesce 指定默认空值</p>
+<h2 id="添加-sql-convert-函数">添加 sql convert 函数</h2>
+<p>根据数据类型， 做转换</p>
+<pre tabindex="0"><code>const (
+	FormatTime     = &quot;15:04:05&quot;
+	FormatDate     = &quot;2006-01-02&quot;
+	FormatDateTime = &quot;2006-01-02 15:04:05&quot;
+)
+
+var (
+	Err_NilDests       = errors.New(&quot;destinations required&quot;)
+	Err_NilPointerDest = errors.New(&quot;destination not support nil pointer&quot;)
+	Err_NotSupportDest = errors.New(&quot;not support destination&quot;)
+)
+
+const Invalid_Id = 0
+
+func ConvertRow(row *sql.Row, dests ...interface{}) error {
+	destLen := len(dests)
+	if destLen == 0 {
+		return Err_NilDests
+	}
+
+	refs := make([]interface{}, destLen)
+	for i := range refs {
+		var ref interface{}
+		refs[i] = &amp;ref
+	}
+	err := row.Scan(refs...)
+	if err != nil {
+		return err
+	}
+
+	for i := 0; i &lt; destLen; i++ {
+		val := reflect.ValueOf(dests[i])
+		ind := reflect.Indirect(val)
+		refVal := reflect.ValueOf(refs[i])
+		refInd := reflect.Indirect(refVal)
+		if err := convertValueFromDB(&amp;ind, refInd.Interface()); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func convertValueFromDB(dest *reflect.Value, src interface{}) (err error) {
+	var (
+		value  interface{}
+		kind   = dest.Kind()
+		strSrc string
+	)
+	if src != nil {
+		switch v := src.(type) {
+		case []byte:
+			strSrc = string(v)
+		default:
+			strSrc = fmt.Sprintf(&quot;%v&quot;, src)
+		}
+	}
+	switch kind {
+	case reflect.Bool:
+		if src == nil {
+			value = false
+		} else {
+			value, err = strconv.ParseBool(strSrc)
+		}
+		if err != nil {
+			return
+		}
+		dest.Set(reflect.ValueOf(value).Convert(dest.Type()))
+	case reflect.Int8, reflect.Int16, reflect.Int, reflect.Int32, reflect.Int64:
+		if src == nil {
+			value = int64(0)
+		} else {
+			value, err = strconv.ParseInt(strSrc, 10, 64)
+		}
+		if err != nil {
+			return
+		}
+		dest.Set(reflect.ValueOf(value).Convert(dest.Type()))
+	case reflect.Uint8, reflect.Uint16, reflect.Uint, reflect.Uint32, reflect.Uint64:
+		if src == nil {
+			value = uint64(0)
+		} else {
+			value, err = strconv.ParseUint(strSrc, 10, 64)
+		}
+		if err != nil {
+			return
+		}
+		dest.Set(reflect.ValueOf(value).Convert(dest.Type()))
+	case reflect.Float32, reflect.Float64:
+		if src == nil {
+			value = float64(0)
+		} else {
+			value, err = strconv.ParseFloat(strSrc, 64)
+		}
+		if err != nil {
+			return
+		}
+		dest.Set(reflect.ValueOf(value).Convert(dest.Type()))
+	case reflect.String:
+		if src == nil {
+			value = &quot;&quot;
+		} else {
+			value = strSrc
+		}
+		dest.Set(reflect.ValueOf(value).Convert(dest.Type()))
+	default:
+		if dest.Interface() == nil {
+			panic(Err_NilPointerDest)
+		}
+		switch dest.Interface().(type) {
+		case time.Time:
+			if src == nil {
+				value = time.Time{}
+			} else {
+				switch v := src.(type) {
+				case time.Time:
+					value = v.In(time.Local)
+				default:
+					var t time.Time
+					if len(strSrc) &gt;= 19 {
+						t, err = time.ParseInLocation(FormatDateTime, strSrc[:19], time.Local)
+					} else if len(strSrc) &gt;= 10 {
+						t, err = time.ParseInLocation(FormatDate, strSrc[:10], time.Local)
+					} else if len(strSrc) &gt;= 8 {
+						t, err = time.ParseInLocation(FormatTime, strSrc[:8], time.Local)
+					}
+					if err != nil {
+						return
+					}
+					value = t
+				}
+			}
+			dest.Set(reflect.ValueOf(value).Convert(dest.Type()))
+
+		default:
+			panic(Err_NotSupportDest)
+		}
+	}
+	return
+}
+
+</code></pre>
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#问题">问题</a></li>
+    <li><a href="#字段为空">字段为空</a></li>
+    <li><a href="#添加-sql-convert-函数">添加 sql convert 函数</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/elk/grafana/" class="button left"><span>Grafana搭建部署环境和配置</span></a>
+    
+    
+      <a href="/blog/golang/%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4/" class="button right"><span>Golang-编译指令</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

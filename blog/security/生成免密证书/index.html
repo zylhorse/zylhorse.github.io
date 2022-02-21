@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>生成自签名SSL免密证书 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="生成自签名SSL免密证书">
+<meta itemprop="description" content="#!/bin/sh# create self-signed server certificate:SSLDIR=$PWD/sslSERVERDIR=$SSLDIR/serverCLIENTDIR=$SSLDIR/clientOPENSSLFILE=$PWD/openssl.cnfsudo rm -rf $SSLDIRsudo mkdir $SSLDIRsudo mkdir $SERVERDIRsudo mkdir $CLIENTDIRsudo mkdir $SSLDIR/demoCAsudo mkdir $SSLDIR/demoCA/newcertssudo touch $SSLDIR/demoCA/index.txtsudo touch $SSLDIR/demoCA/serialsudo echo 01 &gt; $SSLDIR/demoCA/serialcd $SSLDIRread -p &quot;Enter your domain [www.example.com]: &quot; DOMAINsudo sed -i &quot;s/subjectAltName=IP.*/subjectAltName=IP:$DOMAIN/g&quot; $OPENSSLFILESUBJECT=&quot;/C=CN/ST=Beijing/L=Beigjing/O=YongNuo/OU=CEO/CN=$DOMAIN/emailAddress=zylhorse@126.com&quot;echo &quot;Create Ca key / cert ...&quot;sudo openssl req -new -x509 -subj $SUBJECT -keyout $SSLDIR/ca."><meta itemprop="datePublished" content="2015-06-13T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2015-06-13T00:00:00+00:00" />
+<meta itemprop="wordCount" content="214">
+<meta itemprop="keywords" content="Certificate," /><meta property="og:title" content="生成自签名SSL免密证书" />
+<meta property="og:description" content="#!/bin/sh# create self-signed server certificate:SSLDIR=$PWD/sslSERVERDIR=$SSLDIR/serverCLIENTDIR=$SSLDIR/clientOPENSSLFILE=$PWD/openssl.cnfsudo rm -rf $SSLDIRsudo mkdir $SSLDIRsudo mkdir $SERVERDIRsudo mkdir $CLIENTDIRsudo mkdir $SSLDIR/demoCAsudo mkdir $SSLDIR/demoCA/newcertssudo touch $SSLDIR/demoCA/index.txtsudo touch $SSLDIR/demoCA/serialsudo echo 01 &gt; $SSLDIR/demoCA/serialcd $SSLDIRread -p &quot;Enter your domain [www.example.com]: &quot; DOMAINsudo sed -i &quot;s/subjectAltName=IP.*/subjectAltName=IP:$DOMAIN/g&quot; $OPENSSLFILESUBJECT=&quot;/C=CN/ST=Beijing/L=Beigjing/O=YongNuo/OU=CEO/CN=$DOMAIN/emailAddress=zylhorse@126.com&quot;echo &quot;Create Ca key / cert ...&quot;sudo openssl req -new -x509 -subj $SUBJECT -keyout $SSLDIR/ca." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/security/%E7%94%9F%E6%88%90%E5%85%8D%E5%AF%86%E8%AF%81%E4%B9%A6/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2015-06-13T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-06-13T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="生成自签名SSL免密证书"/>
+<meta name="twitter:description" content="#!/bin/sh# create self-signed server certificate:SSLDIR=$PWD/sslSERVERDIR=$SSLDIR/serverCLIENTDIR=$SSLDIR/clientOPENSSLFILE=$PWD/openssl.cnfsudo rm -rf $SSLDIRsudo mkdir $SSLDIRsudo mkdir $SERVERDIRsudo mkdir $CLIENTDIRsudo mkdir $SSLDIR/demoCAsudo mkdir $SSLDIR/demoCA/newcertssudo touch $SSLDIR/demoCA/index.txtsudo touch $SSLDIR/demoCA/serialsudo echo 01 &gt; $SSLDIR/demoCA/serialcd $SSLDIRread -p &quot;Enter your domain [www.example.com]: &quot; DOMAINsudo sed -i &quot;s/subjectAltName=IP.*/subjectAltName=IP:$DOMAIN/g&quot; $OPENSSLFILESUBJECT=&quot;/C=CN/ST=Beijing/L=Beigjing/O=YongNuo/OU=CEO/CN=$DOMAIN/emailAddress=zylhorse@126.com&quot;echo &quot;Create Ca key / cert ...&quot;sudo openssl req -new -x509 -subj $SUBJECT -keyout $SSLDIR/ca."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/security/%E7%94%9F%E6%88%90%E5%85%8D%E5%AF%86%E8%AF%81%E4%B9%A6/">生成自签名SSL免密证书</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-06-13 00:00:00 &#43;0000 UTC">2015-06-13</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <pre tabindex="0"><code>#!/bin/sh
+  
+# create self-signed server certificate:
+
+SSLDIR=$PWD/ssl
+SERVERDIR=$SSLDIR/server
+CLIENTDIR=$SSLDIR/client
+OPENSSLFILE=$PWD/openssl.cnf
+
+sudo rm -rf $SSLDIR
+sudo mkdir $SSLDIR
+sudo mkdir $SERVERDIR
+sudo mkdir $CLIENTDIR
+sudo mkdir $SSLDIR/demoCA
+sudo mkdir $SSLDIR/demoCA/newcerts
+sudo touch $SSLDIR/demoCA/index.txt
+sudo touch $SSLDIR/demoCA/serial
+sudo echo 01 &gt; $SSLDIR/demoCA/serial
+cd $SSLDIR
+
+read -p &quot;Enter your domain [www.example.com]: &quot; DOMAIN
+sudo sed -i &quot;s/subjectAltName=IP.*/subjectAltName=IP:$DOMAIN/g&quot; $OPENSSLFILE
+
+SUBJECT=&quot;/C=CN/ST=Beijing/L=Beigjing/O=YongNuo/OU=CEO/CN=$DOMAIN/emailAddress=zylhorse@126.com&quot;
+
+echo &quot;Create Ca key / cert ...&quot;
+sudo openssl req -new -x509 -subj $SUBJECT -keyout $SSLDIR/ca.key -out $SSLDIR/ca.crt -days 365 -nodes
+sudo openssl rsa -in $SSLDIR/ca.key -out $SSLDIR/ca.key
+
+echo &quot;Create server key...&quot;
+sudo openssl genrsa -des3 -passout pass:123456 -out $SERVERDIR/$DOMAIN.key 1024
+sudo openssl rsa -passin pass:123456 -in $SERVERDIR/$DOMAIN.key -passout pass:123456 -out $SERVERDIR/$DOMAIN.key
+
+echo &quot;Create server certificate signing request...&quot;
+sudo openssl req -new -subj $SUBJECT -key $SERVERDIR/$DOMAIN.key -out $SERVERDIR/$DOMAIN.csr -config $OPENSSLFILE -extensions v3_req
+
+echo &quot;Sign SSL certificate...&quot;
+sudo openssl ca -passin pass:123456 -in $SERVERDIR/$DOMAIN.csr -out $SERVERDIR/$DOMAIN.crt -cert $SSLDIR/ca.crt -keyfile $SSLDIR/ca.key -config $OPENSSLFILE -extensions v3_req
+
+echo &quot;Create client key...&quot;
+sudo openssl genrsa -des3 -passout pass:123456 -out $CLIENTDIR/$DOMAIN.key 1024
+sudo openssl rsa -passin pass:123456 -in $CLIENTDIR/$DOMAIN.key -passout pass:123456 -out $CLIENTDIR/$DOMAIN.key
+
+echo &quot;Create client certificate signing request...&quot;
+sudo openssl req -new -subj $SUBJECT -key $CLIENTDIR/$DOMAIN.key -out $CLIENTDIR/$DOMAIN.csr -config $OPENSSLFILE -extensions v3_req
+
+echo &quot;Sign SSL certificate...&quot;
+sudo openssl ca -passin pass:123456 -in $CLIENTDIR/$DOMAIN.csr -out $CLIENTDIR/$DOMAIN.crt -cert $SSLDIR/ca.crt -keyfile $SSLDIR/ca.key -config $OPENSSLFILE -extensions v3_req
+
+</code></pre>
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/security/">Security</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/certificate/">Certificate</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents"></nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/security/%E7%94%9F%E6%88%90%E8%AF%81%E4%B9%A6/" class="button left"><span>生成自签名SSL证书</span></a>
+    
+    
+      <a href="/blog/lua/ide/" class="button right"><span>lua编译环境搭建和IDE配置</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Security
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

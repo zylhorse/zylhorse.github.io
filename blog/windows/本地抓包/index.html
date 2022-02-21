@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Windows下Wireshark抓包问题 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Windows下Wireshark抓包问题">
+<meta itemprop="description" content="windows 本地抓包 在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。 但是wireshark此时是无法抓取到数据包的，需要通过简单的设置才可以。
+具体方法如下：
+  方法一
+ 以管理员身份运行cmd route add 本机ip mask 255.255.255.255 网关ip 如：route add 172.16.51.115 mask 255.255.255.255 172.16.1.1 使用完毕后用route delete 172.16.51.115 mask 255.255.255.255 172.16.1.1删除，否则所有本机报文都经过网卡出去走一圈回来很耗性能。 此时再利用wireshark进行抓包便可以抓到本机自己同自己的通信包，这样配置的原因是将发往本机的包发送到网关，而此时wireshark可以捕获到网卡驱动的报文实现抓包。   但这样有一个缺点，那就是本地请求的URL的IP只能写本地的IP地址，不能写localhost或127.0.0.1，写localhost或127.0.0.1还是抓不到包。
+   方法二
+windows系统没有提供本地回环网络的接口，用wireshark监控网络的话只能看到经过网卡的流量，看不到访问localhost的流量， 因为wireshark在windows系统上默认使用的是WinPcap来抓包的，现在可以用Npcap来替换掉WinPcap， Npcap是基于WinPcap 4.1.3开发的，api兼容WinPcap。
+ 下载安装包 Npcap项目主页，它采用的是MIT开源协议，Npcap下载 安装 安装时要勾选 Use DLT_NULL protocol sa Loopback &hellip; 和 install npcap in winpcap api-compat mode，如下所示。    方法三
+RawCap
+  "><meta itemprop="datePublished" content="2014-09-03T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2014-09-03T00:00:00+00:00" />
+<meta itemprop="wordCount" content="51">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Windows下Wireshark抓包问题" />
+<meta property="og:description" content="windows 本地抓包 在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。 但是wireshark此时是无法抓取到数据包的，需要通过简单的设置才可以。
+具体方法如下：
+  方法一
+ 以管理员身份运行cmd route add 本机ip mask 255.255.255.255 网关ip 如：route add 172.16.51.115 mask 255.255.255.255 172.16.1.1 使用完毕后用route delete 172.16.51.115 mask 255.255.255.255 172.16.1.1删除，否则所有本机报文都经过网卡出去走一圈回来很耗性能。 此时再利用wireshark进行抓包便可以抓到本机自己同自己的通信包，这样配置的原因是将发往本机的包发送到网关，而此时wireshark可以捕获到网卡驱动的报文实现抓包。   但这样有一个缺点，那就是本地请求的URL的IP只能写本地的IP地址，不能写localhost或127.0.0.1，写localhost或127.0.0.1还是抓不到包。
+   方法二
+windows系统没有提供本地回环网络的接口，用wireshark监控网络的话只能看到经过网卡的流量，看不到访问localhost的流量， 因为wireshark在windows系统上默认使用的是WinPcap来抓包的，现在可以用Npcap来替换掉WinPcap， Npcap是基于WinPcap 4.1.3开发的，api兼容WinPcap。
+ 下载安装包 Npcap项目主页，它采用的是MIT开源协议，Npcap下载 安装 安装时要勾选 Use DLT_NULL protocol sa Loopback &hellip; 和 install npcap in winpcap api-compat mode，如下所示。    方法三
+RawCap
+  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/windows/%E6%9C%AC%E5%9C%B0%E6%8A%93%E5%8C%85/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2014-09-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2014-09-03T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Windows下Wireshark抓包问题"/>
+<meta name="twitter:description" content="windows 本地抓包 在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。 但是wireshark此时是无法抓取到数据包的，需要通过简单的设置才可以。
+具体方法如下：
+  方法一
+ 以管理员身份运行cmd route add 本机ip mask 255.255.255.255 网关ip 如：route add 172.16.51.115 mask 255.255.255.255 172.16.1.1 使用完毕后用route delete 172.16.51.115 mask 255.255.255.255 172.16.1.1删除，否则所有本机报文都经过网卡出去走一圈回来很耗性能。 此时再利用wireshark进行抓包便可以抓到本机自己同自己的通信包，这样配置的原因是将发往本机的包发送到网关，而此时wireshark可以捕获到网卡驱动的报文实现抓包。   但这样有一个缺点，那就是本地请求的URL的IP只能写本地的IP地址，不能写localhost或127.0.0.1，写localhost或127.0.0.1还是抓不到包。
+   方法二
+windows系统没有提供本地回环网络的接口，用wireshark监控网络的话只能看到经过网卡的流量，看不到访问localhost的流量， 因为wireshark在windows系统上默认使用的是WinPcap来抓包的，现在可以用Npcap来替换掉WinPcap， Npcap是基于WinPcap 4.1.3开发的，api兼容WinPcap。
+ 下载安装包 Npcap项目主页，它采用的是MIT开源协议，Npcap下载 安装 安装时要勾选 Use DLT_NULL protocol sa Loopback &hellip; 和 install npcap in winpcap api-compat mode，如下所示。    方法三
+RawCap
+  "/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/windows/%E6%9C%AC%E5%9C%B0%E6%8A%93%E5%8C%85/">Windows下Wireshark抓包问题</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2014-09-03 00:00:00 &#43;0000 UTC">2014-09-03</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="windows-本地抓包">windows 本地抓包</h2>
+<p>在进行通信开发的过程中，我们往往会把本机既作为客户端又作为服务器端来调试代码，使得本机自己和自己通信。
+但是<code>wireshark</code>此时是无法抓取到数据包的，需要通过简单的设置才可以。</p>
+<p>具体方法如下：</p>
+<ul>
+<li>
+<p>方法一</p>
+<ol>
+<li>以管理员身份运行<code>cmd</code></li>
+<li><code>route add 本机ip mask 255.255.255.255 网关ip</code>
+如：<code>route add 172.16.51.115 mask 255.255.255.255 172.16.1.1</code>
+使用完毕后用<code>route delete 172.16.51.115 mask 255.255.255.255 172.16.1.1</code>删除，否则所有本机报文都经过网卡出去走一圈回来很耗性能。</li>
+<li>此时再利用<code>wireshark</code>进行抓包便可以抓到本机自己同自己的通信包，这样配置的原因是将发往本机的包发送到网关，而此时<code>wireshark</code>可以捕获到网卡驱动的报文实现抓包。</li>
+</ol>
+<blockquote>
+<p>但这样有一个缺点，那就是本地请求的URL的IP只能写本地的IP地址，不能写localhost或127.0.0.1，写localhost或127.0.0.1还是抓不到包。</p>
+</blockquote>
+</li>
+<li>
+<p>方法二<br>
+<code>windows</code>系统没有提供本地回环网络的接口，用<code>wireshark</code>监控网络的话只能看到经过网卡的流量，看不到访问<code>localhost</code>的流量，
+因为<code>wireshark</code>在<code>windows</code>系统上默认使用的是<code>WinPcap</code>来抓包的，现在可以用<code>Npcap</code>来替换掉<code>WinPcap</code>，
+<code>Npcap</code>是基于<code>WinPcap 4.1.3</code>开发的，<code>api</code>兼容<code>WinPcap</code>。</p>
+<ol>
+<li>下载安装包
+Npcap项目主页，它采用的是MIT开源协议，Npcap下载</li>
+<li>安装
+安装时要勾选 Use DLT_NULL protocol sa Loopback &hellip; 和 install npcap in winpcap api-compat mode，如下所示。</li>
+</ol>
+</li>
+<li>
+<p>方法三<br>
+<code>RawCap</code></p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/windows/">Windows</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#windows-本地抓包">windows 本地抓包</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/network/dns/bind/" class="button left"><span>Bind-ubuntu部署配置</span></a>
+    
+    
+      <a href="/blog/linux/shadowsocks/shadowsocks/" class="button right"><span>Ubuntu安装配置shadowsocks</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Windows
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

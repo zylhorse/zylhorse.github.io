@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>详解安全传输协议SSL TLS - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="详解安全传输协议SSL TLS">
+<meta itemprop="description" content="tls 传输层安全协议 包含两部分：
+ 握手协议（handshake protocol）： 客户端和服务端进行协商，确定一组用于数据传输加密的密钥串 记录协议（record protocol）： 通过握手协议确定的密钥串进行数据加密传输  握手和密钥协商过程FullHandshake 客户端ClientHello 客户端发起请求，以明文传输请求信息包含：
+ version： 支持最高TLS协议版本, 从低到高：SSLV1、SSLV3、TLSV1、TLSV1.1、TLSV1.2 cipher suites： 客户端支持的加密套件列表： Kx = Key Exchange 密钥协商算法Au = Authentication 身份认证算法Enc = Encrypt 加密算法Mac = Message Authentication Code 信息摘要算法 compression methods：压缩算法列表，用于后续信息压缩传输 random_C：客户端随机数，用于后续密钥生成 extensions： 扩展字段，支持协议与算法相关参数及辅助信息 session id： 会话id，后续连接到同一台服务器，可以避免完全握手；  如果客户端时第一次连接服务器，则该字段为空。
+   服务器ServerHello 服务端返回协商的结果信息， 包含：
+ version： 选择使用的TLS协议版本 cipher suite： 选择使用的加密套件 compression method： 选择使用的压缩算法 random_S: 服务器随机数 ，用于后续密钥生成 session id： 会话id  握手成功，服务器会缓存session 参数到tls缓存中， 并生成对应的session id 返回该session id 给客户端，客户端将session id存储在浏览器并设置时限 后续连接到同一台服务器，则发送session id， 服务器验证后， 使用以前使用过的对称密钥来恢复session"><meta itemprop="datePublished" content="2015-07-03T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2015-07-03T00:00:00+00:00" />
+<meta itemprop="wordCount" content="167">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="详解安全传输协议SSL TLS" />
+<meta property="og:description" content="tls 传输层安全协议 包含两部分：
+ 握手协议（handshake protocol）： 客户端和服务端进行协商，确定一组用于数据传输加密的密钥串 记录协议（record protocol）： 通过握手协议确定的密钥串进行数据加密传输  握手和密钥协商过程FullHandshake 客户端ClientHello 客户端发起请求，以明文传输请求信息包含：
+ version： 支持最高TLS协议版本, 从低到高：SSLV1、SSLV3、TLSV1、TLSV1.1、TLSV1.2 cipher suites： 客户端支持的加密套件列表： Kx = Key Exchange 密钥协商算法Au = Authentication 身份认证算法Enc = Encrypt 加密算法Mac = Message Authentication Code 信息摘要算法 compression methods：压缩算法列表，用于后续信息压缩传输 random_C：客户端随机数，用于后续密钥生成 extensions： 扩展字段，支持协议与算法相关参数及辅助信息 session id： 会话id，后续连接到同一台服务器，可以避免完全握手；  如果客户端时第一次连接服务器，则该字段为空。
+   服务器ServerHello 服务端返回协商的结果信息， 包含：
+ version： 选择使用的TLS协议版本 cipher suite： 选择使用的加密套件 compression method： 选择使用的压缩算法 random_S: 服务器随机数 ，用于后续密钥生成 session id： 会话id  握手成功，服务器会缓存session 参数到tls缓存中， 并生成对应的session id 返回该session id 给客户端，客户端将session id存储在浏览器并设置时限 后续连接到同一台服务器，则发送session id， 服务器验证后， 使用以前使用过的对称密钥来恢复session" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/security/ssl-tls/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2015-07-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-07-03T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="详解安全传输协议SSL TLS"/>
+<meta name="twitter:description" content="tls 传输层安全协议 包含两部分：
+ 握手协议（handshake protocol）： 客户端和服务端进行协商，确定一组用于数据传输加密的密钥串 记录协议（record protocol）： 通过握手协议确定的密钥串进行数据加密传输  握手和密钥协商过程FullHandshake 客户端ClientHello 客户端发起请求，以明文传输请求信息包含：
+ version： 支持最高TLS协议版本, 从低到高：SSLV1、SSLV3、TLSV1、TLSV1.1、TLSV1.2 cipher suites： 客户端支持的加密套件列表： Kx = Key Exchange 密钥协商算法Au = Authentication 身份认证算法Enc = Encrypt 加密算法Mac = Message Authentication Code 信息摘要算法 compression methods：压缩算法列表，用于后续信息压缩传输 random_C：客户端随机数，用于后续密钥生成 extensions： 扩展字段，支持协议与算法相关参数及辅助信息 session id： 会话id，后续连接到同一台服务器，可以避免完全握手；  如果客户端时第一次连接服务器，则该字段为空。
+   服务器ServerHello 服务端返回协商的结果信息， 包含：
+ version： 选择使用的TLS协议版本 cipher suite： 选择使用的加密套件 compression method： 选择使用的压缩算法 random_S: 服务器随机数 ，用于后续密钥生成 session id： 会话id  握手成功，服务器会缓存session 参数到tls缓存中， 并生成对应的session id 返回该session id 给客户端，客户端将session id存储在浏览器并设置时限 后续连接到同一台服务器，则发送session id， 服务器验证后， 使用以前使用过的对称密钥来恢复session"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/security/ssl-tls/">详解安全传输协议SSL TLS</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-07-03 00:00:00 &#43;0000 UTC">2015-07-03</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="tls-传输层安全协议">tls 传输层安全协议</h2>
+<p>包含两部分：</p>
+<ol>
+<li>握手协议（<code>handshake protocol</code>）： 客户端和服务端进行协商，确定一组用于数据传输加密的密钥串</li>
+<li>记录协议（<code>record protocol</code>）： 通过握手协议确定的密钥串进行数据加密传输</li>
+</ol>
+<h2 id="握手和密钥协商过程fullhandshake">握手和密钥协商过程FullHandshake</h2>
+<h3 id="客户端clienthello">客户端ClientHello</h3>
+<p>客户端发起请求，以明文传输请求信息包含：</p>
+<ol>
+<li><code>version</code>： 支持最高<code>TLS</code>协议版本, 从低到高：<code>SSLV1</code>、<code>SSLV3</code>、<code>TLSV1</code>、<code>TLSV1.1</code>、<code>TLSV1.2</code></li>
+<li><code>cipher suites</code>： 客户端支持的加密套件列表：
+<pre tabindex="0"><code>Kx = Key Exchange 密钥协商算法
+Au = Authentication 身份认证算法
+Enc = Encrypt 加密算法
+Mac = Message Authentication Code 信息摘要算法
+</code></pre></li>
+<li><code>compression methods</code>：压缩算法列表，用于后续信息压缩传输</li>
+<li><code>random_C</code>：客户端随机数，用于后续密钥生成</li>
+<li><code>extensions</code>： 扩展字段，支持协议与算法相关参数及辅助信息</li>
+<li><code>session id</code>： 会话id，后续连接到同一台服务器，可以避免完全握手；
+<blockquote>
+<p>如果客户端时第一次连接服务器，则该字段为空。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="服务器serverhello">服务器ServerHello</h3>
+<p>服务端返回协商的结果信息， 包含：</p>
+<ol>
+<li><code>version</code>： 选择使用的<code>TLS</code>协议版本</li>
+<li><code>cipher suite</code>： 选择使用的加密套件</li>
+<li><code>compression method</code>： 选择使用的压缩算法</li>
+<li><code>random_S</code>: 服务器随机数 ，用于后续密钥生成</li>
+<li><code>session id</code>： 会话id</li>
+</ol>
+<p>握手成功，服务器会缓存<code>session</code> 参数到<code>tls</code>缓存中， 并生成对应的<code>session id</code>
+返回该<code>session id</code> 给客户端，客户端将<code>session id</code>存储在浏览器并设置时限
+后续连接到同一台服务器，则发送<code>session id</code>， 服务器验证后， 使用以前使用过的对称密钥来恢复<code>session</code></p>
+<p>问题： 大量客户端连接，会造成巨大的缓存开销；</p>
+<p><code>Session Ticket</code>：</p>
+<ol>
+<li>客户端在<code>client hello</code> 中指定是否支持<code>session ticket</code></li>
+<li>如果客户端支持<code>session ticket</code>， 服务器将创建新的<code>session ticket</code>， 并将<code>Session</code>参数使用私钥进行加密，返回给客户端。</li>
+<li>客户端存储该<code>session ticket</code></li>
+</ol>
+<h3 id="服务器servercertificate">服务器ServerCertificate</h3>
+<ol>
+<li>服务端发送服务器证书给客户端， 用于身份验证和密钥交换</li>
+<li>客户端校验证书合法性： 可信性、是否吊销、有效期、域名</li>
+</ol>
+<h3 id="服务器clientcertificaterequest-可选">服务器ClientCertificateRequest （可选）</h3>
+<p>如果进行双端验证，则服务端会向客户端请求客户端证书</p>
+<h3 id="服务器serverhellodone">服务器ServerHelloDone</h3>
+<p>服务器通知客户端初始协商<code>ServerHello</code>结束</p>
+<h3 id="客户端clientcertificate可选">客户端ClientCertificate（可选）</h3>
+<p>如果选择双端验证， 客户端向服务器端发送客户端证书</p>
+<h3 id="客户端clientkeyexchange">客户端ClientKeyExchange</h3>
+<ol>
+<li>客户端计算<code>PreMaster</code>,并使用证书公钥加密发送给服务器</li>
+<li>客户端根据<code>random_C</code>,<code>random_S</code>,<code>PreMaster</code>计算得到协商密钥（<code>master</code>）</li>
+</ol>
+<h3 id="客户端certificateverifymessage-可选">客户端CertificateVerifyMessage （可选）</h3>
+<p>如果选择双向验证，客户端使用本地私钥生成数字签名， 并发送给服务器，服务器使用客户端公钥证书进行身份验证</p>
+<h3 id="客户端changecipherspec">客户端ChangeCipherSpec</h3>
+<p>客户端通知服务器后续通信都使用协商密钥（<code>master</code>）和协商算法进行加密通信</p>
+<h3 id="客户端encryptedhandshakemessage">客户端EncryptedHandshakeMessage</h3>
+<p>使用协商密钥和算法加密一段数据， 发送给服务器</p>
+<h3 id="服务器changecipherspec">服务器ChangeCipherSpec</h3>
+<ol>
+<li>服务器接收到<code>PreMaster</code>， 使用私钥进行解密</li>
+<li>服务器根据<code>random_C</code>,<code>random_S</code>,<code>PreMaster</code>计算得到协商密钥（<code>master</code>）</li>
+<li>解密客户端发送的加密数据，验证数据和密钥的正确性</li>
+<li>服务器验证通过后， 同样发送<code>ChangeCipherSpec</code>消息，告诉客户端后续通信采用协商的密钥和算法进行加密通信</li>
+</ol>
+<h3 id="服务器encrypthandshakemessage">服务器EncryptHandshakeMessage</h3>
+<ol>
+<li>使用协商密钥和算法加密一段数据， 发送给客户端</li>
+<li>客户端验证通过后， 握手结束</li>
+</ol>
+<h2 id="会话缓存握手">会话缓存握手</h2>
+<h3 id="session-id">session id</h3>
+<ol>
+<li>如果客户端和服务器之间曾经建立连接， 服务器会在握手成功后返回<code>Session ID</code>给客户端， 并在服务器缓存对应的通信参数</li>
+<li>如果客户端和服务器再次建立连接， 则<code>ClientHello</code> 会携带<code>Session ID</code>发送给服务器</li>
+<li>服务器收到客户端的<code>Session ID</code>，回去检索TLS缓存， 如果没有检索到或Session过期， 则进行完整握手过程（<code>FullHandshake</code>）</li>
+<li>如果服务器检索到<code>Session</code>缓存， 则发送<code>ChangeCipherSpec</code>和<code>EncryptHandshakeMessage</code></li>
+<li>如果客户端能偶验证通过服务器的加密数据， 则客户端也发送<code>ChangeCipherSpec</code>和<code>EncryptHandshakeMessage</code></li>
+<li>服务器验证客户端的加密数据， 通过则握手成功</li>
+</ol>
+<h3 id="session-ticket">session ticket</h3>
+<ol>
+<li>如果客户端和服务器之间曾经建立连接， 服务器会在握手成功后返回<code>Session Ticket</code>给客户端， 并在客户端保存</li>
+<li>如果客户端和服务器再次建立连接， 则<code>ClientHello</code> 会携带<code>Session Ticket</code>发送给服务器</li>
+<li>服务器收到客户端的<code>Session Ticket</code>，并进行解密， 如果解密失败则进行完整握手过程（<code>FullHandshake</code>）</li>
+<li>如果服务器解密成功， 则发送<code>ChangeCipherSpec</code>和<code>EncryptHandshakeMessage</code></li>
+<li>如果客户端能偶验证通过服务器的加密数据， 则客户端也发送<code>ChangeCipherSpec</code>和<code>EncryptHandshakeMessage</code></li>
+<li>服务器验证客户端的加密数据， 通过则握手成功</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/security/">Security</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tls-传输层安全协议">tls 传输层安全协议</a></li>
+    <li><a href="#握手和密钥协商过程fullhandshake">握手和密钥协商过程FullHandshake</a>
+      <ul>
+        <li><a href="#客户端clienthello">客户端ClientHello</a></li>
+        <li><a href="#服务器serverhello">服务器ServerHello</a></li>
+        <li><a href="#服务器servercertificate">服务器ServerCertificate</a></li>
+        <li><a href="#服务器clientcertificaterequest-可选">服务器ClientCertificateRequest （可选）</a></li>
+        <li><a href="#服务器serverhellodone">服务器ServerHelloDone</a></li>
+        <li><a href="#客户端clientcertificate可选">客户端ClientCertificate（可选）</a></li>
+        <li><a href="#客户端clientkeyexchange">客户端ClientKeyExchange</a></li>
+        <li><a href="#客户端certificateverifymessage-可选">客户端CertificateVerifyMessage （可选）</a></li>
+        <li><a href="#客户端changecipherspec">客户端ChangeCipherSpec</a></li>
+        <li><a href="#客户端encryptedhandshakemessage">客户端EncryptedHandshakeMessage</a></li>
+        <li><a href="#服务器changecipherspec">服务器ChangeCipherSpec</a></li>
+        <li><a href="#服务器encrypthandshakemessage">服务器EncryptHandshakeMessage</a></li>
+      </ul>
+    </li>
+    <li><a href="#会话缓存握手">会话缓存握手</a>
+      <ul>
+        <li><a href="#session-id">session id</a></li>
+        <li><a href="#session-ticket">session ticket</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/security/hash/" class="button left"><span>详解hash</span></a>
+    
+    
+      <a href="/blog/software-programming/ebnf/" class="button right"><span>Extended Backus–Naur form</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Security
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

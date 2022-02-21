@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Message Queue on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/message-queue/</link>
+    <description>Recent content in Message Queue on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 08 Jan 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/message-queue/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>消息队列简介和消息队列中间件</title>
+      <link>https://zylhorse.github.io/blog/message-queue/%E4%B8%AD%E9%97%B4%E4%BB%B6/</link>
+      <pubDate>Tue, 08 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/message-queue/%E4%B8%AD%E9%97%B4%E4%BB%B6/</guid>
+      <description>消息队列 消息队列是消息的一个链表。 拥有写权限的可以向队列中写入特定格式消息， 拥有读权限可以从队列中读取特定格式消息。
+消息队列中间件 ActiveMQ，RabbitMQ，ZeroMQ，Kafka，MetaMQ，RocketMQ，NSQ，NATS,NATS-Streaming
+意义  解耦： 生产者根据自己逻辑发布消息； 消费者根据需要去订阅；对于多服务依赖有解耦的意义； 异步： 多服务调用，减少同步等待时间； 削峰： 业务系统根据自己的处理能力去消息队列中拿，防止大量信息导致系统崩溃；  问题  高可用：mq 肯定事集群部署，防止单机挂掉，业务停掉； 数据丢失： mq 需要数据本地磁盘持久化；  </description>
+    </item>
+    
+    <item>
+      <title>Docker部署和配置nsq集群</title>
+      <link>https://zylhorse.github.io/blog/message-queue/nsq/docker-%E5%AE%89%E8%A3%85nsq/</link>
+      <pubDate>Sun, 25 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/message-queue/nsq/docker-%E5%AE%89%E8%A3%85nsq/</guid>
+      <description>nsq.yml version: &#39;3&#39;services:nsqlookupd:image: nsqio/nsqcommand: /nsqlookupdports:- 4160:4160- 4161:4161nsqd:image: nsqio/nsqcommand: /nsqd --lookupd-tcp-address=192.168.20.99:4160 --broadcast-address=192.168.20.99depends_on:- nsqlookupdports:- 4150:4150- 4151:4151nsqadmin:image: nsqio/nsqcommand: /nsqadmin --lookupd-http-address=192.168.20.99:4161depends_on:- nsqlookupdports:- 4171:4171</description>
+    </item>
+    
+    <item>
+      <title>NSQ简介</title>
+      <link>https://zylhorse.github.io/blog/message-queue/nsq/nsqd/</link>
+      <pubDate>Fri, 23 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/message-queue/nsq/nsqd/</guid>
+      <description>描述 是一个守护进程，负责接收，排队，投递消息给客户端
+参数 -lookupd-tcp-address=: nslookup tcp 监听地址 -broadcast-address=&amp;quot;&amp;quot;: 注册到nslookup地址， 需要显示指定</description>
+    </item>
+    
+    <item>
+      <title>Kafka简介</title>
+      <link>https://zylhorse.github.io/blog/message-queue/kafka/kafka/</link>
+      <pubDate>Thu, 08 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/message-queue/kafka/kafka/</guid>
+      <description>简介 </description>
+    </item>
+    
+  </channel>
+</rss>

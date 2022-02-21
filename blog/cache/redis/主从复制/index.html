@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Redis的主从同步方式 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Redis的主从同步方式">
+<meta itemprop="description" content="概述 为了分担redis读写压力， 支持主从复制； 分为全量同步和增量同步
+全量同步 全量同步一般发生在slave 初始化阶段， 这时slave需要将master上的所有数据复制一份，具体步骤：
+ slave连接master， 发送SYNC命令 master接收到SYNC命令，开始执行BGSAVE命令生成RDB文件并在缓冲区记录此后执行的所有命令； master执行完BGSAVE命令后， 向所有slave发送快照，并在发送期间继续记录被执行的命令； slave收到快照文件后，丢弃所有数据，并载入新的快照； master快照发送完成后，开始向slave分发缓冲中记录的命令 slave载入快照完成后，开始接收master上缓冲的写命令；  增量同步 增量同步主要发生在slave初始化后，开始正常工作后， 将master上后续发生的写操作同步到slave上。具体过程：
+ master每执行一个写命令， 就会向slave发送同样的写命令。  主从同步特点  异步同步，不阻塞master服务器 master要开启持久化，否则master重启很危险 repl-diskless-sync no 默认不使用diskless同步方式  "><meta itemprop="datePublished" content="2016-12-01T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2016-12-01T00:00:00+00:00" />
+<meta itemprop="wordCount" content="27">
+<meta itemprop="keywords" content="Redis," /><meta property="og:title" content="Redis的主从同步方式" />
+<meta property="og:description" content="概述 为了分担redis读写压力， 支持主从复制； 分为全量同步和增量同步
+全量同步 全量同步一般发生在slave 初始化阶段， 这时slave需要将master上的所有数据复制一份，具体步骤：
+ slave连接master， 发送SYNC命令 master接收到SYNC命令，开始执行BGSAVE命令生成RDB文件并在缓冲区记录此后执行的所有命令； master执行完BGSAVE命令后， 向所有slave发送快照，并在发送期间继续记录被执行的命令； slave收到快照文件后，丢弃所有数据，并载入新的快照； master快照发送完成后，开始向slave分发缓冲中记录的命令 slave载入快照完成后，开始接收master上缓冲的写命令；  增量同步 增量同步主要发生在slave初始化后，开始正常工作后， 将master上后续发生的写操作同步到slave上。具体过程：
+ master每执行一个写命令， 就会向slave发送同样的写命令。  主从同步特点  异步同步，不阻塞master服务器 master要开启持久化，否则master重启很危险 repl-diskless-sync no 默认不使用diskless同步方式  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/cache/redis/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2016-12-01T00:00:00+00:00" />
+<meta property="article:modified_time" content="2016-12-01T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Redis的主从同步方式"/>
+<meta name="twitter:description" content="概述 为了分担redis读写压力， 支持主从复制； 分为全量同步和增量同步
+全量同步 全量同步一般发生在slave 初始化阶段， 这时slave需要将master上的所有数据复制一份，具体步骤：
+ slave连接master， 发送SYNC命令 master接收到SYNC命令，开始执行BGSAVE命令生成RDB文件并在缓冲区记录此后执行的所有命令； master执行完BGSAVE命令后， 向所有slave发送快照，并在发送期间继续记录被执行的命令； slave收到快照文件后，丢弃所有数据，并载入新的快照； master快照发送完成后，开始向slave分发缓冲中记录的命令 slave载入快照完成后，开始接收master上缓冲的写命令；  增量同步 增量同步主要发生在slave初始化后，开始正常工作后， 将master上后续发生的写操作同步到slave上。具体过程：
+ master每执行一个写命令， 就会向slave发送同样的写命令。  主从同步特点  异步同步，不阻塞master服务器 master要开启持久化，否则master重启很危险 repl-diskless-sync no 默认不使用diskless同步方式  "/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/cache/redis/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">Redis的主从同步方式</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-12-01 00:00:00 &#43;0000 UTC">2016-12-01</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h3 id="概述">概述</h3>
+<p>为了分担redis读写压力， 支持主从复制； 分为全量同步和增量同步</p>
+<h4 id="全量同步">全量同步</h4>
+<p>全量同步一般发生在slave 初始化阶段， 这时slave需要将master上的所有数据复制一份，具体步骤：</p>
+<ol>
+<li>slave连接master， 发送SYNC命令</li>
+<li>master接收到SYNC命令，开始执行BGSAVE命令生成RDB文件并在缓冲区记录此后执行的所有命令；</li>
+<li>master执行完BGSAVE命令后， 向所有slave发送快照，并在发送期间继续记录被执行的命令；</li>
+<li>slave收到快照文件后，丢弃所有数据，并载入新的快照；</li>
+<li>master快照发送完成后，开始向slave分发缓冲中记录的命令</li>
+<li>slave载入快照完成后，开始接收master上缓冲的写命令；</li>
+</ol>
+<h4 id="增量同步">增量同步</h4>
+<p>增量同步主要发生在slave初始化后，开始正常工作后， 将master上后续发生的写操作同步到slave上。具体过程：</p>
+<ol>
+<li>master每执行一个写命令， 就会向slave发送同样的写命令。</li>
+</ol>
+<h4 id="主从同步特点">主从同步特点</h4>
+<ol>
+<li>异步同步，不阻塞master服务器</li>
+<li>master要开启持久化，否则master重启很危险</li>
+<li>repl-diskless-sync no 默认不使用diskless同步方式</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#概述">概述</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/stories/%E4%B8%80%E6%AC%A1/" class="button left"><span>一次</span></a>
+    
+    
+      <a href="/blog/cache/redis/%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F/" class="button right"><span>Redis高可用方案-集群模式</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Cache
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

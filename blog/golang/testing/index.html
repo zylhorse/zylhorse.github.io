@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang单元测试 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Golang单元测试">
+<meta itemprop="description" content="简介  Package testing为Go packages提供自动化测试支持。 使用 go test 命令来启动测试 编写新的测试套件，需要创建以_test.go结尾的新文件  admin.go的测试文件，需要在当前目录新建测试文件admin_test.go   测试方法func TestXxx(*testing.T)  测试方法需要以Test开头 Xxx方法必须以大写字母开头 方法参数必须是：t *testing.T    关键词 tests: 常规测试
+beanchmarks: 基准测试
+examples : 样例测试
+sub: 子模式
+Benchmarks(基准测试) func BenchmarkXxx(b *testing.B)
+ benchmarks方法需要以Benchmark开头 benchmarks方法，在go test命令添加-bench时才执行 benchmarks中，需要目标代码被执行b.N次 func BenchmarkXxx(b *testing.B) {for i := 0; i &lt; b.N; i&#43;&#43; {Xxx()}} benchmarks在执行过程中会调整b.N，直到benchmarks函数持续足够长的时间，可以可靠的计时为止 执行结果： BenchmarkXxx 68453040	17.8 ns/op  单次执行目标代码耗时17.8ns,目标代码执行68453040次   benchmarks目标代码执行前，如果有比较耗时的准备操作，benchmarks的时间可以重置 func BenchmarkXxx(b *testing."><meta itemprop="datePublished" content="2019-09-23T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-09-23T00:00:00+00:00" />
+<meta itemprop="wordCount" content="355">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Golang单元测试" />
+<meta property="og:description" content="简介  Package testing为Go packages提供自动化测试支持。 使用 go test 命令来启动测试 编写新的测试套件，需要创建以_test.go结尾的新文件  admin.go的测试文件，需要在当前目录新建测试文件admin_test.go   测试方法func TestXxx(*testing.T)  测试方法需要以Test开头 Xxx方法必须以大写字母开头 方法参数必须是：t *testing.T    关键词 tests: 常规测试
+beanchmarks: 基准测试
+examples : 样例测试
+sub: 子模式
+Benchmarks(基准测试) func BenchmarkXxx(b *testing.B)
+ benchmarks方法需要以Benchmark开头 benchmarks方法，在go test命令添加-bench时才执行 benchmarks中，需要目标代码被执行b.N次 func BenchmarkXxx(b *testing.B) {for i := 0; i &lt; b.N; i&#43;&#43; {Xxx()}} benchmarks在执行过程中会调整b.N，直到benchmarks函数持续足够长的时间，可以可靠的计时为止 执行结果： BenchmarkXxx 68453040	17.8 ns/op  单次执行目标代码耗时17.8ns,目标代码执行68453040次   benchmarks目标代码执行前，如果有比较耗时的准备操作，benchmarks的时间可以重置 func BenchmarkXxx(b *testing." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/testing/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-09-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-09-23T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang单元测试"/>
+<meta name="twitter:description" content="简介  Package testing为Go packages提供自动化测试支持。 使用 go test 命令来启动测试 编写新的测试套件，需要创建以_test.go结尾的新文件  admin.go的测试文件，需要在当前目录新建测试文件admin_test.go   测试方法func TestXxx(*testing.T)  测试方法需要以Test开头 Xxx方法必须以大写字母开头 方法参数必须是：t *testing.T    关键词 tests: 常规测试
+beanchmarks: 基准测试
+examples : 样例测试
+sub: 子模式
+Benchmarks(基准测试) func BenchmarkXxx(b *testing.B)
+ benchmarks方法需要以Benchmark开头 benchmarks方法，在go test命令添加-bench时才执行 benchmarks中，需要目标代码被执行b.N次 func BenchmarkXxx(b *testing.B) {for i := 0; i &lt; b.N; i&#43;&#43; {Xxx()}} benchmarks在执行过程中会调整b.N，直到benchmarks函数持续足够长的时间，可以可靠的计时为止 执行结果： BenchmarkXxx 68453040	17.8 ns/op  单次执行目标代码耗时17.8ns,目标代码执行68453040次   benchmarks目标代码执行前，如果有比较耗时的准备操作，benchmarks的时间可以重置 func BenchmarkXxx(b *testing."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/testing/">Golang单元测试</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-09-23 00:00:00 &#43;0000 UTC">2019-09-23</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="简介">简介</h2>
+<ul>
+<li>Package <code>testing</code>为Go packages提供自动化测试支持。</li>
+<li>使用 <code>go test</code> 命令来启动测试</li>
+<li>编写新的测试套件，需要创建以<code>_test.go</code>结尾的新文件
+<ul>
+<li><code>admin.go</code>的测试文件，需要在当前目录新建测试文件<code>admin_test.go</code></li>
+</ul>
+</li>
+<li>测试方法<code>func TestXxx(*testing.T)</code>
+<ul>
+<li>测试方法需要以<code>Test</code>开头</li>
+<li><code>Xxx</code>方法必须以大写字母开头</li>
+<li>方法参数必须是：<code>t *testing.T</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="关键词">关键词</h2>
+<p><code>tests</code>: 常规测试<br>
+<code>beanchmarks</code>: 基准测试<br>
+<code>examples</code> : 样例测试<br>
+<code>sub</code>: 子模式</p>
+<h2 id="benchmarks基准测试">Benchmarks(基准测试)</h2>
+<p><code>func BenchmarkXxx(b *testing.B)</code></p>
+<ul>
+<li><code>benchmarks</code>方法需要以<code>Benchmark</code>开头</li>
+<li><code>benchmarks</code>方法，在<code>go test</code>命令添加<code>-bench</code>时才执行</li>
+<li><code>benchmarks</code>中，需要目标代码被执行<code>b.N</code>次
+<pre tabindex="0"><code>func BenchmarkXxx(b *testing.B) {
+    for i := 0; i &lt; b.N; i++ {
+        Xxx()
+    }
+}
+</code></pre></li>
+<li><code>benchmarks</code>在执行过程中会调整<code>b.N</code>，直到<code>benchmarks</code>函数持续足够长的时间，可以可靠的计时为止</li>
+<li>执行结果： <code>BenchmarkXxx   	68453040	        17.8 ns/op</code>
+<ul>
+<li>单次执行目标代码耗时17.8ns,目标代码执行68453040次</li>
+</ul>
+</li>
+<li><code>benchmarks</code>目标代码执行前，如果有比较耗时的准备操作，<code>benchmarks</code>的时间可以重置
+<pre tabindex="0"><code>func BenchmarkXxx(b *testing.B) {
+    PrepareLongTime()
+    b.ResetTimer()
+    for i := 0; i &lt; b.N; i++ {
+        Xxx()
+    }
+}
+</code></pre></li>
+</ul>
+<h3 id="parallel并行测试">Parallel(并行测试)</h3>
+<p>如果<code>benchmarks</code>需要并行的测试性能，可以使用<code>RunParallel</code>。<br>
+一般需要给<code>go test</code>指定参数<code>-cpu 1,2,4</code></p>
+<pre tabindex="0"><code>func BenchmarkXxxParallel(b *testing.B) {
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			Xxx()
+		}
+	})
+}
+</code></pre><h2 id="examples样例测试">Examples(样例测试)</h2>
+<p><code>examples</code>运行测试时，会比较测试代码输出的结果和<code>Output:</code>模块声明的结果</p>
+<ul>
+<li><code>Output:</code> 比较时会忽略头尾空格</li>
+<li><code>Unordered output:</code> 比较时忽略结果顺序</li>
+<li>当没有 <code>Output:</code> 模块时，<code>go test</code> 不会执行<code>examples</code></li>
+</ul>
+<h2 id="skipping">Skipping</h2>
+<p>跳过测试代码不去执行</p>
+<pre tabindex="0"><code>eg:
+  
+    func TestTimeConsuming(t *testing.T) {
+        if testing.Short() {
+            t.Skip(&quot;skipping test in short mode.&quot;)
+        }
+        ...
+    }
+</code></pre><h2 id="subtests-and-sub-benchmarks">Subtests and Sub-benchmarks</h2>
+<p><code>go test</code> 支持子模式，避免创建多个<code>TestFuncXxx</code></p>
+<pre tabindex="0"><code>eg: 
+
+    func TestFoo(t *testing.T) {
+        // &lt;setup code&gt;
+        t.Run(&quot;A=1&quot;, func(t *testing.T) { ... })
+        t.Run(&quot;A=2&quot;, func(t *testing.T) { ... })
+        t.Run(&quot;B=1&quot;, func(t *testing.T) { ... })
+        // &lt;tear-down code&gt;
+    }
+
+    go test -run ''      # Run all tests.
+    go test -run Foo     # Run top-level tests matching &quot;Foo&quot;, such as &quot;TestFooBar&quot;.
+    go test -run Foo/A=  # For top-level tests matching &quot;Foo&quot;, run subtests matching &quot;A=&quot;.
+    go test -run /A=1    # For all top-level tests, run subtests matching &quot;A=1&quot;.
+</code></pre><blockquote>
+<p>Parallel(并行测试)也支持子模式</p>
+</blockquote>
+<h2 id="main">Main</h2>
+<p>有些时候需要在测试执行前做一些准备工作,测试完成做一些资源回收工作，这时就用到函数：</p>
+<pre tabindex="0"><code>func TestMain(m *testing.M) {
+ 	// call flag.Parse() here if TestMain uses flags
+    flag.Parse()
+    // prepare for testing
+    setup()
+    // finish testing operation
+    defer teardown()
+ 	os.Exit(m.Run())
+ }
+</code></pre><ul>
+<li><code>TestMain</code>在<code>main goroutine</code>中执行</li>
+<li><code>m.Run()</code> 会执行所有的<code>tests</code>等，并返回<code>exit code</code></li>
+<li><code>flag.Parse()</code>在<code>TestMain</code>后执行，如果需要命令行参数，在<code>TestMain</code>中需要显示的调用<code>flag.Parse()</code></li>
+</ul>
+<h2 id="go-test-参数详解">go test 参数详解</h2>
+<ul>
+<li><code>-bench regexp</code> 执行符合正则表达式的<code>benchmarks</code>
+<ul>
+<li><code>-bench .</code> 执行所有的<code>benchmarks</code></li>
+<li><code>-bench reg1/reg2/reg3</code> 正则表达式由<code>/</code>分割</li>
+</ul>
+</li>
+<li><code>-benchmem</code> 打印<code>benchmarks</code>内存分配统计信息</li>
+<li><code>-benchtime t</code> 设置<code>benchmarks</code>运行足够的次数
+<ul>
+<li><code>-benchtime 2s</code> 默认为1s</li>
+<li><code>-benchtime 1000x</code> 指定执行<code>benchmarks</code>次数</li>
+</ul>
+</li>
+<li><code>-count n</code> 指定<code>tests</code>和<code>benchmarks</code>执行次数
+<ul>
+<li>如果指定<code>-cpu</code>, 则每个<code>GOMAXPROCS</code>都要执行n次</li>
+<li><code>examples</code> 总是执行1次</li>
+</ul>
+</li>
+<li><code>-cpu 1,2,4</code> 指定<code>tests</code>和<code>benchmarks</code>在哪些<code>GOMAXPROCS</code>上并行执行
+<ul>
+<li>默认时当前<code>GOMAXPROCS</code></li>
+</ul>
+</li>
+<li><code>-list regexp</code> 列出所有符合正则表达式的 <code>tests,benchmarks,examples</code>
+<ul>
+<li>只列出符合条件的，不执行</li>
+</ul>
+</li>
+<li><code>-run regexp</code> 执行符合正则表达式的<code>tests</code>
+<ul>
+<li><code>-run .</code> 执行所有的<code>tests</code></li>
+<li><code>-run reg1/reg2/reg3</code> 正则表达式由<code>/</code>分割</li>
+</ul>
+</li>
+<li><code>-v</code> 打印所有测试日志</li>
+<li><code>-c</code> 生成可执行二进制测试文件，但不运行测试</li>
+<li><code>-i</code> 安装测试依赖的<code>package</code>,但不运行测试</li>
+<li><code>-short</code> 设置是否缩短运行时长的<code>tests</code>
+<ul>
+<li>使用<code>testing.Short()</code>接收该参数</li>
+</ul>
+</li>
+<li><code>-cpuprofile</code> 生成CPU <code>profile</code>文件
+<ul>
+<li><code>-cpuprofile=cpu.out</code></li>
+<li>同时生成二进制测试文件</li>
+</ul>
+</li>
+<li><code>-memprofile</code> 生成MEM <code>profile</code>文件
+<ul>
+<li><code>-memprofile=mem.out</code></li>
+<li>同时生成二进制测试文件</li>
+</ul>
+</li>
+<li><code>-blockprofile</code> 生成 BLOCK <code>profile</code>文件
+<ul>
+<li><code>-blockprofile=block.out</code></li>
+<li>同时生成二进制测试文件</li>
+</ul>
+</li>
+<li><code>-mutexprofile</code> 生成MUTEX <code>profile</code>文件
+<ul>
+<li><code>-mutexprofile=mutex.out</code></li>
+<li>同时生成二进制测试文件</li>
+</ul>
+</li>
+<li><code>-trace</code> 生成执行<code>trace</code>文件</li>
+</ul>
+<blockquote>
+<p>测试生成的二进制文件和<code>profile</code>文件，使用命令<code>go tool pprof app.test cpu.prof</code> 分析</p>
+</blockquote>
+<h3 id="go-辅助函数">go 辅助函数</h3>
+<ul>
+<li><code>T.Helper()</code>: 标记当前函数为<code>helper</code>函数，当打印文件和行信息时跳过当前函数。
+<blockquote>
+<p><code>T.Helper()</code>是协程安全的， 可以在多个<code>goroutine</code>中调用</p>
+</blockquote>
+</li>
+<li><code>T.SkipNow()</code>: 标记跳过当前测试函数，并调用<code>runtime.Goexit</code>终止当前测试函数</li>
+<li><code>T.CleanUp(f func())</code>: 注册回调清理函数，该函数将在测试流程结束时执行。</li>
+<li><code>T.ResetTimer()</code>: 将运行基准时间和内存计数器置零。
+<blockquote>
+<p><code>testing.ResetTimer()</code> 不影响定时器的运行。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="问题">问题</h2>
+<ol>
+<li>缓存: golang 单元测试，有缓存机制，导致前后测试结果一致, 需要手动清理；
+<pre tabindex="0"><code>    go clean -testcache
+</code></pre></li>
+</ol>
+<h2 id="reference">Reference</h2>
+<p><a href="https://golang.org/pkg/testing/">golang.org/pkg/testing</a></p>
+
+      
+    <h2>参考</h2>
+    <ul>
+        
+            
+                <li><a target="_blank" href="https://pkg.go.dev/cmd/go@go1.13.1#hdr-Testing_flags">Testing flags</a></li>
+            
+        
+    </ul>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#关键词">关键词</a></li>
+    <li><a href="#benchmarks基准测试">Benchmarks(基准测试)</a>
+      <ul>
+        <li><a href="#parallel并行测试">Parallel(并行测试)</a></li>
+      </ul>
+    </li>
+    <li><a href="#examples样例测试">Examples(样例测试)</a></li>
+    <li><a href="#skipping">Skipping</a></li>
+    <li><a href="#subtests-and-sub-benchmarks">Subtests and Sub-benchmarks</a></li>
+    <li><a href="#main">Main</a></li>
+    <li><a href="#go-test-参数详解">go test 参数详解</a>
+      <ul>
+        <li><a href="#go-辅助函数">go 辅助函数</a></li>
+      </ul>
+    </li>
+    <li><a href="#问题">问题</a></li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%80%E8%87%B4%E6%80%A7/" class="button left"><span>分布式一致性</span></a>
+    
+    
+      <a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/" class="button right"><span>分布式系统</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

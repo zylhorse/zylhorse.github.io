@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>struct为什么会有字节对齐这个概念 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="struct为什么会有字节对齐这个概念">
+<meta itemprop="description" content="结构体struct  struct 是一种复合数据类型， 它是由基本数据类型组合而成(char, int, float, ...) 编译器将struct中的成员按其alignment分配空间，各个成员在内存中顺序存储 struct中的第一个成员地址为struct的首地址 struct中的每个成员地址具有对齐的特性，如int32其起始地址应该为4的倍数  字节对齐  计算机内存空间按照byte划分 各种类型数据按照规则在内存空间上排列，数据只能从特定的内存地址进行存取  为什么  某些cpu在访问没有进行对齐的变量时，会报错。比如oracle sparc系统 比较常见的没有字节对齐，会损失数据的存取效率。  大部分平台读内存都是从偶地址开始 如果int32存放在偶地址，则一个读周期就可以读出数据 如果放在奇地址，则需要2个读周期    规则  基本类型自身的对齐值  char 1byte short 2byte int/float/double 等 4byte   结构体对齐值 为其成员中对齐值最大的那个 指定/取消对齐值  指定：  #pragma pack (value) __attribute__ ((__packed__))   取消: #pragma pack ()    代码示例 struct A{int a;char b;short c;};struct B{char b;int a;short c;};#pragma pack (2)struct C{char b;int a;short c;};#pragma pack ()#pragma pack (1)struct D{char b;int a;short c;};#pragma pack ()结果是:sizeof(strcut A)值为8sizeof(struct B)的值却是12sizeof(struct C)值是8。sizeof(struct D)值为7。"><meta itemprop="datePublished" content="2013-10-13T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2013-10-13T00:00:00+00:00" />
+<meta itemprop="wordCount" content="104">
+<meta itemprop="keywords" content="" /><meta property="og:title" content="struct为什么会有字节对齐这个概念" />
+<meta property="og:description" content="结构体struct  struct 是一种复合数据类型， 它是由基本数据类型组合而成(char, int, float, ...) 编译器将struct中的成员按其alignment分配空间，各个成员在内存中顺序存储 struct中的第一个成员地址为struct的首地址 struct中的每个成员地址具有对齐的特性，如int32其起始地址应该为4的倍数  字节对齐  计算机内存空间按照byte划分 各种类型数据按照规则在内存空间上排列，数据只能从特定的内存地址进行存取  为什么  某些cpu在访问没有进行对齐的变量时，会报错。比如oracle sparc系统 比较常见的没有字节对齐，会损失数据的存取效率。  大部分平台读内存都是从偶地址开始 如果int32存放在偶地址，则一个读周期就可以读出数据 如果放在奇地址，则需要2个读周期    规则  基本类型自身的对齐值  char 1byte short 2byte int/float/double 等 4byte   结构体对齐值 为其成员中对齐值最大的那个 指定/取消对齐值  指定：  #pragma pack (value) __attribute__ ((__packed__))   取消: #pragma pack ()    代码示例 struct A{int a;char b;short c;};struct B{char b;int a;short c;};#pragma pack (2)struct C{char b;int a;short c;};#pragma pack ()#pragma pack (1)struct D{char b;int a;short c;};#pragma pack ()结果是:sizeof(strcut A)值为8sizeof(struct B)的值却是12sizeof(struct C)值是8。sizeof(struct D)值为7。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/compilation/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2013-10-13T00:00:00+00:00" />
+<meta property="article:modified_time" content="2013-10-13T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="struct为什么会有字节对齐这个概念"/>
+<meta name="twitter:description" content="结构体struct  struct 是一种复合数据类型， 它是由基本数据类型组合而成(char, int, float, ...) 编译器将struct中的成员按其alignment分配空间，各个成员在内存中顺序存储 struct中的第一个成员地址为struct的首地址 struct中的每个成员地址具有对齐的特性，如int32其起始地址应该为4的倍数  字节对齐  计算机内存空间按照byte划分 各种类型数据按照规则在内存空间上排列，数据只能从特定的内存地址进行存取  为什么  某些cpu在访问没有进行对齐的变量时，会报错。比如oracle sparc系统 比较常见的没有字节对齐，会损失数据的存取效率。  大部分平台读内存都是从偶地址开始 如果int32存放在偶地址，则一个读周期就可以读出数据 如果放在奇地址，则需要2个读周期    规则  基本类型自身的对齐值  char 1byte short 2byte int/float/double 等 4byte   结构体对齐值 为其成员中对齐值最大的那个 指定/取消对齐值  指定：  #pragma pack (value) __attribute__ ((__packed__))   取消: #pragma pack ()    代码示例 struct A{int a;char b;short c;};struct B{char b;int a;short c;};#pragma pack (2)struct C{char b;int a;short c;};#pragma pack ()#pragma pack (1)struct D{char b;int a;short c;};#pragma pack ()结果是:sizeof(strcut A)值为8sizeof(struct B)的值却是12sizeof(struct C)值是8。sizeof(struct D)值为7。"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/compilation/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/">struct为什么会有字节对齐这个概念</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2013-10-13 00:00:00 &#43;0000 UTC">2013-10-13</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="结构体struct">结构体struct</h2>
+<ol>
+<li><code>struct</code> 是一种复合数据类型， 它是由基本数据类型组合而成(<code>char, int, float, ...</code>)</li>
+<li>编译器将<code>struct</code>中的成员按其<code>alignment</code>分配空间，各个成员在内存中顺序存储</li>
+<li><code>struct</code>中的第一个成员地址为<code>struct</code>的首地址</li>
+<li><code>struct</code>中的每个成员地址具有对齐的特性，如int32其起始地址应该为4的倍数</li>
+</ol>
+<h2 id="字节对齐">字节对齐</h2>
+<ol>
+<li>计算机内存空间按照byte划分</li>
+<li>各种类型数据按照规则在内存空间上排列，数据只能从特定的内存地址进行存取</li>
+</ol>
+<h3 id="为什么">为什么</h3>
+<ul>
+<li>某些cpu在访问没有进行对齐的变量时，会报错。比如<code>oracle sparc</code>系统</li>
+<li>比较常见的没有字节对齐，会损失数据的存取效率。
+<ul>
+<li>大部分平台读内存都是从偶地址开始</li>
+<li>如果int32存放在偶地址，则一个读周期就可以读出数据</li>
+<li>如果放在奇地址，则需要2个读周期</li>
+</ul>
+</li>
+</ul>
+<h3 id="规则">规则</h3>
+<ol>
+<li>基本类型自身的对齐值
+<ul>
+<li><code>char</code> 1byte</li>
+<li><code>short</code> 2byte</li>
+<li><code>int/float/double</code> 等 4byte</li>
+</ul>
+</li>
+<li>结构体对齐值 为其成员中对齐值最大的那个</li>
+<li>指定/取消对齐值
+<ul>
+<li>指定：
+<ol>
+<li><code>#pragma pack (value)</code></li>
+<li><code>__attribute__ ((__packed__))</code></li>
+</ol>
+</li>
+<li>取消: <code>#pragma pack ()</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="代码示例">代码示例</h3>
+<pre tabindex="0"><code>struct A
+{
+        int a;
+        char b;
+        short c;
+};
+struct B
+{
+        char b;
+        int a;
+        short c;
+};
+#pragma pack (2)
+struct C
+{
+        char b;
+        int a;
+        short c;
+};
+#pragma pack ()
+
+#pragma pack (1)
+struct D
+{
+        char b;
+        int a;
+        short c;
+};
+#pragma pack ()
+
+结果是:
+sizeof(strcut A)值为8
+sizeof(struct B)的值却是12
+sizeof(struct C)值是8。
+sizeof(struct D)值为7。
+</code></pre>
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/compilation/">Compilation</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      <li>None</li>
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#结构体struct">结构体struct</a></li>
+    <li><a href="#字节对齐">字节对齐</a>
+      <ul>
+        <li><a href="#为什么">为什么</a></li>
+        <li><a href="#规则">规则</a></li>
+        <li><a href="#代码示例">代码示例</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/memory/%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA/" class="button left"><span>内存溢出的场景及解决方案</span></a>
+    
+    
+      <a href="/blog/stories/%E5%8D%81%E5%B0%81%E4%BF%A1/" class="button right"><span>十封信</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Compilation
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

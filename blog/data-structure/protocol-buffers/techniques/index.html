@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Protocol Buffers - 技巧 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Protocol Buffers - 技巧">
+<meta itemprop="description" content="本文描述处理protocol buffer的一些常用设计模式。你也可以发送设计和使用问题到Protocol Buffers 讨论组
+流化多个Message  Streaming Multiple Messages
+ 如果你想要写多个message到单个文件或流中，由你确定跟踪一个message结束位置和下一个message开始的位置。protocol buffer格式不是自定义的， 因此protocol buffer解析器无法自行确定消息的结束位置。解决这个问题最简单的方法是在写message之前，先写message大小。 当你读入message时，先读大小，然后读取字节到一个单独的缓冲区，再从缓冲区解析。(如果你想要避免拷贝字节到一个独立的缓冲区， 请检查CodedInputStrem类(C&#43;&#43;和Java中)，它可以告知将读取限制为特定的字节数)
+大数据集  Large Data Sets
+ protocol buffer不是为处理大型message而设计的。根据一般经验，如果每个处理的message都大于1M字节, 那么需要考虑替代方案。
+这就是说，protocol buffer非常适合处理大型数据集中的单个message。通常，大型数据集实际上只是小块的集合，其中每小块可能是结构化的数据块。 尽管protocol buffer不能一次处理整个集合，使用protocol buffer来编码每块可以大大简化你的问题: 现在你只需要处理一组字节字符串，而不是一组结构。
+protocol buffer不包含对大数据集的内置支持，因为不同的情况需要不同的解决方案。有些时候一个简单的记录列表就可以， 而其它时候你需要一个类似数据库的东西。每一种解决方案应该作为单独的库来开发，这样只有需要它的人才需要支付成本。
+自描述Message  Self-describing Messages
+ protocol buffer不包含它们自己类型的描述。因此，只给出一条原始message，而没有定义其类型的对应的.proto文件，这很难提取出任何有用的数据。
+但是，注意，.proto文件的内容本身可以使用protocol buffer表示。src/google/protobuf/descriptor.proto文件定义了所涉及的message类型。 protoc可以输出一个FileDescriptorSet－表示一组.proto文件－使用--descriptor_set_out选项。这样，你可以像以下定义一个自描述的message：
+syntax = &quot;proto3&quot;;import &quot;google/protobuf/any.proto&quot;;import &quot;google/protobuf/descriptor.proto&quot;;message SelfDescribingMessage {// Set of FileDescriptorProtos which describe the type and its dependencies.google.protobuf.FileDescriptorSet descriptor_set = 1;// The message and its type, encoded as an Any message."><meta itemprop="datePublished" content="2021-10-28T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-10-28T00:00:00+00:00" />
+<meta itemprop="wordCount" content="82">
+<meta itemprop="keywords" content="Protocol Buffers," /><meta property="og:title" content="Protocol Buffers - 技巧" />
+<meta property="og:description" content="本文描述处理protocol buffer的一些常用设计模式。你也可以发送设计和使用问题到Protocol Buffers 讨论组
+流化多个Message  Streaming Multiple Messages
+ 如果你想要写多个message到单个文件或流中，由你确定跟踪一个message结束位置和下一个message开始的位置。protocol buffer格式不是自定义的， 因此protocol buffer解析器无法自行确定消息的结束位置。解决这个问题最简单的方法是在写message之前，先写message大小。 当你读入message时，先读大小，然后读取字节到一个单独的缓冲区，再从缓冲区解析。(如果你想要避免拷贝字节到一个独立的缓冲区， 请检查CodedInputStrem类(C&#43;&#43;和Java中)，它可以告知将读取限制为特定的字节数)
+大数据集  Large Data Sets
+ protocol buffer不是为处理大型message而设计的。根据一般经验，如果每个处理的message都大于1M字节, 那么需要考虑替代方案。
+这就是说，protocol buffer非常适合处理大型数据集中的单个message。通常，大型数据集实际上只是小块的集合，其中每小块可能是结构化的数据块。 尽管protocol buffer不能一次处理整个集合，使用protocol buffer来编码每块可以大大简化你的问题: 现在你只需要处理一组字节字符串，而不是一组结构。
+protocol buffer不包含对大数据集的内置支持，因为不同的情况需要不同的解决方案。有些时候一个简单的记录列表就可以， 而其它时候你需要一个类似数据库的东西。每一种解决方案应该作为单独的库来开发，这样只有需要它的人才需要支付成本。
+自描述Message  Self-describing Messages
+ protocol buffer不包含它们自己类型的描述。因此，只给出一条原始message，而没有定义其类型的对应的.proto文件，这很难提取出任何有用的数据。
+但是，注意，.proto文件的内容本身可以使用protocol buffer表示。src/google/protobuf/descriptor.proto文件定义了所涉及的message类型。 protoc可以输出一个FileDescriptorSet－表示一组.proto文件－使用--descriptor_set_out选项。这样，你可以像以下定义一个自描述的message：
+syntax = &quot;proto3&quot;;import &quot;google/protobuf/any.proto&quot;;import &quot;google/protobuf/descriptor.proto&quot;;message SelfDescribingMessage {// Set of FileDescriptorProtos which describe the type and its dependencies.google.protobuf.FileDescriptorSet descriptor_set = 1;// The message and its type, encoded as an Any message." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/data-structure/protocol-buffers/techniques/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-10-28T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-10-28T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Protocol Buffers - 技巧"/>
+<meta name="twitter:description" content="本文描述处理protocol buffer的一些常用设计模式。你也可以发送设计和使用问题到Protocol Buffers 讨论组
+流化多个Message  Streaming Multiple Messages
+ 如果你想要写多个message到单个文件或流中，由你确定跟踪一个message结束位置和下一个message开始的位置。protocol buffer格式不是自定义的， 因此protocol buffer解析器无法自行确定消息的结束位置。解决这个问题最简单的方法是在写message之前，先写message大小。 当你读入message时，先读大小，然后读取字节到一个单独的缓冲区，再从缓冲区解析。(如果你想要避免拷贝字节到一个独立的缓冲区， 请检查CodedInputStrem类(C&#43;&#43;和Java中)，它可以告知将读取限制为特定的字节数)
+大数据集  Large Data Sets
+ protocol buffer不是为处理大型message而设计的。根据一般经验，如果每个处理的message都大于1M字节, 那么需要考虑替代方案。
+这就是说，protocol buffer非常适合处理大型数据集中的单个message。通常，大型数据集实际上只是小块的集合，其中每小块可能是结构化的数据块。 尽管protocol buffer不能一次处理整个集合，使用protocol buffer来编码每块可以大大简化你的问题: 现在你只需要处理一组字节字符串，而不是一组结构。
+protocol buffer不包含对大数据集的内置支持，因为不同的情况需要不同的解决方案。有些时候一个简单的记录列表就可以， 而其它时候你需要一个类似数据库的东西。每一种解决方案应该作为单独的库来开发，这样只有需要它的人才需要支付成本。
+自描述Message  Self-describing Messages
+ protocol buffer不包含它们自己类型的描述。因此，只给出一条原始message，而没有定义其类型的对应的.proto文件，这很难提取出任何有用的数据。
+但是，注意，.proto文件的内容本身可以使用protocol buffer表示。src/google/protobuf/descriptor.proto文件定义了所涉及的message类型。 protoc可以输出一个FileDescriptorSet－表示一组.proto文件－使用--descriptor_set_out选项。这样，你可以像以下定义一个自描述的message：
+syntax = &quot;proto3&quot;;import &quot;google/protobuf/any.proto&quot;;import &quot;google/protobuf/descriptor.proto&quot;;message SelfDescribingMessage {// Set of FileDescriptorProtos which describe the type and its dependencies.google.protobuf.FileDescriptorSet descriptor_set = 1;// The message and its type, encoded as an Any message."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/data-structure/protocol-buffers/techniques/">Protocol Buffers - 技巧</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2021-10-28 00:00:00 &#43;0000 UTC">2021-10-28</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <p>本文描述处理<code>protocol buffer</code>的一些常用设计模式。你也可以发送设计和使用问题到<a href="http://groups.google.com/group/protobuf">Protocol Buffers 讨论组</a></p>
+<h2 id="流化多个message">流化多个Message</h2>
+<blockquote>
+<p>Streaming Multiple Messages</p>
+</blockquote>
+<p>如果你想要写多个<code>message</code>到单个文件或流中，由你确定跟踪一个<code>message</code>结束位置和下一个<code>message</code>开始的位置。<code>protocol buffer</code>格式不是自定义的，
+因此<code>protocol buffer</code>解析器无法自行确定消息的结束位置。解决这个问题最简单的方法是在写<code>message</code>之前，先写<code>message</code>大小。
+当你读入<code>message</code>时，先读大小，然后读取字节到一个单独的缓冲区，再从缓冲区解析。(如果你想要避免拷贝字节到一个独立的缓冲区，
+请检查<code>CodedInputStrem</code>类(C++和Java中)，它可以告知将读取限制为特定的字节数)</p>
+<h2 id="大数据集">大数据集</h2>
+<blockquote>
+<p>Large Data Sets</p>
+</blockquote>
+<p><code>protocol buffer</code>不是为处理大型<code>message</code>而设计的。根据一般经验，如果每个处理的<code>message</code>都大于1M字节, 那么需要考虑替代方案。</p>
+<p>这就是说，<code>protocol buffer</code>非常适合处理大型数据集中的单个<code>message</code>。通常，大型数据集实际上只是小块的集合，其中每小块可能是结构化的数据块。
+尽管<code>protocol buffer</code>不能一次处理整个集合，使用<code>protocol buffer</code>来编码每块可以大大简化你的问题:  现在你只需要处理一组字节字符串，而不是一组结构。</p>
+<p><code>protocol buffer</code>不包含对大数据集的内置支持，因为不同的情况需要不同的解决方案。有些时候一个简单的记录列表就可以，
+而其它时候你需要一个类似数据库的东西。每一种解决方案应该作为单独的库来开发，这样只有需要它的人才需要支付成本。</p>
+<h2 id="自描述message">自描述Message</h2>
+<blockquote>
+<p>Self-describing Messages</p>
+</blockquote>
+<p><code>protocol buffer</code>不包含它们自己类型的描述。因此，只给出一条原始<code>message</code>，而没有定义其类型的对应的<code>.proto</code>文件，这很难提取出任何有用的数据。</p>
+<p>但是，注意，<code>.proto</code>文件的内容本身可以使用<code>protocol buffer</code>表示。<code>src/google/protobuf/descriptor.proto</code>文件定义了所涉及的<code>message</code>类型。
+<code>protoc</code>可以输出一个<code>FileDescriptorSet</code>－表示一组<code>.proto</code>文件－使用<code>--descriptor_set_out</code>选项。这样，你可以像以下定义一个自描述的<code>message</code>：</p>
+<pre tabindex="0"><code>syntax = &quot;proto3&quot;;
+
+import &quot;google/protobuf/any.proto&quot;;
+import &quot;google/protobuf/descriptor.proto&quot;;
+
+message SelfDescribingMessage {
+  // Set of FileDescriptorProtos which describe the type and its dependencies.
+  google.protobuf.FileDescriptorSet descriptor_set = 1;
+
+  // The message and its type, encoded as an Any message.
+  google.protobuf.Any message = 2;
+}
+
+</code></pre><p>通过使用<code>DynamicMessage</code>(在c++和Java中可用)这样的类，您可以编写可以操作<code>selfdescripbingmessages</code>的工具。</p>
+<p>尽管如此，这个功能之所以没有包含在协议缓冲区库中，是因为我们从未在Google中使用过它。</p>
+<p>此技巧需要使用描述符支持动态<code>message</code>。请再使用自描述<code>message</code>前，检查你的平台是否支持此特性。</p>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/data-structure/">Data Structure</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/protocol-buffers/">Protocol Buffers</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#流化多个message">流化多个Message</a></li>
+    <li><a href="#大数据集">大数据集</a></li>
+    <li><a href="#自描述message">自描述Message</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/data-structure/protocol-buffers/guide/" class="button left"><span>Protocol Buffers - Version 3指南</span></a>
+    
+    
+      <a href="/blog/data-structure/protocol-buffers/instroduction/" class="button right"><span>Protocol Buffers - 简介</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Data&#32;Structure
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

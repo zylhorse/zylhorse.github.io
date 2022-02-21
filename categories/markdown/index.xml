@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Markdown on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/markdown/</link>
+    <description>Recent content in Markdown on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 07 Jan 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/markdown/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>markdown使用手册</title>
+      <link>https://zylhorse.github.io/blog/markdown/markdown/</link>
+      <pubDate>Thu, 07 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/markdown/markdown/</guid>
+      <description>简单链接   格式
+[zylhorse blog](https://zylhorse.github.io)
+  效果
+zylhorse blog
+  后置链接地址   格式
+[zylhorse blog][1][zylhorse about][about]....[1]: https://zylhorse.github.io[about]: https://zylhorse.github.io/about  效果
+zylhorse blog
+zylhorse about
+&amp;hellip;.
+  表格   格式
+表头|表头|表头:---|:---:|---:左对齐 | 居中 | 右对齐换行&amp;lt;br&amp;gt;换行 | &amp;lt;img width=&amp;quot;100px&amp;quot; height=&amp;quot;100px&amp;quot; src=&amp;quot;/img/main/logo.jpg&amp;quot;/&amp;gt; | ![logo](/img/main/wechat.jpg)   效果
+   表头 表头 表头     左对齐 居中 右对齐   换行</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>OpenTracing-系统集成 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="OpenTracing-系统集成">
+<meta itemprop="description" content="概述 这里讲解集成OpenTracing到你的系统中，需要做的工作。
+服务端修改
+ 过滤器，拦截器，中间件等处理入站请求的组件 Span的载体 tracer的配置：开启/采样率/日志等  客户端修改
+ 过滤器，拦截器，中间件等处理出站请求的组件 tracer的配置：开启/采样率/日志等  提醒 操作名(operation name) 每个Span被创建时，都需要指定其操作名。操作名需要遵循一定的规范。
+一些默认命名示例：
+ 请求处理方法名称 web资源名称 RPC服务和方法连接名称  确认需要追踪的方法 有些系统需要追踪所有请求， 有些系统需要追踪特定请求。 程序应该提供配置，满足这两种场景，允许用户设置。
+追踪请求属性 程序有时需要记录请求的一些属性。一般避免手动设置Span的Tag信息， 有以下两种方式：
+ gRPC的Span Decorator // SpanDecorator binds a function that decorates gRPC Spans.func SpanDecorator(decorator SpanDecoratorFunc) Option {return func(o *options) {o.decorator = decorator}} 添加属性配置列表TRACED_REQUEST_ATTRIBUTES, 在追踪过滤器中确认需要添加的Tags for attr in settings.TRACED_REQUEST_ATTRIBUTES:if hasattr(request, attr):payload = str(getattr(request, attr))Span."><meta itemprop="datePublished" content="2021-03-03T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-03-03T00:00:00+00:00" />
+<meta itemprop="wordCount" content="262">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="OpenTracing-系统集成" />
+<meta property="og:description" content="概述 这里讲解集成OpenTracing到你的系统中，需要做的工作。
+服务端修改
+ 过滤器，拦截器，中间件等处理入站请求的组件 Span的载体 tracer的配置：开启/采样率/日志等  客户端修改
+ 过滤器，拦截器，中间件等处理出站请求的组件 tracer的配置：开启/采样率/日志等  提醒 操作名(operation name) 每个Span被创建时，都需要指定其操作名。操作名需要遵循一定的规范。
+一些默认命名示例：
+ 请求处理方法名称 web资源名称 RPC服务和方法连接名称  确认需要追踪的方法 有些系统需要追踪所有请求， 有些系统需要追踪特定请求。 程序应该提供配置，满足这两种场景，允许用户设置。
+追踪请求属性 程序有时需要记录请求的一些属性。一般避免手动设置Span的Tag信息， 有以下两种方式：
+ gRPC的Span Decorator // SpanDecorator binds a function that decorates gRPC Spans.func SpanDecorator(decorator SpanDecoratorFunc) Option {return func(o *options) {o.decorator = decorator}} 添加属性配置列表TRACED_REQUEST_ATTRIBUTES, 在追踪过滤器中确认需要添加的Tags for attr in settings.TRACED_REQUEST_ATTRIBUTES:if hasattr(request, attr):payload = str(getattr(request, attr))Span." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/opentracing/integration/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-03-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-03-03T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="OpenTracing-系统集成"/>
+<meta name="twitter:description" content="概述 这里讲解集成OpenTracing到你的系统中，需要做的工作。
+服务端修改
+ 过滤器，拦截器，中间件等处理入站请求的组件 Span的载体 tracer的配置：开启/采样率/日志等  客户端修改
+ 过滤器，拦截器，中间件等处理出站请求的组件 tracer的配置：开启/采样率/日志等  提醒 操作名(operation name) 每个Span被创建时，都需要指定其操作名。操作名需要遵循一定的规范。
+一些默认命名示例：
+ 请求处理方法名称 web资源名称 RPC服务和方法连接名称  确认需要追踪的方法 有些系统需要追踪所有请求， 有些系统需要追踪特定请求。 程序应该提供配置，满足这两种场景，允许用户设置。
+追踪请求属性 程序有时需要记录请求的一些属性。一般避免手动设置Span的Tag信息， 有以下两种方式：
+ gRPC的Span Decorator // SpanDecorator binds a function that decorates gRPC Spans.func SpanDecorator(decorator SpanDecoratorFunc) Option {return func(o *options) {o.decorator = decorator}} 添加属性配置列表TRACED_REQUEST_ATTRIBUTES, 在追踪过滤器中确认需要添加的Tags for attr in settings.TRACED_REQUEST_ATTRIBUTES:if hasattr(request, attr):payload = str(getattr(request, attr))Span."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/opentracing/integration/">OpenTracing-系统集成</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2021-03-03 00:00:00 &#43;0000 UTC">2021-03-03</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            &lt;no value&gt;分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="概述">概述</h2>
+<p>这里讲解集成OpenTracing到你的系统中，需要做的工作。</p>
+<p>服务端修改</p>
+<ul>
+<li>过滤器，拦截器，中间件等处理入站请求的组件</li>
+<li>Span的载体</li>
+<li>tracer的配置：开启/采样率/日志等</li>
+</ul>
+<p>客户端修改</p>
+<ul>
+<li>过滤器，拦截器，中间件等处理出站请求的组件</li>
+<li>tracer的配置：开启/采样率/日志等</li>
+</ul>
+<h2 id="提醒">提醒</h2>
+<h3 id="操作名operation-name">操作名(operation name)</h3>
+<p>每个Span被创建时，都需要指定其操作名。操作名需要遵循一定的<a href="/blog/opentracing/opentracing/concepts#span-operate-name">规范</a>。</p>
+<p>一些默认命名示例：</p>
+<ul>
+<li>请求处理方法名称</li>
+<li>web资源名称</li>
+<li>RPC服务和方法连接名称</li>
+</ul>
+<h3 id="确认需要追踪的方法">确认需要追踪的方法</h3>
+<p>有些系统需要追踪所有请求， 有些系统需要追踪特定请求。 程序应该提供配置，满足这两种场景，允许用户设置。</p>
+<h3 id="追踪请求属性">追踪请求属性</h3>
+<p>程序有时需要记录请求的一些属性。一般避免手动设置Span的Tag信息， 有以下两种方式：</p>
+<ul>
+<li>gRPC的Span Decorator
+<pre tabindex="0"><code>// SpanDecorator binds a function that decorates gRPC Spans.
+func SpanDecorator(decorator SpanDecoratorFunc) Option {
+	return func(o *options) {
+		o.decorator = decorator
+	}
+}
+</code></pre></li>
+<li>添加属性配置列表<code>TRACED_REQUEST_ATTRIBUTES</code>, 在追踪过滤器中确认需要添加的Tags
+<pre tabindex="0"><code>for attr in settings.TRACED_REQUEST_ATTRIBUTES:
+    if hasattr(request, attr):
+        payload = str(getattr(request, attr))
+        Span.set_tag(attr, payload)
+</code></pre></li>
+</ul>
+<h2 id="服务端追踪">服务端追踪</h2>
+<p>服务端追踪的目的是追踪请求在这个服务器内部的全生命周期的情况，并保证能够和前置的客户端追踪信息连接起来。
+你可以在服务器收到请求时，创建Span，并在服务器完成请求处理后，关闭这些Span。追踪一个服务端请求的流程如下：</p>
+<ul>
+<li>服务器接收到请求
+<ol>
+<li>从网络请求（跨进程的调用：HTTP等）获取当前的追踪链状态</li>
+<li>创建一个新的Span</li>
+<li>保存当前的追踪状态</li>
+</ol>
+</li>
+<li>服务器完成请求处理 / 返回响应
+<ol>
+<li>结束上面创建的Span</li>
+<li>由于调用流程决定于请求的处理情况，所以你需要知道如果修改框架的请求和响应处理——是否需要通过修改过滤器、中间件、配置栈或者其他机制。</li>
+</ol>
+</li>
+</ul>
+<h3 id="spancontext存储">SpanContext存储</h3>
+<ul>
+<li>如果框架有请求Context，可以将SpanContext存储到请求Context中
+<pre tabindex="0"><code>def filter(request):
+    span = # extract / start span from request
+    with (ctx.active_span = span):
+        process_request(request)
+    span.finish()
+</code></pre><blockquote>
+<p>在请求处理的任何阶段都可以通过ctx.active_span获取当前Span</p>
+</blockquote>
+</li>
+<li>否则，需要建立request和span的映射, 其中一种实现为封装全局Tracer
+<pre tabindex="0"><code>class MyFrameworkTracer:
+    def __init__(opentracing_tracer):
+        self.internal_tracer = opentracing_tracer
+        self.active_spans = {}
+    def add_span(request, span):
+        self.active_spans[request] = span
+    def get_span(request):
+        return self.active_spans[request]
+    def finish_span(request):
+        span = self.active_spans[request]
+        span.finish()
+        del self.active_spans[request]
+
+使用：
+    def process_request(request):
+        span = # extract / start span from request
+        tracer.add_span(request, span)
+    def process_response(request, response):
+        tracer.finish_span(request)
+</code></pre><blockquote>
+<ul>
+<li>确保request和span的映射表是线程安全的</li>
+<li>在处理response时，请确保request实例的可用性(也可以不使用request对象，使用其他标识来做映射)</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h2 id="客户端追踪">客户端追踪</h2>
+<p>当框架有一个客户端组件的时候，需要在初始化request的时候，开启客户端的追踪。这样做是为了将生成的Span放到请求头中，
+这样Span才能请求随着请求，传递到服务端。类似于服务端追踪，你需要知道如何修改你的客户端代码，来发送请求，和接收相应。
+当客户端完成修改，就可以完成端到端的追踪了。</p>
+<p>追踪一个客户端请求的流程如下：</p>
+<ul>
+<li>准备请求对象
+<ul>
+<li>读取现在的追踪状态</li>
+<li>新建一个Span</li>
+<li>将Span注入(Inject)到请求中</li>
+</ul>
+</li>
+<li>发送请求</li>
+<li>接收响应
+<ul>
+<li>完成并关闭Span</li>
+</ul>
+</li>
+</ul>
+<h3 id="读取现有的trace新建">读取现有的Trace/新建</h3>
+<p>正如服务端一样，我们必须知道是应该开启一个新的追踪或者链接一个已有的追踪。
+例如,一个基于微服务架构分布式架构中，一个应用可能即是服务端又是客户端。一个服务的提供方同时又是另一个服务的发起方，这个东西需要被联系起来。
+如果存在一个活跃的Trace，你需要把它的Span作为父级Span，创建ChildOf Span。否则，需要新建没有父级的Span。</p>
+<h3 id="完成并关闭span">完成并关闭Span</h3>
+<ul>
+<li>如果设计过滤器封装了请求处理
+<pre tabindex="0"><code>def filter(request, response):
+    span = # start span from the current trace state
+    tracer.inject(span, opentracing.Format.HTTP_HEADERS, request.headers)
+    response = send_request(request)
+    if response.error:
+       span.set_tag(opentracing., true)
+    span.finish()
+</code></pre></li>
+<li>否则，请求和响应被分开处理,需要自行扩展Tracer，用以封装request-span的映射
+<pre tabindex="0"><code>def process_request(request):
+    span = # start span from the current trace state
+    tracer.inject(span. opentracing.Format.HTTP_HEADERS, request.headers)
+    tracer.add_client_span(request, span)
+def process_response(request, response):
+    tracer.finish_client_span(request)
+</code></pre></li>
+</ul>
+<h2 id="spanrelationships">Span&amp;&amp;Relationships</h2>
+<ul>
+<li>Spans<br>
+Span是分布式系统中的逻辑工作单元，根据定义，它们都有名称、开始时间和持续时间。在Tracing中，Span与生成它们的分布式系统组件相关联。<br>
+<img src="/img/opentracing/system_span_life.png" alt="Spans"></li>
+<li>Relationships<br>
+标识Span之间的连接，一个Span可以和N个Span关联。这种关系可以描述系统运行和延迟业务的关键路径。
+<img src="/img/opentracing/system_span_relation.png" alt="Relationships"></li>
+</ul>
+<p>我们希望为所有代码组织Span及其Relationship。当你为自己的分布式系统构建Tracing时，最好的方式是，从服务框架或与其他组件有广泛交互的组件开始。</p>
+<h2 id="专注高价值区域">专注高价值区域</h2>
+<p>如上所述，从RPC和Web框架开始搭建Tracing是一个良好的开端。这两层有很大的覆盖范围和并涉及大量的事务。<br>
+接下来，你应该检查服务器框架中未被基础设施覆盖的区域。提供足够的代码组件，为高价值事务的关键路径创建Trace。<br>
+你监控的首要目标，是基于关键路径上的Span，寻找最耗时的操作，为优化操作提供最重要的数据支持。
+例如，对于只占用事务时间1%的操作（一个大粒度的span）增加更细粒度的监控，对于你理解端到端的延迟（性能问题）不会有太大意义。</p>
+<h2 id="逐步完善">逐步完善</h2>
+<p>当我们在为系统构建Trace时，需要权衡高价值事务的追踪与代码覆盖率。尽可能的为高价值的事务生成端到端的Trace，这会帮助我们进一步的识别哪些区域需要细粒度的Trace。<br>
+一旦建立了端到端的Trace，我们很容易评估哪些区域需要增加投入，进行更细粒度的Trace，用以确定工作的优先级。</p>
+<h2 id="示例">示例</h2>
+<p>该示例表述： 用户通过客户端向服务发起一个HTTP请求，服务产生一系列的调用：  <br>
+<code>client (HTTP) → web tier (RPC) → auth service (RPC) → billing service (RPC) → resource request (API) → response to web tier (API) → response to client (HTTP)</code> <br>
+<img src="/img/opentracing/business_span.png" alt="Call"></p>
+<p>然后我们为Web和RPC进行Trace后，可以得到用户请求的完整Trace视图：<br>
+<img src="/img/opentracing/sample_trace.png" alt="Sample"></p>
+<p>基于Trace，我们可以为服务建立明确的SLO(段限原点 (segment limit origin)),用于寻找耗时较长的事务。</p>
+
+      
+    <h2>参考</h2>
+    <ul>
+        
+            
+                <li><a target="_blank" href="https://opentracing.io/specification/">OpenTracing</a></li>
+            
+        
+            
+                <li><a target="_blank" href="https://ai.google/research/pubs/pub36356">Google&#39;s Drapper paper</a></li>
+            
+        
+    </ul>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/opentracing/">Opentracing</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#概述">概述</a></li>
+    <li><a href="#提醒">提醒</a>
+      <ul>
+        <li><a href="#操作名operation-name">操作名(operation name)</a></li>
+        <li><a href="#确认需要追踪的方法">确认需要追踪的方法</a></li>
+        <li><a href="#追踪请求属性">追踪请求属性</a></li>
+      </ul>
+    </li>
+    <li><a href="#服务端追踪">服务端追踪</a>
+      <ul>
+        <li><a href="#spancontext存储">SpanContext存储</a></li>
+      </ul>
+    </li>
+    <li><a href="#客户端追踪">客户端追踪</a>
+      <ul>
+        <li><a href="#读取现有的trace新建">读取现有的Trace/新建</a></li>
+        <li><a href="#完成并关闭span">完成并关闭Span</a></li>
+      </ul>
+    </li>
+    <li><a href="#spanrelationships">Span&amp;&amp;Relationships</a></li>
+    <li><a href="#专注高价值区域">专注高价值区域</a></li>
+    <li><a href="#逐步完善">逐步完善</a></li>
+    <li><a href="#示例">示例</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F/" class="button left"><span>分布式监控系统-Tracing、Metrics、Logging</span></a>
+    
+    
+      <a href="/blog/opentracing/jaeger/" class="button right"><span>OpenTracing-Jaeger Demo</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Opentracing
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang源码阅读-sync.pool - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Golang源码阅读-sync.pool">
+<meta itemprop="description" content="基本概述 Pool定义在package sync中.
+Pool是一组临时对象的集合， 可以用于保存和检索临时对象。
+存储在Pool中的任何对象，都可以在任何时间被自动删除，而不需要通知。如果当前Pool持有对象的唯一引用， 那么该对象可能会被释放。
+Pool是多协程并发使用安全的。
+Pool在第一次使用后，不能再被拷贝赋值。
+Pool作用 Pool设计用来缓存已分配内存但未使用的对象，用于后续的复用。用来减轻gc的压力。 换言之，Pool使得构建高效、线程安全的缓存变得简单。但是，它并不适用所有的缓存情况。 Pool只是提供了一种在多客户机之间分摊分配开销的方法。
+使用场景 Pool在标准库中的使用示例是在package fmt中， 维护一个临时输出缓冲区的动态大小存储区。 当goroutine打印活跃时扩容缓冲区，打印沉寂时收缩缓冲区。
+另一方面，缓存列表维护一组短命的临时对象的场景不适合使用Pool，因为这种情况不能很好的 分摊分配开销。让这些对象实现他们自己的缓存列表会更有效。
+数据结构 type Pool struct {noCopy noCopy // 第一次使用后不允许被复制local unsafe.Pointer // 固定大小的per-P pool, 实际类型是[P]poolLocallocalSize uintptr // local的大小victim unsafe.Pointer // 上一个gc周期local的备份victimSize uintptr // victim的大小// `New` 是可选项，指定函数用以在`Get`返回`nil`时生成一个值。 // 它不能与`Get`调用同时更改New func() interface{}} local大小为什么是GOMAXPROCS？
+优化G对local的竞争。G绑定到P上只能操作对应的local[PID],这样设计避免了多个G操作Pool时需要加锁。  type poolLocal struct {poolLocalInternal// Prevents false sharing on widespread platforms with// 128 mod (cache line size) = 0 ."><meta itemprop="datePublished" content="2019-11-29T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-11-29T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1078">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Golang源码阅读-sync.pool" />
+<meta property="og:description" content="基本概述 Pool定义在package sync中.
+Pool是一组临时对象的集合， 可以用于保存和检索临时对象。
+存储在Pool中的任何对象，都可以在任何时间被自动删除，而不需要通知。如果当前Pool持有对象的唯一引用， 那么该对象可能会被释放。
+Pool是多协程并发使用安全的。
+Pool在第一次使用后，不能再被拷贝赋值。
+Pool作用 Pool设计用来缓存已分配内存但未使用的对象，用于后续的复用。用来减轻gc的压力。 换言之，Pool使得构建高效、线程安全的缓存变得简单。但是，它并不适用所有的缓存情况。 Pool只是提供了一种在多客户机之间分摊分配开销的方法。
+使用场景 Pool在标准库中的使用示例是在package fmt中， 维护一个临时输出缓冲区的动态大小存储区。 当goroutine打印活跃时扩容缓冲区，打印沉寂时收缩缓冲区。
+另一方面，缓存列表维护一组短命的临时对象的场景不适合使用Pool，因为这种情况不能很好的 分摊分配开销。让这些对象实现他们自己的缓存列表会更有效。
+数据结构 type Pool struct {noCopy noCopy // 第一次使用后不允许被复制local unsafe.Pointer // 固定大小的per-P pool, 实际类型是[P]poolLocallocalSize uintptr // local的大小victim unsafe.Pointer // 上一个gc周期local的备份victimSize uintptr // victim的大小// `New` 是可选项，指定函数用以在`Get`返回`nil`时生成一个值。 // 它不能与`Get`调用同时更改New func() interface{}} local大小为什么是GOMAXPROCS？
+优化G对local的竞争。G绑定到P上只能操作对应的local[PID],这样设计避免了多个G操作Pool时需要加锁。  type poolLocal struct {poolLocalInternal// Prevents false sharing on widespread platforms with// 128 mod (cache line size) = 0 ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/sync.pool/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-11-29T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-11-29T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang源码阅读-sync.pool"/>
+<meta name="twitter:description" content="基本概述 Pool定义在package sync中.
+Pool是一组临时对象的集合， 可以用于保存和检索临时对象。
+存储在Pool中的任何对象，都可以在任何时间被自动删除，而不需要通知。如果当前Pool持有对象的唯一引用， 那么该对象可能会被释放。
+Pool是多协程并发使用安全的。
+Pool在第一次使用后，不能再被拷贝赋值。
+Pool作用 Pool设计用来缓存已分配内存但未使用的对象，用于后续的复用。用来减轻gc的压力。 换言之，Pool使得构建高效、线程安全的缓存变得简单。但是，它并不适用所有的缓存情况。 Pool只是提供了一种在多客户机之间分摊分配开销的方法。
+使用场景 Pool在标准库中的使用示例是在package fmt中， 维护一个临时输出缓冲区的动态大小存储区。 当goroutine打印活跃时扩容缓冲区，打印沉寂时收缩缓冲区。
+另一方面，缓存列表维护一组短命的临时对象的场景不适合使用Pool，因为这种情况不能很好的 分摊分配开销。让这些对象实现他们自己的缓存列表会更有效。
+数据结构 type Pool struct {noCopy noCopy // 第一次使用后不允许被复制local unsafe.Pointer // 固定大小的per-P pool, 实际类型是[P]poolLocallocalSize uintptr // local的大小victim unsafe.Pointer // 上一个gc周期local的备份victimSize uintptr // victim的大小// `New` 是可选项，指定函数用以在`Get`返回`nil`时生成一个值。 // 它不能与`Get`调用同时更改New func() interface{}} local大小为什么是GOMAXPROCS？
+优化G对local的竞争。G绑定到P上只能操作对应的local[PID],这样设计避免了多个G操作Pool时需要加锁。  type poolLocal struct {poolLocalInternal// Prevents false sharing on widespread platforms with// 128 mod (cache line size) = 0 ."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/sync.pool/">Golang源码阅读-sync.pool</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-11-29 00:00:00 &#43;0000 UTC">2019-11-29</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="基本概述">基本概述</h2>
+<p><code>Pool</code>定义在<code>package sync</code>中.</p>
+<p><code>Pool</code>是一组临时对象的集合， 可以用于保存和检索临时对象。</p>
+<p>存储在<code>Pool</code>中的任何对象，都可以在任何时间被自动删除，而不需要通知。如果当前<code>Pool</code>持有对象的唯一引用，
+那么该对象可能会被释放。</p>
+<p><code>Pool</code>是多协程并发使用安全的。</p>
+<p><code>Pool</code>在第一次使用后，不能再被拷贝赋值。</p>
+<h2 id="pool作用">Pool作用</h2>
+<p><code>Pool</code>设计用来缓存已分配内存但未使用的对象，用于后续的复用。用来减轻gc的压力。
+换言之，<code>Pool</code>使得构建高效、线程安全的缓存变得简单。但是，它并不适用所有的缓存情况。
+<code>Pool</code>只是提供了一种在多客户机之间分摊分配开销的方法。</p>
+<h2 id="使用场景">使用场景</h2>
+<p><code>Pool</code>在标准库中的使用示例是在<code>package fmt</code>中， 维护一个临时输出缓冲区的动态大小存储区。
+当<code>goroutine</code>打印活跃时扩容缓冲区，打印沉寂时收缩缓冲区。</p>
+<p>另一方面，缓存列表维护一组短命的临时对象的场景不适合使用<code>Pool</code>，因为这种情况不能很好的
+分摊分配开销。让这些对象实现他们自己的缓存列表会更有效。</p>
+<h2 id="数据结构">数据结构</h2>
+<pre tabindex="0"><code>type Pool struct {
+    noCopy noCopy // 第一次使用后不允许被复制
+
+	local     unsafe.Pointer // 固定大小的per-P pool, 实际类型是[P]poolLocal
+	localSize uintptr        // local的大小
+
+	victim     unsafe.Pointer // 上一个gc周期local的备份
+	victimSize uintptr        // victim的大小
+
+    // `New` 是可选项，指定函数用以在`Get`返回`nil`时生成一个值。 
+    // 它不能与`Get`调用同时更改
+	New func() interface{}
+}
+</code></pre><ol>
+<li><code>local</code>大小为什么是GOMAXPROCS？<br>
+优化G对<code>local</code>的竞争。G绑定到P上只能操作对应的<code>local[PID]</code>,这样设计避免了多个G操作<code>Pool</code>时需要加锁。</li>
+</ol>
+<pre tabindex="0"><code>type poolLocal struct {
+	poolLocalInternal
+
+	// Prevents false sharing on widespread platforms with
+	// 128 mod (cache line size) = 0 .
+	pad [128 - unsafe.Sizeof(poolLocalInternal{})%128]byte
+}
+
+// Local per-P Pool appendix.
+// local per-P Pool 附录。
+type poolLocalInternal struct {
+	private interface{} // 只能P自身使用
+	shared  poolChain   // P对链表可以进行pushHead/popHead; 其它P可以进行popTail.
+}
+
+// poolChain is a dynamically-sized version of poolDequeue.
+//
+// This is implemented as a doubly-linked list queue of poolDequeues
+// where each dequeue is double the size of the previous one. Once a
+// dequeue fills up, this allocates a new one and only ever pushes to
+// the latest dequeue. Pops happen from the other end of the list and
+// once a dequeue is exhausted, it gets removed from the list.
+type poolChain struct {
+	// head is the poolDequeue to push to. This is only accessed
+	// by the producer, so doesn't need to be synchronized.
+	head *poolChainElt
+
+	// tail is the poolDequeue to popTail from. This is accessed
+	// by consumers, so reads and writes must be atomic.
+	tail *poolChainElt
+}
+
+type poolChainElt struct {
+	poolDequeue
+    
+	// next and prev link to the adjacent poolChainElts in this
+	// poolChain.
+	//
+	// next is written atomically by the producer and read
+	// atomically by the consumer. It only transitions from nil to
+	// non-nil.
+	//
+	// prev is written atomically by the consumer and read
+	// atomically by the producer. It only transitions from
+	// non-nil to nil.
+	next, prev *poolChainElt
+}
+
+// poolDequeue is a lock-free fixed-size single-producer,
+// multi-consumer queue. The single producer can both push and pop
+// from the head, and consumers can pop from the tail.
+//
+// It has the added feature that it nils out unused slots to avoid
+// unnecessary retention of objects. This is important for sync.Pool,
+// but not typically a property considered in the literature.
+type poolDequeue struct {
+	// headTail packs together a 32-bit head index and a 32-bit
+	// tail index. Both are indexes into vals modulo len(vals)-1.
+	//
+	// tail = index of oldest data in queue
+	// head = index of next slot to fill
+	//
+	// Slots in the range [tail, head) are owned by consumers.
+	// A consumer continues to own a slot outside this range until
+	// it nils the slot, at which point ownership passes to the
+	// producer.
+	//
+	// The head index is stored in the most-significant bits so
+	// that we can atomically add to it and the overflow is
+	// harmless.
+	headTail uint64
+
+	// vals is a ring buffer of interface{} values stored in this
+	// dequeue. The size of this must be a power of 2.
+	//
+	// vals[i].typ is nil if the slot is empty and non-nil
+	// otherwise. A slot is still in use until *both* the tail
+	// index has moved beyond it and typ has been set to nil. This
+	// is set to nil atomically by the consumer and read
+	// atomically by the producer.
+	vals []eface
+}
+
+type eface struct {
+	typ, val unsafe.Pointer
+}
+
+</code></pre><h2 id="源码">源码</h2>
+<h3 id="poolcleanup">poolCleanup</h3>
+<pre tabindex="0"><code>var (
+	allPoolsMu Mutex
+
+    // allPools 是具有非空主缓存Pool的集合 
+    // allPools的原子操作保护有两种： allPoolsMu琐和STW。
+	allPools []*Pool
+    
+    // oldPools是具有非空受害者缓存Pool的集合
+    // oldPools的原子操作由STW保护。
+	oldPools []*Pool
+)
+
+func init() {
+    // 在runtime中注册poolCleanup
+	runtime_registerPoolCleanup(poolCleanup)
+}
+// poolCleanup 在STW时调用，在gc开始时。 
+func poolCleanup() {
+	// This function is called with the world stopped, at the beginning of a garbage collection.
+	// It must not allocate and probably should not call any runtime functions.
+
+	// Because the world is stopped, no pool user can be in a pinned section (in effect, this has all Ps pinned).
+
+	// Drop victim caches from all pools.
+    // 清空所有P中的victim缓存
+	for _, p := range oldPools {
+		p.victim = nil
+		p.victimSize = 0
+	}
+
+	// Move primary cache to victim cache.
+    // 将主缓存的转移给victim缓存，并清空主缓存
+	for _, p := range allPools {
+		p.victim = p.local
+		p.victimSize = p.localSize
+		p.local = nil
+		p.localSize = 0
+	}
+
+	// The pools with non-empty primary caches now have non-empty
+	// victim caches and no pools have primary caches.
+    // 
+	oldPools, allPools = allPools, nil
+}
+</code></pre><ol>
+<li>
+<p>为什么poolCleanup没有加锁？ 
+答: 因为poolCleanup是在STW时被调用，所有的P都被抢占，因此不会发生竞争。</p>
+</li>
+<li>
+<p><code>runtime_procPin</code>怎么阻止GC发生，即怎么阻止poolCleanup发生的？</p>
+</li>
+</ol>
+<h3 id="get">Get</h3>
+<pre tabindex="0"><code>// + go1.3
+// Get从Pool中选择任意项，将其从Pool中删除，并返回给调用者。
+// Get可能选择性忽略pool并视其为空。调用者不应假设传递给Put的值和Get返回的值之间有任何联系
+//
+// 如果Get返回nil且Pool.New不为nil，Get返回调用New生成的结果。
+func (p *Pool) Get() interface{} {
+	...
+    // 将G和P进行绑定，禁止抢占，并返回P的poolLocal和P的id
+	l, pid := p.pin()
+    // 
+	x := l.private
+	l.private = nil
+	if x == nil {
+		// Try to pop the head of the local shard. We prefer
+		// the head over the tail for temporal locality of
+		// reuse.
+		x, _ = l.shared.popHead()
+		if x == nil {
+			x = p.getSlow(pid)
+		}
+	}
+	runtime_procUnpin()
+	if race.Enabled {
+		race.Enable()
+		if x != nil {
+			race.Acquire(poolRaceAddr(x))
+		}
+	}
+	if x == nil &amp;&amp; p.New != nil {
+		x = p.New()
+	}
+	return x
+}
+</code></pre><h4 id="pin">pin</h4>
+<pre tabindex="0"><code>// pin 绑定当前G到P，禁止抢占并且返回当前P的poolLocal和id。
+func (p *Pool) pin() (*poolLocal, int) {
+    // runtime_procPin runtime
+    // 抢占P并返回pid用于Pool.local的索引
+	pid := runtime_procPin()
+	// In pinSlow we store to local and then to localSize, here we load in opposite order.
+	// Since we've disabled preemption, GC cannot happen in between.
+	// Thus here we must observe local at least as large localSize.
+	// We can observe a newer/larger local, it is fine (we must observe its zero-initialized-ness).
+    // 	
+    s := atomic.LoadUintptr(&amp;p.localSize) // load-acquire
+	l := p.local                          // load-consume
+    // 判断local是否有效(已经初始化，且未经过GC)
+	if uintptr(pid) &lt; s {
+        // 返回当前P对应索引的poolLocal
+		return indexLocal(l, pid), pid
+	}
+    // 如果local无效
+	return p.pinSlow()
+}
+</code></pre><ol>
+<li><code>runtime_procPin</code>怎么绑定G实现抢占的？
+<ul>
+<li>首先看一下<code>runtime</code>中<code>procPin</code>的实现：
+<pre tabindex="0"><code>//go:nosplit
+func procPin() int {
+ // 获取当前goroutine兑现
+ _g_ := getg()
+// 获取执行G的M
+ mp := _g_.m
+// 这里实现P的抢占
+ mp.locks++
+// 返回PID
+ return int(mp.p.ptr().id)
+}
+</code></pre></li>
+</ul>
+</li>
+</ol>
+<h4 id="pinslow">pinSlow</h4>
+<pre tabindex="0"><code>func (p *Pool) pinSlow() (*poolLocal, int) {
+	// Retry under the mutex.
+	// Can not lock the mutex while pinned.
+	runtime_procUnpin()
+	allPoolsMu.Lock()
+	defer allPoolsMu.Unlock()
+	pid := runtime_procPin()
+	// poolCleanup won't be called while we are pinned.
+	s := p.localSize
+	l := p.local
+	if uintptr(pid) &lt; s {
+		return indexLocal(l, pid), pid
+	}
+	if p.local == nil {
+		allPools = append(allPools, p)
+	}
+	// If GOMAXPROCS changes between GCs, we re-allocate the array and lose the old one.
+	size := runtime.GOMAXPROCS(0)
+	local := make([]poolLocal, size)
+	atomic.StorePointer(&amp;p.local, unsafe.Pointer(&amp;local[0])) // store-release
+	atomic.StoreUintptr(&amp;p.localSize, uintptr(size))         // store-release
+	return &amp;local[pid], pid
+}
+</code></pre><ol>
+<li>为什么要先调用<code>runtime_procUnpin</code>，再<code>lock</code>?
+<ul>
+<li>看一下<code>mutext.lock()</code>的实现</li>
+</ul>
+</li>
+</ol>
+<h3 id="put">Put</h3>
+<pre tabindex="0"><code>// + go 1.3 
+// Put 将x添加到poll中
+func (p *Pool) Put(x interface{})
+</code></pre>
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#基本概述">基本概述</a></li>
+    <li><a href="#pool作用">Pool作用</a></li>
+    <li><a href="#使用场景">使用场景</a></li>
+    <li><a href="#数据结构">数据结构</a></li>
+    <li><a href="#源码">源码</a>
+      <ul>
+        <li><a href="#poolcleanup">poolCleanup</a></li>
+        <li><a href="#get">Get</a></li>
+        <li><a href="#put">Put</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/golang/sync.mutex/" class="button left"><span>Golang源码阅读-sync.Mutex</span></a>
+    
+    
+      <a href="/blog/golang/godoc/" class="button right"><span>Golang doc使用细则</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

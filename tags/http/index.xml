@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HTTP on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/http/</link>
+    <description>Recent content in HTTP on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 26 May 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/http/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>http2协议解析及解决哪些问题</title>
+      <link>https://zylhorse.github.io/blog/network/http2/</link>
+      <pubDate>Fri, 26 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/network/http2/</guid>
+      <description>http超文本传输协议  http是简单的请求-响应协议，指定客户端发送数据格式以及服务器响应的数据格式 http是一次性连接，每次连接处理一个请求 http是无状态连接，服务器不保留客户信息  http 报文格式  请求报文：  请求行\r\n通用信息头\r\n请求头\r\n实体头\r\n报文主体响应报文：  状态行\r\n通用信息头\r\n响应头\r\n实体头\r\n报文主体http1.1 缺陷 高延迟 网络延迟问题主要由队头阻塞（head-of-line blocking）导致带宽无法被充分利用；
+ 队头阻塞指当顺序请求序列中的一个请求因为某种原因被阻塞时，后面排队的请求也一并阻塞，导致客户端迟迟收不到数据。
+ 解决办法：
+ 合并多张小图为一张大图（雪碧图），前端利用算法进行切割使用 内联： 防止发送很多小图请求， 将图片原始数据嵌入在css的URL中 拼接： 将体量小的js文件使用webpack打包成一个js文件 将同一页面资源分散到不同域名，提升连接上限： 浏览器限制同一域名最多建立6个tcp连接。  无状态 由于http是无状态连接，为了服务器识别同一用户请求，报文header中一般会携带 User Agent、Cookie、Accept、Server等许多固定头字段。header携带内容过大，一定层度上增加传输成本。
+不支持服务器推送消息 明文传输的不安全性 HTTP/2 二进制传输  将原来的header+body消息，打散为数个小片的二进制帧（Frame），用HEADERS帧存放头数据，用DATA帧存放主体数据 同域名下所有通信都在单个连接下完成， 该连接可以承载任意数量的双向数据流 每个数据流都是以消息的形式发送，而消息由一个或多个帧组成 多个帧可以乱序发送，根据帧首部的流标识进行重新组装  Header 压缩  建立HPACK索引表， 由客户端和服务器共同渐进更新； 相同的报文头不用每次请求都发送 采用哈夫曼编码来压缩报文头  多路复用  对于同一域名下的多个请求连接，复用一个tcp连接， 消除了tcp建立连接带来的延迟和内存消耗 单个连接可以承载任意数量的双向数据流， 并行交错发送和响应请求， 请求之间互不影响； 每个请求可以携带一个31bit的优先值， 数值越大优先级越低。 客户端和服务器根据优先级采用不同的策略处理流；  server push 服务器可以新建流，主动向客户端发送消息。</description>
+    </item>
+    
+  </channel>
+</rss>

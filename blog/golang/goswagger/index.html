@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang swagger应用 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Golang swagger应用">
+<meta itemprop="description" content="简介 goswagger包含了Swagger 2.0的golang实现。
+swag方式 参考: README
+swagger 采用源码安装方式：
+git clone https://github.com/go-swagger/go-swaggergo install ./go-swagger/cmd/swagger参考: SPEC"><meta itemprop="datePublished" content="2019-11-23T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-11-23T00:00:00+00:00" />
+<meta itemprop="wordCount" content="16">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Golang swagger应用" />
+<meta property="og:description" content="简介 goswagger包含了Swagger 2.0的golang实现。
+swag方式 参考: README
+swagger 采用源码安装方式：
+git clone https://github.com/go-swagger/go-swaggergo install ./go-swagger/cmd/swagger参考: SPEC" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/goswagger/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-11-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-11-23T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang swagger应用"/>
+<meta name="twitter:description" content="简介 goswagger包含了Swagger 2.0的golang实现。
+swag方式 参考: README
+swagger 采用源码安装方式：
+git clone https://github.com/go-swagger/go-swaggergo install ./go-swagger/cmd/swagger参考: SPEC"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/goswagger/">Golang swagger应用</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-11-23 00:00:00 &#43;0000 UTC">2019-11-23</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="简介">简介</h2>
+<p><code>goswagger</code>包含了<code>Swagger 2.0</code>的<code>golang</code>实现。</p>
+<h2 id="swag方式">swag方式</h2>
+<p>参考: <a href="https://github.com/swaggo/swag">README</a></p>
+<h2 id="swagger">swagger</h2>
+<p>采用源码安装方式：</p>
+<pre tabindex="0"><code>git clone https://github.com/go-swagger/go-swagger
+go install ./go-swagger/cmd/swagger
+</code></pre><p>参考: <a href="https://goswagger.io/generate/spec.html">SPEC</a></p>
+
+      
+    <h2>参考</h2>
+    <ul>
+        
+            
+                <li><a target="_blank" href="https://goswagger.io/">Swagger golang</a></li>
+            
+        
+            
+                <li><a target="_blank" href="https://github.com/swaggo/swag">Swag</a></li>
+            
+        
+    </ul>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#swag方式">swag方式</a></li>
+    <li><a href="#swagger">swagger</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/golang/godoc/" class="button left"><span>Golang doc使用细则</span></a>
+    
+    
+      <a href="/blog/distribution-system/%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0/" class="button right"><span>服务治理-服务注册和发现</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

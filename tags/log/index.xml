@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Log on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/log/</link>
+    <description>Recent content in Log on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 04 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/log/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ELK简介及日志收集、服务监控、性能监控</title>
+      <link>https://zylhorse.github.io/blog/elk/elk/</link>
+      <pubDate>Fri, 04 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/elk/elk/</guid>
+      <description>elk 描述 elk 架构是指：elastic 公司三个开源的产品： elasticsearch, logstash, kibana
+Elasticsearch是个开源分布式搜索引擎，提供搜集、分析、存储数据三大功能。它的特点有：分布式，零配置，自动发现，索引自动分片，索引副本机制，restful风格接口，多数据源，自动搜索负载等。
+Logstash 主要是用来日志的搜集、分析、过滤日志的工具，支持大量的数据获取方式。一般工作方式为c/s架构，client端安装在需要收集日志的主机上，server端负责将收到的各节点日志进行过滤、修改等操作在一并发往elasticsearch上去。
+Kibana 也是一个开源和免费的工具，Kibana可以为 Logstash 和 ElasticSearch 提供的日志分析友好的 Web 界面，可以帮助汇总、分析和搜索重要数据日志。
+web地址 目前在内网服务器上搭建filebeat,metricbeat,heartbeat 等agent。 以及 elasticsearch, kibana 平台。
+kibana地址： 192.168.20.30:5601
+日志  查看： logs 过滤： log.file.path:xxx
+  搜索： discover 索引： filebeat-7.2.0-*
+ 服务监控  查看：uptime
+  监控服务
+ 硬件监控  查看：dashboard 索引： [Metricbeat System] Host overview ECS
+  监控硬件：
+ cpu 内存 硬盘io 磁盘io 进程信息   集成 管理后台 完整日志架构： productor -&amp;gt; nsq -&amp;gt; nsqbeat -&amp;gt; elasticsearch -&amp;gt; kibana</description>
+    </item>
+    
+    <item>
+      <title>日志业务思考和规则</title>
+      <link>https://zylhorse.github.io/blog/log-system/logging/</link>
+      <pubDate>Tue, 27 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/log-system/logging/</guid>
+      <description>Logging&amp;amp;&amp;amp;Instrumentation思考 Logging 和 Instrumentation 在软件开发中是两个热门的话题， 尤其在微服务领域。
+当然具体，还有很多需要思考。
+关于Logging：要logging什么？logging到哪种详细的程度？流向哪里： syslog? file on disk? message queue?
+关于Instrumentation: 什么时候instrumenting代码？哪些信息需要instrumenting？ 使用哪些metrics系统？
+ logging,instrumentation,tracing最终都只是实现系统的可观测性。
+ Logging 服务应该只logging可操作信息，包括不限于:
+ 需要人为处理的严重的、致命级别的错误
+e.g. 数据库不可用的消息信号   人为处理的log应该是稀少的，如果没有错误，理想中可以不logging任何信息
+ 需要机器处理的结构化数据
+e.g. 媒体对象已经播放，logging下来以便批处理对版税进行日结算   机器处理的log应该是定义良好的格式化数据
+ 因为log包的适用性有局限，所以选择功能简单的包。 避免多个log级别(info/warn/error)，尤其是不要在运行时进行level配置。 只输出需要查看的log。当然debug log是个例外，开发和诊断错误时有用。
+log应当被视为事件流处理:
+ 服务不应该关心输出流的转存 服务不应该尝试写入或管理log文件 服务应当将事件流无缓冲的写入stdout 由操作系统或基础设施转存进程或容器的stdout/stderr到目的地，e.g. 集中log系统ELK stack, 持久化消息代理Kafka, 滚动日志服务runit  logging的代价是昂贵的，因此不要logging任何不符合上述标准的信息。e.g. 禁止logging每一个HTTP请求，尤其是热点路由上的，这些更适合instrumenting
+Instrumentation Instrumentation 用于服务相关的所有剩余诊断信息。
+与Log相比，服务应该尽可能的instrumenting每一个可以捕获的有意义的数据。
+Metrics记录和报告的成本是低廉的， Instrumentation系统包含的数据越多越有意义。
+ Instrumentation 表示一种“能够监测和度量某个系统的性能，分析系统错误，并能将追踪的数据进行记录”的监测工具
+ instrumenting包含信息包括不限于:
+ 排除在logging之外的信息 请求计数、请求延迟、请求错误计数  Brendan Gregg’s USE method 建议instrument所有系统资源的利用率，饱和度，错误计数。</description>
+    </item>
+    
+    <item>
+      <title>日志业务系统架构设计</title>
+      <link>https://zylhorse.github.io/blog/log-system/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/</link>
+      <pubDate>Tue, 27 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/log-system/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/</guid>
+      <description>日志业务 两种日志收集架构
+ 应用产生日志-&amp;gt; 根据大小/时间 写入文件-&amp;gt; rotation 日志文件 -&amp;gt; 定期查看/定期删除 应用产生日志-&amp;gt; 传输 -&amp;gt; 过滤/转换 -&amp;gt; 存储-&amp;gt; 分析/查看  日志业务结构 采集-&amp;gt;缓存-&amp;gt;转换/过滤-&amp;gt;存储-&amp;gt;可视化
+日志技术架构 filebeat/logstash -&amp;gt; kafka -&amp;gt; fluentd -&amp;gt; es -&amp;gt; kibana
+日志平台优化  由于日志低频次， 将历史数据存入廉价存储， 普通用户需要时再导入es 日志存储的时间越长，意义越小。 根据实际情况制定留存数据策略 顺序写入磁盘，区别随机写入磁盘，我们采用顺序写数据模式  </description>
+    </item>
+    
+  </channel>
+</rss>

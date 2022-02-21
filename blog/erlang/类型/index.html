@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Erlang类型表示法 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Erlang类型表示法">
+<meta itemprop="description" content="类型 Erlang有一种类型表示法，可以用来定义新的数据类型并给代码添加类型注解。类型注解让代码更容易理解和维护，还可以在编译时检测错误。
+指定数据和函数类型 -module(...).-export([plan_route/2]).-spec play_route(point(), point()) -&gt; route().-type direction() :: north | south | east | west.-type point() :: {integer(), integer()}.-type route() :: [{go, direction(), integer()}]. 这个模块导出一个名为plan_route/2的函数。该函数的输入和返回数据类型由类型声明(type)定义了三个新数据类型。该函数由类型规范(spec)指定输入和返回数据类型。 为了增加类型的表达能力，可以添加类型注解： -spec plan_route(From::point(), To::point()) -&gt; ....  类型语法   类型定义可以使用一下的非正式语法： T1 :: A | B | C
+ 它的意思是T1被定义为A、B或C其中之一。
+ 用这些表示法，可以定义一些Erlang类型如下：Type :: any() | none() | pid() | port() | reference() | [] | Atom |binary() | float() | Fun | Integer | [Type] | Tuple | Union | UserDefinedUnion :: Type1 | Type2 | ."><meta itemprop="datePublished" content="2015-12-01T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2015-12-01T00:00:00+00:00" />
+<meta itemprop="wordCount" content="357">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Erlang类型表示法" />
+<meta property="og:description" content="类型 Erlang有一种类型表示法，可以用来定义新的数据类型并给代码添加类型注解。类型注解让代码更容易理解和维护，还可以在编译时检测错误。
+指定数据和函数类型 -module(...).-export([plan_route/2]).-spec play_route(point(), point()) -&gt; route().-type direction() :: north | south | east | west.-type point() :: {integer(), integer()}.-type route() :: [{go, direction(), integer()}]. 这个模块导出一个名为plan_route/2的函数。该函数的输入和返回数据类型由类型声明(type)定义了三个新数据类型。该函数由类型规范(spec)指定输入和返回数据类型。 为了增加类型的表达能力，可以添加类型注解： -spec plan_route(From::point(), To::point()) -&gt; ....  类型语法   类型定义可以使用一下的非正式语法： T1 :: A | B | C
+ 它的意思是T1被定义为A、B或C其中之一。
+ 用这些表示法，可以定义一些Erlang类型如下：Type :: any() | none() | pid() | port() | reference() | [] | Atom |binary() | float() | Fun | Integer | [Type] | Tuple | Union | UserDefinedUnion :: Type1 | Type2 | ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/erlang/%E7%B1%BB%E5%9E%8B/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2015-12-01T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-12-01T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Erlang类型表示法"/>
+<meta name="twitter:description" content="类型 Erlang有一种类型表示法，可以用来定义新的数据类型并给代码添加类型注解。类型注解让代码更容易理解和维护，还可以在编译时检测错误。
+指定数据和函数类型 -module(...).-export([plan_route/2]).-spec play_route(point(), point()) -&gt; route().-type direction() :: north | south | east | west.-type point() :: {integer(), integer()}.-type route() :: [{go, direction(), integer()}]. 这个模块导出一个名为plan_route/2的函数。该函数的输入和返回数据类型由类型声明(type)定义了三个新数据类型。该函数由类型规范(spec)指定输入和返回数据类型。 为了增加类型的表达能力，可以添加类型注解： -spec plan_route(From::point(), To::point()) -&gt; ....  类型语法   类型定义可以使用一下的非正式语法： T1 :: A | B | C
+ 它的意思是T1被定义为A、B或C其中之一。
+ 用这些表示法，可以定义一些Erlang类型如下：Type :: any() | none() | pid() | port() | reference() | [] | Atom |binary() | float() | Fun | Integer | [Type] | Tuple | Union | UserDefinedUnion :: Type1 | Type2 | ."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/%E7%B1%BB%E5%9E%8B/">Erlang类型表示法</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-12-01 00:00:00 &#43;0000 UTC">2015-12-01</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="类型">类型</h2>
+<p>Erlang有一种类型表示法，可以用来定义新的数据类型并给代码添加类型注解。类型注解让代码更容易理解和维护，还可以在编译时检测错误。</p>
+<h2 id="指定数据和函数类型">指定数据和函数类型</h2>
+<pre tabindex="0"><code>-module(...).
+-export([plan_route/2]).
+-spec play_route(point(), point()) -&gt; route().
+-type direction() :: north | south | east | west.
+-type point()     :: {integer(), integer()}.
+-type route()     :: [{go, direction(), integer()}].
+</code></pre><ul>
+<li>这个模块导出一个名为plan_route/2的函数。该函数的输入和返回数据类型由类型声明(type)定义了三个新数据类型。该函数由类型规范(spec)指定输入和返回数据类型。</li>
+<li>为了增加类型的表达能力，可以添加类型注解：
+<code>-spec plan_route(From::point(), To::point()) -&gt; ....</code></li>
+</ul>
+<h2 id="类型语法">类型语法</h2>
+<ul>
+<li>
+<p>类型定义可以使用一下的非正式语法：
+T1    :: A | B | C</p>
+<blockquote>
+<p>它的意思是T1被定义为A、B或C其中之一。</p>
+</blockquote>
+<pre tabindex="0"><code>用这些表示法，可以定义一些Erlang类型如下：
+Type    :: any() | none() | pid() | port() | reference() | [] | Atom |binary() | float() | Fun | Integer | [Type] | Tuple | Union | UserDefined
+Union   :: Type1 | Type2 | ...
+Atom    :: atom() | Erlang_Atom
+Integer :: integer() | Min .. Max
+Fun      :: fun() | fun((...) -&gt; Type)
+Tuple   :: tuple() | {T1, T2, T3, ... Tn}
+</code></pre></li>
+</ul>
+<ol>
+<li>在上面的例子中，any()是指任意的Erlang数据类型，X()是指一个类型为X的Erlang对象，而none()标识则用来指代永不返回的函数类型。</li>
+<li><input checked="" disabled="" type="checkbox"> 这种表示法指代一个由X类型构成的列表，{T1,T2,T3,&hellip;Tn}指代一个大小为n，参数类型为T1,T2,&hellip;Tn的元组。</li>
+</ol>
+<ul>
+<li>定义新的类型可以使用一下方法： <br>
+-type　NewTypeName(TVar1,TVar2, &hellip;TVarN)    :: Type.
+<blockquote>
+<p>TVar1,&hellip;TVarN是可选的类型变量，Type是一个类型表达式。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="预定义类型">预定义类型</h2>
+<pre><code>除了类型语法以外，还有下面这些预定义的类型别名：
+```
+-type term()    :: any().
+-type boolean() :: false | true.
+-type byte()     :: 0..255.
+-type char()    :: 0..16#10ffff.
+-type number() :: integer() | float().
+-type list()     :: [any()].
+-type maybe_improper_list()    :: maybe_improper_list(any(), any()).
+-type maybe_improper_list(T)    :: maybe_improper_list(T,any()).
+-type string()    :: [char()].
+-type nonempty_string() :: [char(), ...].
+-type iolist()    :: maybe_improper_list(byte() | binary() | iolist(), binary() | []).
+-type module()    :: atom().
+-type mfa()    :: (atom,atom,atom).
+-type node() :: atom().
+-type timeout() :: infinity | non_neg_integer().
+-type no_return() :: none().
+```
+</code></pre>
+<ul>
+<li>还有少量其它的预定义类型。non_neg_integer()是一个非负整数，pos_integer()是一个正整数，neg_integer()是一个负数。  最后[X,&hellip;]是一个由X类型构成的非空列表。</li>
+</ul>
+<h2 id="指定函数的输入输出类型">指定函数的输入输出类型</h2>
+<ul>
+<li>
+<p>函数规范指定某个函数的参数属于何种类型，以及该函数的返回值属于何种类型。</p>
+</li>
+<li>
+<p>函数规范的书写方式如下：</p>
+<pre tabindex="0"><code>-spec functionName(T1,T2,...Tn) -&gt; Tret when
+    Ti    :: Typei,
+    Tj    :: Typej
+    ....
+</code></pre></li>
+<li>
+<p>这里的T1,T2,&hellip;Tn描述了某个函数的所有参数类型，Tret描述了函数的返回类型。如果有必要可以在关键字when后面引入额外的类型变量。
+举个例子：</p>
+<pre tabindex="0"><code>-spec file:open(FileName, Modes) -&gt; {error, Why} | {ok, Handle} when 
+    FileName    :: string(),
+    Modes    :: [Mode],
+    Mode    :: read | wirte | ...,
+    Why    :: error_term(),
+    Handle    :: file_handle().
+</code></pre><blockquote>
+<p>说明：如果打开一个文件不是返回{error,Why} 就是{ok, Handle}。FileName是一个字符串，Modes是一个由Mode组成的列表，而Mode是read,write等类型中的一个。</p>
+</blockquote>
+</li>
+<li>
+<p>不适用限定词when的写法是：</p>
+<pre tabindex="0"><code>-spec file::open(string(), [read | write | ...]) -&gt; {error, Why} | {ok, Handle}.
+</code></pre></li>
+<li>
+<p>这样写的问题在于：首先，失去FileName和Modes这些描述性的变量；其次类型规范的长度大大增加，导致阅读和在打印文档里格式化的难度增加。在理想情况下，程序的后面应该附有文档，而如果没有给函数参数命名，就无法在文档中引用。</p>
+</li>
+<li>
+<p>使用限定词when的类型规范，这个函数的任何文档都可以毫无歧义的引用打开的文件，方法是使用其名称FileName。而丢弃了限定词when，文档引用打开的文档时就不得不称其为&quot;open的第一个参数&quot;，这种迂回的说法对第一种规范编写方式而言是不必要的。　</p>
+</li>
+<li>
+<p>类型变量可以在参数里使用，如下所示：</p>
+<pre tabindex="0"><code>-spec lists:map((fun(A) -&gt; B), [A]) -&gt; [B].
+</code></pre><blockquote>
+<p>表示map函数接受一个从A类型编程B类型的函数和一个A类型的列表，两个参数。然后返回一个B类型的列表。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="导出类型和本地类型">导出类型和本地类型</h2>
+<ul>
+<li>
+<p>有时候我们希望某个类型的定义局限在该定义所属的模块内部，而另一些情况我们希望把次类型导出至别的模块。<br>
+例如我们在a模块声明rich_text和font类型，并使用export_type导出这两个类型：</p>
+<pre tabindex="0"><code>-module(a).
+-type rich_text()     :: [{font(), char()}].
+-type font()    :: integer().
+-export_type(rich_text/0, font/0).
+</code></pre></li>
+<li>
+<p>在b模块操作使用rich_text 和font类型：</p>
+<pre tabindex="0"><code>-module(b).    
+-spec rich_text_length(a:rich_text()) -&gt; integer().
+</code></pre><blockquote>
+<p>rich_text_length的输入参数使用了完全限定的类型名a:rich_text(),他是指从a模块导出的rich_text()类型。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="不透明类型">不透明类型</h2>
+<ul>
+<li>有时我们希望隐藏数据类型内部数据结构的细节，使得只有创建该数据结构的模块才了解类型的细节。
+<pre tabindex="0"><code>-module(a).  
+-opaque rich_text() :: [{font(), char()}].
+-export_type(rich_text/0).
+-export([make_text/1, bounding_box/1]).
+-spec make_text(string())    :: rich_text().
+-spec bounding_text(rich_text())  -&gt; {Height::ingeger(), Width::ingeter()).
+</code></pre></li>
+<li><code>-opaque rich_text() :: [{font(), char()}].</code><br>
+创建了一个名为rich_text的不透明类型，以下是在其它模块使用的代码：
+<pre tabindex="0"><code>－module(b).
+...
+do_this()     -&gt;
+     X = a:make_text(&quot;hello world&quot;).
+     {W,H} = a:bounding_text(X).
+</code></pre></li>
+<li>在b中使用a模块的rich_text()数据类型，b模块永远不需要知道X的内部结构。X是模块a创建的，调用bounding_box(X)时将它传回a。</li>
+<li>抽象违规：
+<pre tabindex="0"><code>eg:
+-module(c).
+fonts_in(Str) -&gt;    
+    X = a:make_text(Str),
+    [F || {F,_} &lt;- X].
+</code></pre><blockquote>
+<p>例子中，模块c是不知道X的数据类型的，在列表推导中我们无法知道X中元素的数据类型，这种使用未知的类型内部数据结构的方式被称为类型违规。</p>
+</blockquote>
+</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#类型">类型</a></li>
+    <li><a href="#指定数据和函数类型">指定数据和函数类型</a></li>
+    <li><a href="#类型语法">类型语法</a></li>
+    <li><a href="#预定义类型">预定义类型</a></li>
+    <li><a href="#指定函数的输入输出类型">指定函数的输入输出类型</a></li>
+    <li><a href="#导出类型和本地类型">导出类型和本地类型</a></li>
+    <li><a href="#不透明类型">不透明类型</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/erlang/%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5/" class="button left"><span>Erlang类型检查</span></a>
+    
+    
+      <a href="/blog/erlang/%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B%E6%9C%AA%E5%AE%8C/" class="button right"><span>Erlang套接字编程</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Erlang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

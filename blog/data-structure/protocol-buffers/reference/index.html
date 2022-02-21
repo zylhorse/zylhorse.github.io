@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Protocol Buffers - 规范 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Protocol Buffers - 规范">
+<meta itemprop="description" content="本文是Protocol Buffers语言规范的参考文档。语法使用EBNF.
+ [PB2] 表示pb version2 的规范
+[PB3] 表示pb version3 的规范
+ | alternation() grouping[] option (zero or one time){} repetition (any number of times)词法元素  Lexical elements
+ 字母和数字  Letters and digits
+ letter = &quot;A&quot; … &quot;Z&quot; | &quot;a&quot; … &quot;z&quot;[PB2] capitalLetter = &quot;A&quot; … &quot;Z&quot;decimalDigit = &quot;0&quot; … &quot;9&quot;octalDigit = &quot;0&quot; … &quot;7&quot;hexDigit = &quot;0&quot; … &quot;9&quot; | &quot;A&quot; … &quot;F&quot; | &quot;a&quot; … &quot;f&quot;标识符  Identifiers"><meta itemprop="datePublished" content="2021-10-28T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-10-28T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1297">
+<meta itemprop="keywords" content="Protocol Buffers," /><meta property="og:title" content="Protocol Buffers - 规范" />
+<meta property="og:description" content="本文是Protocol Buffers语言规范的参考文档。语法使用EBNF.
+ [PB2] 表示pb version2 的规范
+[PB3] 表示pb version3 的规范
+ | alternation() grouping[] option (zero or one time){} repetition (any number of times)词法元素  Lexical elements
+ 字母和数字  Letters and digits
+ letter = &quot;A&quot; … &quot;Z&quot; | &quot;a&quot; … &quot;z&quot;[PB2] capitalLetter = &quot;A&quot; … &quot;Z&quot;decimalDigit = &quot;0&quot; … &quot;9&quot;octalDigit = &quot;0&quot; … &quot;7&quot;hexDigit = &quot;0&quot; … &quot;9&quot; | &quot;A&quot; … &quot;F&quot; | &quot;a&quot; … &quot;f&quot;标识符  Identifiers" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/data-structure/protocol-buffers/reference/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-10-28T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-10-28T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Protocol Buffers - 规范"/>
+<meta name="twitter:description" content="本文是Protocol Buffers语言规范的参考文档。语法使用EBNF.
+ [PB2] 表示pb version2 的规范
+[PB3] 表示pb version3 的规范
+ | alternation() grouping[] option (zero or one time){} repetition (any number of times)词法元素  Lexical elements
+ 字母和数字  Letters and digits
+ letter = &quot;A&quot; … &quot;Z&quot; | &quot;a&quot; … &quot;z&quot;[PB2] capitalLetter = &quot;A&quot; … &quot;Z&quot;decimalDigit = &quot;0&quot; … &quot;9&quot;octalDigit = &quot;0&quot; … &quot;7&quot;hexDigit = &quot;0&quot; … &quot;9&quot; | &quot;A&quot; … &quot;F&quot; | &quot;a&quot; … &quot;f&quot;标识符  Identifiers"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/data-structure/protocol-buffers/reference/">Protocol Buffers - 规范</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2021-10-28 00:00:00 &#43;0000 UTC">2021-10-28</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <p>本文是Protocol Buffers语言规范的参考文档。语法使用<a href="/blog/software-programming/ebnf">EBNF</a>.</p>
+<blockquote>
+<p>[PB2] 表示pb version2 的规范<br>
+[PB3] 表示pb version3 的规范</p>
+</blockquote>
+<pre tabindex="0"><code>|   alternation
+()  grouping
+[]  option (zero or one time)
+{}  repetition (any number of times)
+</code></pre><h2 id="词法元素">词法元素</h2>
+<blockquote>
+<p>Lexical elements</p>
+</blockquote>
+<h3 id="字母和数字">字母和数字</h3>
+<blockquote>
+<p>Letters and digits</p>
+</blockquote>
+<pre tabindex="0"><code>letter = &quot;A&quot; … &quot;Z&quot; | &quot;a&quot; … &quot;z&quot;
+[PB2] capitalLetter =  &quot;A&quot; … &quot;Z&quot;
+decimalDigit = &quot;0&quot; … &quot;9&quot;
+octalDigit   = &quot;0&quot; … &quot;7&quot;
+hexDigit     = &quot;0&quot; … &quot;9&quot; | &quot;A&quot; … &quot;F&quot; | &quot;a&quot; … &quot;f&quot;
+</code></pre><h3 id="标识符">标识符</h3>
+<blockquote>
+<p>Identifiers</p>
+</blockquote>
+<pre tabindex="0"><code>ident = letter { letter | decimalDigit | &quot;_&quot; }
+fullIdent = ident { &quot;.&quot; ident }
+messageName = ident
+enumName = ident
+fieldName = ident
+oneofName = ident
+mapName = ident
+serviceName = ident
+rpcName = ident
+[PB2] streamName = ident
+messageType = [ &quot;.&quot; ] { ident &quot;.&quot; } messageName
+enumType = [ &quot;.&quot; ] { ident &quot;.&quot; } enumName
+[PB2] groupName = capitalLetter { letter | decimalDigit | &quot;_&quot; }
+</code></pre><h3 id="整数">整数</h3>
+<blockquote>
+<p>Integer literals</p>
+</blockquote>
+<pre tabindex="0"><code>intLit     = decimalLit | octalLit | hexLit
+decimalLit = ( &quot;1&quot; … &quot;9&quot; ) { decimalDigit }
+octalLit   = &quot;0&quot; { octalDigit }
+hexLit     = &quot;0&quot; ( &quot;x&quot; | &quot;X&quot; ) hexDigit { hexDigit }
+</code></pre><h3 id="浮点数">浮点数</h3>
+<blockquote>
+<p>Floating-point literals</p>
+</blockquote>
+<pre tabindex="0"><code>floatLit = ( decimals &quot;.&quot; [ decimals ] [ exponent ] | decimals exponent | &quot;.&quot;decimals [ exponent ] ) | &quot;inf&quot; | &quot;nan&quot;
+decimals  = decimalDigit { decimalDigit }
+exponent  = ( &quot;e&quot; | &quot;E&quot; ) [ &quot;+&quot; | &quot;-&quot; ] decimals 
+</code></pre><h3 id="布尔值">布尔值</h3>
+<blockquote>
+<p>Boolean</p>
+</blockquote>
+<pre tabindex="0"><code>boolLit = &quot;true&quot; | &quot;false&quot; 
+</code></pre><h3 id="字符串">字符串</h3>
+<blockquote>
+<p>String literals</p>
+</blockquote>
+<pre tabindex="0"><code>strLit = ( &quot;'&quot; { charValue } &quot;'&quot; ) | ( '&quot;' { charValue } '&quot;' )
+charValue = hexEscape | octEscape | charEscape | /[^\0\n\\]/
+hexEscape = '\' ( &quot;x&quot; | &quot;X&quot; ) hexDigit hexDigit
+octEscape = '\' octalDigit octalDigit octalDigit
+charEscape = '\' ( &quot;a&quot; | &quot;b&quot; | &quot;f&quot; | &quot;n&quot; | &quot;r&quot; | &quot;t&quot; | &quot;v&quot; | '\' | &quot;'&quot; | '&quot;' )
+quote = &quot;'&quot; | '&quot;'
+</code></pre><h3 id="空语句">空语句</h3>
+<blockquote>
+<p>EmptyStatement</p>
+</blockquote>
+<pre tabindex="0"><code>emptyStatement = &quot;;&quot;
+</code></pre><h3 id="常量">常量</h3>
+<blockquote>
+<p>Constant</p>
+</blockquote>
+<pre tabindex="0"><code>constant = fullIdent | ( [ &quot;-&quot; | &quot;+&quot; ] intLit ) | ( [ &quot;-&quot; | &quot;+&quot; ] floatLit ) |
+                   strLit | boolLit 
+</code></pre><h2 id="syntax语句">Syntax语句</h2>
+<p>syntax 语句用来定义protobuf的版本。</p>
+<pre tabindex="0"><code>syntax = &quot;syntax&quot; &quot;=&quot; quote &quot;proto2&quot; quote &quot;;&quot;
+</code></pre><h2 id="import语句">Import语句</h2>
+<blockquote>
+<p>Import Statement</p>
+</blockquote>
+<p>Import语句用来导入另一个<code>.proto</code>。</p>
+<pre tabindex="0"><code>import = &quot;import&quot; [ &quot;weak&quot; | &quot;public&quot; ] strLit &quot;;&quot; 
+</code></pre><p>示例:</p>
+<pre tabindex="0"><code>import public &quot;other.proto&quot;;
+</code></pre><h2 id="package语句">Package语句</h2>
+<blockquote>
+<p>Package</p>
+</blockquote>
+<p>包语句用以避免proto中message命名冲突</p>
+<pre tabindex="0"><code>package = &quot;package&quot; fullIdent &quot;;&quot;`
+</code></pre><p>示例:</p>
+<pre tabindex="0"><code>package foo.bar;
+</code></pre><h2 id="option语句">Option语句</h2>
+<blockquote>
+<p>Option</p>
+</blockquote>
+<p><code>option</code>可以在proto文件，message，enum，service中使用。<br>
+<code>option</code>可以是<code>protobuf</code>规范定义的或自定义。更多信息，参考
+<a href="%22/blog/data-structure/protocol-buffers/guide#option%E8%AF%AD%E5%8F%A5%22">Protocol Buffers-Version 2指南</a></p>
+<pre tabindex="0"><code>option = &quot;option&quot; optionName  &quot;=&quot; constant &quot;;&quot;
+optionName = ( ident | &quot;(&quot; fullIdent &quot;)&quot; ) { &quot;.&quot; ident }
+</code></pre><p>示例：</p>
+<pre tabindex="0"><code>option java_package = &quot;com.example.foo&quot;;
+</code></pre><h2 id="fields语句">Fields语句</h2>
+<blockquote>
+<p>Fields</p>
+</blockquote>
+<p>Fields 是<code>message</code>结构中的基本元素。<br>
+[PB2] Fields可以是普通Fields，group，oneof，map等。 单个Field由 标签 类型 字段编号组成。
+[PB3] Fields可以是普通Fields，oneof，map等。 单个Field由 类型 字段编号组成。</p>
+<pre tabindex="0"><code>[PB2] label = &quot;required&quot; | &quot;optional&quot; | &quot;repeated&quot;
+type = &quot;double&quot; | &quot;float&quot; | &quot;int32&quot; | &quot;int64&quot; | &quot;uint32&quot; | &quot;uint64&quot;
+      | &quot;sint32&quot; | &quot;sint64&quot; | &quot;fixed32&quot; | &quot;fixed64&quot; | &quot;sfixed32&quot; | &quot;sfixed64&quot;
+      | &quot;bool&quot; | &quot;string&quot; | &quot;bytes&quot; | messageType | enumType
+fieldNumber = intLit;
+</code></pre><h3 id="普通field">普通field</h3>
+<blockquote>
+<p>Normal field</p>
+</blockquote>
+<p>[PB2] 每个field定义由label，type，name，field number组成。 还可能有 field options。
+[PB3] 每个field定义由type，name，field number组成。 还可能有 field options。</p>
+<pre tabindex="0"><code>[PB2] field = label type fieldName &quot;=&quot; fieldNumber [ &quot;[&quot; fieldOptions &quot;]&quot; ] &quot;;&quot;
+[PB3] field = [&quot;repeated&quot;] type fieldName &quot;=&quot; fieldNumber [ &quot;[&quot; fieldOptions &quot;]&quot; ] &quot;;&quot;
+fieldOptions = fieldOption { &quot;,&quot;  fieldOption }
+fieldOption = optionName &quot;=&quot; constant
+</code></pre><p>示例:</p>
+<pre tabindex="0"><code>[PB2] optional foo.bar nested_message = 2;
+[PB3] foo.bar nested_message = 2;
+repeated int32 samples = 4 [packed=true];
+</code></pre><h3 id="pb2组field">[PB2]组field</h3>
+<blockquote>
+<p>Group field</p>
+</blockquote>
+<blockquote>
+<p>注意：[PB3]该特性被废弃，在创建新的message类型时，应当使用嵌套message结构。</p>
+</blockquote>
+<p><code>Group</code>是在<code>message</code>定义中嵌套消息的一种方法。<code>Group</code>名称必须大写字母开头。</p>
+<pre tabindex="0"><code>group = label &quot;group&quot; groupName &quot;=&quot; fieldNumber messageBody
+</code></pre><p>示例:</p>
+<pre tabindex="0"><code>repeated group Result = 1 {
+    required string url = 2;
+    optional string title = 3;
+    repeated string snippets = 4;
+}
+</code></pre><h3 id="oneof">Oneof</h3>
+<blockquote>
+<p>Oneof and oneof field</p>
+</blockquote>
+<p>[PB2] oneof由oneof fields和oneof名称组成。oneof fields 没有label。 
+[PB3] oneof由oneof fields和oneof名称组成。</p>
+<pre tabindex="0"><code>oneof = &quot;oneof&quot; oneofName &quot;{&quot; { option | oneofField | emptyStatement } &quot;}&quot;
+oneofField = type fieldName &quot;=&quot; fieldNumber [ &quot;[&quot; fieldOptions &quot;]&quot; ] &quot;;&quot;
+</code></pre><p>示例:</p>
+<pre tabindex="0"><code>oneof foo {
+    string name = 4;
+    SubMessage sub_message = 9;
+}
+</code></pre><h3 id="映射field">映射field</h3>
+<blockquote>
+<p>Map field</p>
+</blockquote>
+<p>map field 由key 类型，value类型，名称 和 字段编号组成。 key的类型可以是任意的整数和字符串类型。</p>
+<blockquote>
+<p>[PB2] key 类型不能是 enum</p>
+</blockquote>
+<pre tabindex="0"><code>mapField = &quot;map&quot; &quot;&lt;&quot; keyType &quot;,&quot; type &quot;&gt;&quot; mapName &quot;=&quot; fieldNumber [ &quot;[&quot; fieldOptions &quot;]&quot; ] &quot;;&quot;
+keyType = &quot;int32&quot; | &quot;int64&quot; | &quot;uint32&quot; | &quot;uint64&quot; | &quot;sint32&quot; | &quot;sint64&quot; |
+          &quot;fixed32&quot; | &quot;fixed64&quot; | &quot;sfixed32&quot; | &quot;sfixed64&quot; | &quot;bool&quot; | &quot;string&quot;
+</code></pre><p>示例:</p>
+<pre tabindex="0"><code>map&lt;string, Project&gt; projects = 3;
+</code></pre><h2 id="扩展和保留">扩展和保留</h2>
+<blockquote>
+<p>Extensions and Reserved</p>
+</blockquote>
+<p>扩展和保留是定义字段编号和字段名范围的message元素。</p>
+<h3 id="pb2扩展">[PB2]扩展</h3>
+<blockquote>
+<p>Extensions</p>
+</blockquote>
+<p>扩展定义message中字段编号的范围，可用于第三方扩展。<br>
+其他人可以在他们自己的.proto文件中使用这些数字标记为message类型定义新的field，而不必编辑原始文件。</p>
+<pre tabindex="0"><code>extensions = &quot;extensions&quot; ranges &quot;;&quot;
+ranges = range { &quot;,&quot; range }
+range =  intLit [ &quot;to&quot; ( intLit | &quot;max&quot; ) ]
+</code></pre><p>示例:</p>
+<pre tabindex="0"><code>extensions 100 to 199;
+extensions 4, 20 to max;
+</code></pre><h3 id="保留">保留</h3>
+<blockquote>
+<p>Reserved</p>
+</blockquote>
+<p>保留定义message中的字段编号或字段名称不能使用的范围。</p>
+<pre tabindex="0"><code>reserved = &quot;reserved&quot; ( ranges | fieldNames ) &quot;;&quot;
+fieldNames = fieldName { &quot;,&quot; fieldName }
+</code></pre><p>示例:</p>
+<pre tabindex="0"><code>reserved 2, 15, 9 to 11;
+reserved &quot;foo&quot;, &quot;bar&quot;;
+</code></pre><h2 id="顶级定义">顶级定义</h2>
+<blockquote>
+<p>Top Level definitions</p>
+</blockquote>
+<h3 id="enum定义">Enum定义</h3>
+<p>[PB2] enum由名称和enum主体组成。 enum主体由fields和option组成。 
+[PB3] enum由名称和enum主体组成。 enum主体由fields和option组成。enum 定义必须以enum 0值开始。</p>
+<pre tabindex="0"><code>enum = &quot;enum&quot; enumName enumBody
+enumBody = &quot;{&quot; { option | enumField | emptyStatement } &quot;}&quot;
+enumField = ident &quot;=&quot; [ &quot;-&quot; ] intLit [ &quot;[&quot; enumValueOption { &quot;,&quot;  enumValueOption } &quot;]&quot; ]&quot;;&quot;
+enumValueOption = optionName &quot;=&quot; constant
+</code></pre><p>示例:</p>
+<pre tabindex="0"><code>enum EnumAllowingAlias {
+  option allow_alias = true;
+  UNKNOWN = 0;
+  STARTED = 1;
+  RUNNING = 2 [(custom_option) = &quot;hello world&quot;];
+}
+</code></pre><h3 id="pb2extend定义">[PB2]Extend定义</h3>
+<blockquote>
+<p>Extend</p>
+</blockquote>
+<p>如果在相同或导入的.proto文件中的message保留了extensions范围，则该message可以被extend。</p>
+<pre tabindex="0"><code>extend = &quot;extend&quot; messageType &quot;{&quot; {field | group | emptyStatement} &quot;}&quot;
+</code></pre><p>示例:</p>
+<pre tabindex="0"><code>extend Foo {
+  optional int32 bar = 126;
+}
+</code></pre><h3 id="message定义">Message定义</h3>
+<blockquote>
+<p>Message definition</p>
+</blockquote>
+<p>[PB2] message由名称和message 主体组成。 message主体由field，嵌套enum，嵌套message，extend，extensions，
+reserved，groups，options，oneofs，map
+[PB3] message由名称和message 主体组成。 message主体由field，嵌套enum，嵌套message，
+reserved，options，oneofs，map</p>
+<pre tabindex="0"><code>message = &quot;message&quot; messageName messageBody
+[PB2]messageBody = &quot;{&quot; { field | enum | message | extend | extensions | group |
+option | oneof | mapField | reserved | emptyStatement } &quot;}&quot;
+[PB3]messageBody = &quot;{&quot; { field | enum | message |
+option | oneof | mapField | reserved | emptyStatement } &quot;}&quot;
+</code></pre><p>示例:</p>
+<pre tabindex="0"><code>message Outer {
+  option (my_option).a = true;
+  message Inner {   // Level 2
+    [PB2] required int64 ival = 1;
+    [PB3] int64 ival = 1;
+  }
+  map&lt;int32, string&gt; my_map = 2;
+  [PB2] extensions 20 to 30;
+}
+</code></pre><h2 id="service定义">Service定义</h2>
+<blockquote>
+<p>Service definition</p>
+</blockquote>
+<pre tabindex="0"><code>[PB2]
+service = &quot;service&quot; serviceName &quot;{&quot; { option | rpc | stream | emptyStatement } &quot;}&quot;
+rpc = &quot;rpc&quot; rpcName &quot;(&quot; [ &quot;stream&quot; ] messageType &quot;)&quot; &quot;returns&quot; &quot;(&quot; [ &quot;stream&quot; ] messageType &quot;)&quot; (( &quot;{&quot; { option | emptyStatement } &quot;}&quot; ) | &quot;;&quot; )
+stream = &quot;stream&quot; streamName &quot;(&quot; messageType &quot;,&quot; messageType &quot;)&quot; (( &quot;{&quot; { option | emptyStatement } &quot;}&quot;) | &quot;;&quot; )
+[PB3]
+service = &quot;service&quot; serviceName &quot;{&quot; { option | rpc | emptyStatement } &quot;}&quot;
+rpc = &quot;rpc&quot; rpcName &quot;(&quot; [ &quot;stream&quot; ] messageType &quot;)&quot; &quot;returns&quot; &quot;(&quot; [ &quot;stream&quot; ] messageType &quot;)&quot; (( &quot;{&quot; {option | emptyStatement } &quot;}&quot; ) | &quot;;&quot;)
+</code></pre><p>示例:</p>
+<pre tabindex="0"><code>service SearchService {
+  rpc Search (SearchRequest) returns (SearchResponse);
+}
+</code></pre><h2 id="proto文件">Proto文件</h2>
+<blockquote>
+<p>Proto file</p>
+</blockquote>
+<h3 id="pb2">PB2</h3>
+<pre tabindex="0"><code>proto = syntax { import | package | option | topLevelDef | emptyStatement }
+topLevelDef = message | enum | extend | service
+</code></pre><p>示例:</p>
+<pre tabindex="0"><code>syntax = &quot;proto2&quot;;
+import public &quot;other.proto&quot;;
+option java_package = &quot;com.example.foo&quot;;
+enum EnumAllowingAlias {
+  option allow_alias = true;
+  UNKNOWN = 0;
+  STARTED = 1;
+  RUNNING = 2 [(custom_option) = &quot;hello world&quot;];
+}
+message Outer {
+  option (my_option).a = true;
+  message Inner {   // Level 2
+    required int64 ival = 1;
+  }
+  repeated Inner inner_message = 2;
+  optional EnumAllowingAlias enum_field = 3;
+  map&lt;int32, string&gt; my_map = 4;
+  extensions 20 to 30;
+}
+message Foo {
+  optional group GroupMessage {
+    optional a = 1;
+  }
+}
+</code></pre><h3 id="pb3">PB3</h3>
+<pre tabindex="0"><code>proto = syntax { import | package | option | topLevelDef | emptyStatement }
+[PB2] topLevelDef = message | enum | extend | service
+[PB3] topLevelDef = message | enum | service
+</code></pre><p>示例:</p>
+<pre tabindex="0"><code>syntax = &quot;proto3&quot;;
+import public &quot;other.proto&quot;;
+option java_package = &quot;com.example.foo&quot;;
+enum EnumAllowingAlias {
+  option allow_alias = true;
+  UNKNOWN = 0;
+  STARTED = 1;
+  RUNNING = 2 [(custom_option) = &quot;hello world&quot;];
+}
+message Outer {
+  option (my_option).a = true;
+  message Inner {   // Level 2
+    int64 ival = 1;
+  }
+  repeated Inner inner_message = 2;
+  EnumAllowingAlias enum_field = 3;
+  map&lt;int32, string&gt; my_map = 4;
+}
+</code></pre>
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/data-structure/">Data Structure</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/protocol-buffers/">Protocol Buffers</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#词法元素">词法元素</a>
+      <ul>
+        <li><a href="#字母和数字">字母和数字</a></li>
+        <li><a href="#标识符">标识符</a></li>
+        <li><a href="#整数">整数</a></li>
+        <li><a href="#浮点数">浮点数</a></li>
+        <li><a href="#布尔值">布尔值</a></li>
+        <li><a href="#字符串">字符串</a></li>
+        <li><a href="#空语句">空语句</a></li>
+        <li><a href="#常量">常量</a></li>
+      </ul>
+    </li>
+    <li><a href="#syntax语句">Syntax语句</a></li>
+    <li><a href="#import语句">Import语句</a></li>
+    <li><a href="#package语句">Package语句</a></li>
+    <li><a href="#option语句">Option语句</a></li>
+    <li><a href="#fields语句">Fields语句</a>
+      <ul>
+        <li><a href="#普通field">普通field</a></li>
+        <li><a href="#pb2组field">[PB2]组field</a></li>
+        <li><a href="#oneof">Oneof</a></li>
+        <li><a href="#映射field">映射field</a></li>
+      </ul>
+    </li>
+    <li><a href="#扩展和保留">扩展和保留</a>
+      <ul>
+        <li><a href="#pb2扩展">[PB2]扩展</a></li>
+        <li><a href="#保留">保留</a></li>
+      </ul>
+    </li>
+    <li><a href="#顶级定义">顶级定义</a>
+      <ul>
+        <li><a href="#enum定义">Enum定义</a></li>
+        <li><a href="#pb2extend定义">[PB2]Extend定义</a></li>
+        <li><a href="#message定义">Message定义</a></li>
+      </ul>
+    </li>
+    <li><a href="#service定义">Service定义</a></li>
+    <li><a href="#proto文件">Proto文件</a>
+      <ul>
+        <li><a href="#pb2">PB2</a></li>
+        <li><a href="#pb3">PB3</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/data-structure/protocol-buffers/style_guide/" class="button left"><span>Protocol Buffers - 编码规范</span></a>
+    
+    
+      <a href="/blog/prometheus/pushgateway/" class="button right"><span>Prometheus-Pushgateway</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Data&#32;Structure
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

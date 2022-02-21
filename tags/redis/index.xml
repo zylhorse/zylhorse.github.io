@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Redis on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/redis/</link>
+    <description>Recent content in Redis on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 12 May 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/redis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Redis发布订阅模式和事件通知</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85/</link>
+      <pubDate>Fri, 12 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85/</guid>
+      <description>发布订阅 redis发布订阅是一种消息通讯模式， 接收者subscribe channel 消息， 发送者publish channel 消息
+语法：subscribe channel1 channel2publish channel messageunsubscribe channel1 channel2pubsub subcommand // eg: pubsub channels 查看订阅channelpsubscribe pattern // 订阅给定模式频道punsubscribe pattern // 退订给定模式频道事件通知（keyspace notification）  keyspace 通知是的客户端可以通过订阅频道或模式，来接收那些以某种方式改动redis数据集的事件； 事件通过redis的订阅发布功能来进行分发； redis的订阅和发布功能采取的是发送即忘（fire and forget）策略， 会导致离线的redis-cli，丢失这部分事件。  事件类型 对每个数据的修改， 键空间都会发送两种不同类型的事件：
+ 键空间（key-space）通知 键事件（key-event）通知  例如： 当del key命令执行时：1. 键空间频道的订阅者将接收到被执行的事件的名字，在这个例子中，就是 del2. 键事件频道的订阅者将接收到被执行事件的键的名字，在这个例子中，就是 mykey配置 修改 redis.conf 中的notify-keyspace-events， 参数配置如下：
+字符	发送的通知K	键空间通知，所有通知以__keyspace@&amp;lt;db&amp;gt;__为前缀，针对KeyE	键事件通知，所有通知以__keyevent@&amp;lt;db&amp;gt;__为前缀，针对eventg	DEL、EXPIRE、RENAME等类型无关的通用命令的通知$	字符串命令的通知l	列表命令的通知s	集合命令的通知h	哈希命令的通知z	有序集合命令的通知x	过期事件：每当有过期键被删除时发送e	驱逐(evict)事件：每当有键因为maxmemory政策而被删除时发送A	参数g$lshzxe的别名，相当于是All输入的参数中至少要有一个K或E， 否则不管其余的参数是什么， 都不会有任何通知被分发。</description>
+    </item>
+    
+    <item>
+      <title>Redis源码解读-dict</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/dict/</link>
+      <pubDate>Sat, 11 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/dict/</guid>
+      <description>定义 dict实现通过key查找value的键值对的数据结构，底层通过hash表实现
+数据结构 </description>
+    </item>
+    
+    <item>
+      <title>Redis的主从同步方式</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/</link>
+      <pubDate>Thu, 01 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/</guid>
+      <description>概述 为了分担redis读写压力， 支持主从复制； 分为全量同步和增量同步
+全量同步 全量同步一般发生在slave 初始化阶段， 这时slave需要将master上的所有数据复制一份，具体步骤：
+ slave连接master， 发送SYNC命令 master接收到SYNC命令，开始执行BGSAVE命令生成RDB文件并在缓冲区记录此后执行的所有命令； master执行完BGSAVE命令后， 向所有slave发送快照，并在发送期间继续记录被执行的命令； slave收到快照文件后，丢弃所有数据，并载入新的快照； master快照发送完成后，开始向slave分发缓冲中记录的命令 slave载入快照完成后，开始接收master上缓冲的写命令；  增量同步 增量同步主要发生在slave初始化后，开始正常工作后， 将master上后续发生的写操作同步到slave上。具体过程：
+ master每执行一个写命令， 就会向slave发送同样的写命令。  主从同步特点  异步同步，不阻塞master服务器 master要开启持久化，否则master重启很危险 repl-diskless-sync no 默认不使用diskless同步方式  </description>
+    </item>
+    
+    <item>
+      <title>Redis高可用方案-集群模式</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Sun, 27 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F/</guid>
+      <description>概述  redis cluster 时redis的分布式解决方案， 在3.0 推出； 当遇到单机内存，并发流量等瓶颈时，可以采用cluster架构达到负载均衡的目的； cluster 将整个数据集，按照分区规则映射到多个节点上，每个节点负责整个数据集的一个子集； 节点之间会相互通信， meet操作时节点之间相互通信的基础， meet 操作有一定的频率和规则； 推荐节点小于1000， 因为节点之间meet操作会占用大量带宽；  原理  redis cluster采用哈希分区中的虚拟槽分区。 虚拟槽分区巧妙的使用哈希空间， 使用分散度良好的哈希函数把所有的数据映射到一个固定范围的整数集合（槽）； 槽的范围时0~16383， 槽是集群内数据管理和迁移的基本单位； 把16384槽按照节点数量进行平均分配，由节点进行管理 对每个key按照CRC16规则进行hash运算 把hash结果对16383进行取余 把余数发送给Redis节点 节点接收到数据，验证是否在自己管理的槽编号的范围 如果在自己管理的槽编号范围内，则把数据保存到数据槽中，然后返回执行结果 如果在自己管理的槽编号范围外，则会把数据发送给正确的节点进行moved重定向，由正确的节点来把数据保存在对应的槽中  增加主节点  redis-trib.rb add-node new-node-addr cluster-node-addr redis-trib.rb reshared cluster-node-addr  增加从节点  redis-trib.rb add-node new-node-addr cluster-node-addr cluster replicate new-node-Id  删除从节点  redis-trib.rb del-node cluster-node-addr del-node-id redis-trib.rb reshared cluster-node-addr redis-trib.rb del-node cluster-node-addr del-node-id  部署  至少需要6台机器， 3个master，3个slave； 每个master至少搭配一个slave；  hashtag  hashtag 解决让相关的key 划分到同一个节点上； 原理： 给相关key 使用{}添加同样的标记；  fail 状态必要条件  某个主节点和所有从节点全部挂掉，我们集群就进入faill状态。 如果集群超过半数以上master挂掉，无论是否有slave，集群进入fail状态.</description>
+    </item>
+    
+    <item>
+      <title>Redis高可用方案-哨兵模式</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Sat, 12 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/</guid>
+      <description>哨兵模式 哨兵是一个独立的进程， 通过和redis各个节点的通信，监听各节点的状态；并互相监控； 备注： sentinel节点需要2n+1(n&amp;gt;=1)个
+sentinel监听  每10秒 sentinel 对 master和slave 进行info； 发现slave节点，确认主从关系 每2秒 sentinel 通过master（pub/sub） 交换信息， 所有的sentinel都订阅master的一个channel， 并每隔2秒向该channel发送信息； 感知新的sentinel， 协商master是否通信失败； 每1秒 sentinel 向其他sentinel/master/slave节点 ping； 用于心跳监测；  主观下线 单个sentinel对redis 节点通信失败的‘偏见’；如果一个redis节点在down-after-millseconds 时间内， 没有回复sentinel心跳包，则该redis节点被sentinel认定为主观下线
+客观下线  当redis节点被sentinel标记为主观下线后， 并不意味该redis节点故障了。 该sentinel会询问其他sentinel， 如果sentinel cluster中超过quorum数量的sentinel 认定该节点主观下线， 则该redis 客观下线； 如果该节点为sentinel和slave节点， 则操作到此为止； 如果客观下线的redis节点为master， 则开始故障转移；  故障转移流程 sentinel cluster 选举leader  当一个sentinel 确定master 主观下线后， 会请求其他sentinel将自己选举为leader， 被请求的sentinel 如果没有同意其他sentinel的选举请求， 则同意该请求， 否则为不同意； 如果一个sentinel 获得的选票数达到了leader最低票数（quorum和sentinel节点数/2+1）则该sentinel当选为leader， 否则重新选举；  sentinel leader 决定新的master  过滤故障节点 选择slave-priority配置的优先级别 最高的slave节点， 如不存在继续下一步； 选择复制偏移量最大（复制的最完整）的slave节点， 如不存在继续下一步； 选择run_id 最小的slave节点；  </description>
+    </item>
+    
+    <item>
+      <title>Redis高可用解决方案</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/%E9%AB%98%E5%8F%AF%E7%94%A8ha-high-available/</link>
+      <pubDate>Tue, 08 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/%E9%AB%98%E5%8F%AF%E7%94%A8ha-high-available/</guid>
+      <description>高可用扩容  垂直扩容： 提升机器内存配置， 不需要应用程序支持； 水平扩容： 增加节点，需要应用程序支持；  哨兵模式（sentinel） 故障转移后redis客户端将无法感知redis节点的变化；导致无法正常使用；
+哨兵模式高可用客户端流程  客户端获取 sentinel 集合； 客户端获取master 信息； 客户端验证获取的master 为真正的master， 防止故障转移期间主节点的变化； 客户端订阅sentinel节点 相关频道， 时刻获取节点去读写；  问题  不能解决读写分离；  集群模式（cluster）  数据异步复制，不能保证强一致性。复制结构只支持一层，从节点只能复制主节点； key 批量操作限制，目前只支持相同槽的key 批量查询， 不允许跨槽查询； key 事务操作优先，当key在多个槽上分布时， 不支持事务功能；  </description>
+    </item>
+    
+    <item>
+      <title>Redis的hotkey和bigkey监控和处理</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/hotkeybigkey/</link>
+      <pubDate>Sun, 23 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/hotkeybigkey/</guid>
+      <description>bigkey  单个key 存储value很大 hash set list zset 等存储元素过多  如何发现  redis-cli &amp;ndash;bigkeys rdbtools 分析rdb 文件 redis-rdb-cli 第三方工具  怎么解决  减少list hash set zset 成员， 对成员过多的数据进行取模分片 string类型的big value 不建议存入 redis， 可以用文档型数据库mongodb或cdn等方式优化。  hotkey  并发访问量很大的热点key  如何发现 收集所有redis请求，统计分析
+ redis-cli &amp;ndash;hotkeys 在proxy 层，对每一个redis请求进行收集上报，统计分析 对redis端口的tcp数据包进行抓包统计； 基于lfu（最近最少使用） 根据使用频率进行统计  怎么解决 产生随机值（0-2N, N 为集群节点数），作为key的后缀， 将key分布到集群的多个实例中。并设置随机过期时间；
+const M = N * 2//生成随机数random = GenRandom(0, M)//构造备份新keybakHotKey = hotKey + “_” + randomdata = redis.</description>
+    </item>
+    
+    <item>
+      <title>Redis源码阅读-ziplist</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/ziplist/</link>
+      <pubDate>Mon, 10 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/ziplist/</guid>
+      <description>定义 ziplist由一系列特殊编码的连续内存块组成的顺序存储结构，类似数组， 但是ziplist每个元素占用内存大小不同。
+数据结构 type ziplist struct {zlbytes: ziplist的长度（单位: 字节)，是一个32位无符号整数zltail: ziplist最后一个节点的偏移量，反向遍历ziplist或者pop尾部节点的时候有用。zllen: ziplist的节点（entry）个数entry: 节点zlend: 值为0xFF，用于标记ziplist的结尾 }type entry struct {prevlengh: 记录上一个节点的长度，为了方便反向遍历ziplistencoding: 当前节点的编码规则，下文会详细说data: 当前节点的值，可以是数字或字符串}当data小于63字节时(2^6)，节点存为上图的第一种类型，高2位为00，低6位表示data的长度。当data小于16383字节时(2^14)，节点存为上图的第二种类型，高2位为01，后续14位表示data的长度。当data小于4294967296字节时(2^32)，节点存为上图的第二种类型，高2位为10，下一字节起连续32位表示data的长度。应用 ziplist 是list键、hash键、zset键的底层实现之一</description>
+    </item>
+    
+    <item>
+      <title>Redis源码阅读-skiplist</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/skiplist/</link>
+      <pubDate>Tue, 20 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/skiplist/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Redis自带性能测试命令</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/</link>
+      <pubDate>Tue, 06 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/</guid>
+      <description>性能测试 redis-benchmark options options value
+序号	选项	描述	默认值1	-h	指定服务器主机名	127.0.0.12	-p	指定服务器端口	63793	-s	指定服务器 socket	4	-c	指定并发连接数	505	-n	指定请求数	100006	-d	以字节的形式指定 SET/GET 值的数据大小	27	-k	1=keep alive 0=reconnect	18	-r	SET/GET/INCR 使用随机 key, SADD 使用随机值	9	-P	通过管道传输 &amp;lt;numreq&amp;gt; 请求	110	-q	强制退出 redis。仅显示 query/sec 值	11	--csv	以 CSV 格式输出	12	-l	生成循环，永久执行测试	13	-t	仅运行以逗号分隔的测试命令列表。	14	-I	Idle 模式。仅打开 N 个 idle 连接并等待。性能和网络阻塞  大文本数据需要压缩存储，如果不压缩占用内存大，而且访问时占用流量带宽 线上禁止keys使用正则匹配， keys匹配时效率低， 可以使用scan替代 线上禁止monitor， 存在内存暴增，影响性能  </description>
+    </item>
+    
+    <item>
+      <title>Redis有哪些内存淘汰策略</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/%E5%86%85%E5%AD%98%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5/</link>
+      <pubDate>Thu, 18 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/%E5%86%85%E5%AD%98%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5/</guid>
+      <description>淘汰策略  volatile-lru： 从设置过期事件的数据集合中，对最近最少使用的数据进行淘汰 volitile-ttl： 从设置过期事件的数据集合中，对将要过期数据进行淘汰 allkeys-lru： 在内存不足容纳新的数据时，对最近最少使用的数据进行淘汰； allkeys-random: 从数据集中淘汰任意数据   redis 4.0版本新增
+ volatile-lfu: 从设置过期事件的数据集合中，对使用次数最少的数据进行淘汰 allkeys-lru： 在内存不足容纳新的数据时，对使用次数最少的数据进行淘汰  </description>
+    </item>
+    
+    <item>
+      <title>Redis源码阅读-SDS动态字符串</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/sds%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+      <pubDate>Thu, 21 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/sds%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+      <description>概述  redis 没有直接使用C语言的字符串，而是定义了自己的字符串结构： SDS(simple dynamic string)作为默认字符串； 我们使用的所有键值基本都是SDS类  定义 </description>
+    </item>
+    
+    <item>
+      <title>Redis中key过期删除</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/key%E8%BF%87%E6%9C%9F%E5%88%A0%E9%99%A4/</link>
+      <pubDate>Tue, 12 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/key%E8%BF%87%E6%9C%9F%E5%88%A0%E9%99%A4/</guid>
+      <description>定期删除  redis 默认每个100ms 就会随机抽取一些设置过期时间的key， 检查其是否过期， 如果过期就删除。 随机抽取是为了防止完整遍历增加cpu负载  惰性删除  key在被使用时， 去检查过期时间， 如果过期就删除  </description>
+    </item>
+    
+    <item>
+      <title>Redis中key的命名规范</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/key%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/</link>
+      <pubDate>Thu, 07 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/key%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/</guid>
+      <description> 建议全部大写 key不能太长，太长占用资源，可读性差 key根据命名空间使用： 分开； 命名空间示例： 项目名：表名：字段名：字段id  </description>
+    </item>
+    
+    <item>
+      <title>Redis持久化有哪些方式</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/%E6%8C%81%E4%B9%85%E5%8C%96/</link>
+      <pubDate>Fri, 10 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/%E6%8C%81%E4%B9%85%E5%8C%96/</guid>
+      <description>持久化   RDB:
+ redis 会fork一个子进程，将内存数据写磁盘；写完临时文件后， 将旧的rdb文件替换； 实现copy-on-write； 以快照的形式将内存中数据备份到dump.rdb文件中；定时保存； 缺点：  在服务故障时会丢失部分数据； 数据量大会导致服务停止几百毫秒；      AOF：
+ 将redis 命令都存到一个文件中；redis 每执行一行命令都会将其写入到aof文件中； 配置： appendonly yes appendfsync always # 每次数据修改都会写入AOF文件， 影响redis性能appendfsync everysec # 每秒同步一次， 将更多写命令同步到磁盘appendsync no # 让系统决定何时同步 缺点： 文件会会大一些， 还原速度慢 ；    查看目录 语法： saveconfig get dirredis 4.0 新增  RDB和AOF混合持久， 配置： aof-use-rdb-preamble  如果混合持久打开， AOF重写时会直接吧RDB的内容写到AOF文件开头。 优点： 结合RDB和AOF优点，快速加载同时避免丢失过多数据。 缺点： AOF中的RDB部分时二进制格式， 可读性差；    </description>
+    </item>
+    
+    <item>
+      <title>Redis的基本常识和memcache对比</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/redis/</link>
+      <pubDate>Thu, 02 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/redis/</guid>
+      <description>redis  redis 使用c语言编写的高性能键值对内存数据库； 读速度： 110000/s; 写速度： 81000/s 单进程单线程， 是线程安全的； 采用多路复用机制处理请求； 有5种数据结构strnig、hash、list、set、sort set 使用管道技术，解决客户端发送阻塞； 服务端对多个请求批量处理，一次返回；  redis性能  redis 所有数据都存储在内存中， 读写都非常迅速； redis 采用单线程， 避免了线程调度的上下文切换和资源竞争 redis 多路复用，非阻塞I/O  memecache 区别  memcache 数据全部存储到内存中， 断电会挂掉； memcache 数据不能超出内存大小； redis 部分数据存储到磁盘上，可以保证数据持久性； memcache 仅支持key-value， redis 支持5中数据类型；  </description>
+    </item>
+    
+    <item>
+      <title>Redis使用遇到的问题</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Sun, 10 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/%E9%97%AE%E9%A2%98/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Redis怎么减少RRT-Pipeline</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/pipeline/</link>
+      <pubDate>Sun, 06 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/pipeline/</guid>
+      <description>概述 redis client 与server 的每次通信，都会产生一次RTT（round time trip); 并且多次通信会频繁的进行网络IO； 为此pipeline 可以将多条命令请求整合，一次发送；
+问题 1. 应当限制pipeline中命令的大小1.1 在pipeline机制中， client不会去读取缓冲数据， 除非pipeline所有命令执行完成。1.2 当缓冲中被应答数据填满， server端调用write 就会阻塞或失败2. pipeline不能保证命令执行的原子性2.1 如果多个命令在执行时发生异常， 则丢失未执行的命令2.2 因此在使用pipeline时， 要自己保证执行命令的数据安全3. 不能进解决多条命令之间的依赖关系</description>
+    </item>
+    
+    <item>
+      <title>Redis有没有数据库的概念</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+      <pubDate>Tue, 01 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
+      <description>概述  redis单机支持16个数据库， 每个数据库的数据是隔离的不能共享；redis cluster 是没有数据库概念的 redis 之所以分这么多数据库， 也是为了区分业务， 不同业务存放在不同的数据库中；  </description>
+    </item>
+    
+    <item>
+      <title>Redis基本数据类型</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</link>
+      <pubDate>Sun, 10 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</guid>
+      <description>键 redis 键值为string类型， 最大可为512M语法： get keydel key dump key exists keyexpire key second expireat key timestampkeys pattern move key db // 将key移动到数据库db中randomkey // 随机获取db中keypersist key // 移除过期时间TTL key rename key newnametype key String字符串 string类型是二进制安全的。表示string可以包含任何数据；最大可为512M；语法：set key valueget keygetrange key start endsetrange key offset valuesetex key seconds valuesetnx key value strlen key mset key1 value1 key2 value2append key valueincr keydecr keyincrby key valuedecrby key value应用场景：  常规key-value缓存 分布式锁 计数器： 禁止非法IP访问频率；文档访问频率； 限速： 限制登录接口获取验证码频率 共享session： 使用redis将用户session集中管理  Hash哈希 hash 是一个键值对集合，是string类型的映射表。最大可存储uint32max 个键值对；语法：hset key field1 value1hget key field1hmset key field1 value1 field2 value2hmget key field1 field2hdel key field1 field2hexist key field1hkeys key hvals keyhgetall keyhlen keyhsetnx key field valueshscan key cursor match [pattern] count [count]应用场景： 存储用户id及用户信息</description>
+    </item>
+    
+    <item>
+      <title>Redis安装和配置</title>
+      <link>https://zylhorse.github.io/blog/cache/redis/%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Fri, 06 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/cache/redis/%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</guid>
+      <description>安全 语法： config get requirepassconfig set requirepass passwordauth password客户端连接 client list // redis 客户端列表client setname // 设置客户端连接名client getname // 获取客户端连接名client pause // 挂起客户端client kill // 关闭客户端外网访问   注释 redis.conf
+# bind 127.0.0.1  添加requirepass
+  版本大于3.2 还需要取消保护模式
+protected-mode no  修改linux redis最大连接数 修改用户打开文件句柄数 $ sudo vim /etc/security/limits.conf redis soft nofile 65535redis hard nofile	65535修改文件句柄限制 $ sudo vim /lib/systemd/system/redis.</description>
+    </item>
+    
+  </channel>
+</rss>

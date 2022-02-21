@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang doc使用细则 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Golang doc使用细则">
+<meta itemprop="description" content="简介 go doc和godoc 在golang 1.13版本被移除，可手动安装go get golang.org/x/tools/cmd/godoc
+go doc GO 命令行工具， 打印和显示文档 打印内容：
+package pkgxxx // import &quot;project/pkgxxx&quot;FUNCTIONSfunc FuncXxx(n int) stringTYPEStype TXxx struct {Val int}go doc Flags -all: 显示package的所有文档
+-c: 区分大小写，默认不区分
+-cmd: 打印文档包含package main,默认是不包含的
+-u: 打印文档包含不能导出(首字母小写)的FUNCTIONS和TYPES文档,默认是不包含的
+-src: 显示源代码
+-short: 单行显示
+go doc参数  go doc: 输出当前目录下package的文档说明 go doc &lt;pkg&gt;: 输出指定package的文档说明  示例： go doc http   go doc &lt;sym&gt;[.&lt;methodOrField&gt;]: 输出指定package的指定FUNCTIONS或TYPES的文档说明  示例: go doc http."><meta itemprop="datePublished" content="2019-11-23T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-11-23T00:00:00+00:00" />
+<meta itemprop="wordCount" content="621">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Golang doc使用细则" />
+<meta property="og:description" content="简介 go doc和godoc 在golang 1.13版本被移除，可手动安装go get golang.org/x/tools/cmd/godoc
+go doc GO 命令行工具， 打印和显示文档 打印内容：
+package pkgxxx // import &quot;project/pkgxxx&quot;FUNCTIONSfunc FuncXxx(n int) stringTYPEStype TXxx struct {Val int}go doc Flags -all: 显示package的所有文档
+-c: 区分大小写，默认不区分
+-cmd: 打印文档包含package main,默认是不包含的
+-u: 打印文档包含不能导出(首字母小写)的FUNCTIONS和TYPES文档,默认是不包含的
+-src: 显示源代码
+-short: 单行显示
+go doc参数  go doc: 输出当前目录下package的文档说明 go doc &lt;pkg&gt;: 输出指定package的文档说明  示例： go doc http   go doc &lt;sym&gt;[.&lt;methodOrField&gt;]: 输出指定package的指定FUNCTIONS或TYPES的文档说明  示例: go doc http." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/godoc/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-11-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-11-23T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang doc使用细则"/>
+<meta name="twitter:description" content="简介 go doc和godoc 在golang 1.13版本被移除，可手动安装go get golang.org/x/tools/cmd/godoc
+go doc GO 命令行工具， 打印和显示文档 打印内容：
+package pkgxxx // import &quot;project/pkgxxx&quot;FUNCTIONSfunc FuncXxx(n int) stringTYPEStype TXxx struct {Val int}go doc Flags -all: 显示package的所有文档
+-c: 区分大小写，默认不区分
+-cmd: 打印文档包含package main,默认是不包含的
+-u: 打印文档包含不能导出(首字母小写)的FUNCTIONS和TYPES文档,默认是不包含的
+-src: 显示源代码
+-short: 单行显示
+go doc参数  go doc: 输出当前目录下package的文档说明 go doc &lt;pkg&gt;: 输出指定package的文档说明  示例： go doc http   go doc &lt;sym&gt;[.&lt;methodOrField&gt;]: 输出指定package的指定FUNCTIONS或TYPES的文档说明  示例: go doc http."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/godoc/">Golang doc使用细则</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-11-23 00:00:00 &#43;0000 UTC">2019-11-23</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="简介">简介</h2>
+<p><code>go doc</code>和<code>godoc</code> 在<code>golang 1.13</code>版本被移除，可手动安装<code>go get golang.org/x/tools/cmd/godoc</code></p>
+<h2 id="go-doc">go doc</h2>
+<p><code>GO</code> 命令行工具， 打印和显示文档
+打印内容：</p>
+<pre tabindex="0"><code>package pkgxxx // import &quot;project/pkgxxx&quot;
+
+FUNCTIONS
+
+func FuncXxx(n int) string
+
+TYPES
+
+type TXxx struct {
+        Val  int
+}
+</code></pre><h3 id="go-doc-flags">go doc Flags</h3>
+<p><code>-all</code>: 显示<code>package</code>的所有文档<br>
+<code>-c</code>: 区分大小写，默认不区分<br>
+<code>-cmd</code>: 打印文档包含<code>package main</code>,默认是不包含的<br>
+<code>-u</code>: 打印文档包含不能导出(首字母小写)的<code>FUNCTIONS</code>和<code>TYPES</code>文档,默认是不包含的<br>
+<code>-src</code>: 显示源代码<br>
+<code>-short</code>: 单行显示</p>
+<h3 id="go-doc参数">go doc参数</h3>
+<ul>
+<li><code>go doc</code>: 输出当前目录下<code>package</code>的文档说明</li>
+<li><code>go doc &lt;pkg&gt;</code>: 输出指定<code>package</code>的文档说明
+<ul>
+<li>示例： <code>go doc http</code></li>
+</ul>
+</li>
+<li><code>go doc &lt;sym&gt;[.&lt;methodOrField&gt;]</code>: 输出指定<code>package</code>的指定<code>FUNCTIONS</code>或<code>TYPES</code>的文档说明
+<ul>
+<li>示例: <code>go doc http.Request</code></li>
+</ul>
+</li>
+<li><code>go doc [&lt;pkg&gt;.]&lt;sym&gt;[.&lt;methodOrField&gt;]</code>: 输出<code>package</code>中<code>TYPES</code>的<code>FUNCTIONS</code>的文档说明
+<ul>
+<li>示例: <code>go doc http.Request.Write</code></li>
+</ul>
+</li>
+<li><code>go doc &lt;pkg&gt; &lt;sym&gt;[.&lt;methodOrField&gt;]</code>: 输出<code>package</code>中<code>TYPES</code>的<code>FUNCTIONS</code>的文档说明， 此处<code>pkg</code>需要全路径
+<ul>
+<li>示例： <code>go doc net/http Request</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="godoc">godoc</h2>
+<p><code>Go</code>自带文档发布工具</p>
+<h3 id="godoc-文档结构">godoc 文档结构</h3>
+<pre tabindex="0"><code>Overview // 包的描述
+Index // 包内Const, Var, Functions,Types的目录索引
+Examples // 包内Examples
+Package files // 包内文件列表
+... // Index 中包含的条目
+Subdirectories // 包目录下的子目录列表
+Bugs // BUG(whos) 声明的bug列表
+</code></pre><h3 id="godoc-启动">godoc 启动</h3>
+<p><code>godoc -http=:6060 -index -timestamps</code></p>
+<h3 id="godoc-参数">godoc 参数</h3>
+<p><code>-http</code> : 指定文档服务地址
+<code>-index</code>: 开启查询索引
+<code>-maxresults</code>: 设置查询结果最大显示数量，默认10000
+<code>-play</code>: 显示<code>play</code>模块，在线编辑运行代码
+<code>-timestamps</code>: 显示文档最新更新时间</p>
+<h2 id="example">Example</h2>
+<p>表示在测试源文件中的示例函数</p>
+<h3 id="examples-function-命名规则">Examples function 命名规则</h3>
+<ul>
+<li><code>package xxx</code> 的命名为： <code>func Example()</code></li>
+<li><code>func Fxx()</code> 的命名为： <code>func ExampleFxx()</code></li>
+<li><code>type Txx</code> 的命名为： <code>func ExampleTxx()</code></li>
+<li><code>func (*Txx) Fxx()</code> 的命名为： <code>func ExampleTxx_Fxx()</code></li>
+</ul>
+<h3 id="examples-function-示例">Examples function 示例</h3>
+<p>引用: <code>go/src/encoding/json/example_test.go</code></p>
+<pre tabindex="0"><code>func ExampleMarshal() {
+	type ColorGroup struct {
+		ID     int
+		Name   string
+		Colors []string
+	}
+	group := ColorGroup{
+		ID:     1,
+		Name:   &quot;Reds&quot;,
+		Colors: []string{&quot;Crimson&quot;, &quot;Red&quot;, &quot;Ruby&quot;, &quot;Maroon&quot;},
+	}
+	b, err := json.Marshal(group)
+	if err != nil {
+		fmt.Println(&quot;error:&quot;, err)
+	}
+	os.Stdout.Write(b)
+	// Output:
+	// {&quot;ID&quot;:1,&quot;Name&quot;:&quot;Reds&quot;,&quot;Colors&quot;:[&quot;Crimson&quot;,&quot;Red&quot;,&quot;Ruby&quot;,&quot;Maroon&quot;]}
+}
+</code></pre><h2 id="doc编写规范">doc编写规范</h2>
+<p>大型<code>package</code>，可以新建<code>doc.go</code>来专门记录<code>package</code>注释</p>
+<h3 id="注释规则">注释规则</h3>
+<ul>
+<li>直接将常见注释<code>//</code>添加到声明前，且两者之间不能有空行</li>
+<li>如果注释需要段落，则段落间添加空行注释
+<pre tabindex="0"><code>  // Sentence 1.
+  //
+  // Sentence 2.
+  type StructXxx struct {
+  }
+</code></pre></li>
+<li>如果注释需要代码块，则代码块使用缩进
+<pre tabindex="0"><code>// Xxx
+//      code ....
+type StructXxx struct {
+}      
+</code></pre></li>
+</ul>
+<h3 id="注释模块">注释模块</h3>
+<ul>
+<li>
+<p>package注释</p>
+<ul>
+<li>版权注释和package正文注释之间需要添加空行
+<pre tabindex="0"><code>eg: 
+
+    // Copyright 2019 zylhorse@126.com Author. All rights reserved.
+    // Use of this source code is governed by a BSD-style
+    // license that can be found in the LICENSE file.
+
+    // Package docc implements demo with godoc format
+    package docc
+</code></pre></li>
+</ul>
+</li>
+<li>
+<p>Const, Var, Functions,Types注释
+引用： <code>go/src/bytes/buffer.go</code></p>
+<pre tabindex="0"><code>    eg: 
+
+        // smallBufferSize is an initial allocation minimal capacity.
+        const smallBufferSize = 64
+
+        // A Buffer is a variable-sized buffer of bytes with Read and Write methods.
+        // The zero value for Buffer is an empty buffer ready to use.
+        type Buffer struct {
+        	buf      []byte // contents are the bytes buf[off : len(buf)]
+            ...
+        }
+
+        // The readOp constants describe the last action performed on
+        // the buffer, so that UnreadRune and UnreadByte can check for
+        // invalid usage. opReadRuneX constants are chosen such that
+        // converted to int they correspond to the rune size that was read.
+        type readOp int8
+
+        // Don't use iota for these, as the values need to correspond with the
+        // names and comments, which is easier to see when being explicit.
+        const (
+        	opRead      readOp = -1 // Any other read operation.
+        	opInvalid   readOp = 0  // Non-read operation.
+        	opReadRune1 readOp = 1  // Read rune of size 1.
+        	opReadRune2 readOp = 2  // Read rune of size 2.
+        	opReadRune3 readOp = 3  // Read rune of size 3.
+        	opReadRune4 readOp = 4  // Read rune of size 4.
+        )
+
+        // ErrTooLarge is passed to panic if memory cannot be allocated to store data in a buffer.
+        var ErrTooLarge = errors.New(&quot;bytes.Buffer: too large&quot;)
+
+        // String returns the contents of the unread portion of the buffer
+        // as a string. If the Buffer is a nil pointer, it returns &quot;&lt;nil&gt;&quot;.
+        //
+        // To build strings more efficiently, see the strings.Builder type.
+        func (b *Buffer) String() string {
+        	if b == nil {
+        		// Special case, useful in debugging.
+        		return &quot;&lt;nil&gt;&quot;
+        	}
+        	return string(b.buf[b.off:])
+        }
+
+</code></pre></li>
+<li>
+<p>BUG注释</p>
+<ul>
+<li>规则 <code>// BUG(whos)</code>: <code>whos</code>可以是更详细的人名信息</li>
+<li>该注释会显示到<code>godoc</code>文档底部的<code>BUGS</code>目录</li>
+</ul>
+<pre tabindex="0"><code>eg: 
+
+    // Title returns a copy of the string s with all Unicode letters that begin words
+    // mapped to their Unicode title case.
+    //
+    // BUG(rsc): The rule Title uses for word boundaries does not handle Unicode punctuation properly.
+    func Title(s string) string{
+        ...
+    }
+</code></pre></li>
+<li>
+<p>Deprecated接口</p>
+<ul>
+<li>表示接口被弃用</li>
+<li>GoLand等IDE在使用时会做出提示
+<pre tabindex="0"><code>// Deprecated: the function will deprecate after v1.0.1
+</code></pre></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#go-doc">go doc</a>
+      <ul>
+        <li><a href="#go-doc-flags">go doc Flags</a></li>
+        <li><a href="#go-doc参数">go doc参数</a></li>
+      </ul>
+    </li>
+    <li><a href="#godoc">godoc</a>
+      <ul>
+        <li><a href="#godoc-文档结构">godoc 文档结构</a></li>
+        <li><a href="#godoc-启动">godoc 启动</a></li>
+        <li><a href="#godoc-参数">godoc 参数</a></li>
+      </ul>
+    </li>
+    <li><a href="#example">Example</a>
+      <ul>
+        <li><a href="#examples-function-命名规则">Examples function 命名规则</a></li>
+        <li><a href="#examples-function-示例">Examples function 示例</a></li>
+      </ul>
+    </li>
+    <li><a href="#doc编写规范">doc编写规范</a>
+      <ul>
+        <li><a href="#注释规则">注释规则</a></li>
+        <li><a href="#注释模块">注释模块</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/golang/sync.pool/" class="button left"><span>Golang源码阅读-sync.pool</span></a>
+    
+    
+      <a href="/blog/golang/goswagger/" class="button right"><span>Golang swagger应用</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

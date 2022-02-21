@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>申请免费SSL证书 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="申请免费SSL证书">
+<meta itemprop="description" content="证书申请 ssl证书申请的3个主要步骤
+  制作CSR文件
+所谓CSR就是由申请人制作的Certificate Secure Request证书请求文件。制作过程中，系统会产生2个密钥，一个是公钥就是这个CSR文件，另外一个是私钥，存放在服务器上。要制作CSR文件，申请人可以参考WEB SERVER的文档，一般APACHE等，使用OPENssl命令行来生成KEY&#43;CSR2个文件，Tomcat，JBoss，Resin等使用KEYTOOL来生成JKS和CSR文件，IIS通过向导建立一个挂起的请求和一个CSR文件。
+  CA认证
+将CSR提交给CA，CA一般有2种认证方式：
+   域名认证：一般通过对管理员邮箱认证的方式，这种方式认证速度快，但是签发的证书中没有企业的名称; 企业文档认证：需要提供企业的营业执照。 也有需要同时认证以上2种方式的证书，叫EV ssl证书，这种证书可以使IE7以上的浏览器地址栏变成绿色，所以认证也最严格。  证书安装
+在收到CA的证书后，可以将证书部署上服务器，一般APACHE文件直接将KEY&#43;CER复制到文件上，然后修改httpD.CONF文件;TOMCAT等，需要将CA签发的证书CER文件导入JKS文件后，复制上服务器，然后修改SERVER.XML;IIS需要处理挂起的请求，将CER文件导入。   Letsencrypt证书申请   环境配置 $ sudo apt-get install letsencrypt
+  生成证书, 需要用到80端口，先停止相关进程：
+$ sudo letsencrypt certonly --email xxx@xxx.com -d www.example.comxxx@xxx.com 为邮箱,用于后续证书状态(过期)通知；
+www.example.com 为生成服务器证书域名；
+  多域名证书(收费)
+*.zylhorse.com 通配符证书匹配所有三级域名，eg：ys.zylhorse.comys1.zylhorse.compin.zylhorse.com  "><meta itemprop="datePublished" content="2019-05-22T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-05-22T00:00:00+00:00" />
+<meta itemprop="wordCount" content="42">
+<meta itemprop="keywords" content="Certificate," /><meta property="og:title" content="申请免费SSL证书" />
+<meta property="og:description" content="证书申请 ssl证书申请的3个主要步骤
+  制作CSR文件
+所谓CSR就是由申请人制作的Certificate Secure Request证书请求文件。制作过程中，系统会产生2个密钥，一个是公钥就是这个CSR文件，另外一个是私钥，存放在服务器上。要制作CSR文件，申请人可以参考WEB SERVER的文档，一般APACHE等，使用OPENssl命令行来生成KEY&#43;CSR2个文件，Tomcat，JBoss，Resin等使用KEYTOOL来生成JKS和CSR文件，IIS通过向导建立一个挂起的请求和一个CSR文件。
+  CA认证
+将CSR提交给CA，CA一般有2种认证方式：
+   域名认证：一般通过对管理员邮箱认证的方式，这种方式认证速度快，但是签发的证书中没有企业的名称; 企业文档认证：需要提供企业的营业执照。 也有需要同时认证以上2种方式的证书，叫EV ssl证书，这种证书可以使IE7以上的浏览器地址栏变成绿色，所以认证也最严格。  证书安装
+在收到CA的证书后，可以将证书部署上服务器，一般APACHE文件直接将KEY&#43;CER复制到文件上，然后修改httpD.CONF文件;TOMCAT等，需要将CA签发的证书CER文件导入JKS文件后，复制上服务器，然后修改SERVER.XML;IIS需要处理挂起的请求，将CER文件导入。   Letsencrypt证书申请   环境配置 $ sudo apt-get install letsencrypt
+  生成证书, 需要用到80端口，先停止相关进程：
+$ sudo letsencrypt certonly --email xxx@xxx.com -d www.example.comxxx@xxx.com 为邮箱,用于后续证书状态(过期)通知；
+www.example.com 为生成服务器证书域名；
+  多域名证书(收费)
+*.zylhorse.com 通配符证书匹配所有三级域名，eg：ys.zylhorse.comys1.zylhorse.compin.zylhorse.com  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/security/%E7%94%B3%E8%AF%B7%E5%85%8D%E8%B4%B9%E8%AF%81%E4%B9%A6/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-05-22T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-05-22T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="申请免费SSL证书"/>
+<meta name="twitter:description" content="证书申请 ssl证书申请的3个主要步骤
+  制作CSR文件
+所谓CSR就是由申请人制作的Certificate Secure Request证书请求文件。制作过程中，系统会产生2个密钥，一个是公钥就是这个CSR文件，另外一个是私钥，存放在服务器上。要制作CSR文件，申请人可以参考WEB SERVER的文档，一般APACHE等，使用OPENssl命令行来生成KEY&#43;CSR2个文件，Tomcat，JBoss，Resin等使用KEYTOOL来生成JKS和CSR文件，IIS通过向导建立一个挂起的请求和一个CSR文件。
+  CA认证
+将CSR提交给CA，CA一般有2种认证方式：
+   域名认证：一般通过对管理员邮箱认证的方式，这种方式认证速度快，但是签发的证书中没有企业的名称; 企业文档认证：需要提供企业的营业执照。 也有需要同时认证以上2种方式的证书，叫EV ssl证书，这种证书可以使IE7以上的浏览器地址栏变成绿色，所以认证也最严格。  证书安装
+在收到CA的证书后，可以将证书部署上服务器，一般APACHE文件直接将KEY&#43;CER复制到文件上，然后修改httpD.CONF文件;TOMCAT等，需要将CA签发的证书CER文件导入JKS文件后，复制上服务器，然后修改SERVER.XML;IIS需要处理挂起的请求，将CER文件导入。   Letsencrypt证书申请   环境配置 $ sudo apt-get install letsencrypt
+  生成证书, 需要用到80端口，先停止相关进程：
+$ sudo letsencrypt certonly --email xxx@xxx.com -d www.example.comxxx@xxx.com 为邮箱,用于后续证书状态(过期)通知；
+www.example.com 为生成服务器证书域名；
+  多域名证书(收费)
+*.zylhorse.com 通配符证书匹配所有三级域名，eg：ys.zylhorse.comys1.zylhorse.compin.zylhorse.com  "/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/security/%E7%94%B3%E8%AF%B7%E5%85%8D%E8%B4%B9%E8%AF%81%E4%B9%A6/">申请免费SSL证书</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-05-22 00:00:00 &#43;0000 UTC">2019-05-22</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="证书申请">证书申请</h2>
+<p><em><strong>ssl证书申请的3个主要步骤</strong></em></p>
+<ol>
+<li>
+<p>制作CSR文件<br>
+所谓CSR就是由申请人制作的Certificate Secure Request证书请求文件。制作过程中，系统会产生2个密钥，一个是公钥就是这个CSR文件，另外一个是私钥，存放在服务器上。要制作CSR文件，申请人可以参考WEB SERVER的文档，一般APACHE等，使用OPENssl命令行来生成KEY+CSR2个文件，Tomcat，JBoss，Resin等使用KEYTOOL来生成JKS和CSR文件，IIS通过向导建立一个挂起的请求和一个CSR文件。</p>
+</li>
+<li>
+<p>CA认证<br>
+将CSR提交给CA，CA一般有2种认证方式：</p>
+</li>
+</ol>
+<ul>
+<li>域名认证：一般通过对管理员邮箱认证的方式，这种方式认证速度快，但是签发的证书中没有企业的名称;</li>
+<li>企业文档认证：需要提供企业的营业执照。</li>
+<li>也有需要同时认证以上2种方式的证书，叫EV ssl证书，这种证书可以使IE7以上的浏览器地址栏变成绿色，所以认证也最严格。</li>
+</ul>
+<ol start="3">
+<li>证书安装<br>
+在收到CA的证书后，可以将证书部署上服务器，一般APACHE文件直接将KEY+CER复制到文件上，然后修改httpD.CONF文件;TOMCAT等，需要将CA签发的证书CER文件导入JKS文件后，复制上服务器，然后修改SERVER.XML;IIS需要处理挂起的请求，将CER文件导入。
+　</li>
+</ol>
+<h2 id="letsencrypt证书申请">Letsencrypt证书申请</h2>
+<ol>
+<li>
+<p>环境配置 <code>$ sudo apt-get install letsencrypt</code></p>
+</li>
+<li>
+<p>生成证书, 需要用到80端口，先停止相关进程：</p>
+<pre tabindex="0"><code>$ sudo letsencrypt certonly --email xxx@xxx.com -d www.example.com
+</code></pre><p><a href="mailto:xxx@xxx.com">xxx@xxx.com</a> 为邮箱,用于后续证书状态(过期)通知；</p>
+<p><a href="http://www.example.com">www.example.com</a> 为生成服务器证书域名；</p>
+</li>
+<li>
+<p>多域名证书(收费)</p>
+<pre tabindex="0"><code>*.zylhorse.com 通配符证书匹配所有三级域名，eg：
+    ys.zylhorse.com
+    ys1.zylhorse.com
+    pin.zylhorse.com
+</code></pre></li>
+</ol>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/security/">Security</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/certificate/">Certificate</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#证书申请">证书申请</a></li>
+    <li><a href="#letsencrypt证书申请">Letsencrypt证书申请</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/golang/pointer/" class="button left"><span>Golang-package-unsafe</span></a>
+    
+    
+      <a href="/blog/distribution-system/%E4%B8%80%E8%87%B4%E6%80%A7%E5%93%88%E5%B8%8C/" class="button right"><span>一致性哈希特性和使用场景</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Security
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

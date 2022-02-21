@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Erlang模块和函数 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Erlang模块和函数">
+<meta itemprop="description" content="模块  模块是Erlang中代码的基本单元，我们编写的所有函数都存放在模块中，模块文件的扩展名通常为.erl。 编译后的文件扩展名为.beam,   注： beam 是 Erlang虚拟机（Bogdan‘s Erlang Abstract Machine）的所写。Erlang虚拟机最早的版本是 Joe Armstrong编写的基于栈的虚拟机JAM（Joe&rsquo;s Abstract Machine）。后来，Bogumil(Bogdan) Hausman在1993年编写了基于寄存器的虚拟机BEAM（Bogdan&rsquo;t Abstract Machine), 执行效率有了 大幅度提高。
+  erlang虚拟机执行代码的原理：http://www.mamicode.com/info-detail-671999.html  函数  函数由子句构成，子句以分号分隔，最后一条子语句以句号结束。每一个函数由函数头和函数体组成，函数头由函数名和随后以括号括起来的模式组成，函数体由一系列表达式组成。 shell中编译模块文件： c(文件名） 引用模块中函数： moduleName:funcName(模式）。 模块中函数调用是顺序的从第一个子句开始进行模式匹配。 在erlang中做相同的事情，只需要编写模式及表达式，erlang编译器会自动生成优化的模式匹配代码。  同名不同目的函数  在Erlang中，同一个模块的两个函数，如果同名但是参数不同，则这两个函数被认为完全不同。 为了方便同名不同目的函数经常被用来作为辅助函数使用。  fun fun就是匿名函数,fun可以有任意参数（目：arity）。
+高阶函数（high-order function） 这些能返回fun或接受fun作为参数的函数，被称作高阶函数。
+什么时候使用高阶函数  编写返回fun的高阶函数不容易调试 高阶函数可以用来解决延迟求值、可重入的解析器、解析组合子等问题。  -import 和 -export 声明  声明 -import(lists,[map/2,sum/1]) 意味着函数 map/2,sum/1是从lists模块中导入。 声明 -export([total/1]) 意味着total/1能够在模块之外被调用。只有从一个模块中导出的函数才能在模块外调用。  简单的列表处理  lists:map(Fun,List): 将方法Fun应用到列表List的每一个元素中，输出操作后的元素列表。 lists:member(Ele,List): 判断元素Ele是否是列表List中的元素，输出true/false。 lists:filter(Fun,List): 用方法Fun过滤列表List中的每一个元素，输出符合要求的元素列表。 lists: sum(List):计算列表中所有元素的和。 lists: seq(1,N): 返回一个包含1到N的整数列表。 lists:reverse(L) : 将列表中元素顺序反转。  列表推导  列表推导无需使用fun、map或filter等表达式来创建列表。  1&gt;L= [1,2,3,4]."><meta itemprop="datePublished" content="2015-08-20T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2015-08-20T00:00:00+00:00" />
+<meta itemprop="wordCount" content="166">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Erlang模块和函数" />
+<meta property="og:description" content="模块  模块是Erlang中代码的基本单元，我们编写的所有函数都存放在模块中，模块文件的扩展名通常为.erl。 编译后的文件扩展名为.beam,   注： beam 是 Erlang虚拟机（Bogdan‘s Erlang Abstract Machine）的所写。Erlang虚拟机最早的版本是 Joe Armstrong编写的基于栈的虚拟机JAM（Joe&rsquo;s Abstract Machine）。后来，Bogumil(Bogdan) Hausman在1993年编写了基于寄存器的虚拟机BEAM（Bogdan&rsquo;t Abstract Machine), 执行效率有了 大幅度提高。
+  erlang虚拟机执行代码的原理：http://www.mamicode.com/info-detail-671999.html  函数  函数由子句构成，子句以分号分隔，最后一条子语句以句号结束。每一个函数由函数头和函数体组成，函数头由函数名和随后以括号括起来的模式组成，函数体由一系列表达式组成。 shell中编译模块文件： c(文件名） 引用模块中函数： moduleName:funcName(模式）。 模块中函数调用是顺序的从第一个子句开始进行模式匹配。 在erlang中做相同的事情，只需要编写模式及表达式，erlang编译器会自动生成优化的模式匹配代码。  同名不同目的函数  在Erlang中，同一个模块的两个函数，如果同名但是参数不同，则这两个函数被认为完全不同。 为了方便同名不同目的函数经常被用来作为辅助函数使用。  fun fun就是匿名函数,fun可以有任意参数（目：arity）。
+高阶函数（high-order function） 这些能返回fun或接受fun作为参数的函数，被称作高阶函数。
+什么时候使用高阶函数  编写返回fun的高阶函数不容易调试 高阶函数可以用来解决延迟求值、可重入的解析器、解析组合子等问题。  -import 和 -export 声明  声明 -import(lists,[map/2,sum/1]) 意味着函数 map/2,sum/1是从lists模块中导入。 声明 -export([total/1]) 意味着total/1能够在模块之外被调用。只有从一个模块中导出的函数才能在模块外调用。  简单的列表处理  lists:map(Fun,List): 将方法Fun应用到列表List的每一个元素中，输出操作后的元素列表。 lists:member(Ele,List): 判断元素Ele是否是列表List中的元素，输出true/false。 lists:filter(Fun,List): 用方法Fun过滤列表List中的每一个元素，输出符合要求的元素列表。 lists: sum(List):计算列表中所有元素的和。 lists: seq(1,N): 返回一个包含1到N的整数列表。 lists:reverse(L) : 将列表中元素顺序反转。  列表推导  列表推导无需使用fun、map或filter等表达式来创建列表。  1&gt;L= [1,2,3,4]." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/erlang/erlang%E6%A8%A1%E5%9D%97%E5%92%8C%E5%87%BD%E6%95%B0/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2015-08-20T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-08-20T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Erlang模块和函数"/>
+<meta name="twitter:description" content="模块  模块是Erlang中代码的基本单元，我们编写的所有函数都存放在模块中，模块文件的扩展名通常为.erl。 编译后的文件扩展名为.beam,   注： beam 是 Erlang虚拟机（Bogdan‘s Erlang Abstract Machine）的所写。Erlang虚拟机最早的版本是 Joe Armstrong编写的基于栈的虚拟机JAM（Joe&rsquo;s Abstract Machine）。后来，Bogumil(Bogdan) Hausman在1993年编写了基于寄存器的虚拟机BEAM（Bogdan&rsquo;t Abstract Machine), 执行效率有了 大幅度提高。
+  erlang虚拟机执行代码的原理：http://www.mamicode.com/info-detail-671999.html  函数  函数由子句构成，子句以分号分隔，最后一条子语句以句号结束。每一个函数由函数头和函数体组成，函数头由函数名和随后以括号括起来的模式组成，函数体由一系列表达式组成。 shell中编译模块文件： c(文件名） 引用模块中函数： moduleName:funcName(模式）。 模块中函数调用是顺序的从第一个子句开始进行模式匹配。 在erlang中做相同的事情，只需要编写模式及表达式，erlang编译器会自动生成优化的模式匹配代码。  同名不同目的函数  在Erlang中，同一个模块的两个函数，如果同名但是参数不同，则这两个函数被认为完全不同。 为了方便同名不同目的函数经常被用来作为辅助函数使用。  fun fun就是匿名函数,fun可以有任意参数（目：arity）。
+高阶函数（high-order function） 这些能返回fun或接受fun作为参数的函数，被称作高阶函数。
+什么时候使用高阶函数  编写返回fun的高阶函数不容易调试 高阶函数可以用来解决延迟求值、可重入的解析器、解析组合子等问题。  -import 和 -export 声明  声明 -import(lists,[map/2,sum/1]) 意味着函数 map/2,sum/1是从lists模块中导入。 声明 -export([total/1]) 意味着total/1能够在模块之外被调用。只有从一个模块中导出的函数才能在模块外调用。  简单的列表处理  lists:map(Fun,List): 将方法Fun应用到列表List的每一个元素中，输出操作后的元素列表。 lists:member(Ele,List): 判断元素Ele是否是列表List中的元素，输出true/false。 lists:filter(Fun,List): 用方法Fun过滤列表List中的每一个元素，输出符合要求的元素列表。 lists: sum(List):计算列表中所有元素的和。 lists: seq(1,N): 返回一个包含1到N的整数列表。 lists:reverse(L) : 将列表中元素顺序反转。  列表推导  列表推导无需使用fun、map或filter等表达式来创建列表。  1&gt;L= [1,2,3,4]."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/erlang%E6%A8%A1%E5%9D%97%E5%92%8C%E5%87%BD%E6%95%B0/">Erlang模块和函数</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-08-20 00:00:00 &#43;0000 UTC">2015-08-20</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h1 id="模块">模块</h1>
+<ul>
+<li>模块是Erlang中代码的基本单元，我们编写的所有函数都存放在模块中，模块文件的扩展名通常为.erl。</li>
+<li>编译后的文件扩展名为.beam,</li>
+</ul>
+<blockquote>
+<p>注： beam 是 Erlang虚拟机（Bogdan‘s Erlang Abstract Machine）的所写。Erlang虚拟机最早的版本是 Joe Armstrong编写的基于栈的虚拟机JAM（Joe&rsquo;s Abstract Machine）。后来，Bogumil(Bogdan) Hausman在1993年编写了基于寄存器的虚拟机BEAM（Bogdan&rsquo;t Abstract Machine), 执行效率有了 大幅度提高。</p>
+</blockquote>
+<ul>
+<li>erlang虚拟机执行代码的原理：http://www.mamicode.com/info-detail-671999.html</li>
+</ul>
+<h1 id="函数">函数</h1>
+<ul>
+<li>函数由子句构成，子句以分号分隔，最后一条子语句以句号结束。每一个函数由函数头和函数体组成，函数头由函数名和随后以括号括起来的模式组成，函数体由一系列表达式组成。</li>
+<li>shell中编译模块文件： c(文件名）</li>
+<li>引用模块中函数： moduleName:funcName(模式）。</li>
+<li>模块中函数调用是顺序的从第一个子句开始进行模式匹配。</li>
+<li>在erlang中做相同的事情，只需要编写模式及表达式，erlang编译器会自动生成优化的模式匹配代码。</li>
+</ul>
+<h2 id="同名不同目的函数">同名不同目的函数</h2>
+<ul>
+<li>在Erlang中，同一个模块的两个函数，如果同名但是参数不同，则这两个函数被认为完全不同。</li>
+<li>为了方便同名不同目的函数经常被用来作为辅助函数使用。</li>
+</ul>
+<h1 id="fun">fun</h1>
+<p>fun就是匿名函数,fun可以有任意参数（目：arity）。</p>
+<h1 id="高阶函数high-order-function">高阶函数（high-order function）</h1>
+<p>这些能返回fun或接受fun作为参数的函数，被称作高阶函数。</p>
+<h2 id="什么时候使用高阶函数">什么时候使用高阶函数</h2>
+<ul>
+<li>编写返回fun的高阶函数不容易调试</li>
+<li>高阶函数可以用来解决延迟求值、可重入的解析器、解析组合子等问题。</li>
+</ul>
+<h1 id="-import-和--export-声明">-import 和 -export 声明</h1>
+<ul>
+<li>声明 -import(lists,[map/2,sum/1]) 意味着函数 map/2,sum/1是从lists模块中导入。</li>
+<li>声明 -export([total/1]) 意味着total/1能够在模块之外被调用。只有从一个模块中导出的函数才能在模块外调用。</li>
+</ul>
+<h1 id="简单的列表处理">简单的列表处理</h1>
+<ul>
+<li>lists:map(Fun,List): 将方法Fun应用到列表List的每一个元素中，输出操作后的元素列表。</li>
+<li>lists:member(Ele,List): 判断元素Ele是否是列表List中的元素，输出true/false。</li>
+<li>lists:filter(Fun,List): 用方法Fun过滤列表List中的每一个元素，输出符合要求的元素列表。</li>
+<li>lists: sum(List):计算列表中所有元素的和。</li>
+<li>lists: seq(1,N): 返回一个包含1到N的整数列表。</li>
+<li>lists:reverse(L) : 将列表中元素顺序反转。</li>
+</ul>
+<h1 id="列表推导">列表推导</h1>
+<ul>
+<li>列表推导无需使用fun、map或filter等表达式来创建列表。</li>
+</ul>
+<pre tabindex="0"><code>1&gt;L= [1,2,3,4].
+2&gt;lists:map(fun(X)-&gt;X*2 end,L).
+[2,4,6,8]
+与之相比，使用列表推导方式：
+3&gt;[X*2 || X&lt;-L].
+[2,4,6,8]
+列表推导形如：[F(X) || X&lt;-L]
+将列表中每一个元素赋值到X，使用方法F
+</code></pre><ul>
+<li>对每一个元素进行操作，从而返回操作后元素列表。</li>
+</ul>
+<pre tabindex="0"><code>[X | Qualifier1, Qualifier2,...]:
+</code></pre><blockquote>
+<p>X是任意一条表达式，后面的限定符（Qualifier）可以是生成器、位串生成器、过滤器。</p>
+</blockquote>
+<ul>
+<li>生成器（generator）写法是：Pattern&lt;-ListExpr,其中ListExpr必须是能够得出列表的表达式。</li>
+<li>位串生成器（bitstring）写法是：BitStringPattern &lt;= BitStringExpr,其中BitStringExpr必须是一个能得出位串的表达式。</li>
+<li>过滤器（filter）：可以是判断函数，也可以时bool表达式。生成器部分起着过滤器的作用</li>
+<li>列表推导优点：
+明显缩短代码</li>
+</ul>
+<h1 id="内置函数bifbuilt-in-function">内置函数BIF(built-in function）</h1>
+<ul>
+<li>作为erlang语言定义一部分的函数。 有些内置函数是用Erlang实现的，但大多数是用Erlang虚拟机里面的底层操作实现的。</li>
+<li>内置函数能提供操作系统的接口并提供那些无法用Erlang编写或者编写后非常低效的操作。</li>
+</ul>
+<pre tabindex="0"><code>list_to_tuple(List,Tuple):列表转换成元组。
+time():获取系统时间。
+</code></pre><h1 id="关卡guard">关卡（guard）</h1>
+<pre><code>关卡是一种结构，形如： 
+max(X, Y) when X &gt; Y -&gt; X;
+max(X, Y) -&gt; Y.
+关卡增加模式匹配的威力    
+</code></pre>
+<h2 id="关卡序列guard-sequence">关卡序列（guard sequence）</h2>
+<ul>
+<li>关卡序列指： 单一或一系列的关卡，用分号（；）隔开。对于关卡序列G1,G2,G3,&hellip;只要有一个关卡的值为true，它的值就是true。</li>
+<li>关卡由一系列的关卡表达式组成，用逗号（，）隔开。关卡GuardExpr1,GuardExpr2,&hellip;只有在所有关卡表达式的值都为true时才为true。</li>
+<li>限制关卡表达式只能是Erlang表达式的子集，确保关卡表达式无副作用。 关卡是模式匹配的一种扩展。</li>
+</ul>
+<h1 id="case">case</h1>
+<pre tabindex="0"><code>case Expression of
+    Pattern1 -&gt; Expr_seq1;
+    Pattern2 -&gt; Expr_seq2;
+    ...
+end
+</code></pre><p>执行表达式的值就是case的值</p>
+<h1 id="if">if</h1>
+<pre tabindex="0"><code>if 
+    Guard1 -&gt;
+        Expr_seq1;
+    Guard2 -&gt;
+        Expr_seq2;
+    ...
+    true -&gt; 
+        Expr_seqN
+end
+</code></pre><p>执行表达式的值就是 if表达式的值。通常if表达式的最后一个关卡是原子true ， 确保其它关卡都失败时，if表达式的最后会被执行。</p>
+<h1 id="构建列表的效率">构建列表的效率</h1>
+<p>构建列表最有效率的方式是向现成列表的头部添加元素。</p>
+<pre tabindex="0"><code>向L中添加元素H:
+[H | L] 此方法效率高；
+L ++ [H] 此方法易读，效率低。
+</code></pre><h1 id="归集器">归集器</h1>
+<pre><code>将数据结果分别添加到合适的列表里面，这些列表叫做归集器（accumulator）。    
+</code></pre>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#同名不同目的函数">同名不同目的函数</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#什么时候使用高阶函数">什么时候使用高阶函数</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#关卡序列guard-sequence">关卡序列（guard sequence）</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/software-programming/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="button left"><span>编程范式-函数式编程</span></a>
+    
+    
+      <a href="/blog/erlang/%E8%AE%B0%E5%BD%95%E5%92%8C%E6%98%A0%E5%B0%84%E7%BB%84/" class="button right"><span>Erlang记录和映射组</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Erlang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

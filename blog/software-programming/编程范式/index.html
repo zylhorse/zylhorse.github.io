@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>编程的基本风格或典范模式(programming paradigm) - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="编程的基本风格或典范模式(programming paradigm)">
+<meta itemprop="description" content="编程范式（programming paradigm） 概念  编程的基本风格或典范模式，是如何编写程序的方法论。 哲学观点：编程者在创造虚拟世界，而编程范式就是他们置身其中不自觉采用的世界观和方法论。 编程是为了解决问题，而解决问题可以有多种视角和思路，其中普适且行之有效的模式被归结为范式。 由于着眼点和思维方式不同，相应的范式有自己的侧重和偏向，因此范式常用&rsquo;oriented&rsquo;描述。换言之每种范式都引导编程者带着某种倾向去分析问题、解决问题，这不就是‘导向’吗？ 编程范式是抽象的，必须通过具体的编程语言来体现。任何编程语言在设计中都会倾向于某些编程范式，一种编程范式可以在不同的编程语言中体现，一种编程语言也可以适用多种范式。  常见编程范式  命令式（Imperative Programming）
+命令“机器”如何去做(how)，这样不管你想要的是什么(what)，它都会按照命令实现。 声明式（Declarative Programming) 告诉“机器”你想要的是什么(what)，让“机器”推导如何去做(how).  函数式（Function Programming） 将机器运算当作是函数运算，并且避免使用程序状态及易变对象 逻辑编程（Logic programming） 设置答案需要匹配的规则解决问题，而不是设置步骤解决问题。编程语言：Prolog 过程式（Procedural Programming) 主要采用程序调用（Procedure call）或函数调用（Function call）来进行流程控制。 面向对象(Object Programming） 对象作为程序的单元，将程序和数据封装其中。对象是相互独立和相互调用。 "><meta itemprop="datePublished" content="2013-08-26T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2013-08-26T00:00:00+00:00" />
+<meta itemprop="wordCount" content="30">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="编程的基本风格或典范模式(programming paradigm)" />
+<meta property="og:description" content="编程范式（programming paradigm） 概念  编程的基本风格或典范模式，是如何编写程序的方法论。 哲学观点：编程者在创造虚拟世界，而编程范式就是他们置身其中不自觉采用的世界观和方法论。 编程是为了解决问题，而解决问题可以有多种视角和思路，其中普适且行之有效的模式被归结为范式。 由于着眼点和思维方式不同，相应的范式有自己的侧重和偏向，因此范式常用&rsquo;oriented&rsquo;描述。换言之每种范式都引导编程者带着某种倾向去分析问题、解决问题，这不就是‘导向’吗？ 编程范式是抽象的，必须通过具体的编程语言来体现。任何编程语言在设计中都会倾向于某些编程范式，一种编程范式可以在不同的编程语言中体现，一种编程语言也可以适用多种范式。  常见编程范式  命令式（Imperative Programming）
+命令“机器”如何去做(how)，这样不管你想要的是什么(what)，它都会按照命令实现。 声明式（Declarative Programming) 告诉“机器”你想要的是什么(what)，让“机器”推导如何去做(how).  函数式（Function Programming） 将机器运算当作是函数运算，并且避免使用程序状态及易变对象 逻辑编程（Logic programming） 设置答案需要匹配的规则解决问题，而不是设置步骤解决问题。编程语言：Prolog 过程式（Procedural Programming) 主要采用程序调用（Procedure call）或函数调用（Function call）来进行流程控制。 面向对象(Object Programming） 对象作为程序的单元，将程序和数据封装其中。对象是相互独立和相互调用。 " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/software-programming/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2013-08-26T00:00:00+00:00" />
+<meta property="article:modified_time" content="2013-08-26T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="编程的基本风格或典范模式(programming paradigm)"/>
+<meta name="twitter:description" content="编程范式（programming paradigm） 概念  编程的基本风格或典范模式，是如何编写程序的方法论。 哲学观点：编程者在创造虚拟世界，而编程范式就是他们置身其中不自觉采用的世界观和方法论。 编程是为了解决问题，而解决问题可以有多种视角和思路，其中普适且行之有效的模式被归结为范式。 由于着眼点和思维方式不同，相应的范式有自己的侧重和偏向，因此范式常用&rsquo;oriented&rsquo;描述。换言之每种范式都引导编程者带着某种倾向去分析问题、解决问题，这不就是‘导向’吗？ 编程范式是抽象的，必须通过具体的编程语言来体现。任何编程语言在设计中都会倾向于某些编程范式，一种编程范式可以在不同的编程语言中体现，一种编程语言也可以适用多种范式。  常见编程范式  命令式（Imperative Programming）
+命令“机器”如何去做(how)，这样不管你想要的是什么(what)，它都会按照命令实现。 声明式（Declarative Programming) 告诉“机器”你想要的是什么(what)，让“机器”推导如何去做(how).  函数式（Function Programming） 将机器运算当作是函数运算，并且避免使用程序状态及易变对象 逻辑编程（Logic programming） 设置答案需要匹配的规则解决问题，而不是设置步骤解决问题。编程语言：Prolog 过程式（Procedural Programming) 主要采用程序调用（Procedure call）或函数调用（Function call）来进行流程控制。 面向对象(Object Programming） 对象作为程序的单元，将程序和数据封装其中。对象是相互独立和相互调用。 "/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/software-programming/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/">编程的基本风格或典范模式(programming paradigm)</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2013-08-26 00:00:00 &#43;0000 UTC">2013-08-26</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h1 id="编程范式programming-paradigm">编程范式（programming paradigm）</h1>
+<h2 id="概念">概念</h2>
+<ul>
+<li>编程的基本风格或典范模式，是如何编写程序的方法论。</li>
+<li>哲学观点：编程者在创造虚拟世界，而编程范式就是他们置身其中不自觉采用的世界观和方法论。</li>
+<li>编程是为了解决问题，而解决问题可以有多种视角和思路，其中普适且行之有效的模式被归结为范式。</li>
+<li>由于着眼点和思维方式不同，相应的范式有自己的侧重和偏向，因此范式常用&rsquo;oriented&rsquo;描述。换言之每种范式都引导编程者带着某种倾向去分析问题、解决问题，这不就是‘导向’吗？</li>
+<li>编程范式是抽象的，必须通过具体的编程语言来体现。任何编程语言在设计中都会倾向于某些编程范式，一种编程范式可以在不同的编程语言中体现，一种编程语言也可以适用多种范式。</li>
+</ul>
+<h2 id="常见编程范式">常见编程范式</h2>
+<ul>
+<li>命令式（Imperative Programming）<br>
+命令“机器”如何去做(how)，这样不管你想要的是什么(what)，它都会按照命令实现。</li>
+<li>声明式（Declarative Programming)   <br>
+告诉“机器”你想要的是什么(what)，让“机器”推导如何去做(how).</li>
+</ul>
+<h3 id="函数式function-programming">函数式（Function Programming）</h3>
+<pre><code>将机器运算当作是函数运算，并且避免使用程序状态及易变对象
+</code></pre>
+<h3 id="逻辑编程logic-programming">逻辑编程（Logic programming）</h3>
+<pre><code>设置答案需要匹配的规则解决问题，而不是设置步骤解决问题。
+编程语言：Prolog
+</code></pre>
+<h3 id="过程式procedural-programming">过程式（Procedural Programming)</h3>
+<pre><code>主要采用程序调用（Procedure call）或函数调用（Function call）来进行流程控制。
+</code></pre>
+<h3 id="面向对象object-programming">面向对象(Object Programming）</h3>
+<pre><code>对象作为程序的单元，将程序和数据封装其中。对象是相互独立和相互调用。</code></pre>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/software-programming/">Software Programming</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#概念">概念</a></li>
+    <li><a href="#常见编程范式">常见编程范式</a>
+      <ul>
+        <li><a href="#函数式function-programming">函数式（Function Programming）</a></li>
+        <li><a href="#逻辑编程logic-programming">逻辑编程（Logic programming）</a></li>
+        <li><a href="#过程式procedural-programming">过程式（Procedural Programming)</a></li>
+        <li><a href="#面向对象object-programming">面向对象(Object Programming）</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/software-programming/%E8%AF%AD%E8%A8%80%E7%B1%BB%E5%9E%8B/" class="button left"><span>编程语言分类</span></a>
+    
+    
+      <a href="/blog/stories/%E5%BF%A7%E9%83%81/" class="button right"><span>忧郁</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Software&#32;Programming
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

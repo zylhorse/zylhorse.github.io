@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Node on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/node/</link>
+    <description>Recent content in Node on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 23 Jun 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/node/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Node开发常见问题及解决方案</title>
+      <link>https://zylhorse.github.io/blog/nodejs/problem/</link>
+      <pubDate>Sun, 23 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/nodejs/problem/</guid>
+      <description>证书设置 添加证书路径到环境变量：
+export NODE_EXTRA_CA_CERTS=&amp;quot;/etc/nginx/ssl/ca.crt&amp;quot;install慢  全局配置  查看全局配置文件位置npm config -g ls -l :  globalconfig = &amp;quot;$prefix/etc/npmrc&amp;quot; 编辑该文件，写入内容: registry=https://registry.npm.taobao.orgdisturl = https://npm.taobao.org/mirrors/nodemetrics-registry = https://registry.npm.taobao.org     EACCESS npm install 执行时出现以下错误：Error: EACCES: permission denied, mkdtemp...
+解决方案：
+npm install --unsafe-perm=true --allow-root=true</description>
+    </item>
+    
+  </channel>
+</rss>

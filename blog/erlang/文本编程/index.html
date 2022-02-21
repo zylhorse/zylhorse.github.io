@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Erlang文本编程 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Erlang文本编程">
+<meta itemprop="description" content="文本编程 操作文件的模块  file   包含打开、关闭、读写文件的方法。
+  filename   这个模块的方法能够跨平台的操作文件名，这样可以在不同的操作系统上运行相同的代码。
+  filelib   此模块是file的扩展。它包含的许多工具函数能够列出文件、检查文件类型。其中大多数是由file里的函数编写。
+  io   这个模块有一些操作已打开文件的方法。它可以解析文件数据，也可以将数据格式化写入文件。
+ 读取文件的几种方法  file:consult(FileName)   读取erlang数据格式的文件数据。
+ code:which(Module) 查看已载入模块源码文件地址
+格式命令  ~n 输出换行符 ~p 把参数打印为美观形式 ~s 参数是一个字符串、I/O列表或原子，打印时不带引号 ~w 输出各种Erlang数据类型  "><meta itemprop="datePublished" content="2015-10-07T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2015-10-07T00:00:00+00:00" />
+<meta itemprop="wordCount" content="24">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Erlang文本编程" />
+<meta property="og:description" content="文本编程 操作文件的模块  file   包含打开、关闭、读写文件的方法。
+  filename   这个模块的方法能够跨平台的操作文件名，这样可以在不同的操作系统上运行相同的代码。
+  filelib   此模块是file的扩展。它包含的许多工具函数能够列出文件、检查文件类型。其中大多数是由file里的函数编写。
+  io   这个模块有一些操作已打开文件的方法。它可以解析文件数据，也可以将数据格式化写入文件。
+ 读取文件的几种方法  file:consult(FileName)   读取erlang数据格式的文件数据。
+ code:which(Module) 查看已载入模块源码文件地址
+格式命令  ~n 输出换行符 ~p 把参数打印为美观形式 ~s 参数是一个字符串、I/O列表或原子，打印时不带引号 ~w 输出各种Erlang数据类型  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/erlang/%E6%96%87%E6%9C%AC%E7%BC%96%E7%A8%8B/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2015-10-07T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-10-07T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Erlang文本编程"/>
+<meta name="twitter:description" content="文本编程 操作文件的模块  file   包含打开、关闭、读写文件的方法。
+  filename   这个模块的方法能够跨平台的操作文件名，这样可以在不同的操作系统上运行相同的代码。
+  filelib   此模块是file的扩展。它包含的许多工具函数能够列出文件、检查文件类型。其中大多数是由file里的函数编写。
+  io   这个模块有一些操作已打开文件的方法。它可以解析文件数据，也可以将数据格式化写入文件。
+ 读取文件的几种方法  file:consult(FileName)   读取erlang数据格式的文件数据。
+ code:which(Module) 查看已载入模块源码文件地址
+格式命令  ~n 输出换行符 ~p 把参数打印为美观形式 ~s 参数是一个字符串、I/O列表或原子，打印时不带引号 ~w 输出各种Erlang数据类型  "/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/%E6%96%87%E6%9C%AC%E7%BC%96%E7%A8%8B/">Erlang文本编程</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-10-07 00:00:00 &#43;0000 UTC">2015-10-07</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h1 id="文本编程">文本编程</h1>
+<h2 id="操作文件的模块">操作文件的模块</h2>
+<ul>
+<li>file</li>
+</ul>
+<blockquote>
+<p>包含打开、关闭、读写文件的方法。</p>
+</blockquote>
+<ul>
+<li>filename</li>
+</ul>
+<blockquote>
+<p>这个模块的方法能够跨平台的操作文件名，这样可以在不同的操作系统上运行相同的代码。</p>
+</blockquote>
+<ul>
+<li>filelib</li>
+</ul>
+<blockquote>
+<p>此模块是file的扩展。它包含的许多工具函数能够列出文件、检查文件类型。其中大多数是由file里的函数编写。</p>
+</blockquote>
+<ul>
+<li>io</li>
+</ul>
+<blockquote>
+<p>这个模块有一些操作已打开文件的方法。它可以解析文件数据，也可以将数据格式化写入文件。</p>
+</blockquote>
+<h2 id="读取文件的几种方法">读取文件的几种方法</h2>
+<ul>
+<li>file:consult(FileName)</li>
+</ul>
+<blockquote>
+<p>读取erlang数据格式的文件数据。</p>
+</blockquote>
+<h2 id="codewhichmodule">code:which(Module)</h2>
+<p>查看已载入模块源码文件地址</p>
+<h2 id="格式命令">格式命令</h2>
+<ul>
+<li>~n 输出换行符</li>
+<li>~p 把参数打印为美观形式</li>
+<li>~s 参数是一个字符串、I/O列表或原子，打印时不带引号</li>
+<li>~w 输出各种Erlang数据类型</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#操作文件的模块">操作文件的模块</a></li>
+    <li><a href="#读取文件的几种方法">读取文件的几种方法</a></li>
+    <li><a href="#codewhichmodule">code:which(Module)</a></li>
+    <li><a href="#格式命令">格式命令</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/erlang/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95eunit/" class="button left"><span>Erlang单元测试</span></a>
+    
+    
+      <a href="/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E8%A1%A5%E9%81%97/" class="button right"><span>Erlang顺序编程补遗</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Erlang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

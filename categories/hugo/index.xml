@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hugo on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/hugo/</link>
+    <description>Recent content in Hugo on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 07 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/hugo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo评论系统-Gitalk</title>
+      <link>https://zylhorse.github.io/blog/hugo/gitalk/</link>
+      <pubDate>Mon, 07 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/hugo/gitalk/</guid>
+      <description>注册GitHub OAuth application
+  配置config.toml
+[params.gitalk]enable = trueclientId = &amp;quot;&amp;quot;clientSecret = &amp;quot;&amp;quot;repo = &amp;quot;&amp;quot; # 保存评论的repoowner = &amp;quot;&amp;quot; //app 所有者admin = &amp;quot;&amp;quot; //app 所有者perPage = 20 # 每页评论条数，最大100pagerDirection = &amp;quot;last&amp;quot; # 评论排序方式： 最新：last， 最早：first  配置comments.html 在layouts/_default/comments.html中添加一下代码：
+{{- if .Site.Params.valine.gitalk -}} &amp;lt;div id=&amp;quot;gitalk-container&amp;quot; class=&amp;quot;gcomments&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css&amp;quot;&amp;gt;&amp;lt;script src=&amp;quot;https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&amp;lt;script&amp;gt;const gitalk = new Gitalk({clientID: {{ .Site.Params.gitalk.clientId }},clientSecret: {{ .</description>
+    </item>
+    
+    <item>
+      <title>Hugo评论系统-Utteranc</title>
+      <link>https://zylhorse.github.io/blog/hugo/utteranc/</link>
+      <pubDate>Mon, 07 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/hugo/utteranc/</guid>
+      <description>安装Utteranc
+ 进入Utteranc GitHub App 在页面中选择你要添加的repo,进行安装    配置config.toml
+## Utterances[params.utterances]enable = truerepo = &amp;quot;zylhorse/zylhorse.github.io&amp;quot; // 这里替换为你的github repoissueTerm = &amp;quot;title&amp;quot; // issue 标题， 基于当前文章标题/路径..theme = &amp;quot;github-light&amp;quot; // 风格themeDark = &amp;quot;photon-dark&amp;quot; 参考： https://utteranc.es/
+   配置comments.html 在layouts/_default/comments.html中添加一下代码：
+{{ if .Site.Params.utterances.enable }}&amp;lt;label&amp;gt;{{ jsonify .Params.categories }}&amp;lt;/label&amp;gt;&amp;lt;article class=&amp;quot;ucomments&amp;quot;&amp;gt;&amp;lt;script src=&amp;quot;https://utteranc.es/client.js&amp;quot;repo={{ .Site.Params.utterances.repo }}issue-term={{ .Site.Params.utterances.issueTerm }}label={{ jsonify .Params.categories }} // 以categories作为issue的labelstheme={{ .</description>
+    </item>
+    
+    <item>
+      <title>Hugo评论系统-Valine</title>
+      <link>https://zylhorse.github.io/blog/hugo/valine/</link>
+      <pubDate>Mon, 07 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/hugo/valine/</guid>
+      <description>注册LeanCloud开发版
+ 创建LeanCloud应用 获取appId和appKey,用于以下配置    配置config.toml
+ # Valine.# You can get your appid and appkey from https://leancloud.cn# more info please open https://valine.js.org[params.valine]enable = trueappId = &amp;quot;appId&amp;quot;appKey = &#39;appKey&#39;notify = false # 邮件通知verify = false # 是否需要验证码avatar = &amp;quot;&amp;quot; # 空字符串默认使用Gravatar头像placeholder = &#39;说点什么吧...&#39;visitor = true  配置comments.html 在layouts/_default/comments.html中添加一下代码：
+{{- if .Site.Params.valine.enable -}}&amp;lt;!-- id 将作为查询条件 --&amp;gt;&amp;lt;div id=&amp;quot;vcomments&amp;quot; style=&amp;quot;border: #4d99bf&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;script src=&amp;quot;//cdn1.</description>
+    </item>
+    
+    <item>
+      <title>Hugo评论系统</title>
+      <link>https://zylhorse.github.io/blog/hugo/comments/</link>
+      <pubDate>Sun, 06 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/hugo/comments/</guid>
+      <description>评论系统 Hugo自带Disqus评论系统，无法在国内加载。本系统采用Utterances。国内推荐以下评论系统：
+   名称 简介 优缺点     Valine 诞生于2017年8月7日，是一款基于LeanCloud的无后端评论系统 1.样式简洁,有回复功能 2. LeanCloud免费容器无法24小时在线，需要配置定时器，防止服务休眠3. Valine-Admin 可以实现评论管理，配置复杂度较高   Utterances 基于Github Issue的评论系统 1. 配置简单 2. 无回复功能 3. 基于Github Issue，可以进行评论管理   Gitalk 基于GitHub Issue和Preact开发的评论插件 1. 配置简单
+2. 有回复功能 3. 基于Github Issue，可以进行评论管理    </description>
+    </item>
+    
+    <item>
+      <title>Hugo使用手册</title>
+      <link>https://zylhorse.github.io/blog/hugo/hugo/</link>
+      <pubDate>Sat, 05 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/hugo/hugo/</guid>
+      <description>画图工具 https://app.diagrams.net/
+http://asciiflow.com/
+bind ip 使本地可被其他机器访问： hugo --bind x.x.x.x
+ x.x.x.x 可以是0.0.0.0 也可以是本机ip
+ 添加文章引用 Hugo 提供了两种 shortcode 用来在文档中插入引用链接地址： ref 和 relref ，语法如下：
+ relref 插入被引用文档的相对链接地址，而 ref 则插入被引用文档的完整链接地址。 ref 和 relref 的唯一参数是文档路径+锚点组成的字符串，并且文档路径和锚点都是可选的  当参数中只含有文档路径时，会插入被引用文档的链接地址； 当参数中只含有锚点时，会插入当前文档的锚点链接地址； 当参数中二者都存在时，会插入被引用文档的锚点链接地址。     锚点是文档标题，如果标题有空格则将空格替换成中划线-
+ </description>
+    </item>
+    
+  </channel>
+</rss>

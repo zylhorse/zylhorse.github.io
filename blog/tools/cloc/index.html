@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>代码统计工具 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="代码统计工具">
+<meta itemprop="description" content="Cloc 安装
+ npm install -g cloc # https://www.npmjs.com/package/clocsudo apt-get install cloc # Debian, Ubuntusudo yum install cloc # Red Hat, Fedorasudo pacman -S cloc # Archsudo pkg install cloc # FreeBSDsudo port install cloc # Mac OS X with MacPorts基本使用
+&gt; cloc ./dir4076 text files.3883 unique files. 1521 files ignored.http://cloc.sourceforge.net v 1.50 T=12.0 s (209.2 files/s, 70472.1 lines/s)-------------------------------------------------------------------------------Language files blank comment code-------------------------------------------------------------------------------Perl 2052 110356 130018 292281C 135 18718 22862 140483C/C&#43;&#43; Header 147 7650 12093 44042Bourne Shell 116 3402 5789 36882Lisp 1 684 2242 7515make 7 498 473 2044C&#43;&#43; 10 312 277 2000XML 26 231 0 1972yacc 2 128 97 1549YAML 2 2 0 489DOS Batch 11 85 50 322HTML 1 19 2 98-------------------------------------------------------------------------------SUM: 2510 142085 173903 529677-------------------------------------------------------------------------------GitStats 待续"><meta itemprop="datePublished" content="2017-05-03T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2017-05-03T00:00:00+00:00" />
+<meta itemprop="wordCount" content="146">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="代码统计工具" />
+<meta property="og:description" content="Cloc 安装
+ npm install -g cloc # https://www.npmjs.com/package/clocsudo apt-get install cloc # Debian, Ubuntusudo yum install cloc # Red Hat, Fedorasudo pacman -S cloc # Archsudo pkg install cloc # FreeBSDsudo port install cloc # Mac OS X with MacPorts基本使用
+&gt; cloc ./dir4076 text files.3883 unique files. 1521 files ignored.http://cloc.sourceforge.net v 1.50 T=12.0 s (209.2 files/s, 70472.1 lines/s)-------------------------------------------------------------------------------Language files blank comment code-------------------------------------------------------------------------------Perl 2052 110356 130018 292281C 135 18718 22862 140483C/C&#43;&#43; Header 147 7650 12093 44042Bourne Shell 116 3402 5789 36882Lisp 1 684 2242 7515make 7 498 473 2044C&#43;&#43; 10 312 277 2000XML 26 231 0 1972yacc 2 128 97 1549YAML 2 2 0 489DOS Batch 11 85 50 322HTML 1 19 2 98-------------------------------------------------------------------------------SUM: 2510 142085 173903 529677-------------------------------------------------------------------------------GitStats 待续" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/tools/cloc/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2017-05-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2017-05-03T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="代码统计工具"/>
+<meta name="twitter:description" content="Cloc 安装
+ npm install -g cloc # https://www.npmjs.com/package/clocsudo apt-get install cloc # Debian, Ubuntusudo yum install cloc # Red Hat, Fedorasudo pacman -S cloc # Archsudo pkg install cloc # FreeBSDsudo port install cloc # Mac OS X with MacPorts基本使用
+&gt; cloc ./dir4076 text files.3883 unique files. 1521 files ignored.http://cloc.sourceforge.net v 1.50 T=12.0 s (209.2 files/s, 70472.1 lines/s)-------------------------------------------------------------------------------Language files blank comment code-------------------------------------------------------------------------------Perl 2052 110356 130018 292281C 135 18718 22862 140483C/C&#43;&#43; Header 147 7650 12093 44042Bourne Shell 116 3402 5789 36882Lisp 1 684 2242 7515make 7 498 473 2044C&#43;&#43; 10 312 277 2000XML 26 231 0 1972yacc 2 128 97 1549YAML 2 2 0 489DOS Batch 11 85 50 322HTML 1 19 2 98-------------------------------------------------------------------------------SUM: 2510 142085 173903 529677-------------------------------------------------------------------------------GitStats 待续"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/tools/cloc/">代码统计工具</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2017-05-03 00:00:00 &#43;0000 UTC">2017-05-03</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            &lt;no value&gt;分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="cloc">Cloc</h2>
+<p><strong>安装</strong></p>
+<pre tabindex="0"><code>  npm install -g cloc                    # https://www.npmjs.com/package/cloc
+  sudo apt-get install cloc              # Debian, Ubuntu
+  sudo yum install cloc                  # Red Hat, Fedora
+  sudo pacman -S cloc                    # Arch
+  sudo pkg install cloc                  # FreeBSD
+  sudo port install cloc                 # Mac OS X with MacPorts
+</code></pre><p><strong>基本使用</strong></p>
+<pre tabindex="0"><code>&gt; cloc ./dir
+
+4076 text files.
+    3883 unique files.                                          
+    1521 files ignored.
+
+http://cloc.sourceforge.net v 1.50  T=12.0 s (209.2 files/s, 70472.1 lines/s)
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+Perl                          2052         110356         130018         292281
+C                              135          18718          22862         140483
+C/C++ Header                   147           7650          12093          44042
+Bourne Shell                   116           3402           5789          36882
+Lisp                             1            684           2242           7515
+make                             7            498            473           2044
+C++                             10            312            277           2000
+XML                             26            231              0           1972
+yacc                             2            128             97           1549
+YAML                             2              2              0            489
+DOS Batch                       11             85             50            322
+HTML                             1             19              2             98
+-------------------------------------------------------------------------------
+SUM:                          2510         142085         173903         529677
+-------------------------------------------------------------------------------
+</code></pre><h2 id="gitstats">GitStats</h2>
+<p>待续</p>
+
+      
+    <h2>参考</h2>
+    <ul>
+        
+            
+                <li><a target="_blank" href="http://cloc.sourceforge.net/">Cloc</a></li>
+            
+        
+            
+                <li><a target="_blank" href="http://cloc.sourceforge.net/">GitStats</a></li>
+            
+        
+    </ul>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/tools/">TOOLS</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#cloc">Cloc</a></li>
+    <li><a href="#gitstats">GitStats</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/cache/redis/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85/" class="button left"><span>Redis发布订阅模式和事件通知</span></a>
+    
+    
+      <a href="/blog/cache/%E7%BC%93%E5%AD%98/" class="button right"><span>缓存穿透、缓存雪崩、缓存击穿的区别和解决方案</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=TOOLS
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

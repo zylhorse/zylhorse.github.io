@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CDN on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/cdn/</link>
+    <description>Recent content in CDN on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 23 Jun 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/cdn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CDN内容分发网络工作过程和分类</title>
+      <link>https://zylhorse.github.io/blog/distribution-system/cdn/</link>
+      <pubDate>Sun, 23 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/distribution-system/cdn/</guid>
+      <description>CDN  全称 Content Delivery Network，即内容分发网络 概念始于1996，美国麻省理工学院的研究小组，并于1999年创建CDN服务公司 CDN构建在现有网络基础上，依靠部署在各地的边缘服务器，通过中心平台的负载均衡、内容分发、调度等模块，是用户就近获取内容，降低网络拥塞，挺高用户访问的响应速度和命中率。 CDN的关键技术是内容存储和分发  一些前端开源CDN服务  基于github的cdn BootCDN  CDN基本工作过程 使用CDN可以简化网站的系统维护工作
+ 运维只需要将网站内容注入到CDN系统，就可以同通过CDN系统部署在各个物理位置的服务器进行全网分发，实现跨运营商、跨地域的用户覆盖 由于CDN将内容推送到网络边缘，大量用户访问被分散到网络边缘  不在构成网站出口、互联互通点的资源挤占 也不需要跨越长距离的IP路由    实现原理 关键字：
+ CNAME：即：别名记录。这种记录允许您将多个名字映射到同一台计算机。 GSLB： Global Server Load Balance, 全局负载均衡。 实现在广域网上不同地域服务器间的流量调配，保证使用最佳的服务器服务离自己最近的客户。  今天我们看到的网站系统基本上基于B/S架构，具体流程如下：
+ 未使用CDN，用户访问网站过程：    用户在自己的浏览器中输入要访问的网站域名 浏览器向本地的DNS服务器请求对该域名解析  本地DNS服务器中如果有缓存该域名的解析结果，则直接响应用户的解析请求 本地DNS服务器中如果没有缓存该域名的解析结果， 则以递归的方式向整个DNS系统请求解析，获得应答后将结果反馈给浏览器   浏览器得到域名的解析结果，就是该域名对应的服务器设备IP 浏览器向服务器请求内容 服务器将用户请求内容传输给浏览器     使用CDN，用户访问网站过程    当用户加载网站上的内容和资源URL时 经过本地DNS系统解析，DNS系统会将域名的解析权交给CNAME指向的CDN专用DNS服务器 CDN的专属DNS服务器将CDN的全局负载均衡设备IP返回给用户 用户向CDN的全局负载均衡设备发起内容URL的访问请求 CDN全局负载均衡设备根据用户IP和用户请求内容URL，选择一台用户所在区域的区域负载均衡设备， 告诉用户向这台设备发起请求 区域负载均衡设备会为用户选择一台合适的缓存服务器提供服务。选择依据：  判断哪台服务器距离用户最近 根据请求URL携带内容，判断哪一台服务器上有用户所需内容 查询当前服务器负载情况，判断哪一台有服务能力。 基于以上条件的综合分析后， 区域负载均衡设备会向全局负载均衡设备返回一台缓存服务器IP   全局负载均衡设备把缓存服务器的IP返回给用户 用户向缓存服务器发起请求，缓存服务器响应用户需求，返回用户请求内容  如果这台缓存服务器没有请求内容，而区域负载均衡设备依然将其分配给用户 这台缓存服务器会向它的上级缓存服务器请求内容，直到追溯到网站的源服务器将内容缓存到自身        CDN基于内容分类 关键字：</description>
+    </item>
+    
+  </channel>
+</rss>

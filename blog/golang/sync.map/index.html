@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang源码阅读-sync.map - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Golang源码阅读-sync.map">
+<meta itemprop="description" content="sync.map  runtime中go的基本类型 map 不支持并发的读写， 会报错：fatal error: concurrent map writes 为了支持并发， 我们直接对整个map加读写锁，相当低效， 因此官方实现了sync.map  高效的原理和思路  用空间换时间，降低锁的区域 用两个map来存储数据  虽然两个map存储有冗余，但是底层数据类型都是指针，所以冗余的空间还是有限的。    总结  如果对map的读操作大于写操作， 则sync.map能大大提升性能； 写操作需要加锁， 且操作两个map 写操作也会触发， 两个map之间的切换。  源码解析 基础结构  Map type Map struct {mu Mutex // 互斥锁，用于锁定dirty map， 写锁read atomic.Value // 优先读， 支持原子操作。相当于dirty的缓存dirty map[interface{}]*entry // dirty保存最新写入数据， 允许读写misses int // 记录在read中读取不到数据，去dirty中查询的次数} readonly type readOnly struct {m map[interface{}]*entryamended bool // 当key不在read中而在dirty中时， 为true} entry type entry struct {//可见value是个指针类型，虽然read和dirty存在冗余情况（amended=false），但是由于是指针类型，存储的空间应该不是问题p unsafe."><meta itemprop="datePublished" content="2019-11-29T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-11-29T00:00:00+00:00" />
+<meta itemprop="wordCount" content="537">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Golang源码阅读-sync.map" />
+<meta property="og:description" content="sync.map  runtime中go的基本类型 map 不支持并发的读写， 会报错：fatal error: concurrent map writes 为了支持并发， 我们直接对整个map加读写锁，相当低效， 因此官方实现了sync.map  高效的原理和思路  用空间换时间，降低锁的区域 用两个map来存储数据  虽然两个map存储有冗余，但是底层数据类型都是指针，所以冗余的空间还是有限的。    总结  如果对map的读操作大于写操作， 则sync.map能大大提升性能； 写操作需要加锁， 且操作两个map 写操作也会触发， 两个map之间的切换。  源码解析 基础结构  Map type Map struct {mu Mutex // 互斥锁，用于锁定dirty map， 写锁read atomic.Value // 优先读， 支持原子操作。相当于dirty的缓存dirty map[interface{}]*entry // dirty保存最新写入数据， 允许读写misses int // 记录在read中读取不到数据，去dirty中查询的次数} readonly type readOnly struct {m map[interface{}]*entryamended bool // 当key不在read中而在dirty中时， 为true} entry type entry struct {//可见value是个指针类型，虽然read和dirty存在冗余情况（amended=false），但是由于是指针类型，存储的空间应该不是问题p unsafe." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/sync.map/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-11-29T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-11-29T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang源码阅读-sync.map"/>
+<meta name="twitter:description" content="sync.map  runtime中go的基本类型 map 不支持并发的读写， 会报错：fatal error: concurrent map writes 为了支持并发， 我们直接对整个map加读写锁，相当低效， 因此官方实现了sync.map  高效的原理和思路  用空间换时间，降低锁的区域 用两个map来存储数据  虽然两个map存储有冗余，但是底层数据类型都是指针，所以冗余的空间还是有限的。    总结  如果对map的读操作大于写操作， 则sync.map能大大提升性能； 写操作需要加锁， 且操作两个map 写操作也会触发， 两个map之间的切换。  源码解析 基础结构  Map type Map struct {mu Mutex // 互斥锁，用于锁定dirty map， 写锁read atomic.Value // 优先读， 支持原子操作。相当于dirty的缓存dirty map[interface{}]*entry // dirty保存最新写入数据， 允许读写misses int // 记录在read中读取不到数据，去dirty中查询的次数} readonly type readOnly struct {m map[interface{}]*entryamended bool // 当key不在read中而在dirty中时， 为true} entry type entry struct {//可见value是个指针类型，虽然read和dirty存在冗余情况（amended=false），但是由于是指针类型，存储的空间应该不是问题p unsafe."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/sync.map/">Golang源码阅读-sync.map</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-11-29 00:00:00 &#43;0000 UTC">2019-11-29</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="syncmap">sync.map</h2>
+<ol>
+<li>runtime中go的基本类型 map 不支持并发的读写， 会报错：fatal error: concurrent map writes</li>
+<li>为了支持并发， 我们直接对整个map加读写锁，相当低效， 因此官方实现了sync.map</li>
+</ol>
+<h2 id="高效的原理和思路">高效的原理和思路</h2>
+<ul>
+<li>用空间换时间，降低锁的区域</li>
+<li>用两个map来存储数据
+<ul>
+<li>虽然两个map存储有冗余，但是底层数据类型都是指针，所以冗余的空间还是有限的。</li>
+</ul>
+</li>
+</ul>
+<h2 id="总结">总结</h2>
+<ol>
+<li>如果对map的读操作大于写操作， 则sync.map能大大提升性能；</li>
+<li>写操作需要加锁， 且操作两个map</li>
+<li>写操作也会触发， 两个map之间的切换。</li>
+</ol>
+<h2 id="源码解析">源码解析</h2>
+<h3 id="基础结构">基础结构</h3>
+<ul>
+<li><code>Map</code>
+<pre tabindex="0"><code>type Map struct {
+	mu Mutex // 互斥锁，用于锁定dirty map， 写锁
+	read atomic.Value // 优先读， 支持原子操作。相当于dirty的缓存
+	dirty map[interface{}]*entry // dirty保存最新写入数据， 允许读写
+	misses int // 记录在read中读取不到数据，去dirty中查询的次数
+}
+</code></pre></li>
+<li><code>readonly</code>
+<pre tabindex="0"><code>type readOnly struct {
+    m       map[interface{}]*entry
+    amended bool // 当key不在read中而在dirty中时， 为true
+}
+</code></pre></li>
+<li><code>entry</code>
+<pre tabindex="0"><code>type entry struct {
+     //可见value是个指针类型，虽然read和dirty存在冗余情况（amended=false），但是由于是指针类型，存储的空间应该不是问题
+    p unsafe.Pointer // *interface{}
+}
+</code></pre></li>
+</ul>
+<h3 id="删除">删除</h3>
+<ul>
+<li>语法
+<pre tabindex="0"><code>mm := sync.map{}
+mm.Delete(1)  
+</code></pre></li>
+<li>源码分析
+<pre tabindex="0"><code>func (m *Map) Delete(key interface{}) {
+	read, _ := m.read.Load().(readOnly)
+	e, ok := read.m[key]
+	// read中不存在key，且read和dirty不同步
+	if !ok &amp;&amp; read.amended {
+		m.mu.Lock()
+		read, _ = m.read.Load().(readOnly)
+		e, ok = read.m[key]
+		if !ok &amp;&amp; read.amended {
+		    // 删除dirty中key
+			delete(m.dirty, key)
+		}
+		m.mu.Unlock()
+	}
+	// 如果read中查询到，则将此key值标记为删除
+	if ok {
+		e.delete()
+	}
+}
+
+func (e *entry) delete() (hadValue bool) {
+	for {
+		p := atomic.LoadPointer(&amp;e.p)
+		if p == nil || p == expunged {
+			return false
+		}
+		if atomic.CompareAndSwapPointer(&amp;e.p, p, nil) {
+			return true
+		}
+	}
+}
+</code></pre></li>
+</ul>
+<h3 id="插入和更新">插入和更新</h3>
+<p>-语法
+<code> mm := sync.map{} mm.Store(1,1) </code></p>
+<ul>
+<li>源码分析
+<pre tabindex="0"><code>func (m *Map) Store(key, value interface{}) {
+    // 如果read中存在key，且没有被标记删除，则更新，更新是原子操作
+	read, _ := m.read.Load().(readOnly)
+	if e, ok := read.m[key]; ok &amp;&amp; e.tryStore(&amp;value) {
+		return
+	}
+
+	m.mu.Lock()
+	// 加锁二次读取read， 避免上面读取和加锁之间，read 有改动
+	read, _ = m.read.Load().(readOnly)
+	if e, ok := read.m[key]; ok { // read中存在key
+	    // read中存在key， 但是被标记删除， 则dirty中key已被删除， 需要添加
+		if e.unexpungeLocked() {
+			m.dirty[key] = e
+		}
+		// 更新read和dirty 中key映射的value值
+		e.storeLocked(&amp;value)
+	} else if e, ok := m.dirty[key]; ok { // dirty中存在key，则更新
+		e.storeLocked(&amp;value)
+	} else { // read 和 dirty 中都没有
+		if !read.amended { // 第一次添加key
+			m.dirtyLocked() // 将read中数据添加到dirty
+			m.read.Store(readOnly{m: read.m, amended: true}) // 后面dirty会添加新的key/value， 因此amended设置为true
+		}
+		// 添加新key/value
+		m.dirty[key] = newEntry(value)
+	}
+	//解锁
+	m.mu.Unlock()
+}
+
+// 尝试对entry进行更新
+func (e *entry) tryStore(i *interface{}) bool {
+	for {
+	    // 加载entry 数据
+		p := atomic.LoadPointer(&amp;e.p)
+		// 如果被标记为删除， 则直接返回false
+		if p == expunged {
+			return false
+		}
+		// cas 更新entry值
+		if atomic.CompareAndSwapPointer(&amp;e.p, p, unsafe.Pointer(i)) {
+			return true
+		}
+	}
+}
+
+// 取消entry的删除标记
+func (e *entry) unexpungeLocked() (wasExpunged bool) {
+	return atomic.CompareAndSwapPointer(&amp;e.p, expunged, nil)
+}
+
+// 更新entry的值
+func (e *entry) storeLocked(i *interface{}) {
+	atomic.StorePointer(&amp;e.p, unsafe.Pointer(i))
+}
+
+// 将read中未删除的数据加入到dirty中
+func (m *Map) dirtyLocked() {
+    if m.dirty != nil {
+        return
+    }
+
+    read, _ := m.read.Load().(readOnly)
+    m.dirty = make(map[interface{}]*entry, len(read.m))
+
+    // 遍历read。
+    for k, e := range read.m {
+        // 通过此次操作，dirty中的元素都是未被删除的，可见标记为expunged的元素不在dirty中！！！
+        if !e.tryExpungeLocked() {
+            m.dirty[k] = e
+        }
+    }
+}
+
+// 判断entry是否被标记删除，并且将标记为nil的entry更新标记为expunge
+func (e *entry) tryExpungeLocked() (isExpunged bool) {
+    p := atomic.LoadPointer(&amp;e.p)
+
+    for p == nil {
+        // 将已经删除标记为nil的数据标记为expunged
+        if atomic.CompareAndSwapPointer(&amp;e.p, nil, expunged) {
+            return true
+        }
+        p = atomic.LoadPointer(&amp;e.p)
+    }
+    return p == expunged
+}
+
+</code></pre></li>
+</ul>
+<h3 id="查询">查询</h3>
+<ul>
+<li>语法
+<pre tabindex="0"><code>mm := sync.map{}
+m.Load(1)
+</code></pre></li>
+<li>源码分析
+<pre tabindex="0"><code>func (m *Map) Load(key interface{}) (value interface{}, ok bool) {
+    // 查询只读read， 线程安全，优先读取
+	read, _ := m.read.Load().(readOnly)
+	e, ok := read.m[key]
+	// 如果read中不存在key， 且dirty和read 不同步，则读取dirty
+	if !ok &amp;&amp; read.amended {
+		m.mu.Lock()
+		read, _ = m.read.Load().(readOnly)
+		e, ok = read.m[key]
+		if !ok &amp;&amp; read.amended {
+		    // 查询dirty中key
+			e, ok = m.dirty[key]
+			// 记录查询失败次数
+			m.missLocked()
+		}
+	    // 解锁
+		m.mu.Unlock()
+	}
+	// 没有查询到，返回nil和false
+	if !ok {
+		return nil, false
+	}
+	// 查询到， 则返回值
+	return e.load()
+}
+
+// 记录查询read 失败次数
+func (m *Map) missLocked() {
+    // 失败记录++
+	m.misses++
+	if m.misses &lt; len(m.dirty) {
+		return
+	}
+	// 查询穿透到dirty过多， 则将dirty复制到read, 且 amended 为false
+	m.read.Store(readOnly{m: m.dirty})
+	// 将dirty清空
+	m.dirty = nil
+	// 查询read失败记录清零
+	m.misses = 0
+}
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#syncmap">sync.map</a></li>
+    <li><a href="#高效的原理和思路">高效的原理和思路</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#源码解析">源码解析</a>
+      <ul>
+        <li><a href="#基础结构">基础结构</a></li>
+        <li><a href="#删除">删除</a></li>
+        <li><a href="#插入和更新">插入和更新</a></li>
+        <li><a href="#查询">查询</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/golang/context/" class="button left"><span>Golang源码阅读-Context</span></a>
+    
+    
+      <a href="/blog/golang/sync.mutex/" class="button right"><span>Golang源码阅读-sync.Mutex</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

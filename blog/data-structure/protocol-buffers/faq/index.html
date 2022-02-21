@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Protocol Buffers - FAQ - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Protocol Buffers - FAQ">
+<meta itemprop="description" content="本文讨论一些Protocol Buffers 开源项目的一些常见问题。 如果你有一些问题，这里没有回答，请加入讨论组并提问。
+普通问题 为什么发布Protocol Buffers？
+有以下几个原因:
+ Protocol Buffers 在Google中几乎被每个人使用。我们有许多想要开源发布的项目在使用protocol buffers, 因此我们需要首先发布protocol bufeers。事实上，一些技术已经可以在开源项目中找到 - 如果你深入Google AppEngine 代码，你会发现它们。 我们愿意提供接收protocol buffers和XML的公共API, 因为这非常高效，而且我们只是把XML转换成protocol buffers。 我们认为Google之外的人会发现protocol buffers会很有用 将protocol buffers变成我们乐意发布的形式是有趣20%的项目。  为什么首次发布版本2？版本1发生了什么？
+protocol buffers的初始版本(亦名Proto1)最早在2001年在Google内开始开发，经过多年的发展，当有人需要并且愿意自己做，就会萌生出新的特性。 就像任何以这种方式创造出来的东西一样，它有点混乱。我们得出的结论是，按照现在的样子发布代码是不可行的。
+版本2(Proto2)是一个完全重写的版本，尽管它保留了大部分的设计并使用了许多来自Proto1的实现思想。添加了一些功能，删除了一些。 然而，最重要的是，代码被清理干净，并且没有任何依赖于尚未开放源码的Google库。
+为什么命名为&quot;Protocol Buffers&quot;？
+这个名称源于该格式的早期，那时还没有协议缓冲区编译器来为我们生成类。 当时，有一个名为ProtocolBuffer的类，它实际上充当了单个方法的缓冲区。 用户可以通过调用AddValue(tag, value)等方法将tag/value对分别添加到这个缓冲区。 原始字节被存储在一个缓冲区中，一旦消息被构造好，这个缓冲区就可以被写出来。
+从那时起，名称中的“buffers”部分就失去了意义，但它仍然是我们使用的名称。今天，人们通常使用术语“protocol message”来指抽象意义上的message， “protocol buffer”指消息的序列化副本，“protocol message object”指表示已解析消息的内存对象。
+Google还有Protocol Buffers的任何专利吗？
+Google目前没有关于Protocol Buffers的授权专利，我们很高兴解决人们可能有的关于协议缓冲区和专利的任何担忧。
+技术类问题  Similar Technologies
+ Protocol Buffers 和 XML 有什么不同?
+答案见概述页
+Protocol Buffers和ASN.1,COM,CORBA,Thrift,etc 有什么不同？
+我们认为所有这些系统都有优点和缺点。Google内部依赖protocol buffers，并且它是我们成功的重要组成部分， 但是这并不意味着它是所有问题的理想解决方案。你应该在自己项目中评估以上每一个选项。
+但是，值得注意的是，这些技术中有几种同时定义了交换格式和RPC(远程过程调用)协议。协议缓冲区只是一种交换格式。 它们可以很容易地用于RPC——实际上，它们对定义RPC services 的支持是有限的——但是它们没有绑定到任何一个RPC实现或协议。"><meta itemprop="datePublished" content="2021-10-28T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-10-28T00:00:00+00:00" />
+<meta itemprop="wordCount" content="97">
+<meta itemprop="keywords" content="Protocol Buffers," /><meta property="og:title" content="Protocol Buffers - FAQ" />
+<meta property="og:description" content="本文讨论一些Protocol Buffers 开源项目的一些常见问题。 如果你有一些问题，这里没有回答，请加入讨论组并提问。
+普通问题 为什么发布Protocol Buffers？
+有以下几个原因:
+ Protocol Buffers 在Google中几乎被每个人使用。我们有许多想要开源发布的项目在使用protocol buffers, 因此我们需要首先发布protocol bufeers。事实上，一些技术已经可以在开源项目中找到 - 如果你深入Google AppEngine 代码，你会发现它们。 我们愿意提供接收protocol buffers和XML的公共API, 因为这非常高效，而且我们只是把XML转换成protocol buffers。 我们认为Google之外的人会发现protocol buffers会很有用 将protocol buffers变成我们乐意发布的形式是有趣20%的项目。  为什么首次发布版本2？版本1发生了什么？
+protocol buffers的初始版本(亦名Proto1)最早在2001年在Google内开始开发，经过多年的发展，当有人需要并且愿意自己做，就会萌生出新的特性。 就像任何以这种方式创造出来的东西一样，它有点混乱。我们得出的结论是，按照现在的样子发布代码是不可行的。
+版本2(Proto2)是一个完全重写的版本，尽管它保留了大部分的设计并使用了许多来自Proto1的实现思想。添加了一些功能，删除了一些。 然而，最重要的是，代码被清理干净，并且没有任何依赖于尚未开放源码的Google库。
+为什么命名为&quot;Protocol Buffers&quot;？
+这个名称源于该格式的早期，那时还没有协议缓冲区编译器来为我们生成类。 当时，有一个名为ProtocolBuffer的类，它实际上充当了单个方法的缓冲区。 用户可以通过调用AddValue(tag, value)等方法将tag/value对分别添加到这个缓冲区。 原始字节被存储在一个缓冲区中，一旦消息被构造好，这个缓冲区就可以被写出来。
+从那时起，名称中的“buffers”部分就失去了意义，但它仍然是我们使用的名称。今天，人们通常使用术语“protocol message”来指抽象意义上的message， “protocol buffer”指消息的序列化副本，“protocol message object”指表示已解析消息的内存对象。
+Google还有Protocol Buffers的任何专利吗？
+Google目前没有关于Protocol Buffers的授权专利，我们很高兴解决人们可能有的关于协议缓冲区和专利的任何担忧。
+技术类问题  Similar Technologies
+ Protocol Buffers 和 XML 有什么不同?
+答案见概述页
+Protocol Buffers和ASN.1,COM,CORBA,Thrift,etc 有什么不同？
+我们认为所有这些系统都有优点和缺点。Google内部依赖protocol buffers，并且它是我们成功的重要组成部分， 但是这并不意味着它是所有问题的理想解决方案。你应该在自己项目中评估以上每一个选项。
+但是，值得注意的是，这些技术中有几种同时定义了交换格式和RPC(远程过程调用)协议。协议缓冲区只是一种交换格式。 它们可以很容易地用于RPC——实际上，它们对定义RPC services 的支持是有限的——但是它们没有绑定到任何一个RPC实现或协议。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/data-structure/protocol-buffers/faq/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-10-28T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-10-28T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Protocol Buffers - FAQ"/>
+<meta name="twitter:description" content="本文讨论一些Protocol Buffers 开源项目的一些常见问题。 如果你有一些问题，这里没有回答，请加入讨论组并提问。
+普通问题 为什么发布Protocol Buffers？
+有以下几个原因:
+ Protocol Buffers 在Google中几乎被每个人使用。我们有许多想要开源发布的项目在使用protocol buffers, 因此我们需要首先发布protocol bufeers。事实上，一些技术已经可以在开源项目中找到 - 如果你深入Google AppEngine 代码，你会发现它们。 我们愿意提供接收protocol buffers和XML的公共API, 因为这非常高效，而且我们只是把XML转换成protocol buffers。 我们认为Google之外的人会发现protocol buffers会很有用 将protocol buffers变成我们乐意发布的形式是有趣20%的项目。  为什么首次发布版本2？版本1发生了什么？
+protocol buffers的初始版本(亦名Proto1)最早在2001年在Google内开始开发，经过多年的发展，当有人需要并且愿意自己做，就会萌生出新的特性。 就像任何以这种方式创造出来的东西一样，它有点混乱。我们得出的结论是，按照现在的样子发布代码是不可行的。
+版本2(Proto2)是一个完全重写的版本，尽管它保留了大部分的设计并使用了许多来自Proto1的实现思想。添加了一些功能，删除了一些。 然而，最重要的是，代码被清理干净，并且没有任何依赖于尚未开放源码的Google库。
+为什么命名为&quot;Protocol Buffers&quot;？
+这个名称源于该格式的早期，那时还没有协议缓冲区编译器来为我们生成类。 当时，有一个名为ProtocolBuffer的类，它实际上充当了单个方法的缓冲区。 用户可以通过调用AddValue(tag, value)等方法将tag/value对分别添加到这个缓冲区。 原始字节被存储在一个缓冲区中，一旦消息被构造好，这个缓冲区就可以被写出来。
+从那时起，名称中的“buffers”部分就失去了意义，但它仍然是我们使用的名称。今天，人们通常使用术语“protocol message”来指抽象意义上的message， “protocol buffer”指消息的序列化副本，“protocol message object”指表示已解析消息的内存对象。
+Google还有Protocol Buffers的任何专利吗？
+Google目前没有关于Protocol Buffers的授权专利，我们很高兴解决人们可能有的关于协议缓冲区和专利的任何担忧。
+技术类问题  Similar Technologies
+ Protocol Buffers 和 XML 有什么不同?
+答案见概述页
+Protocol Buffers和ASN.1,COM,CORBA,Thrift,etc 有什么不同？
+我们认为所有这些系统都有优点和缺点。Google内部依赖protocol buffers，并且它是我们成功的重要组成部分， 但是这并不意味着它是所有问题的理想解决方案。你应该在自己项目中评估以上每一个选项。
+但是，值得注意的是，这些技术中有几种同时定义了交换格式和RPC(远程过程调用)协议。协议缓冲区只是一种交换格式。 它们可以很容易地用于RPC——实际上，它们对定义RPC services 的支持是有限的——但是它们没有绑定到任何一个RPC实现或协议。"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/data-structure/protocol-buffers/faq/">Protocol Buffers - FAQ</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2021-10-28 00:00:00 &#43;0000 UTC">2021-10-28</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <p>本文讨论一些Protocol Buffers 开源项目的一些常见问题。 
+如果你有一些问题，这里没有回答，请加入<a href="http://groups.google.com/group/protobuf">讨论组</a>并提问。</p>
+<h2 id="普通问题">普通问题</h2>
+<p><strong>为什么发布Protocol Buffers？</strong><br>
+有以下几个原因:</p>
+<ul>
+<li>Protocol Buffers 在Google中几乎被每个人使用。我们有许多想要开源发布的项目在使用protocol buffers,
+因此我们需要首先发布protocol bufeers。事实上，一些技术已经可以在开源项目中找到 - 如果你深入<a href="https://developers.google.com/appengine">Google AppEngine</a>
+代码，你会发现它们。</li>
+<li>我们愿意提供接收protocol buffers和XML的公共API, 因为这非常高效，而且我们只是把XML转换成protocol buffers。</li>
+<li>我们认为Google之外的人会发现protocol buffers会很有用</li>
+<li>将protocol buffers变成我们乐意发布的形式是有趣20%的项目。</li>
+</ul>
+<p><strong>为什么首次发布版本2？版本1发生了什么？</strong><br>
+protocol buffers的初始版本(亦名Proto1)最早在2001年在Google内开始开发，经过多年的发展，当有人需要并且愿意自己做，就会萌生出新的特性。
+就像任何以这种方式创造出来的东西一样，它有点混乱。我们得出的结论是，按照现在的样子发布代码是不可行的。</p>
+<p>版本2(Proto2)是一个完全重写的版本，尽管它保留了大部分的设计并使用了许多来自Proto1的实现思想。添加了一些功能，删除了一些。
+然而，最重要的是，代码被清理干净，并且没有任何依赖于尚未开放源码的Google库。</p>
+<p><strong>为什么命名为&quot;Protocol Buffers&quot;？</strong></p>
+<p>这个名称源于该格式的早期，那时还没有协议缓冲区编译器来为我们生成类。
+当时，有一个名为<code>ProtocolBuffer</code>的类，它实际上充当了单个方法的缓冲区。
+用户可以通过调用<code>AddValue(tag, value)</code>等方法将tag/value对分别添加到这个缓冲区。
+原始字节被存储在一个缓冲区中，一旦消息被构造好，这个缓冲区就可以被写出来。</p>
+<p>从那时起，名称中的“buffers”部分就失去了意义，但它仍然是我们使用的名称。今天，人们通常使用术语“protocol message”来指抽象意义上的<code>message</code>，
+“protocol buffer”指消息的序列化副本，“protocol message object”指表示已解析消息的内存对象。</p>
+<p><strong>Google还有Protocol Buffers的任何专利吗？</strong><br>
+Google目前没有关于Protocol Buffers的授权专利，我们很高兴解决人们可能有的关于协议缓冲区和专利的任何担忧。</p>
+<h2 id="技术类问题">技术类问题</h2>
+<blockquote>
+<p>Similar Technologies</p>
+</blockquote>
+<p><strong>Protocol Buffers 和 XML 有什么不同?</strong><br>
+答案见<a href="/blog/data-structure/protocol-buffers/guide">概述页</a></p>
+<p><strong>Protocol Buffers和ASN.1,COM,CORBA,Thrift,etc 有什么不同？</strong><br>
+我们认为所有这些系统都有优点和缺点。Google内部依赖protocol buffers，并且它是我们成功的重要组成部分，
+但是这并不意味着它是所有问题的理想解决方案。你应该在自己项目中评估以上每一个选项。</p>
+<p>但是，值得注意的是，这些技术中有几种同时定义了交换格式和RPC(远程过程调用)协议。协议缓冲区只是一种交换格式。
+它们可以很容易地用于RPC——实际上，它们对定义<a href="/blog/data-structure/protocol-buffers/guide#%E6%9C%8D%E5%8A%A1%E5%AE%9A%E4%B9%89">RPC services</a>
+的支持是有限的——但是它们没有绑定到任何一个RPC实现或协议。</p>
+<h2 id="贡献">贡献</h2>
+<blockquote>
+<p>Contributing</p>
+</blockquote>
+<p><strong>我可以为Protocol Buffers添加对新语言的支持吗?</strong> <br>
+当然!实际上，协议缓冲区编译器的设计使编写自己的编译器变得很容易。查看<a href="https://developers.google.com/protocol-buffers/docs/reference/cpp/google.protobuf.compiler.command_line_interface">CommandLineInterface</a>类，
+它是<code>libprotoc</code>库的一部分。</p>
+<p>我们鼓励您为新语言创建代码生成器和运行时库。
+你应该开始你自己的，独立的项目-这样，你将有自由根据自己的需求来管理你的项目，而不会被我们的发布过程所阻碍。
+也请加入<a href="http://groups.google.com/group/protobuf">Protocol Buffers 讨论组</a>，让我们知道您的项目;
+我们将很高兴链接到它，并帮助您解决设计问题。</p>
+<p><strong>我可以为Protocol Buffers提供补丁吗？</strong></p>
+<p>当然!请加入<a href="http://groups.google.com/group/protobuf">Protocol Buffers 讨论组</a>和我们共同探讨。</p>
+<p><strong>我可以为Protocol Buffers添加新功能吗？</strong>
+也许吧。我们总是喜欢建议，但我们对添加东西非常谨慎。多年来我们学到的一件事是，很多人对新功能都有有趣的想法。
+这些特性中的大多数在特定的情况下是非常有用的，但是如果我们接受所有这些特性，Protocol Buffers就会变得臃肿，混乱。
+所以，我们必须非常挑剔。在评估新特性时，我们会寻找那些非常有用或非常简单，或者希望两者兼而有之的新特性。
+我们经常拒绝Google员工增加功能。我们甚至经常拒绝自己团队成员添加的功能。</p>
+<p>话虽如此，我们还是想听听你的想法。加入<a href="http://groups.google.com/group/protobuf">Protocol Buffers 讨论组</a>并让我们知道。
+我们或许能够帮助您找到一种方法，在不改变底层库的情况下完成您想做的事情。
+或者，也许我们会决定你的功能是如此有用或如此简单，所以应该添加它。</p>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/data-structure/">Data Structure</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/protocol-buffers/">Protocol Buffers</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#普通问题">普通问题</a></li>
+    <li><a href="#技术类问题">技术类问题</a></li>
+    <li><a href="#贡献">贡献</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/hugo/hugo/" class="button left"><span>Hugo使用手册</span></a>
+    
+    
+      <a href="/blog/data-structure/protocol-buffers/guide/" class="button right"><span>Protocol Buffers - Version 3指南</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Data&#32;Structure
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

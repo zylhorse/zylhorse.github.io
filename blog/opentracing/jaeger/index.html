@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>OpenTracing-Jaeger Demo - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="OpenTracing-Jaeger Demo">
+<meta itemprop="description" content="Jaeger ENV JAEGER_SERVICE_NAME	The service name.
+JAEGER_AGENT_HOST	The hostname for communicating with agent via UDP (default localhost).
+JAEGER_AGENT_PORT	The port for communicating with agent via UDP (default 6831).
+JAEGER_ENDPOINT	The HTTP endpoint for sending spans directly to a collector, i.e. http://jaeger-collector:14268/api/traces. If specified, the agent host/port are ignored.
+JAEGER_USER	Username to send as part of &ldquo;Basic&rdquo; authentication to the collector endpoint.
+JAEGER_PASSWORD	Password to send as part of &ldquo;Basic&rdquo; authentication to the collector endpoint."><meta itemprop="datePublished" content="2021-03-01T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-03-01T00:00:00+00:00" />
+<meta itemprop="wordCount" content="861">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="OpenTracing-Jaeger Demo" />
+<meta property="og:description" content="Jaeger ENV JAEGER_SERVICE_NAME	The service name.
+JAEGER_AGENT_HOST	The hostname for communicating with agent via UDP (default localhost).
+JAEGER_AGENT_PORT	The port for communicating with agent via UDP (default 6831).
+JAEGER_ENDPOINT	The HTTP endpoint for sending spans directly to a collector, i.e. http://jaeger-collector:14268/api/traces. If specified, the agent host/port are ignored.
+JAEGER_USER	Username to send as part of &ldquo;Basic&rdquo; authentication to the collector endpoint.
+JAEGER_PASSWORD	Password to send as part of &ldquo;Basic&rdquo; authentication to the collector endpoint." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/opentracing/jaeger/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-03-01T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-03-01T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="OpenTracing-Jaeger Demo"/>
+<meta name="twitter:description" content="Jaeger ENV JAEGER_SERVICE_NAME	The service name.
+JAEGER_AGENT_HOST	The hostname for communicating with agent via UDP (default localhost).
+JAEGER_AGENT_PORT	The port for communicating with agent via UDP (default 6831).
+JAEGER_ENDPOINT	The HTTP endpoint for sending spans directly to a collector, i.e. http://jaeger-collector:14268/api/traces. If specified, the agent host/port are ignored.
+JAEGER_USER	Username to send as part of &ldquo;Basic&rdquo; authentication to the collector endpoint.
+JAEGER_PASSWORD	Password to send as part of &ldquo;Basic&rdquo; authentication to the collector endpoint."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/opentracing/jaeger/">OpenTracing-Jaeger Demo</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2021-03-01 00:00:00 &#43;0000 UTC">2021-03-01</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            &lt;no value&gt;分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="jaeger-env">Jaeger ENV</h2>
+<p>JAEGER_SERVICE_NAME	The service name.<br>
+JAEGER_AGENT_HOST	The hostname for communicating with agent via UDP (default localhost).<br>
+JAEGER_AGENT_PORT	The port for communicating with agent via UDP (default 6831).<br>
+JAEGER_ENDPOINT	The HTTP endpoint for sending spans directly to a collector, i.e. http://jaeger-collector:14268/api/traces. If specified, the agent host/port are ignored.<br>
+JAEGER_USER	Username to send as part of &ldquo;Basic&rdquo; authentication to the collector endpoint.<br>
+JAEGER_PASSWORD	Password to send as part of &ldquo;Basic&rdquo; authentication to the collector endpoint.<br>
+JAEGER_REPORTER_LOG_SPANS	Whether the reporter should also log the spans&quot; true or false (default false).<br>
+JAEGER_REPORTER_MAX_QUEUE_SIZE	The reporter&rsquo;s maximum queue size (default 100).<br>
+JAEGER_REPORTER_FLUSH_INTERVAL	The reporter&rsquo;s flush interval, with units, e.g. 500ms or 2s (valid units; default 1s).<br>
+JAEGER_REPORTER_ATTEMPT_RECONNECTING_DISABLED	When true, disables udp connection helper that periodically re-resolves the agent&rsquo;s hostname and reconnects if there was a change (default false).<br>
+JAEGER_REPORTER_ATTEMPT_RECONNECT_INTERVAL	Controls how often the agent client re-resolves the provided hostname in order to detect address changes (valid units; default 30s).<br>
+JAEGER_SAMPLER_TYPE	The sampler type: remote, const, probabilistic, ratelimiting (default remote). See also <a href="https://www.jaegertracing.io/docs/latest/sampling/">https://www.jaegertracing.io/docs/latest/sampling/</a>.<br>
+JAEGER_SAMPLER_PARAM	The sampler parameter (number).<br>
+JAEGER_SAMPLER_MANAGER_HOST_PORT	(deprecated) The HTTP endpoint when using the remote sampler.<br>
+JAEGER_SAMPLING_ENDPOINT	The URL for the sampling configuration server when using sampler type remote (default http://127.0.0.1:5778/sampling).<br>
+JAEGER_SAMPLER_MAX_OPERATIONS	The maximum number of operations that the sampler will keep track of (default 2000).<br>
+JAEGER_SAMPLER_REFRESH_INTERVAL	How often the remote sampler should poll the configuration server for the appropriate sampling strategy, e.g. &ldquo;1m&rdquo; or &ldquo;30s&rdquo; (valid units; default 1m).<br>
+JAEGER_TAGS	A comma separated list of name=value tracer-level tags, which get added to all reported spans. The value can also refer to an environment variable using the format ${envVarName:defaultValue}.<br>
+JAEGER_DISABLED	Whether the tracer is disabled or not. If true, the opentracing.NoopTracer is used (default false).<br>
+JAEGER_RPC_METRICS	Whether to store RPC metrics, true or false (default false).</p>
+<h2 id="demo">Demo</h2>
+<ol>
+<li>创建web工程
+<ul>
+<li>code几个简单的调用点：
+<pre tabindex="0"><code>// Acts as our index page
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+    w.Write([]byte(`&lt;a href=&quot;/home&quot;&gt; Click here to start a request &lt;/a&gt;`))
+}
+func homeHandler(w http.ResponseWriter, r *http.Request) {
+     w.Write([]byte(&quot;Request started&quot;))
+    go func() {
+        http.Get(&quot;http://localhost:8080/async&quot;)
+    }()
+    http.Get(&quot;http://localhost:8080/service&quot;)
+    time.Sleep(time.Duration(rand.Intn(200)) * time.Millisecond)
+    w.Write([]byte(&quot;Request done!&quot;))
+}
+// Mocks a service endpoint that makes a DB call
+func serviceHandler(w http.ResponseWriter, r *http.Request) {
+    // ...
+    http.Get(&quot;http://localhost:8080/db&quot;)
+    time.Sleep(time.Duration(rand.Intn(200)) * time.Millisecond)
+    // ...
+}
+// Mocks a DB call
+func dbHandler(w http.ResponseWriter, r *http.Request) {
+    time.Sleep(time.Duration(rand.Intn(200)) * time.Millisecond)
+    // here would be the actual call to a DB.
+}
+</code></pre></li>
+<li>main中启动
+<pre tabindex="0"><code>func main() {
+    port := 8080
+    addr := fmt.Sprintf(&quot;:%d&quot;, port)
+    mux := http.NewServeMux()
+    mux.HandleFunc(&quot;/&quot;, indexHandler)
+    mux.HandleFunc(&quot;/home&quot;, homeHandler)
+    mux.HandleFunc(&quot;/async&quot;, serviceHandler)
+    mux.HandleFunc(&quot;/service&quot;, serviceHandler)
+    mux.HandleFunc(&quot;/db&quot;, dbHandler)
+    fmt.Printf(&quot;Go to http://localhost:%d/home to start a request!\n&quot;, port)
+    log.Fatal(http.ListenAndServe(addr, mux))
+}
+</code></pre></li>
+</ul>
+</li>
+<li>引入Opentracing监控应用程序
+<ul>
+<li>在入口处创建span
+<pre tabindex="0"><code>func homeHandler(w http.ResponseWriter, r *http.Request) {
+  span := opentracing.StartSpan(&quot;/home&quot;) // Start a span using the global, in this case noop, tracer
+  defer span.Finish()
+  // ... the rest of the function
+}
+</code></pre></li>
+<li>设置一些tags和logs
+<pre tabindex="0"><code>// The ext package provides a set of standardized tags available for use.
+import &quot;github.com/opentracing/opentracing-go/ext&quot;
+
+func homeHandler(w http.ResponseWriter, r *http.Request) {
+// ...
+// We record any errors now.
+    _, err := http.Get(&quot;http://localhost:8080/service&quot;)
+    if err != nil {
+        ext.LogError(span, err) // Log the span and Tag the span as errored
+    }
+// ...
+}
+</code></pre><blockquote>
+<p>当然你也可以添加其他事件信息，如： 发生的重要事件，用户Id，浏览器类型</p>
+</blockquote>
+</li>
+<li>将Span注入到request中
+<pre tabindex="0"><code>func homeHandler(w http.ResponseWriter, r *http.Request) {
+    w.Write([]byte(&quot;Request started&quot;))
+    span := opentracing.StartSpan(&quot;/home&quot;)
+    defer span.Finish()
+
+    // Since we have to inject our span into the HTTP headers, we create a request
+    asyncReq, _ := http.NewRequest(&quot;GET&quot;, &quot;http://localhost:8080/async&quot;, nil)
+    // Inject the span context into the header
+    err := span.Tracer().Inject(span.Context(),
+        opentracing.TextMap,
+        opentracing.HTTPHeaderTextMapCarrier(asyncReq.Header))
+    if err != nil {
+        log.Fatalf(&quot;Could not inject span context into header: %v&quot;, err)
+    }
+    go func() {
+        if _, err := http.DefaultClient.Do(asyncReq); err != nil {
+            ext.LogError(span, err)
+        }
+    }()
+    // Repeat for the /service call.
+    // ....
+}
+</code></pre></li>
+<li>从request中提取Span
+<pre tabindex="0"><code>func serviceHandler(w http.ResponseWriter, r *http.Request) {
+    var sp opentracing.Span
+    opName := r.URL.Path
+    // Attempt to join a trace by getting trace context from the headers.
+    wireContext, err := opentracing.GlobalTracer().Extract(
+        opentracing.TextMap,
+        opentracing.HTTPHeaderTextMapCarrier(r.Header))
+    if err != nil {
+        // If for whatever reason we can't join, go ahead an start a new root span.
+        sp = opentracing.StartSpan(opName)
+    } else {
+        sp = opentracing.StartSpan(opName, opentracing.ChildOf(wireContext))
+    }
+  defer sp.Finish()
+  // ... rest of the function
+</code></pre></li>
+<li>连接到追踪系统
+<pre tabindex="0"><code>import (
+    &quot;github.com/opentracing/opentracing-go&quot;
+     &quot;github.com/opentracing/opentracing-go/ext&quot;
+     &quot;github.com/uber/jaeger-client-go&quot;
+     jaegercfg &quot;github.com/uber/jaeger-client-go/config&quot;
+)
+
+func main() {
+ const (
+     // environment variable names
+     envServiceName                         = &quot;JAEGER_SERVICE_NAME&quot;
+     envDisabled                            = &quot;JAEGER_DISABLED&quot;
+     envRPCMetrics                          = &quot;JAEGER_RPC_METRICS&quot;
+     envTags                                = &quot;JAEGER_TAGS&quot;
+     envSamplerType                         = &quot;JAEGER_SAMPLER_TYPE&quot;
+     envSamplerParam                        = &quot;JAEGER_SAMPLER_PARAM&quot;
+     envSamplerManagerHostPort              = &quot;JAEGER_SAMPLER_MANAGER_HOST_PORT&quot; // Deprecated by envSamplingEndpoint
+     envSamplingEndpoint                    = &quot;JAEGER_SAMPLING_ENDPOINT&quot;
+     envSamplerMaxOperations                = &quot;JAEGER_SAMPLER_MAX_OPERATIONS&quot;
+     envSamplerRefreshInterval              = &quot;JAEGER_SAMPLER_REFRESH_INTERVAL&quot;
+     envReporterMaxQueueSize                = &quot;JAEGER_REPORTER_MAX_QUEUE_SIZE&quot;
+     envReporterFlushInterval               = &quot;JAEGER_REPORTER_FLUSH_INTERVAL&quot;
+     envReporterLogSpans                    = &quot;JAEGER_REPORTER_LOG_SPANS&quot;
+     envReporterAttemptReconnectingDisabled = &quot;JAEGER_REPORTER_ATTEMPT_RECONNECTING_DISABLED&quot;
+     envReporterAttemptReconnectInterval    = &quot;JAEGER_REPORTER_ATTEMPT_RECONNECT_INTERVAL&quot;
+     envEndpoint                            = &quot;JAEGER_ENDPOINT&quot;
+     envUser                                = &quot;JAEGER_USER&quot;
+     envPassword                            = &quot;JAEGER_PASSWORD&quot;
+     envAgentHost                           = &quot;JAEGER_AGENT_HOST&quot;
+     envAgentPort                           = &quot;JAEGER_AGENT_PORT&quot;
+ )
+ os.Setenv(envServiceName, &quot;test&quot;)
+ os.Setenv(envDisabled, &quot;false&quot;)
+ os.Setenv(envSamplerType, &quot;const&quot;)
+ os.Setenv(envSamplerParam, &quot;1&quot;)
+ os.Setenv(envReporterLogSpans, &quot;true&quot;)
+ os.Setenv(envAgentHost, &quot;jarger-agent addr&quot;)
+ os.Setenv(envAgentPort, &quot;6831&quot;)
+
+ cfg, err := jaegercfg.FromEnv()
+ if err != nil {
+     // parsing errors might happen here, such as when we get a string where we expect a number
+     fmt.Println(&quot;Could not parse Jaeger env vars: %s&quot;, err.Error())
+     return
+ }
+ tracer, closer, err := cfg.NewTracer(jaegercfg.Logger(jaeger.StdLogger))
+ if err != nil {
+     fmt.Println(&quot;Could not initialize jaeger tracer: %s&quot;, err.Error())
+     return
+ }
+ defer closer.Close()
+
+ opentracing.SetGlobalTracer(tracer)
+
+ port := 8080
+ addr := fmt.Sprintf(&quot;:%d&quot;, port)
+ mux := http.NewServeMux()
+ mux.HandleFunc(&quot;/&quot;, indexHandler)
+ mux.HandleFunc(&quot;/home&quot;, homeHandler)
+ mux.HandleFunc(&quot;/async&quot;, serviceHandler)
+ mux.HandleFunc(&quot;/service&quot;, serviceHandler)
+ mux.HandleFunc(&quot;/db&quot;, dbHandler)
+ fmt.Printf(&quot;Go to http://localhost:%d/home to start a request!\n&quot;, port)
+ fmt.Println(http.ListenAndServe(addr, mux))
+}
+</code></pre></li>
+</ul>
+</li>
+</ol>
+
+      
+    <h2>参考</h2>
+    <ul>
+        
+            
+                <li><a target="_blank" href="https://opentracing.io/specification/">OpenTracing</a></li>
+            
+        
+            
+                <li><a target="_blank" href="https://github.com/jaegertracing/jaeger-client-go">Jaeger</a></li>
+            
+        
+    </ul>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/opentracing/">Opentracing</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#jaeger-env">Jaeger ENV</a></li>
+    <li><a href="#demo">Demo</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/opentracing/integration/" class="button left"><span>OpenTracing-系统集成</span></a>
+    
+    
+      <a href="/blog/opentracing/concepts/" class="button right"><span>OpenTracing-概念和关键字</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Opentracing
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

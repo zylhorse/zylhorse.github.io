@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Oracle on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/oracle/</link>
+    <description>Recent content in Oracle on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 15 Jul 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/oracle/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Oracle数据库安装配置</title>
+      <link>https://zylhorse.github.io/blog/database/oracle/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/database/oracle/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</guid>
+      <description>docker安装 sudo docker pull deepdiver/docker-oracle-xe-11gsudo docker run -d -p 1522:22 -p 1521:1521 --name oracle deepdiver/docker-oracle-xe-11gclient https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html
+ basic sdk sqlplus  链接动态库 #!/bin/bashln /opt/instantclient_11_2/libclntsh.so.11.1 /usr/lib/libclntsh.soln /optinstantclient_11_2/libnnz11.so /usr/lib/libnnz11.soln /opt/instantclient_11_2/libocci.so.11.1 /usr/lib/libocci.soln /opt/instantclient_11_2/libociei.so /usr/lib/libociei.soln /opt/instantclient_11_2/libocijdbc11.so /usr/lib/libocijdbc11.soln /opt/instantclient_11_2/libsqlplusic.so /usr/lib/libsqlplusic.soln /opt/instantclient_11_2/libsqlplus.so /usr/lib/libsqlplus.so添加动态库到系统 echo /opt/instantclient_11_2 &amp;gt;&amp;gt; /etc/ld.so.confldconfig安装 oracle client 下载地址： https://www.oracle.com/database/technologies/112010-win64soft.html
+错误提示  不满足安装条件, oracle 没有配置当前系统的支持   修改stage/cvu/cvu_prereq.xml添加
+  &amp;lt;OPERATING_SYSTEM RELEASE=&amp;quot;6.2&amp;quot;&amp;gt;&amp;lt;VERSION VALUE=&amp;quot;3&amp;quot;/&amp;gt;&amp;lt;ARCHITECTURE VALUE=&amp;quot;64-bit&amp;quot;/&amp;gt;&amp;lt;NAME VALUE=&amp;quot;Windows 10&amp;quot;/&amp;gt;&amp;lt;ENV_VAR_LIST&amp;gt;&amp;lt;ENV_VAR NAME=&amp;quot;PATH&amp;quot; MAX_LENGTH=&amp;quot;1023&amp;quot; /&amp;gt;&amp;lt;/ENV_VAR_LIST&amp;gt;&amp;lt;/OPERATING_SYSTEM&amp;gt;安装plsql developer 软件 下载地址： https://www.</description>
+    </item>
+    
+  </channel>
+</rss>

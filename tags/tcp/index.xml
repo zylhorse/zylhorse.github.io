@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>TCP on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/tcp/</link>
+    <description>Recent content in TCP on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 06 Dec 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/tcp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TCP-数据传输可靠性</title>
+      <link>https://zylhorse.github.io/blog/network/tcp/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/</link>
+      <pubDate>Sat, 06 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/network/tcp/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/</guid>
+      <description>TCP数据传输 面向字节流， 传输可靠， 面向连接
+问题 网络数据不可靠， 丢包， 错包， 重复包， 乱序包；
+滑动窗口 提高数据吞吐量， 传输数据块（包含多组数据）
+滑动窗口本身可以看做是一个协议，适合于数据传输过程中要求有严格顺序处理的场景
+滑动窗口将时间轴上的数据分成了4个部分:
+ 数据发送且被确认 数据发送但未被确认 数据能够被发送 数据不能发送，等待滑动窗口右移  TCP报文字段 win  报文中win用来描述窗口大小。 接收方窗口大小由接收方控制, 默认4096字节 如果窗口中有未来得及读取的数据， 则响应报文中的win就会减少 如果窗口中的数据被读取， 可能会出现携带ack 但不确认任何数据 而仅仅win变大的包， 这种情况用来更新窗口大小；  确保可靠性方式  校验和  数据发送时， 将数据段当作16位整数， 并将所有数据段相加。 且相加后的进位不丢弃，补到末位， 最后取反，得到校验和； 接收方收到数据后， 以同样方式计算校验和， 与发送方的进行对比；如果校验和不一致则数据传输一定有误。 但是校验和一致，数据传输不一定无误；   序列号  数据传输的每个数据段都进行了编号； 有了序列号， 就能对数据包进行排序和排重；   确认应答  数据传输的每次发送， 接收方都会进行应答， 即发送ack确认报文；   超时重传  基于序列号和确认应答机制，发送方都会等待接收方的ack确认报文。 如果发送方迟迟接收不到ack响应， 则会重新发送该报文，直到达到重传次数限制， 则认为tcp传输异常， 强制关闭； 超时的时间以500ms 为基准， 以指数方式增加； （第一次： 500ms， 第二次： 2*500ms &amp;hellip;);    </description>
+    </item>
+    
+    <item>
+      <title>TCP-IP连接限制</title>
+      <link>https://zylhorse.github.io/blog/network/tcp/maxport/</link>
+      <pubDate>Wed, 03 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/network/tcp/maxport/</guid>
+      <description>在一台系统上，连接到一个远程服务时的本地端口(local_addr)是有限的。根据TCP/IP协议，由于端口是16位整数，也就只能是0到 65535，而0到1023是预留端口， 所以能分配的端口只是1024到65534，也就是64511个。也就是说，一个IP只能创建六万多个长连接。</description>
+    </item>
+    
+    <item>
+      <title>TCP-握手和挥手</title>
+      <link>https://zylhorse.github.io/blog/network/tcp/handshake/</link>
+      <pubDate>Wed, 03 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/network/tcp/handshake/</guid>
+      <description>tcp 状态 tcp连接FLAGS字段表示当前连接状态，FLAGS包含一下几个标识：
+ SYN表示建立连接 FIN表示关闭连接 ACK表示响应 PSH表示有 DATA数据传输 RST表示连接重置  三次握手 tcp建立连接的过程，需要三次握手；
+ 客户端打开连接，主动结束CLOSED阶段； 服务器连接，被动结束CLOSED阶段， 进入LISTEN阶段； 开始握手：   客户端向服务器发送tcp报文
+1.1 标记位为SYN， 表示请求建立连接
+1.2 序号seq=x (x一般为0)
+1.3 客户端进入SYN-SENT 阶段
+  服务器接收来自客户端的tcp报文，结束LISTEN阶段，并发送一段tcp报文
+2.1 标志位为SYN和ACK， 表示确认客户端报文seq有效，同意创建连接
+2.2 序号seq=y（y一般为0）， 确认号ack=x+1, 表示收到客户端序号seq并将其值加1作为自己的确认号ack的值
+2.3 服务端进入SYN-RECVD阶段
+  客户端接收来自服务器的确认报文后， 结束SYN-SENT阶段，并返回一段tcp报文
+3.1 标志位为ACK， 表示确认收到服务器同意连接的信号；
+3.2 序号seq=x+1， 表示收到服务器的确认号ack， 并将其作为自己的序号
+3.3 确认号ack=y+1， 表示收到服务器的序号seq并将其值加1作为自己的确认号ack的值
+3.4 客户端进入ESTABLISHED阶段
+  服务器接收到来自客户端的确认报文后， 明确从服务器到客户端的数据传输时正常的
+4.1 服务器结束SYN-RECVD阶段， 进入ESTABLISHED阶段
+    为什么三次握手  防止服务器开启无用连接，增加服务器开销； 防止失效的请求连接报文传输到服务端， 产生错误；  四次挥手 tcp释放连接，需要四次挥手</description>
+    </item>
+    
+  </channel>
+</rss>

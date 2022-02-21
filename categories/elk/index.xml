@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ELK on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/elk/</link>
+    <description>Recent content in ELK on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 06 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/elk/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ELK-搭建Kibana</title>
+      <link>https://zylhorse.github.io/blog/elk/kibana/</link>
+      <pubDate>Sun, 06 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/elk/kibana/</guid>
+      <description>kibana.yml version: &#39;2&#39;services:kibana:image: docker.elastic.co/kibana/kibana:7.2.0environment:ELASTICSEARCH_HOSTS: http://192.168.20.99:9200ports:- 5601:5601restart: always</description>
+    </item>
+    
+    <item>
+      <title>ELK-搭建Filebeat</title>
+      <link>https://zylhorse.github.io/blog/elk/filebeat/</link>
+      <pubDate>Sat, 05 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/elk/filebeat/</guid>
+      <description>安装 deb:
+curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.3.0-amd64.debsudo dpkg -i filebeat-7.3.0-amd64.debrpm:
+curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.3.0-x86_64.rpmsudo rpm -vi filebeat-7.3.0-x86_64.rpmdocker-compose version: &#39;2&#39;services:filebeat:image: docker.elastic.co/beats/filebeat:7.2.0container_name: filebeatrestart: alwaysvolumes:- ./config/filebeat.yml:/usr/share/filebeat/filebeat.yml- /var/lib/docker/containers:/var/lib/docker/containersuser: root容器日志配置 {&amp;quot;log-driver&amp;quot;:&amp;quot;json-file&amp;quot;,&amp;quot;log-opts&amp;quot;:{ &amp;quot;max-size&amp;quot; :&amp;quot;5m&amp;quot;,&amp;quot;max-file&amp;quot;:&amp;quot;1&amp;quot;, &amp;quot;labels&amp;quot;:&amp;quot;{{.Name}}&amp;quot;}}</description>
+    </item>
+    
+    <item>
+      <title>ELK-搭建Heartbeat</title>
+      <link>https://zylhorse.github.io/blog/elk/heartbeat/</link>
+      <pubDate>Sat, 05 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/elk/heartbeat/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ELK-搭建Metricbeat</title>
+      <link>https://zylhorse.github.io/blog/elk/metricbeat/</link>
+      <pubDate>Sat, 05 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/elk/metricbeat/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ELK-搭建PacketHeat</title>
+      <link>https://zylhorse.github.io/blog/elk/packetheat/</link>
+      <pubDate>Sat, 05 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/elk/packetheat/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ELK-搭建Elasticsearch</title>
+      <link>https://zylhorse.github.io/blog/elk/elasticsearch/</link>
+      <pubDate>Fri, 04 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/elk/elasticsearch/</guid>
+      <description>elasticsearch.yml version: &#39;2&#39;services:elasticsearch:image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0container_name: elasticsearchenvironment:- bootstrap.memory_lock=true- &amp;quot;ES_JAVA_OPTS=-Xms512m -Xmx512m&amp;quot;- &amp;quot;discovery.type=single-node&amp;quot;ulimits:memlock:soft: -1hard: -1volumes:- esdata:/usr/share/elasticsearch/dataports:- 9200:9200networks:- esnetrestart: alwaysvolumes:esdata:driver: localnetworks:esnet:</description>
+    </item>
+    
+    <item>
+      <title>ELK简介及日志收集、服务监控、性能监控</title>
+      <link>https://zylhorse.github.io/blog/elk/elk/</link>
+      <pubDate>Fri, 04 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/elk/elk/</guid>
+      <description>elk 描述 elk 架构是指：elastic 公司三个开源的产品： elasticsearch, logstash, kibana
+Elasticsearch是个开源分布式搜索引擎，提供搜集、分析、存储数据三大功能。它的特点有：分布式，零配置，自动发现，索引自动分片，索引副本机制，restful风格接口，多数据源，自动搜索负载等。
+Logstash 主要是用来日志的搜集、分析、过滤日志的工具，支持大量的数据获取方式。一般工作方式为c/s架构，client端安装在需要收集日志的主机上，server端负责将收到的各节点日志进行过滤、修改等操作在一并发往elasticsearch上去。
+Kibana 也是一个开源和免费的工具，Kibana可以为 Logstash 和 ElasticSearch 提供的日志分析友好的 Web 界面，可以帮助汇总、分析和搜索重要数据日志。
+web地址 目前在内网服务器上搭建filebeat,metricbeat,heartbeat 等agent。 以及 elasticsearch, kibana 平台。
+kibana地址： 192.168.20.30:5601
+日志  查看： logs 过滤： log.file.path:xxx
+  搜索： discover 索引： filebeat-7.2.0-*
+ 服务监控  查看：uptime
+  监控服务
+ 硬件监控  查看：dashboard 索引： [Metricbeat System] Host overview ECS
+  监控硬件：
+ cpu 内存 硬盘io 磁盘io 进程信息   集成 管理后台 完整日志架构： productor -&amp;gt; nsq -&amp;gt; nsqbeat -&amp;gt; elasticsearch -&amp;gt; kibana</description>
+    </item>
+    
+    <item>
+      <title>日志业务系统架构设计</title>
+      <link>https://zylhorse.github.io/blog/log-system/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/</link>
+      <pubDate>Tue, 27 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/log-system/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/</guid>
+      <description>日志业务 两种日志收集架构
+ 应用产生日志-&amp;gt; 根据大小/时间 写入文件-&amp;gt; rotation 日志文件 -&amp;gt; 定期查看/定期删除 应用产生日志-&amp;gt; 传输 -&amp;gt; 过滤/转换 -&amp;gt; 存储-&amp;gt; 分析/查看  日志业务结构 采集-&amp;gt;缓存-&amp;gt;转换/过滤-&amp;gt;存储-&amp;gt;可视化
+日志技术架构 filebeat/logstash -&amp;gt; kafka -&amp;gt; fluentd -&amp;gt; es -&amp;gt; kibana
+日志平台优化  由于日志低频次， 将历史数据存入廉价存储， 普通用户需要时再导入es 日志存储的时间越长，意义越小。 根据实际情况制定留存数据策略 顺序写入磁盘，区别随机写入磁盘，我们采用顺序写数据模式  </description>
+    </item>
+    
+    <item>
+      <title>Grafana搭建部署环境和配置</title>
+      <link>https://zylhorse.github.io/blog/elk/grafana/</link>
+      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/elk/grafana/</guid>
+      <description>概念 Grafana是一个开源可视化工具，可以在各种不同的数据存储上使用
+详情 从本质上讲，它是Graphite-web的一个功能丰富的替代品，可帮助用户轻松创建和编辑仪表板。它包含一个独特的Graphite目标解析器，可以轻松进行度量和功能编辑。用户可以使用智能轴格式（例如线条和点）创建全面的图表，这是Grafana快速的客户端渲染（即使在很长的时间范围内） - 使用Flot作为默认选项。</description>
+    </item>
+    
+  </channel>
+</rss>

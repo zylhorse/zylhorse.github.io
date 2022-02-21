@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Metrics on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/metrics/</link>
+    <description>Recent content in Metrics on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 23 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/metrics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>分布式监控系统-Tracing、Metrics、Logging</title>
+      <link>https://zylhorse.github.io/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F/</link>
+      <pubDate>Fri, 23 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F/</guid>
+      <description>Metrics、Tracing、Logging都是针对全局的，肯定会有重叠的部分。因此思考 使用维恩图(Venn diagram)描述三个概念的定义，用以确定三者不同的部分:
+Metrics: 统计指标是可计量的，它们是在一段时间内组成单个逻辑gauge，counter，histogram的原子。 例如：
+队列的当前深度可以被定义为一个gauge，根据last-writer-win原则更新总计
+HTTP请求的数量可以被定义为计数器，根据简单的累加更新总计
+请求时长可以被定义为一个柱状图，更新总计到时间段并产生统计摘要
+Logging：用于处理离散(偶发)事件。
+例如:
+应用程序的debug/error信息通过syslog的滚动文件描述符，转存到ELK中
+审计踪迹事件通过Kafka，存储到像BigTable这样的数据库中
+特定请求的元数据信息，从服务请求中剥离，并发送给异常收集服务器，如:NewRelic
+Tracing: 用于处理请求范围内的信息。任何数据或者元数据都可以绑定到系统的单个事务对象的生命周期上。
+例如:
+出站RPC到远程服务请求时长
+发送到数据库的SQL查询文本
+入站HTTP请求的关联ID
+根据上述定义，可以标记重叠部分: 对于cloud-native应用来说，大部分instrumentation的典型特征是以请求范围结束，因此讨论tracing的上下文是有意义的。 但是我们可以观察到不是所有的instrumentation都绑定到请求的生命周期上：e.g. 逻辑组件的诊断信息或进程生命周期信息，与任何离散请求是正交关系。 因此不是所有(至少未经处理)的metrics或logs信息都可以硬塞进tracing系统。
+我们应该意识到metrics统计数据，对应用监控有很大帮助，比如：Prometheus生态，可以展现应用的实时监控视图。 相反的，如果将metrics信息硬塞进logging系统处理，会让我们丢失一些特性。
+至此，我们可以对现有系统进行分类。如：
+Prometheus系统，起始是作为专一的metrics系统，慢慢的可能会向tracing系统发展，从而进行请求范围的metrics。但是不会向logging系统领域深入。
+ELK生态提供日志的记录、滚动和聚合，也在其它领域不停的积累，并慢慢的集成进来。
+在这三个领域中Metrics需要最少的管理资源，Logging的资源负荷往往是递增的。
+由此我们可以形成容量或操作开销梯度图，又低到高，可以看出Tracing的开销居于前两者之间：</description>
+    </item>
+    
+  </channel>
+</rss>

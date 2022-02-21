@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ZooKeeper on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/zookeeper/</link>
+    <description>Recent content in ZooKeeper on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 04 Jan 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/zookeeper/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ZooKeeper工作原理</title>
+      <link>https://zylhorse.github.io/blog/distribution-system/zookeeper/</link>
+      <pubDate>Fri, 04 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/distribution-system/zookeeper/</guid>
+      <description>ZooKeeper ZooKeeper是一个开源的分布式协调服务， 由雅虎创建， 是Google Chubby的开源实现， 现在被拆分为Hadoop的独立子项目。
+ ZookKeeper是一个分布式小文件系统，且被设计为高可用。通过选举算法和集群复制来避免单点故障。 因为是基于文件系统设计， 即使所有ZooKeeper节点全部挂掉， 数据也会持久化， 重启服务器后， 可恢复数据。 ZooKeeper通过mvvc（多版本控制）实现乐观锁，节点更新是原子的，所以不是成功就是失败。  功能简介 分布式系统基于ZooKeeper可以实现诸如： 数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群管理、Master选举、配置维护、名字服务、分布式同步、分布式锁、分布式队列
+基本概念 集群角色 一个ZooKeeper集群同一时刻只能有一个Leader， 其他都是Follower或Observer
+ Leader Follower Observer  </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>linux系统信号 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="linux系统信号">
+<meta itemprop="description" content="信号列表   SIGHUP
+本信号在用户终端连接(正常或非正常)结束时发出, 通常是在终端的控制进程结束时, 通知同一 session 内的各个作业, 这时它们与控制终端不再关联。 登录 Linux 时，系统会分配给登录用户一个终端( Session )。在这个终端运行的所有程序，包括前台进程组和后台进程组，一般都属于这个 Session 。 当用户退出 Linux 登录时，前台进程组和后台有对终端输出的进程将会收到 SIGHUP 信号。这个信号的默认操作为终止进程，因此前台进程组和后台有终端输出的进程就会中止。 不过可以捕获这个信号，比如 wget 能捕获 SIGHUP 信号，并忽略它，这样就算退出了Linux 登录，wget 也能继续下载。 此外，对于与终端脱离关系的守护进程，这个信号用于通知它重新读取配置文件。
+  SIGINT
+程序终止( interrupt )信号, 在用户键入 INTR 字符(通常是 Ctrl &#43; C )时发出，用于通知前台进程组终止进程。
+  SIGQUIT
+和 SIGINT 类似, 但由 QUIT 字符(通常是 Ctrl &#43; / )来控制. 进程在因收到 SIGQUIT 退出时会产生 core 文件, 在这个意义上类似于一个程序错误信号。
+  SIGILL
+执行了非法指令. 通常是因为可执行文件本身出现错误, 或者试图执行数据段. 堆栈溢出时也有可能产生这个信号。
+  SIGTRAP"><meta itemprop="datePublished" content="2013-09-22T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2013-09-22T00:00:00+00:00" />
+<meta itemprop="wordCount" content="212">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="linux系统信号" />
+<meta property="og:description" content="信号列表   SIGHUP
+本信号在用户终端连接(正常或非正常)结束时发出, 通常是在终端的控制进程结束时, 通知同一 session 内的各个作业, 这时它们与控制终端不再关联。 登录 Linux 时，系统会分配给登录用户一个终端( Session )。在这个终端运行的所有程序，包括前台进程组和后台进程组，一般都属于这个 Session 。 当用户退出 Linux 登录时，前台进程组和后台有对终端输出的进程将会收到 SIGHUP 信号。这个信号的默认操作为终止进程，因此前台进程组和后台有终端输出的进程就会中止。 不过可以捕获这个信号，比如 wget 能捕获 SIGHUP 信号，并忽略它，这样就算退出了Linux 登录，wget 也能继续下载。 此外，对于与终端脱离关系的守护进程，这个信号用于通知它重新读取配置文件。
+  SIGINT
+程序终止( interrupt )信号, 在用户键入 INTR 字符(通常是 Ctrl &#43; C )时发出，用于通知前台进程组终止进程。
+  SIGQUIT
+和 SIGINT 类似, 但由 QUIT 字符(通常是 Ctrl &#43; / )来控制. 进程在因收到 SIGQUIT 退出时会产生 core 文件, 在这个意义上类似于一个程序错误信号。
+  SIGILL
+执行了非法指令. 通常是因为可执行文件本身出现错误, 或者试图执行数据段. 堆栈溢出时也有可能产生这个信号。
+  SIGTRAP" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/linux/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E5%8F%B7/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2013-09-22T00:00:00+00:00" />
+<meta property="article:modified_time" content="2013-09-22T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="linux系统信号"/>
+<meta name="twitter:description" content="信号列表   SIGHUP
+本信号在用户终端连接(正常或非正常)结束时发出, 通常是在终端的控制进程结束时, 通知同一 session 内的各个作业, 这时它们与控制终端不再关联。 登录 Linux 时，系统会分配给登录用户一个终端( Session )。在这个终端运行的所有程序，包括前台进程组和后台进程组，一般都属于这个 Session 。 当用户退出 Linux 登录时，前台进程组和后台有对终端输出的进程将会收到 SIGHUP 信号。这个信号的默认操作为终止进程，因此前台进程组和后台有终端输出的进程就会中止。 不过可以捕获这个信号，比如 wget 能捕获 SIGHUP 信号，并忽略它，这样就算退出了Linux 登录，wget 也能继续下载。 此外，对于与终端脱离关系的守护进程，这个信号用于通知它重新读取配置文件。
+  SIGINT
+程序终止( interrupt )信号, 在用户键入 INTR 字符(通常是 Ctrl &#43; C )时发出，用于通知前台进程组终止进程。
+  SIGQUIT
+和 SIGINT 类似, 但由 QUIT 字符(通常是 Ctrl &#43; / )来控制. 进程在因收到 SIGQUIT 退出时会产生 core 文件, 在这个意义上类似于一个程序错误信号。
+  SIGILL
+执行了非法指令. 通常是因为可执行文件本身出现错误, 或者试图执行数据段. 堆栈溢出时也有可能产生这个信号。
+  SIGTRAP"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/linux/%E7%B3%BB%E7%BB%9F%E4%BF%A1%E5%8F%B7/">linux系统信号</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2013-09-22 00:00:00 &#43;0000 UTC">2013-09-22</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="信号列表">信号列表</h2>
+<ol>
+<li>
+<p>SIGHUP<br>
+本信号在用户终端连接(正常或非正常)结束时发出, 通常是在终端的控制进程结束时, 通知同一 session 内的各个作业, 这时它们与控制终端不再关联。
+登录 Linux 时，系统会分配给登录用户一个终端( Session )。在这个终端运行的所有程序，包括前台进程组和后台进程组，一般都属于这个 Session 。
+当用户退出 Linux 登录时，前台进程组和后台有对终端输出的进程将会收到 SIGHUP 信号。这个信号的默认操作为终止进程，因此前台进程组和后台有终端输出的进程就会中止。
+不过可以捕获这个信号，比如 wget 能捕获 SIGHUP 信号，并忽略它，这样就算退出了Linux 登录，wget 也能继续下载。
+此外，对于与终端脱离关系的守护进程，这个信号用于通知它重新读取配置文件。</p>
+</li>
+<li>
+<p>SIGINT<br>
+程序终止( interrupt )信号, 在用户键入 INTR 字符(通常是 Ctrl + C )时发出，用于通知前台进程组终止进程。</p>
+</li>
+<li>
+<p>SIGQUIT<br>
+和 SIGINT 类似, 但由 QUIT 字符(通常是 Ctrl + / )来控制. 进程在因收到 SIGQUIT 退出时会产生 core 文件, 在这个意义上类似于一个程序错误信号。</p>
+</li>
+<li>
+<p>SIGILL<br>
+执行了非法指令. 通常是因为可执行文件本身出现错误, 或者试图执行数据段. 堆栈溢出时也有可能产生这个信号。</p>
+</li>
+<li>
+<p>SIGTRAP<br>
+由断点指令或其它 trap 指令产生. 由d ebugger 使用。</p>
+</li>
+<li>
+<p>SIGABRT<br>
+调用 abort 函数生成的信号。</p>
+</li>
+<li>
+<p>SIGBUS<br>
+非法地址, 包括内存地址对齐( alignment )出错。比如访问一个四个字长的整数, 但其地址不是 4 的倍数。它与 SIGSEGV 的区别在于后者是由于对合法存储地址的非法访问触发的(如访问不属于自己存储空间或只读存储空间)。</p>
+</li>
+<li>
+<p>SIGFPE<br>
+在发生致命的算术运算错误时发出. 不仅包括浮点运算错误, 还包括溢出及除数为0等其它所有的算术的错误。</p>
+</li>
+<li>
+<p>SIGKILL<br>
+用来立即结束程序的运行。本信号不能被阻塞、处理和忽略。如果管理员发现某个进程终止不了，可尝试发送这个信号。</p>
+</li>
+<li>
+<p>SIGUSR1<br>
+留给用户使用</p>
+</li>
+<li>
+<p>SIGSEGV<br>
+试图访问未分配给自己的内存, 或试图往没有写权限的内存地址写数据。</p>
+</li>
+<li>
+<p>SIGUSR2<br>
+留给用户使用</p>
+</li>
+<li>
+<p>SIGPIPE<br>
+管道破裂。这个信号通常在进程间通信产生，比如采用 FIFO (管道)通信的两个进程，读管道没打开或者意外终止就往管道写，写进程会收到 SIGPIPE 信号。此外用Socket 通信的两个进程，写进程在写 Socket 的时候，读进程已经终止。</p>
+</li>
+<li>
+<p>SIGALRM<br>
+时钟定时信号, 计算的是实际的时间或时钟时间。alarm 函数使用该信号。</p>
+</li>
+<li>
+<p>SIGTERM<br>
+程序结束( terminate )信号, 与 SIGKILL 不同的是该信号可以被阻塞和处理。通常用来要求程序自己正常退出，shell 命令 kill 缺省产生这个信号。如果进程终止不了，我们才会尝试 SIGKILL。</p>
+</li>
+<li>
+<p>SIGCHLD<br>
+子进程结束时, 父进程会收到这个信号。<br>
+如果父进程没有处理这个信号，也没有等待( wait )子进程，子进程虽然终止，但是还会在内核进程表中占有表项，这时的子进程称为僵尸进程。这种情况我们应该避免(父进程或者忽略 SIGCHILD 信号，或者捕捉它，或者 wait 它派生的子进程，或者父进程先终止，这时子进程的终止自动由 init 进程来接管)。</p>
+</li>
+<li>
+<p>SIGCONT<br>
+让一个停止( stopped )的进程继续执行。本信号不能被阻塞。可以用一个 handler 来让程序在由 stopped 状态变为继续执行时完成特定的工作。例如, 重新显示提示符。</p>
+</li>
+<li>
+<p>SIGSTOP<br>
+停止( stopped )进程的执行。注意它和 terminate 以及 interrupt 的区别：该进程还未结束, 只是暂停执行。本信号不能被阻塞，处理或忽略。</p>
+</li>
+<li>
+<p>SIGTSTP<br>
+停止进程的运行, 但该信号可以被处理和忽略。用户键入 SUSP 字符时(通常是 Ctrl + Z )发出这个信号。</p>
+</li>
+<li>
+<p>SIGTTIN<br>
+当后台作业要从用户终端读数据时，该作业中的所有进程会收到 SIGTTIN 信号。缺省时这些进程会停止执行。</p>
+</li>
+<li>
+<p>SIGTTOU<br>
+类似于 SIGTTIN，但在写终端(或修改终端模式)时收到。</p>
+</li>
+<li>
+<p>SIGURG<br>
+有“紧急”数据或 out-of-band 数据到达 socket 时产生。</p>
+</li>
+<li>
+<p>SIGXCPU<br>
+超过 CPU 时间资源限制。这个限制可以由 getrlimit/setrlimit 来读取/改变。</p>
+</li>
+<li>
+<p>SIGXFSZ<br>
+当进程企图扩大文件以至于超过文件大小资源限制。</p>
+</li>
+<li>
+<p>SIGVTALRM<br>
+虚拟时钟信号。类似于 SIGALRM，但是计算的是该进程占用的 CPU 时间。</p>
+</li>
+<li>
+<p>SIGPROF<br>
+类似于 SIGALRM/SIGVTALRM，但包括该进程用的 CPU 时间以及系统调用的时间。</p>
+</li>
+<li>
+<p>SIGWINCH<br>
+窗口大小改变时发出。</p>
+</li>
+<li>
+<p>SIGIO<br>
+文件描述符准备就绪，可以开始进行输入/输出操作。</p>
+</li>
+<li>
+<p>SIGPWR<br>
+Power failure</p>
+</li>
+<li>
+<p>SIGSYS<br>
+非法的系统调用。</p>
+</li>
+</ol>
+<h3 id="在以上列出的信号中比较特殊的有">在以上列出的信号中，比较特殊的有：</h3>
+<ol>
+<li>程序不可捕获、阻塞或忽略的信号有：SIGKILL,SIGSTOP</li>
+<li>不能恢复至默认动作的信号有：SIGILL,SIGTRAP</li>
+<li>默认会导致进程流产的信号有：SIGABRT,SIGBUS,SIGFPE,SIGILL,SIGIOT,SIGQUIT,SIGSEGV,SIGTRAP,SIGXCPU,SIGXFSZ</li>
+<li>默认会导致进程退出的信号有：SIGALRM,SIGHUP,SIGINT,SIGKILL,SIGPIPE,SIGPOLL,SIGPROF,SIGSYS,SIGTERM,SIGUSR1,SIGUSR2,SIGVTALRM</li>
+<li>默认会导致进程停止的信号有：SIGSTOP,SIGTSTP,SIGTTIN,SIGTTOU</li>
+<li>默认进程忽略的信号有：SIGCHLD,SIGPWR,SIGURG,SIGWINCH</li>
+<li>此外，SIGIO 在 SVR4 是退出，在 4.3BSD 中是忽略；SIGCONT 在进程挂起时是继续，否则是忽略，不能被阻塞</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#信号列表">信号列表</a>
+      <ul>
+        <li><a href="#在以上列出的信号中比较特殊的有">在以上列出的信号中，比较特殊的有：</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/compilation/%E7%BC%96%E8%AF%91%E7%B1%BB%E5%9E%8B/" class="button left"><span>高级语言编译类型</span></a>
+    
+    
+      <a href="/blog/compilation/%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" class="button right"><span>进程启动后怎样申请和分配内存空间</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Linux
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

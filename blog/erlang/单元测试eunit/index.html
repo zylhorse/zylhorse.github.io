@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Erlang单元测试 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Erlang单元测试">
+<meta itemprop="description" content="概述 eunit是erlang的测试框架。 eunit使用了很多预处理宏，这些宏被设计成非入侵式的，不会与现有代码冲突。给模块添加eunit的测试集，一般不需要修改现有代码。测试模块导出函数的测试，可以放在完全独立的模块中，避免冲突。
+单元测试 单元测试是指对程序相对独立的单元进行测试。一个单元可以是一个函数，一个模块，甚至是完整的应用程序。
+为了测试一个单元，指定测试用例，并搭建测试需要的最基本环境。运行测试集并收集结果，为了能够再次测试需要进行必要的清理工作。
+单元测试框架就是为了帮助单元测试过程的每个阶段，使单元测试更容易编写，容易运行，容易检查测试错误。
+单元测试优点 减少改变程序的风险 大多数程序在生命周期内会被修改：bug修复，功能增加，优化，重构，清理。每次程序修改都会引入新bug风险，而使用一组单元测试用例可以很容易的发现代码是否正常工作（回归测试：对旧代码的修改，进行重新测试，确保不会引入新的问题）。
+引导和提高开发进度 编写能通过测试的代码，让程序开发更有效率。通过测试来推动开发的进行（测试驱动开发“TDD”：测试驱动开发）。
+帮助实现接口分离 当程序员编写测试集时可以发现依赖关系不存在、哪些依赖需要抽象出来。更多的依赖接口开发，实现松耦合设计。有助于提前消除坏的依赖关系。
+简化组件集成 自下而上的测试，从最小单元的测试通过，使集成了若干个这种单元的程序更容易测试。（集成测试）
+自文档化 测试集可以被视为使用文档。
+入门 包含EUnit头文件 在Erlang模块中使用EUnit的最简单方法是在模块一开始的地方（在模块声明的后面，在函数定义的前面）添加下面这行：
+-include_lib(&quot;eunit/include/eunit.hrl&quot;).这会有以下作用：
+ 创建一个导出函数test(),它可以执行模块中定义的所有单元测试集。（除非测试关闭，或者模块不包含函数test()) 自动导出命名匹配_test() 、 _ test_ ()的所有函数。（除非测试关闭或者定义了EUNIT_NOAUTO宏） 使EUnit所有的预处理宏可用，帮助编写测试集。
+注：
+为了使 -include_lib(&hellip;)有效，Erlang 模块的搜索路径必须包含 eunit/bin目录（eunit/ebin是EUnit安装目录下的子目录）。如果EUnit安装在Erlang/OTP系统目录的子目录lib/eunit下，eunit/ebin目录在Erlang启动时会被自动添加到搜索路径。其他情况就需要显示添加到搜索路径: 在命令行中添加 -pa &ldquo;path/eunit/ebin&rdquo; 在主目录的.erlang文件中添加:code:add_patha(&ldquo;path/eunit/ebin&rdquo;).  编写简单测试功能 使用EUnit框架可以在Elang中非常简单的编写单元测试。有几种不同的方式来编写。
+以_test()名称结尾的函数可以被EUnit识别为测试函数。它没有参数，不需要被导出。执行成功会返回EUnit抛出的任意值，执行失败会抛出异常（如果不停止，过一会会被终止）。
+一个简单的测试函数的例子：
+reverse_test() -&gt; lists:reverse([1,2,3]).这不是一个好的测试编写方式。
+使用异常报告 添加更多的场景测试，如果测试结果不符合预期则报异常。一个简单的方法是使用匹配表达式=去匹配测试结果和预期结果：
+reverse_nil_test() -&gt; [] = lists:reverse([]).reverse_one_test() -&gt; [1] = lists:reverse([1]).reverse_two_test() -&gt; [2,1] = lists:reverse([1,2]).使用断言 length_test() -&gt; ?assert(lenght([1,2,3]) =:= 3)."><meta itemprop="datePublished" content="2015-10-22T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2015-10-22T00:00:00+00:00" />
+<meta itemprop="wordCount" content="553">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Erlang单元测试" />
+<meta property="og:description" content="概述 eunit是erlang的测试框架。 eunit使用了很多预处理宏，这些宏被设计成非入侵式的，不会与现有代码冲突。给模块添加eunit的测试集，一般不需要修改现有代码。测试模块导出函数的测试，可以放在完全独立的模块中，避免冲突。
+单元测试 单元测试是指对程序相对独立的单元进行测试。一个单元可以是一个函数，一个模块，甚至是完整的应用程序。
+为了测试一个单元，指定测试用例，并搭建测试需要的最基本环境。运行测试集并收集结果，为了能够再次测试需要进行必要的清理工作。
+单元测试框架就是为了帮助单元测试过程的每个阶段，使单元测试更容易编写，容易运行，容易检查测试错误。
+单元测试优点 减少改变程序的风险 大多数程序在生命周期内会被修改：bug修复，功能增加，优化，重构，清理。每次程序修改都会引入新bug风险，而使用一组单元测试用例可以很容易的发现代码是否正常工作（回归测试：对旧代码的修改，进行重新测试，确保不会引入新的问题）。
+引导和提高开发进度 编写能通过测试的代码，让程序开发更有效率。通过测试来推动开发的进行（测试驱动开发“TDD”：测试驱动开发）。
+帮助实现接口分离 当程序员编写测试集时可以发现依赖关系不存在、哪些依赖需要抽象出来。更多的依赖接口开发，实现松耦合设计。有助于提前消除坏的依赖关系。
+简化组件集成 自下而上的测试，从最小单元的测试通过，使集成了若干个这种单元的程序更容易测试。（集成测试）
+自文档化 测试集可以被视为使用文档。
+入门 包含EUnit头文件 在Erlang模块中使用EUnit的最简单方法是在模块一开始的地方（在模块声明的后面，在函数定义的前面）添加下面这行：
+-include_lib(&quot;eunit/include/eunit.hrl&quot;).这会有以下作用：
+ 创建一个导出函数test(),它可以执行模块中定义的所有单元测试集。（除非测试关闭，或者模块不包含函数test()) 自动导出命名匹配_test() 、 _ test_ ()的所有函数。（除非测试关闭或者定义了EUNIT_NOAUTO宏） 使EUnit所有的预处理宏可用，帮助编写测试集。
+注：
+为了使 -include_lib(&hellip;)有效，Erlang 模块的搜索路径必须包含 eunit/bin目录（eunit/ebin是EUnit安装目录下的子目录）。如果EUnit安装在Erlang/OTP系统目录的子目录lib/eunit下，eunit/ebin目录在Erlang启动时会被自动添加到搜索路径。其他情况就需要显示添加到搜索路径: 在命令行中添加 -pa &ldquo;path/eunit/ebin&rdquo; 在主目录的.erlang文件中添加:code:add_patha(&ldquo;path/eunit/ebin&rdquo;).  编写简单测试功能 使用EUnit框架可以在Elang中非常简单的编写单元测试。有几种不同的方式来编写。
+以_test()名称结尾的函数可以被EUnit识别为测试函数。它没有参数，不需要被导出。执行成功会返回EUnit抛出的任意值，执行失败会抛出异常（如果不停止，过一会会被终止）。
+一个简单的测试函数的例子：
+reverse_test() -&gt; lists:reverse([1,2,3]).这不是一个好的测试编写方式。
+使用异常报告 添加更多的场景测试，如果测试结果不符合预期则报异常。一个简单的方法是使用匹配表达式=去匹配测试结果和预期结果：
+reverse_nil_test() -&gt; [] = lists:reverse([]).reverse_one_test() -&gt; [1] = lists:reverse([1]).reverse_two_test() -&gt; [2,1] = lists:reverse([1,2]).使用断言 length_test() -&gt; ?assert(lenght([1,2,3]) =:= 3)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/erlang/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95eunit/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2015-10-22T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-10-22T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Erlang单元测试"/>
+<meta name="twitter:description" content="概述 eunit是erlang的测试框架。 eunit使用了很多预处理宏，这些宏被设计成非入侵式的，不会与现有代码冲突。给模块添加eunit的测试集，一般不需要修改现有代码。测试模块导出函数的测试，可以放在完全独立的模块中，避免冲突。
+单元测试 单元测试是指对程序相对独立的单元进行测试。一个单元可以是一个函数，一个模块，甚至是完整的应用程序。
+为了测试一个单元，指定测试用例，并搭建测试需要的最基本环境。运行测试集并收集结果，为了能够再次测试需要进行必要的清理工作。
+单元测试框架就是为了帮助单元测试过程的每个阶段，使单元测试更容易编写，容易运行，容易检查测试错误。
+单元测试优点 减少改变程序的风险 大多数程序在生命周期内会被修改：bug修复，功能增加，优化，重构，清理。每次程序修改都会引入新bug风险，而使用一组单元测试用例可以很容易的发现代码是否正常工作（回归测试：对旧代码的修改，进行重新测试，确保不会引入新的问题）。
+引导和提高开发进度 编写能通过测试的代码，让程序开发更有效率。通过测试来推动开发的进行（测试驱动开发“TDD”：测试驱动开发）。
+帮助实现接口分离 当程序员编写测试集时可以发现依赖关系不存在、哪些依赖需要抽象出来。更多的依赖接口开发，实现松耦合设计。有助于提前消除坏的依赖关系。
+简化组件集成 自下而上的测试，从最小单元的测试通过，使集成了若干个这种单元的程序更容易测试。（集成测试）
+自文档化 测试集可以被视为使用文档。
+入门 包含EUnit头文件 在Erlang模块中使用EUnit的最简单方法是在模块一开始的地方（在模块声明的后面，在函数定义的前面）添加下面这行：
+-include_lib(&quot;eunit/include/eunit.hrl&quot;).这会有以下作用：
+ 创建一个导出函数test(),它可以执行模块中定义的所有单元测试集。（除非测试关闭，或者模块不包含函数test()) 自动导出命名匹配_test() 、 _ test_ ()的所有函数。（除非测试关闭或者定义了EUNIT_NOAUTO宏） 使EUnit所有的预处理宏可用，帮助编写测试集。
+注：
+为了使 -include_lib(&hellip;)有效，Erlang 模块的搜索路径必须包含 eunit/bin目录（eunit/ebin是EUnit安装目录下的子目录）。如果EUnit安装在Erlang/OTP系统目录的子目录lib/eunit下，eunit/ebin目录在Erlang启动时会被自动添加到搜索路径。其他情况就需要显示添加到搜索路径: 在命令行中添加 -pa &ldquo;path/eunit/ebin&rdquo; 在主目录的.erlang文件中添加:code:add_patha(&ldquo;path/eunit/ebin&rdquo;).  编写简单测试功能 使用EUnit框架可以在Elang中非常简单的编写单元测试。有几种不同的方式来编写。
+以_test()名称结尾的函数可以被EUnit识别为测试函数。它没有参数，不需要被导出。执行成功会返回EUnit抛出的任意值，执行失败会抛出异常（如果不停止，过一会会被终止）。
+一个简单的测试函数的例子：
+reverse_test() -&gt; lists:reverse([1,2,3]).这不是一个好的测试编写方式。
+使用异常报告 添加更多的场景测试，如果测试结果不符合预期则报异常。一个简单的方法是使用匹配表达式=去匹配测试结果和预期结果：
+reverse_nil_test() -&gt; [] = lists:reverse([]).reverse_one_test() -&gt; [1] = lists:reverse([1]).reverse_two_test() -&gt; [2,1] = lists:reverse([1,2]).使用断言 length_test() -&gt; ?assert(lenght([1,2,3]) =:= 3)."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95eunit/">Erlang单元测试</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-10-22 00:00:00 &#43;0000 UTC">2015-10-22</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h1 id="概述">概述</h1>
+<p>eunit是erlang的测试框架。
+eunit使用了很多预处理宏，这些宏被设计成非入侵式的，不会与现有代码冲突。给模块添加eunit的测试集，一般不需要修改现有代码。测试模块导出函数的测试，可以放在完全独立的模块中，避免冲突。</p>
+<h1 id="单元测试">单元测试</h1>
+<p>单元测试是指对程序相对独立的单元进行测试。一个单元可以是一个函数，一个模块，甚至是完整的应用程序。<br>
+为了测试一个单元，指定测试用例，并搭建测试需要的最基本环境。运行测试集并收集结果，为了能够再次测试需要进行必要的清理工作。<br>
+单元测试框架就是为了帮助单元测试过程的每个阶段，使单元测试更容易编写，容易运行，容易检查测试错误。</p>
+<h2 id="单元测试优点">单元测试优点</h2>
+<h3 id="减少改变程序的风险">减少改变程序的风险</h3>
+<p>大多数程序在生命周期内会被修改：bug修复，功能增加，优化，重构，清理。每次程序修改都会引入新bug风险，而使用一组单元测试用例可以很容易的发现代码是否正常工作（回归测试：对旧代码的修改，进行重新测试，确保不会引入新的问题）。</p>
+<h3 id="引导和提高开发进度">引导和提高开发进度</h3>
+<p>编写能通过测试的代码，让程序开发更有效率。通过测试来推动开发的进行（测试驱动开发“TDD”：测试驱动开发）。</p>
+<h3 id="帮助实现接口分离">帮助实现接口分离</h3>
+<p>当程序员编写测试集时可以发现依赖关系不存在、哪些依赖需要抽象出来。更多的依赖接口开发，实现松耦合设计。有助于提前消除坏的依赖关系。</p>
+<h3 id="简化组件集成">简化组件集成</h3>
+<p>自下而上的测试，从最小单元的测试通过，使集成了若干个这种单元的程序更容易测试。（集成测试）</p>
+<h3 id="自文档化">自文档化</h3>
+<p>测试集可以被视为使用文档。</p>
+<h1 id="入门">入门</h1>
+<h2 id="包含eunit头文件">包含EUnit头文件</h2>
+<p>在Erlang模块中使用EUnit的最简单方法是在模块一开始的地方（在模块声明的后面，在函数定义的前面）添加下面这行：</p>
+<pre tabindex="0"><code>-include_lib(&quot;eunit/include/eunit.hrl&quot;).
+</code></pre><p>这会有以下作用：</p>
+<ol>
+<li>创建一个导出函数test(),它可以执行模块中定义的所有单元测试集。（除非测试关闭，或者模块不包含函数test())</li>
+<li>自动导出命名匹配_test() 、 _ test_ ()的所有函数。（除非测试关闭或者定义了EUNIT_NOAUTO宏）</li>
+<li>使EUnit所有的预处理宏可用，帮助编写测试集。<br>
+注：<br>
+为了使 -include_lib(&hellip;)有效，Erlang 模块的搜索路径必须包含 eunit/bin目录（eunit/ebin是EUnit安装目录下的子目录）。如果EUnit安装在Erlang/OTP系统目录的子目录lib/eunit下，eunit/ebin目录在Erlang启动时会被自动添加到搜索路径。其他情况就需要显示添加到搜索路径:</li>
+<li>在命令行中添加 -pa &ldquo;path/eunit/ebin&rdquo;</li>
+<li>在主目录的.erlang文件中添加:code:add_patha(&ldquo;path/eunit/ebin&rdquo;).</li>
+</ol>
+<h2 id="编写简单测试功能">编写简单测试功能</h2>
+<p>使用EUnit框架可以在Elang中非常简单的编写单元测试。有几种不同的方式来编写。<br>
+以_test()名称结尾的函数可以被EUnit识别为测试函数。它没有参数，不需要被导出。执行成功会返回EUnit抛出的任意值，执行失败会抛出异常（如果不停止，过一会会被终止）。<br>
+一个简单的测试函数的例子：</p>
+<pre tabindex="0"><code>reverse_test() -&gt; lists:reverse([1,2,3]).
+</code></pre><p>这不是一个好的测试编写方式。</p>
+<h3 id="使用异常报告">使用异常报告</h3>
+<p>添加更多的场景测试，如果测试结果不符合预期则报异常。一个简单的方法是使用匹配表达式=去匹配测试结果和预期结果：</p>
+<pre tabindex="0"><code>reverse_nil_test() -&gt; [] = lists:reverse([]).
+reverse_one_test() -&gt; [1] = lists:reverse([1]).
+reverse_two_test() -&gt; [2,1] = lists:reverse([1,2]).
+</code></pre><h3 id="使用断言">使用断言</h3>
+<p>length_test() -&gt; ?assert(lenght([1,2,3]) =:= 3).</p>
+<h2 id="运行eunit">运行EUnit</h2>
+<p>如果模块中已经包含了声明 -include_lib(&ldquo;eunit/include/eunit.hrl&rdquo;)，你只需要编译该模块。并执行Module:test()（Module是模块名）。它会执行该模块中的所有测试函数。<br>
+其他调用方法：</p>
+<ol>
+<li>eunit:test(Module).</li>
+<li>eunit:test({inparallel, m}). 此方法会并行执行该模块所有测试用例。</li>
+</ol>
+<h3 id="分离测试集到独立模块">分离测试集到独立模块</h3>
+<p>如果将测试代码和普通代码分离，只需要将测试代码写到Mod_tests模块中（Mod是模块名）。每次测试模块Mod时，EUnit都会查找Mod_tests模块并执行该模块的测试集。</p>
+<h3 id="eunit会捕获标准输出">EUnit会捕获标准输出</h3>
+<p>当你测试代码存在stdout时，你会发现测试时控制台不会输出信息，这是因为EUnit会捕获标准输出。<br>
+可以绕过EUnit，直接向控制台打印测试信息，可以写到用户输出流，如：</p>
+<pre tabindex="0"><code>io:format(user, &quot;~w&quot;, [TMsg]).
+</code></pre><p>这里推荐使用EUnit的 Debugging macros。</p>
+<h2 id="编写测试生成函数">编写测试生成函数</h2>
+<p>简单测试函数的缺点是必须为每一个测试用例编写分离函数。
+更好的做法是编写测试生成函数。<br>
+一个以&hellip;<em>test</em>()结尾的函数，被EUnit识别为测试生成函数，它返回一系列可以被EUnit识别、执行的测试集。</p>
+<p>典型的测试生成函数：</p>
+<pre tabindex="0"><code>basic_test_() -&gt;
+    fun() -&gt; ?assert(1+1 =:= 2) end.
+</code></pre><p>它和下面简单测试函数作用相同：</p>
+<pre tabindex="0"><code>simple_test() -&gt;
+    ?assert(1+1 =:= 2).
+</code></pre><p>实际上，EUnit会将所有的简单测试函数处理成函数表达式序列：它会将简单测试函数放到一个列表中，然后一个一个的执行。</p>
+<h3 id="使用宏写测试集">使用宏写测试集</h3>
+<p>使用宏编写测试集使测试集更紧凑、可读性更高。当一个测试用例执行时会自动添加源码的行号信息。因此需要使用宏_test：</p>
+<pre tabindex="0"><code>basic_test_() -&gt;
+    ?_test(?assert(1+1 =: 2)).
+</code></pre><p>_test宏使用任何表达式作为参数，并且将其替换成函数表达式。这个表达式可以是任何测试表达式，比如一个简单测试函数。<br>
+大多数测试宏家族，如assert，都具有前置下划线形式的表达方式（_assert宏），它们可以自动添加_test宏的包装。上面的例子可以写成如下：</p>
+<pre tabindex="0"><code>basic_test_() -&gt;
+    ?_assert(1+1 =:= 2).
+</code></pre><h2 id="一个例子">一个例子</h2>
+<pre tabindex="0"><code>-module(fib).
+-export([fib/1]).
+-include_lib(&quot;eunit/include/eunit.hrl&quot;).
+
+fib(0) -&gt; 1;
+fib(1) -&gt; 1;
+fib(N) when N &gt; 1 -&gt; fib(N-1) + fib(N-2).
+
+fib_test_() -&gt;
+   [?_assert(fib(0) =:= 1),
+    ?_assert(fib(1) =:= 1),
+    ?_assert(fib(2) =:= 2),
+    ?_assert(fib(3) =:= 3),
+    ?_assert(fib(4) =:= 5),
+    ?_assert(fib(5) =:= 8),
+    ?_assertException(error, function_clause, fib(-1)),
+    ?_assert(fib(31) =:= 2178309)
+   ].
+</code></pre><h2 id="禁用测试">禁用测试</h2>
+<p>EUnit测试在编译时通过宏NOTEST来关闭，如：</p>
+<pre tabindex="0"><code>erlc -DNOTEST my_module.erl
+</code></pre><p>或者在代码中添加宏，位置在include(&hellip;enuit.hrl)之前：</p>
+<pre tabindex="0"><code>-define(NOTEST,true).
+</code></pre><p>注：当定义了EUNIT_NOAUTO宏时，禁用测试操作会从代码中自动清除所有测试函数，被显示导出的测试函数除外。</p>
+<p>可以将下面代码放置到.hrl文件中，并在所有模块中引用该.hrl文件，修改该文件可以更改测试设置：</p>
+<pre tabindex="0"><code>-define(NOTEST,true).
+-include_lib(&quot;eunit/include/enuit.hrl&quot;).
+</code></pre><p>打开EUnit测试开关：
+erlc -DTEST my_module.erl</p>
+<h2 id="避免eunit编译时依赖">避免EUnit编译时依赖</h2>
+<p>可以将以下行添加到上述公共头文件中：</p>
+<pre tabindex="0"><code>-ifdef(TEST).
+-include_lib(&quot;eunit/include/enuit.hrl&quot;).
+-endif.
+</code></pre><p>同样需要保证测试函数也需要包含在-ifdef(TEST) 或者-ifdef(EUNIT)宏里面。</p>
+<h2 id="eunit宏">EUnit宏</h2>
+<p>除非显示规定，不论代码编译时EUnit被使用还是禁用，使用EUnit宏不会引入运行时依赖。</p>
+<h3 id="basic-macros">Basic Macros</h3>
+<p>_test(Expr):将Expr放到“test object”中，形如：</p>
+<pre tabindex="0"><code>{?LINE, fun() -&gt; Expr end}.
+</code></pre><h3 id="编译控制宏">编译控制宏</h3>
+<ul>
+<li>EUNIT：当EUnit在编译时被启用，EUNIT宏被定义为true。可以在条件编译中放置测试代码。</li>
+<li>EUNIT_NOAUTO：当ENUIT_NOAUTO被定义时，会禁用自动导出和清除测试函数。</li>
+<li>TEST：当EUnit在编译时被启用，TEST宏被定义为true。可以在条件编译中放置测试代码。在严格依赖EUnit的场景中首先使用EUNIT宏，其它普通情况首选宏TEST。</li>
+<li>NOTEST： 当EUnit在编译时被禁用，NOTEST宏被定义为true。NOTEST宏也可以用于条件编译，但更多的是用于禁用测试。</li>
+<li>NOASSERT：当测试被禁用时，如果NOASSERT被定义，assert宏将被禁用。当测试启用时，assert宏总是可用，不能被禁用。</li>
+<li>ASSERT：ASSERT宏总是可用。</li>
+<li>NODEBUG：如果定义NODEBUG宏，debugging宏将被禁用。NODEBUG也意味着NOASSERT，除非启用测试。</li>
+<li>DEBUG：如果DEBUG宏被定义，覆盖NODEBUG宏。</li>
+</ul>
+<h3 id="utility宏">Utility宏</h3>
+<ul>
+<li>LET(Var, Arg, Expr): 在表达式Expr中创建本地绑定Var=Arg。同(fun(Var) -&gt; Expr end)(Arg). 此绑定不会导出到表达式Expr外面，在表达式Expr内部，Var的绑定也会投影到周围Var的任何绑定。</li>
+<li>IF(Cond,TrueCase,FalseCase):判断Cond是否为true，ture执行TrueCase，false执行FalseCase。其他值则error。</li>
+</ul>
+<h3 id="assert-宏">Assert 宏</h3>
+<p>Assert宏都有前置下划线的格式，如：?_assert(BoolExpr).<br>
+如果定义了NOASSERT宏，Assert宏不起作用。</p>
+<h4 id="assertboolexpr">assert(BoolExpr)</h4>
+<p>执行BoolExpr表达式，如果结果不为true，则生成异常。如果没有异常，Assert宏返回原子ok。如果禁用测试，Assert宏不起作用。<br>
+assert宏不仅仅在单元测试中使用，它还可以在程序的任何地方用来检查前置、后置条件。</p>
+<h4 id="assertnotboolexpr">assertNot(BoolExpr)</h4>
+<p>等价于 assert(not (Expr)).</p>
+<h4 id="assertmatchguardedpattern-expr">assertMatch(GuardedPattern, Expr)</h4>
+<p>执行Expr表达式，结果与GurardedPattern比较，不匹配则抛异常。使用该宏而不是=模式匹配表达式，是因为其能返回更详细的错误信息。</p>
+<h4 id="assertequalexpect-expr">assertEqual(Expect, Expr)</h4>
+<p>比较表达式EXpect和Expr的值是否相等，如果不相等则抛异常。</p>
+<h4 id="assertexceptionclasspattern-termpattern-expr">assertException(ClassPattern, TermPattern, Expr)</h4>
+<p>执行表达式Expr，抛出异常是否和ClassPattern:TermPattern匹配，不匹配则抛异常。<br>
+assertError(TermPattern, Expr).<br>
+assertExit(TermPattern, Expr).<br>
+assertThrow(TermPattern, Expr).
+上述宏表现和宏assertException相同。</p>
+<h3 id="执行外部命令宏">执行外部命令宏</h3>
+<p>执行外部操作系统命令
+####assertCmd(CommandString)
+执行CommandString命令，如果返回非0则抛异常。如果没有异常宏返回原子ok。</p>
+<h4 id="assertcmdstatusn-commandstring">assertCmdStatus(N, CommandString)</h4>
+<p>和assertCmd(CommandString)宏相似，如果返回非N则抛异常。</p>
+<h4 id="assertcmdoutputtext-commandstring">assertCmdOutput(Text, CommandString)</h4>
+<p>执行CommandString，返回结果不完全匹配Text则抛异常。<br>
+使用LF作为所有平台的换行符</p>
+<h4 id="cmdcommandstring">cmd(CommandString)</h4>
+<p>执行CommandString命令，如果返回非0则抛异常。command输出作为宏的返回值。command输出使用LF作为所有平台换行符。<br>
+cmd宏在setup和cleanup等部分fixture中有用，例如：创建和删除文件或者执行类似的操作系统任务，确保通知任何错误给测试系统。</p>
+<pre tabindex="0"><code>一个典型的UNIX 例子：
+{setup,
+fun () -&gt; ?cmd(&quot;mktemp&quot;) end,
+fun (FileName) -&gt; ?cmd(&quot;rm &quot; ++ FileName) end,
+...}
+</code></pre><h3 id="debugging-宏">Debugging 宏</h3>
+<p>EUnit定义了Debug宏用来打印调试信息到控制台，而不是标准输出。这些宏使用同样格式输出包含文件名和行号。在某些开发环境下，点击Debug宏输出的调试信息，可以直接跳转到源码位置。<br>
+如果NODDEBUG宏在Eunit头文件include之前定义，则Debug宏不起作用。</p>
+<h4 id="debughere">debugHere</h4>
+<p>只打印文件名和行号。返回值ok</p>
+<h4 id="debugmsgtext">debugMsg(Text)</h4>
+<p>打印文本信息，可以是普通字符串，原子，列表。</p>
+<h4 id="debugfmtfmtstring-args">debugFmt(FmtString, Args)</h4>
+<p>格式化输出，类似io: (FmtString, Args)。</p>
+<h4 id="debugvalexpr">debugVal(Expr)</h4>
+<p>打印Expr表达式的代码和值。返回Expr的值。debugVal宏可以放置到任何表达式中，来打印表达式的值。</p>
+<h4 id="debugtimetextexpr">debugTime(Text,Expr)</h4>
+<p>打印Text和Expr表达式的执行时间。返回Expr的值。debugTime宏可以放置到任何表达式中，来打印执行时间。</p>
+<h2 id="eunit测试表现">EUnit测试表现</h2>
+<h3 id="简单测试对象">简单测试对象</h3>
+<p>无参测试函数如下：
+fun () -&gt; &hellip; end.<br>
+fun some_function/0.
+fun some_module: some_function/0.
+简单的测试对象有一个无参函数组成（可能添加一些元数据注释，如：行号）。执行函数成功返回某些值，失败抛异常。</p>
+<h3 id="测试集和深列表">测试集和深列表</h3>
+<p>测试集是包含一系列测试对象的列表。<br>
+如果T_1,&hellip;,T_N是测试对象，那么[T_1,&hellip;,T_N]则是包含这些测试对象的测试集。<br>
+如果S_1,&hellip;,S_N都是测试集，则[S_1,&hellip;,S_N]也是测试集。 因此测试集的集合是一个深列表。<br>
+模块也可以用来表示一个测试集。</p>
+<h3 id="标题">标题</h3>
+<p>测试对象和测试集T都可以添加标题注释，封装成{Title,T},Title是string类型。</p>
+<h3 id="原语">原语</h3>
+<h4 id="modulenameatom">ModuleName::atom()</h4>
+<p>模块的名字，相当于{module,ModuleName}。此原语被用在eunit:test(some_module).</p>
+<h4 id="modulemodulenameatom">{module,ModuleName::atom()}</h4>
+<p>从ModuleName模块将参数为零的函数_test或者_test_导出成测试集,_test()函数构成简单测试集，<em>test</em>()构成测试生成器。<br>
+Eunit也会查找MouduleName_tests模块，如果存在此模块中的测试集也会被添加。<br>
+EUnit 会执行这两个模块中的所有测试集。<br>
+一般_tests模块只包含ModuleName模块中的公共接口测试用例。</p>
+<h4 id="applicationappnameatominfolist">{application,AppName:atom(),Info:list()}</h4>
+<p>这是一个普通的Erlang/OTP应用描述，可能在.app文件中找到。由此产生的测试集 包含Info:list()列出的所有模块中的测试集。</p>
+<h4 id="applicationappnameatom">{application,AppName:atom()}</h4>
+<p>创建AppName中所有模块的测试集。通过查阅应用程序的.app文件，如果不存在，在应用程序的ebin目录下（参考{dir,Path}）测试所有对象文件，如果还不存在则使用code:lib_dir(AppName)。</p>
+<h4 id="path-string">Path:: string()</h4>
+<p>一个字符串代表文件或目录路径，相当于{file,Path}或者{dir,Path},分别依赖于引用的系统文件路径。</p>
+<h4 id="filefilename-string">{file,FileName:: string()}</h4>
+<p>如果文件FileName是.beam文件，EUnit会从该文件加载模块并测试。否则文件会被认为是一个包含测试规范的文本文件，将使用标准库函数file:path_consult/2读取该文件。<br>
+如果文件名是绝对路径，与当前目录相比，该路径首先被查找，然后是正常搜索路径(code:get_path)。这意味着app的文件可以直接使用，不需要路径。如:mnesia.app。</p>
+<h4 id="dir-path-string">{dir, Path:: string()}</h4>
+<p>测试当前目录下所有文件，如果它们已经使用{file,FileName}指定。</p>
+<h4 id="generator-genfun---tests">{generator, GenFun:: (() -&gt;Tests)}</h4>
+<p>调用测试生成器GenFun生成测试集。</p>
+<h4 id="generator-modulenameatom-functionnameatom">{generator, ModuleName::atom(), FunctionName::atom()}</h4>
+<p>调用ModuelName:FunctionName生成测试集。</p>
+<h4 id="withxanyabstracttestfun-any-any">{with,X::any(),[AbstractTestFun:: ((any())-&gt;any()))]}</h4>
+<p>通过列表中的一元函数分配X，将它们转换成无参测试函数。AbstractTestFun是一个普通测试函数，只是它有一个参数，而不是无参。在它成为合格的测试函数前，需要去掉一些信息。{with,X, [F_1, &hellip;, F_N]}相当于[fun() -&gt; F_1(X) end, &hellip;, fun() -&gt;F_N(X) end].<br>
+这将特别有用当抽象测试函数已经正确实现：{with, FD, [fun filetest_a/1,&hellip;,fun filetest_x/1] 相当于[fun() -&gt;filetest_a(FD) end,&hellip;,fun() -&gt; filetest_x(FD) end]。</p>
+<h3 id="控制">控制</h3>
+<p>下面陈述控制测试怎样和在哪里执行。</p>
+<h4 id="spawntests">{spawn,Tests}</h4>
+<p>在子进程中执行指定测试，当前测试进程等待子进程结束。对需要全新，单独进程状态的测试有用。<br>
+EUnit会自动开启至少一个这样的进程。从来不会在调用者的进程里面进程测试。</p>
+<h4 id="spawn-nodeatom-tests">{spawn, Node::atom(), Tests}</h4>
+<p>在指定的节点进程中执行测试。</p>
+<h4 id="timeouttimenumbertests">{timeout,Time::number(),Tests}</h4>
+<p>在指定时间内执行测试。60 表示一分钟。如果超时，测试被强制终止。注：超时被设置在包含安装和清理的活动上，如果超时被触发，整个活动状态被终止。</p>
+<h4 id="inordertests">{inorder,Tests}</h4>
+<p>严格按照顺序执行指定测试。默认的测试的执行顺序根据测试框架选择。</p>
+<h4 id="inparalleltests">{inparallel,Tests}</h4>
+<p>并行执行测试。</p>
+<h4 id="inparallel-ninteger-tests">{inparallel, N::integer(), Tests}</h4>
+<p>并行执行的测试不超过N个。</p>
+<h3 id="固定活动状态">固定活动（状态）</h3>
+<p>&ldquo;fixtrue&quot;是执行特定测试集所必须的状态。EUnit支持fixtures，使测试集setup 本地fixture简单化，当测试集结束，不管结果自动关闭。</p>
+<pre tabindex="0"><code>Setup	() -&gt; (R::any())
+SetupX	(X::any()) -&gt; (R::any())
+Cleanup	(R::any()) -&gt; any()
+CleanupX	(X::any(), R::any()) -&gt; any()
+Instantiator	((R::any()) -&gt; Tests) | {with, [AbstractTestFun::((any()) -&gt; any())]}
+Where	local | spawn | {spawn, Node::atom()}
+</code></pre><pre tabindex="0"><code>{setup, Setup, Tests | Instantiator}
+{setup, Setup, Cleanup, Tests | Instantiator}
+{setup, Where, Setup, Tests | Instantiator}
+{setup, Where, Setup, Cleanup, Tests | Instantiator}
+</code></pre><p>setup: 给所有指定的测试指定单个fixture，可拆卸。具体参数描述如下：</p>
+<pre tabindex="0"><code>{node, Node::atom(), Tests | Instantiator}
+{node, Node::atom(), Args::string(), Tests | Instantiator}
+</code></pre><p>node和setup类似，但是有内置行为：在测试中会启动一个分节点。Node格式为NodeName@full.machine.name。Args 是可选的。参考slave:start_link/3.</p>
+<pre tabindex="0"><code>{foreach, Where, Setup, Cleanup, [Tests | Instantiator]}
+{foreach, Setup, Cleanup, [Tests | Instantiator]}
+{foreach, Where, Setup, [Tests | Instantiator]}
+{foreach, Setup, [Tests | Instantiator]}
+</code></pre><p>foreach 用来建立一个fixture，后续随意拆卸，对每一个指定的测试集反复执行。</p>
+<pre tabindex="0"><code>{foreachx, Where, SetupX, CleanupX, Pairs::[{X::any(), ((X::any(), R::any()) -&gt; Tests)}]}
+{foreachx, SetupX, CleanupX, Pairs}
+{foreachx, Where, SetupX, Pairs}
+{foreachx, SetupX, Pairs}
+</code></pre><p>foreachx和foreach类似，但是使用 Pairs列表，每个Pairs包含额外的参数X和扩展的实例化函数。</p>
+<p>Setup函数在指定测试开始前执行，Cleanup函数在没有测试要执行后执行。Setup函数没有参数，它的返回值将会被传递给Cleanup函数。Cleanup函数有必要执行并返回任意值。当没有Cleanup函数时，一个没有任何作用的虚函数被执行。<br>
+Instaniator函数接受像Cleanup函数一样的值，如：这个值是Setup函数的返回值。应该表现的想一个生成器，返回已经使用给定值实例化的测试集。<br>
+Where 控制怎样执行测试。默认是spawn，这意味着当在子进程中执行测试时，当前进程控制建立和拆卸。<br>
+执行测试的进程需要进行建立和拆卸操作。<br>
+如果进程被杀死，则不需要执行拆卸操作。</p>
+<h3 id="懒惰生成器">懒惰生成器</h3>
+<p>有时在测试开始前不需要生成完整的测试集描述信息。如：如果一次生成大量的测试会占用太多内存。<br>
+可以写一个生成器，每次调用的时候都会生成一个空列表。或者生成一个包含单个测试用例和一个新的可以生成额外测试的生成器。</p>
+<pre tabindex="0"><code>   lazy_test_() -&gt;
+       lazy_gen(10000).
+
+   lazy_gen(N) -&gt;
+       {generator,
+        fun () -&gt;
+            if N &gt; 0 -&gt;
+                   [?_test(...)
+                    | lazy_gen(N-1)];
+               true -&gt;
+                   []
+            end
+        end}.
+</code></pre><p>当EUnit遍历执行测试时，新的生成器不会被调用知道上一个测试结束。</p>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#单元测试优点">单元测试优点</a>
+      <ul>
+        <li><a href="#减少改变程序的风险">减少改变程序的风险</a></li>
+        <li><a href="#引导和提高开发进度">引导和提高开发进度</a></li>
+        <li><a href="#帮助实现接口分离">帮助实现接口分离</a></li>
+        <li><a href="#简化组件集成">简化组件集成</a></li>
+        <li><a href="#自文档化">自文档化</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#包含eunit头文件">包含EUnit头文件</a></li>
+    <li><a href="#编写简单测试功能">编写简单测试功能</a>
+      <ul>
+        <li><a href="#使用异常报告">使用异常报告</a></li>
+        <li><a href="#使用断言">使用断言</a></li>
+      </ul>
+    </li>
+    <li><a href="#运行eunit">运行EUnit</a>
+      <ul>
+        <li><a href="#分离测试集到独立模块">分离测试集到独立模块</a></li>
+        <li><a href="#eunit会捕获标准输出">EUnit会捕获标准输出</a></li>
+      </ul>
+    </li>
+    <li><a href="#编写测试生成函数">编写测试生成函数</a>
+      <ul>
+        <li><a href="#使用宏写测试集">使用宏写测试集</a></li>
+      </ul>
+    </li>
+    <li><a href="#一个例子">一个例子</a></li>
+    <li><a href="#禁用测试">禁用测试</a></li>
+    <li><a href="#避免eunit编译时依赖">避免EUnit编译时依赖</a></li>
+    <li><a href="#eunit宏">EUnit宏</a>
+      <ul>
+        <li><a href="#basic-macros">Basic Macros</a></li>
+        <li><a href="#编译控制宏">编译控制宏</a></li>
+        <li><a href="#utility宏">Utility宏</a></li>
+        <li><a href="#assert-宏">Assert 宏</a></li>
+        <li><a href="#执行外部命令宏">执行外部命令宏</a></li>
+        <li><a href="#debugging-宏">Debugging 宏</a></li>
+      </ul>
+    </li>
+    <li><a href="#eunit测试表现">EUnit测试表现</a>
+      <ul>
+        <li><a href="#简单测试对象">简单测试对象</a></li>
+        <li><a href="#测试集和深列表">测试集和深列表</a></li>
+        <li><a href="#标题">标题</a></li>
+        <li><a href="#原语">原语</a></li>
+        <li><a href="#控制">控制</a></li>
+        <li><a href="#固定活动状态">固定活动（状态）</a></li>
+        <li><a href="#懒惰生成器">懒惰生成器</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/cache/redis/%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/" class="button left"><span>Redis安装和配置</span></a>
+    
+    
+      <a href="/blog/erlang/%E6%96%87%E6%9C%AC%E7%BC%96%E7%A8%8B/" class="button right"><span>Erlang文本编程</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Erlang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

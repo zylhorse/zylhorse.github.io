@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang线程调度模型 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Golang线程调度模型">
+<meta itemprop="description" content="CSP模型  communicating sequential process: 通讯顺序进程； 描述多个并发的实体通过共享channel进行通信的并发模型； channel是重要对象，不用关注发送消息的实体，只需要关心实体发送消息时使用的channel； 利用channel 实现两个实体之间的松耦合； go 使用goroutine和chan实现CSP模型  内核线程 内核调度实体（KSE，Kernel Scheduling Entity）即内核线程
+ 内核线程为操作系统内核最小调度单元； 内核线程创建内存消耗较大，不适合创建太多内核线程； 内核线程调度： 线程挂起前会保存线程上下文到栈空间，再切换到其他可执行线程；线程上下文切换导致cpu开销变大； 内核线程都有固定的内存块（2MB）做栈，用来存储正在被调用或挂起的函数内部变量。  线程调度  线程池： 线程池实现线程复用，避免频繁创建新线程和线程切换，控制了线程数量和内存消耗；但是在资源共享时会发生竞争，降低了并发效率； 异步回调： 在线程阻塞时注册回调方法，不在阻塞当前线程，去处理新的请求。当处理完成后，把结果传给回调方法。回调方法不是在发起请求的线程里。异步回调会造成callback hell， 回调中嵌套回调； 协程： 在协程处理阻塞时， 协程让出cpu执行权，让其他协程执行。 等阻塞结束，在调度等待的协程继续执行；  线程模型  内核级线程模型：用户线程与内核线程KSE是一对一的映射模型；进程创建出来的用户线程与内核线程KSE一一静态绑定； 用户级线程模型： 用户线程与内核线程是多对一的映射模型； 一个进程创建的线程都只和同一个内核线程KSE在运行时动态绑定；线程的调度是在用户层面完成，相较于内核调度不需要让cpu在内核态和用户态切换；缺点： 假设某用户进程上的用户线程因为阻塞调用被cpu中断， 那么进程会被挂起。 混合型线程模型：用户线程与内核线程KSE是多对多的映射模型，一个进程与多个内核线程KSE关联，于是进程中的多个线程可以绑定不同的内核线程KSE。与内核级线程模型不同的是混合型线程模型与内核线程KSE是动态绑定的。当某个KSE绑定的线程阻塞被内核调度出cpu时， 其关联的进程中其余用户线程可以重新与其他KSE绑定运行。实现用户调度器实现用户线程到KSE的调度，内核调度器实现KSE到cpu的调度；  goroutine和Go Scheduler  golang中 goroutine是独立的执行单元。goroutine栈采用动态扩容，初始仅为2KB（最大1GB-64位机器，256M-32位机器）。 goroutine完全由golang自己的调度器 Go Scheduler调度。GC还会定期的将不使用的内存回收，收缩栈空间。  MPG  G: 表示Goroutine， 每个Goroutine对应一个G结构体。G存储goroutine的运行堆栈、状态及函数。G并非执行体，每个G绑定到P才能执行。 P：表示Processer，逻辑处理器。对于G来说P相当于CPU。G只有绑定到P上才会被调度。对M来说P提供了相关的执行环境（context）、内存分配（memcache)、任务队列（G）。 P的数量决定最大可并行G的数量。　P的数量由用户设置的GOMAXPROCS决定。最大位256. M:表示Machine，内核线程抽象，代表真正执行计算的资源。在绑定有效的P后，进入schedule循环。 schedule 循环机制大致从Global队列、P的local队列以及wait队列中获取G，切换到G的执行堆栈上并执行G，调用goexit做清理工作并回到M， 如此反复。M并不保留G状态，这是G可以跨M调度的基础。M数量不确定，由GO RunTime调整， 防止创建太多系统线程，最大为10000."><meta itemprop="datePublished" content="2020-01-11T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-01-11T00:00:00+00:00" />
+<meta itemprop="wordCount" content="89">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Golang线程调度模型" />
+<meta property="og:description" content="CSP模型  communicating sequential process: 通讯顺序进程； 描述多个并发的实体通过共享channel进行通信的并发模型； channel是重要对象，不用关注发送消息的实体，只需要关心实体发送消息时使用的channel； 利用channel 实现两个实体之间的松耦合； go 使用goroutine和chan实现CSP模型  内核线程 内核调度实体（KSE，Kernel Scheduling Entity）即内核线程
+ 内核线程为操作系统内核最小调度单元； 内核线程创建内存消耗较大，不适合创建太多内核线程； 内核线程调度： 线程挂起前会保存线程上下文到栈空间，再切换到其他可执行线程；线程上下文切换导致cpu开销变大； 内核线程都有固定的内存块（2MB）做栈，用来存储正在被调用或挂起的函数内部变量。  线程调度  线程池： 线程池实现线程复用，避免频繁创建新线程和线程切换，控制了线程数量和内存消耗；但是在资源共享时会发生竞争，降低了并发效率； 异步回调： 在线程阻塞时注册回调方法，不在阻塞当前线程，去处理新的请求。当处理完成后，把结果传给回调方法。回调方法不是在发起请求的线程里。异步回调会造成callback hell， 回调中嵌套回调； 协程： 在协程处理阻塞时， 协程让出cpu执行权，让其他协程执行。 等阻塞结束，在调度等待的协程继续执行；  线程模型  内核级线程模型：用户线程与内核线程KSE是一对一的映射模型；进程创建出来的用户线程与内核线程KSE一一静态绑定； 用户级线程模型： 用户线程与内核线程是多对一的映射模型； 一个进程创建的线程都只和同一个内核线程KSE在运行时动态绑定；线程的调度是在用户层面完成，相较于内核调度不需要让cpu在内核态和用户态切换；缺点： 假设某用户进程上的用户线程因为阻塞调用被cpu中断， 那么进程会被挂起。 混合型线程模型：用户线程与内核线程KSE是多对多的映射模型，一个进程与多个内核线程KSE关联，于是进程中的多个线程可以绑定不同的内核线程KSE。与内核级线程模型不同的是混合型线程模型与内核线程KSE是动态绑定的。当某个KSE绑定的线程阻塞被内核调度出cpu时， 其关联的进程中其余用户线程可以重新与其他KSE绑定运行。实现用户调度器实现用户线程到KSE的调度，内核调度器实现KSE到cpu的调度；  goroutine和Go Scheduler  golang中 goroutine是独立的执行单元。goroutine栈采用动态扩容，初始仅为2KB（最大1GB-64位机器，256M-32位机器）。 goroutine完全由golang自己的调度器 Go Scheduler调度。GC还会定期的将不使用的内存回收，收缩栈空间。  MPG  G: 表示Goroutine， 每个Goroutine对应一个G结构体。G存储goroutine的运行堆栈、状态及函数。G并非执行体，每个G绑定到P才能执行。 P：表示Processer，逻辑处理器。对于G来说P相当于CPU。G只有绑定到P上才会被调度。对M来说P提供了相关的执行环境（context）、内存分配（memcache)、任务队列（G）。 P的数量决定最大可并行G的数量。　P的数量由用户设置的GOMAXPROCS决定。最大位256. M:表示Machine，内核线程抽象，代表真正执行计算的资源。在绑定有效的P后，进入schedule循环。 schedule 循环机制大致从Global队列、P的local队列以及wait队列中获取G，切换到G的执行堆栈上并执行G，调用goexit做清理工作并回到M， 如此反复。M并不保留G状态，这是G可以跨M调度的基础。M数量不确定，由GO RunTime调整， 防止创建太多系统线程，最大为10000." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%BC%8F/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2020-01-11T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-01-11T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang线程调度模型"/>
+<meta name="twitter:description" content="CSP模型  communicating sequential process: 通讯顺序进程； 描述多个并发的实体通过共享channel进行通信的并发模型； channel是重要对象，不用关注发送消息的实体，只需要关心实体发送消息时使用的channel； 利用channel 实现两个实体之间的松耦合； go 使用goroutine和chan实现CSP模型  内核线程 内核调度实体（KSE，Kernel Scheduling Entity）即内核线程
+ 内核线程为操作系统内核最小调度单元； 内核线程创建内存消耗较大，不适合创建太多内核线程； 内核线程调度： 线程挂起前会保存线程上下文到栈空间，再切换到其他可执行线程；线程上下文切换导致cpu开销变大； 内核线程都有固定的内存块（2MB）做栈，用来存储正在被调用或挂起的函数内部变量。  线程调度  线程池： 线程池实现线程复用，避免频繁创建新线程和线程切换，控制了线程数量和内存消耗；但是在资源共享时会发生竞争，降低了并发效率； 异步回调： 在线程阻塞时注册回调方法，不在阻塞当前线程，去处理新的请求。当处理完成后，把结果传给回调方法。回调方法不是在发起请求的线程里。异步回调会造成callback hell， 回调中嵌套回调； 协程： 在协程处理阻塞时， 协程让出cpu执行权，让其他协程执行。 等阻塞结束，在调度等待的协程继续执行；  线程模型  内核级线程模型：用户线程与内核线程KSE是一对一的映射模型；进程创建出来的用户线程与内核线程KSE一一静态绑定； 用户级线程模型： 用户线程与内核线程是多对一的映射模型； 一个进程创建的线程都只和同一个内核线程KSE在运行时动态绑定；线程的调度是在用户层面完成，相较于内核调度不需要让cpu在内核态和用户态切换；缺点： 假设某用户进程上的用户线程因为阻塞调用被cpu中断， 那么进程会被挂起。 混合型线程模型：用户线程与内核线程KSE是多对多的映射模型，一个进程与多个内核线程KSE关联，于是进程中的多个线程可以绑定不同的内核线程KSE。与内核级线程模型不同的是混合型线程模型与内核线程KSE是动态绑定的。当某个KSE绑定的线程阻塞被内核调度出cpu时， 其关联的进程中其余用户线程可以重新与其他KSE绑定运行。实现用户调度器实现用户线程到KSE的调度，内核调度器实现KSE到cpu的调度；  goroutine和Go Scheduler  golang中 goroutine是独立的执行单元。goroutine栈采用动态扩容，初始仅为2KB（最大1GB-64位机器，256M-32位机器）。 goroutine完全由golang自己的调度器 Go Scheduler调度。GC还会定期的将不使用的内存回收，收缩栈空间。  MPG  G: 表示Goroutine， 每个Goroutine对应一个G结构体。G存储goroutine的运行堆栈、状态及函数。G并非执行体，每个G绑定到P才能执行。 P：表示Processer，逻辑处理器。对于G来说P相当于CPU。G只有绑定到P上才会被调度。对M来说P提供了相关的执行环境（context）、内存分配（memcache)、任务队列（G）。 P的数量决定最大可并行G的数量。　P的数量由用户设置的GOMAXPROCS决定。最大位256. M:表示Machine，内核线程抽象，代表真正执行计算的资源。在绑定有效的P后，进入schedule循环。 schedule 循环机制大致从Global队列、P的local队列以及wait队列中获取G，切换到G的执行堆栈上并执行G，调用goexit做清理工作并回到M， 如此反复。M并不保留G状态，这是G可以跨M调度的基础。M数量不确定，由GO RunTime调整， 防止创建太多系统线程，最大为10000."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%BC%8F/">Golang线程调度模型</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2020-01-11 00:00:00 &#43;0000 UTC">2020-01-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="csp模型">CSP模型</h2>
+<ol>
+<li>communicating sequential process: 通讯顺序进程；
+描述多个并发的实体通过共享channel进行通信的并发模型；</li>
+<li>channel是重要对象，不用关注发送消息的实体，只需要关心实体发送消息时使用的channel；</li>
+<li>利用channel 实现两个实体之间的松耦合；</li>
+<li>go 使用goroutine和chan实现CSP模型</li>
+</ol>
+<h2 id="内核线程">内核线程</h2>
+<p>内核调度实体（KSE，Kernel Scheduling Entity）即内核线程</p>
+<ol>
+<li>内核线程为操作系统内核最小调度单元；</li>
+<li>内核线程创建内存消耗较大，不适合创建太多内核线程；</li>
+<li>内核线程调度： 线程挂起前会保存线程上下文到栈空间，再切换到其他可执行线程；线程上下文切换导致cpu开销变大；</li>
+<li>内核线程都有固定的内存块（2MB）做栈，用来存储正在被调用或挂起的函数内部变量。</li>
+</ol>
+<h3 id="线程调度">线程调度</h3>
+<ol>
+<li>线程池： 线程池实现线程复用，避免频繁创建新线程和线程切换，控制了线程数量和内存消耗；但是在资源共享时会发生竞争，降低了并发效率；</li>
+<li>异步回调： 在线程阻塞时注册回调方法，不在阻塞当前线程，去处理新的请求。当处理完成后，把结果传给回调方法。回调方法不是在发起请求的线程里。异步回调会造成callback hell， 回调中嵌套回调；</li>
+<li>协程： 在协程处理阻塞时， 协程让出cpu执行权，让其他协程执行。 等阻塞结束，在调度等待的协程继续执行；</li>
+</ol>
+<h2 id="线程模型">线程模型</h2>
+<ol>
+<li>内核级线程模型：用户线程与内核线程KSE是一对一的映射模型；进程创建出来的用户线程与内核线程KSE一一静态绑定；</li>
+<li>用户级线程模型： 用户线程与内核线程是多对一的映射模型； 一个进程创建的线程都只和同一个内核线程KSE在运行时动态绑定；线程的调度是在用户层面完成，相较于内核调度不需要让cpu在内核态和用户态切换；缺点： 假设某用户进程上的用户线程因为阻塞调用被cpu中断， 那么进程会被挂起。</li>
+<li>混合型线程模型：用户线程与内核线程KSE是多对多的映射模型，一个进程与多个内核线程KSE关联，于是进程中的多个线程可以绑定不同的内核线程KSE。与内核级线程模型不同的是混合型线程模型与内核线程KSE是动态绑定的。当某个KSE绑定的线程阻塞被内核调度出cpu时， 其关联的进程中其余用户线程可以重新与其他KSE绑定运行。实现用户调度器实现用户线程到KSE的调度，内核调度器实现KSE到cpu的调度；</li>
+</ol>
+<h2 id="goroutine和go-scheduler">goroutine和Go Scheduler</h2>
+<ol>
+<li>golang中 goroutine是独立的执行单元。goroutine栈采用动态扩容，初始仅为2KB（最大1GB-64位机器，256M-32位机器）。</li>
+<li>goroutine完全由golang自己的调度器 Go Scheduler调度。GC还会定期的将不使用的内存回收，收缩栈空间。</li>
+</ol>
+<h2 id="mpg">MPG</h2>
+<ol>
+<li>G: 表示Goroutine， 每个Goroutine对应一个G结构体。G存储goroutine的运行堆栈、状态及函数。G并非执行体，每个G绑定到P才能执行。</li>
+<li>P：表示Processer，逻辑处理器。对于G来说P相当于CPU。G只有绑定到P上才会被调度。对M来说P提供了相关的执行环境（context）、内存分配（memcache)、任务队列（G）。
+P的数量决定最大可并行G的数量。　P的数量由用户设置的GOMAXPROCS决定。最大位256.</li>
+<li>M:表示Machine，内核线程抽象，代表真正执行计算的资源。在绑定有效的P后，进入schedule循环。
+schedule 循环机制大致从Global队列、P的local队列以及wait队列中获取G，切换到G的执行堆栈上并执行G，调用goexit做清理工作并回到M，
+如此反复。M并不保留G状态，这是G可以跨M调度的基础。M数量不确定，由GO RunTime调整， 防止创建太多系统线程，最大为10000.</li>
+</ol>
+<h3 id="mpg调用流程">MPG调用流程</h3>
+<p>当goroutine 被关键字go创建时，优先加入到P的Local队列。为了运行goroutine，P需要绑定一个M，然后M启动一个内核线程，循环的从P的local队列中取goroutine去执行。
+当M执行完当前P的local队列中所有的G后，P会优先将Global队列中的G加入到自己的Local队列来执行，如果Gloabl队列中的G也为空，
+P会随机挑选其他P的任务队列中的一半G加入到自己的local队列来执行。</p>
+<h3 id="用户态阻塞唤醒">用户态阻塞/唤醒</h3>
+<p>当goroutine因为channel操作或I/O阻塞时，对应的G会被放置到某个wait队列，并且G的状态由_Gruning变为_Gowaitting，而M会跳过当前G，尝试获取并执行下一个G。
+如果当前没有runable的G供M调用，则M将解绑P，并休眠。当阻塞的G被另一端G2唤醒后， G被标记为runable并加入到G2所在P的runnext队列中。</p>
+<h3 id="系统调用阻塞">系统调用阻塞</h3>
+<p>当G被阻塞到某个系统调用上时， 该G所在的P会与M解绑，P尝试与其他Idle的M进行绑定，继续执行其他G。 
+如果没有idle的M，且P的local队列中还有G， 则创建新的M。 当被阻塞的G系统调用完成后， G会重新获取一个idle的P，加入到他的local队列重新执行。 
+如果没有idle的P，则加入Global的队列。</p>
+<h3 id="golang-gc">golang gc</h3>
+<p>gc也是运行到goroutine上的，当内存吃紧的时候，gc 的goroutine也会阻塞，导致P的local队列积压。内存溢出，程序crash。</p>
+<h4 id="stw">STW</h4>
+<p>stop the world
+GC会挂起用户程序直到垃圾回收完。</p>
+<h2 id="goroutine-池化">goroutine 池化</h2>
+<p>类似于多路复用，使用空闲routine处理任务队列；</p>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#csp模型">CSP模型</a></li>
+    <li><a href="#内核线程">内核线程</a>
+      <ul>
+        <li><a href="#线程调度">线程调度</a></li>
+      </ul>
+    </li>
+    <li><a href="#线程模型">线程模型</a></li>
+    <li><a href="#goroutine和go-scheduler">goroutine和Go Scheduler</a></li>
+    <li><a href="#mpg">MPG</a>
+      <ul>
+        <li><a href="#mpg调用流程">MPG调用流程</a></li>
+        <li><a href="#用户态阻塞唤醒">用户态阻塞/唤醒</a></li>
+        <li><a href="#系统调用阻塞">系统调用阻塞</a></li>
+        <li><a href="#golang-gc">golang gc</a></li>
+      </ul>
+    </li>
+    <li><a href="#goroutine-池化">goroutine 池化</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/golang/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/" class="button left"><span>Golang跨平台之交叉编译</span></a>
+    
+    
+      <a href="/blog/stories/bjcar/family/" class="button right"><span>《北京市小客车数量调控暂行规定》实施细则（2020年修订）</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gRPC on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/grpc/</link>
+    <description>Recent content in gRPC on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 23 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/grpc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>gRPC over HTTP2</title>
+      <link>https://zylhorse.github.io/blog/grpc/protocol-http2/</link>
+      <pubDate>Wed, 23 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/grpc/protocol-http2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gRPC-Introduction</title>
+      <link>https://zylhorse.github.io/blog/grpc/introduction/</link>
+      <pubDate>Wed, 23 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/grpc/introduction/</guid>
+      <description>gRPC 是开源的高性能RPC框架，可以运行在任何环境。它可以高效的连接数据中心或跨数据中心的服务， 支持可插拔的load balaning,tracing,health checking和authentication. 它同样适用于分布式计算的最后一英里，连接设备，手机app，浏览器到后端服务。
+本章介绍gRPC 和 protocol buffers。 gRPC使用protocol buffers作为IDL(接口定义语言)和底层信息交换格式。
+概述 在gRPC的架构中，client app可以像本地调用一样，直接调用一个远程server app方法，这使得创建分布式应用和服务更便捷。 与其他RPC系统相似， gRPC也是基于服务化的思想， 暴露方法，使其可以被远程调用。server端，实现这些方法并启动gRPC服务来处理client调用。 client端，stub提供与server端相同的方法，来被client端调用。
+gRPC clients和servers可以在多种环境中运行和通信，并且可以用任何gRPC支持的语言编写。 例如：使用Java编写server，使用GO/Python/Ruby等编写client。 此外最新的API将有gRPC 版本号的支持。
+Protocol Buffers gRPC默认使用Protocol Buffers序列化数据(当然也可以使用其它数据格式，如：JSON)。
+动机 十年来，Google一直使用名为Stubby的单一通用RPC基础设施来连接数据中心或跨数据中心的微服务。Google的内部很早就采用当下流行的微服务架构。 使用统一的，跨平台的RPC基础设施，在效率、安全性、可靠性和行为分析方面进行全范围的改进，用以支撑业务的快速增长。
+Stubby有许多强大的特性，但是它不基于任何标准并且与Google内部基础设施紧密耦合，因此不适合公开发布。 随着SPDY、HTTP/2和QUIC等具有相同特性的公共标准出现，包含Stubby没有提供的一些特性。很明显，是时候利用这些标准化来改造Stubby， 并扩展应用到mobile,loT和Cloud等场景。
+原则和需求 Services not Objects, Messages not References 提倡在系统之间进行粗粒度信息交换的微服务设计理念，同时避免分布式对象的陷阱 和忽略网络错误
+Coverage &amp;amp; Simplicity 这个堆栈应该对所有流行的平台是可用的，并且用户可以轻松的为其选择的平台进行构建。它应该能在CPU和内存有限的设备上使用。
+Free &amp;amp; Open 使其基本功能对所有人免费使用。以开放源码的方式发布所有组件，并使用许可，应当促使而不是阻碍使用。</description>
+    </item>
+    
+    <item>
+      <title>gRPC-platform</title>
+      <link>https://zylhorse.github.io/blog/grpc/platform/</link>
+      <pubDate>Wed, 23 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/grpc/platform/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gRPC-基准测试</title>
+      <link>https://zylhorse.github.io/blog/grpc/benchmarking/</link>
+      <pubDate>Wed, 23 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/grpc/benchmarking/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gRPC-身份认证</title>
+      <link>https://zylhorse.github.io/blog/grpc/authentication/</link>
+      <pubDate>Wed, 23 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/grpc/authentication/</guid>
+      <description>gRPC设计上允许使用多种身份认证机制，</description>
+    </item>
+    
+    <item>
+      <title>gRPC-错误处理</title>
+      <link>https://zylhorse.github.io/blog/grpc/errorhandling/</link>
+      <pubDate>Wed, 23 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/grpc/errorhandling/</guid>
+      <description>本文讲述gRPC的身份认证，包括内置的身份认证机制，以及如何插入自己的认证系统。
+gRPC被设计为</description>
+    </item>
+    
+    <item>
+      <title>gRPC核心概念，架构，生命周期</title>
+      <link>https://zylhorse.github.io/blog/grpc/concepts/</link>
+      <pubDate>Wed, 23 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/grpc/concepts/</guid>
+      <description>本文介绍gRPC的主要概念，架构和生命周期
+服务定义 与其它RPC系统类似，gRPC基于服务定义的概念，指定可以远程调用(使用自定义参数和返回值)的方法。 默认情况下，gRPC使用protocol buffers作为IDL，用以描述服务接口和负载信息的结构。当然，如果需要，你可以使用其它方式替代。
+service HelloService {rpc SayHello (HelloRequest) returns (HelloResponse);}message HelloRequest {string greeting = 1;}message HelloResponse {string reply = 1;}gRPC提供四种定义服务的方法:
+ Unary RPC, client发送单个请求到server并返回单个响应： rpc SayHello(HelloRequest) returns (HelloResponse); Server Stream RPC，client发送单个请求,server返回一个流，用以读取返回的一系列信息。 client从流中读取数据直到没有更多的信息。gRPC保证单个RPC调用中的信息顺序。 rpc LotsOfReplies(HelloRequest) returns (stream HelloResponse); Client Stream RPC, client写入一系列的信息并使用流发送它们到服务器。一旦client结束写信息， 就会等待server读取并返回响应。gRPC保证打个RPC调用中的信息顺序。 rpc LotsOfGreetings(stream HelloRequest) returns (HelloResponse); Bidirectional Stream RPC, client和server都会使用一个读写流发送一系列的信息。这两个流是独立运行的， 因此client和server可以任意的读写数据。例如:sever会在接收完所有的client信息后返回响应信息, 或者交替的接收一个client信息后返回一个响应信息，或者其它方式。 每个流中信息的顺序被保留。 rpc BidiHello(stream HelloRequest) returns (stream HelloResponse);  API使用 gRPC提供的protocol buffer插件,使用.</description>
+    </item>
+    
+  </channel>
+</rss>

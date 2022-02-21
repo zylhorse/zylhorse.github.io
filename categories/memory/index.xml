@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Memory on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/memory/</link>
+    <description>Recent content in Memory on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 10 Oct 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/memory/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mmap实现原理简述及使用场景</title>
+      <link>https://zylhorse.github.io/blog/memory/mmap/</link>
+      <pubDate>Fri, 10 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/memory/mmap/</guid>
+      <description>概念  mmap是一种文档映射到内存的方法； 将文件或其他对象映射到进程的内存地址空间；实现文件磁盘地址和进程虚拟地址空间的映射。 映射后， 进程就可以采用指针的方式读写操作这段内存。而系统会自动回写修改内容到磁盘文件中。 同样内核空间对这段内存的修改也会直接映射到用户空间， 从而实现不同进程间的文档共享。  内部原理 struct vm_area_struct {vm_endvm_startvm_protvm_flagsvm_next *vm_area_struct}linux 内核使用vm_area_struct结构来表示一个独立的虚拟内存区域。
+工作流程 void *mmap(void *start, size_t length, int prot, int flags,int fd, off_t offset);int munmap( void * addr, size_t len ) int msync( void *addr, size_t len, int flags )优点  对文件的读取操作跨过了页缓存，减少了数据的拷贝次数，用内存读写取代I/O读写，提高了文件读取效率。 常规文件操作需要从磁盘到页缓存再到用户主存的两次数据拷贝 实现了用户空间和内核空间的高校交互；俩个空间的操作可以直接反映到映射的内存区域； 实现进程间共享内存进行通讯； 实现高效大规模数据传输，借助磁盘空间协助内存操作。  </description>
+    </item>
+    
+    <item>
+      <title>内存溢出的场景及解决方案</title>
+      <link>https://zylhorse.github.io/blog/memory/%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA/</link>
+      <pubDate>Sun, 03 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/memory/%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA/</guid>
+      <description>栈溢出 压栈内存超出系统上限，导致溢出
+ 函数递归调用层次较深 局部变量体积过大  解决办法  将递归使用循环语句实现 进行尾递归优化： 这样执行的递归函数指挥占用一个栈帧，不会引起栈溢出 增加系统对进程栈分配大小 使用堆内存， 使用全局变量  尾递归  仅在函数的尾位置调用自身 通过优化，使得计算仅占产量栈空间；  常规递归：function fact(n) {if (n &amp;lt;= 0) {return 1;} else {return n * fact(n - 1);}}展开： 6 * fact(5)6 * (5 * fact(4))6 * (5 * (4 * fact(3))))// two thousand years later...6 * (5 * (4 * (3 * (2 * (1 * 1)))))) // &amp;lt;= 最终的展开尾递归：function fact(n, r) {if (n &amp;lt;= 0) {return 1 * r;} else {return fact(n - 1, r * n);}}展开：fact(6, 1) // 1 是 fact(0) 的值，我们需要手动写一下fact(5, 6)fact(4, 30)fact(3, 120)fact(2, 360)fact(1, 720)720 // &amp;lt;= 最终的结果堆溢出 用户动态分配内存，超出系统内存管理器限制。</description>
+    </item>
+    
+  </channel>
+</rss>

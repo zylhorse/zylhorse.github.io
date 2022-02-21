@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Web on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/web/</link>
+    <description>Recent content in Web on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 03 Jul 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/web/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LDAP协议简介</title>
+      <link>https://zylhorse.github.io/blog/web/ldap/</link>
+      <pubDate>Wed, 03 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/web/ldap/</guid>
+      <description>概述 LDAP: light diretory access protocol, 轻量级目录访问协议； LDAP 目录服务，由目录数据库和访问协议组成；
+目录树  目录树： 在目录服务系统中， 整个目录信息集， 都可以表示为一个目录信息树。树中的每个节点是一个条目； 条目： 每个条目是一条记录， 每个条目有自己唯一的名称（DN） 对象类： 与某个实体类型对应的一组属性，可以继承。这样父类的属性也会被继承下来。 属性： 描述条目的某方面信息。 一个属性由一个属性类型和一个或多个属性值组成， 属性由必须属性和非必须属性。  关键字    关键字 英文全称 含义     dc domain Component 域名的部分，其格式是将完整的域名分成几部分，如域名为example.com变成dc=example,dc=com（一条记录的所属位置）   uid User Id 用户ID songtao.xu（一条记录的ID）   ou Organization Unit 组织单位，组织单位可以包含其他各种对象（包括其他组织单元），如“oa组”（一条记录的所属组织）   cn Common Name 公共名称，如“Thomas Johansson”（一条记录的名称）   sn Surname 姓，如“许”   dn Distinguished Name “uid=songtao.</description>
+    </item>
+    
+    <item>
+      <title>防止并发请求重复提交</title>
+      <link>https://zylhorse.github.io/blog/web/%E9%98%B2%E6%AD%A2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/</link>
+      <pubDate>Sat, 23 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/web/%E9%98%B2%E6%AD%A2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/</guid>
+      <description>方案  客户端为每个订单生成deduplicate key，并在前端缓存商品信息及dedupkey 列表 提交订单时，传递dedup key 和订单信息， 客户端则一直等待该订单处理结果； 服务端接收到订单提交， 缓存该信息并设置过期时间； 服务器校验新的订单提交， 去缓存中校验dedupkey， 存在则直接返回。  token  client去server请求token， token 为server端生成的全局唯一标识（业务编码或订单号） client数据请求绑定token server校验：  1. 缓存中token和client请求绑定的token不一致，则拒绝处理2. client请求未绑定token，则拒绝处理3. 缓存中没有token， 则拒绝处理redis atomic  client 每次请求，server端生成一个 userId + request（请求数据） 的唯一标识，放到缓存中； server校验client请求是否已经存在，存在则拒绝处理；  </description>
+    </item>
+    
+    <item>
+      <title>记录web开发遇到的问题和详细解决方案</title>
+      <link>https://zylhorse.github.io/blog/web/%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Sat, 09 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/web/%E9%97%AE%E9%A2%98/</guid>
+      <description>中文名下载乱码 对文件名进行UTF-8编码
+http文件下载 添加报文头: &amp;quot;content-disposition&amp;quot;, &amp;quot;attachment;filename=$fileName&amp;quot;</description>
+    </item>
+    
+  </channel>
+</rss>

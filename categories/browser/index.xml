@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Browser on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/browser/</link>
+    <description>Recent content in Browser on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 28 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/browser/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>chrome浏览器手机debug</title>
+      <link>https://zylhorse.github.io/blog/browser/chrome-debug/</link>
+      <pubDate>Fri, 28 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/browser/chrome-debug/</guid>
+      <description>环境准备  手机打开开发人员选项 用数据线将手机连接到主机  调试  chrome进入inspect:地址栏输入chrome://inspect
+ 点击对应网址的inspect按钮进行调试
+  问题  DevTools页面空白或者404 Not Found  由于国内无法访问 https://chrome-devtools-frontend.appspot.com 这里的解决方法： 翻墙    </description>
+    </item>
+    
+    <item>
+      <title>不同平台常用浏览器的离线下载地址</title>
+      <link>https://zylhorse.github.io/blog/browser/download/</link>
+      <pubDate>Thu, 02 Apr 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/browser/download/</guid>
+      <description>  edge
+  chrome-mac
+  chrome-win64
+  </description>
+    </item>
+    
+  </channel>
+</rss>

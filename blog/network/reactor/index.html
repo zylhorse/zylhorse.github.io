@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Reactor模式深入浅出 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Reactor模式深入浅出">
+<meta itemprop="description" content="Reactor设计模式是一种事件处理模式，用于Service Handler处理由一个或多个输入发送的并发请求。 Service Handler将传入的请求进行Demultiplex，并将它们同步的分发到关联的Event Handler。
+模块 Handle
+任何可以提供输入或者消费系统输出的资源,它可以是打开的文件，一个网络连接(socket)等。
+Synchronous Event Demultiplexer 使用一个event loop来阻塞所有的Handle. 当可以在一个Handle上非阻塞的开始 同步操作时，Demultiplexer将该Handle发送到Dispatcher上。
+ e.g.: 如果Handle没有数据可读时,read()同步调用会阻塞。demultiplexer在Handle上使用select()， 它会阻塞,直到Handle有数据可以读。这种情况下，对read()的同步调用不会阻塞， 并且Demultiplexer可以将Handle发送给Dispatcher。
+ Dispatcher
+管理对Event Handler的注册和移除。分发从Demultiplexer来的Handle到关联的Event Handler。
+Event Handler
+事件处理器，以供Dispatcher回调使用。
+Concrete Event Handler 具体的Event Handler实现。
+下面使用一张图来表现以上各个模块之间的关系:"><meta itemprop="datePublished" content="2017-05-26T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2017-05-26T00:00:00+00:00" />
+<meta itemprop="wordCount" content="32">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Reactor模式深入浅出" />
+<meta property="og:description" content="Reactor设计模式是一种事件处理模式，用于Service Handler处理由一个或多个输入发送的并发请求。 Service Handler将传入的请求进行Demultiplex，并将它们同步的分发到关联的Event Handler。
+模块 Handle
+任何可以提供输入或者消费系统输出的资源,它可以是打开的文件，一个网络连接(socket)等。
+Synchronous Event Demultiplexer 使用一个event loop来阻塞所有的Handle. 当可以在一个Handle上非阻塞的开始 同步操作时，Demultiplexer将该Handle发送到Dispatcher上。
+ e.g.: 如果Handle没有数据可读时,read()同步调用会阻塞。demultiplexer在Handle上使用select()， 它会阻塞,直到Handle有数据可以读。这种情况下，对read()的同步调用不会阻塞， 并且Demultiplexer可以将Handle发送给Dispatcher。
+ Dispatcher
+管理对Event Handler的注册和移除。分发从Demultiplexer来的Handle到关联的Event Handler。
+Event Handler
+事件处理器，以供Dispatcher回调使用。
+Concrete Event Handler 具体的Event Handler实现。
+下面使用一张图来表现以上各个模块之间的关系:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/network/reactor/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2017-05-26T00:00:00+00:00" />
+<meta property="article:modified_time" content="2017-05-26T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Reactor模式深入浅出"/>
+<meta name="twitter:description" content="Reactor设计模式是一种事件处理模式，用于Service Handler处理由一个或多个输入发送的并发请求。 Service Handler将传入的请求进行Demultiplex，并将它们同步的分发到关联的Event Handler。
+模块 Handle
+任何可以提供输入或者消费系统输出的资源,它可以是打开的文件，一个网络连接(socket)等。
+Synchronous Event Demultiplexer 使用一个event loop来阻塞所有的Handle. 当可以在一个Handle上非阻塞的开始 同步操作时，Demultiplexer将该Handle发送到Dispatcher上。
+ e.g.: 如果Handle没有数据可读时,read()同步调用会阻塞。demultiplexer在Handle上使用select()， 它会阻塞,直到Handle有数据可以读。这种情况下，对read()的同步调用不会阻塞， 并且Demultiplexer可以将Handle发送给Dispatcher。
+ Dispatcher
+管理对Event Handler的注册和移除。分发从Demultiplexer来的Handle到关联的Event Handler。
+Event Handler
+事件处理器，以供Dispatcher回调使用。
+Concrete Event Handler 具体的Event Handler实现。
+下面使用一张图来表现以上各个模块之间的关系:"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/network/reactor/">Reactor模式深入浅出</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2017-05-26 00:00:00 &#43;0000 UTC">2017-05-26</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <p><code>Reactor</code>设计模式是一种事件处理模式，用于<code>Service Handler</code>处理由一个或多个输入发送的并发请求。
+<code>Service Handler</code>将传入的请求进行<code>Demultiplex</code>，并将它们<strong>同步</strong>的分发到关联的<code>Event Handler</code>。</p>
+<h2 id="模块">模块</h2>
+<p><strong>Handle</strong><br>
+任何可以提供输入或者消费系统输出的资源,它可以是打开的文件，一个网络连接(socket)等。</p>
+<p><strong>Synchronous Event Demultiplexer</strong>
+使用一个<code>event loop</code>来阻塞所有的<code>Handle</code>. 当可以在一个<code>Handle</code>上非阻塞的开始
+同步操作时，<code>Demultiplexer</code>将该<code>Handle</code>发送到<code>Dispatcher</code>上。</p>
+<blockquote>
+<p>e.g.: 如果<code>Handle</code>没有数据可读时,<code>read()</code>同步调用会阻塞。<code>demultiplexer</code>在<code>Handle</code>上使用<code>select()</code>，
+它会阻塞,直到<code>Handle</code>有数据可以读。这种情况下，对<code>read()</code>的同步调用不会阻塞，
+并且<code>Demultiplexer</code>可以将<code>Handle</code>发送给<code>Dispatcher</code>。</p>
+</blockquote>
+<p><strong>Dispatcher</strong><br>
+管理对<code>Event Handler</code>的注册和移除。分发从<code>Demultiplexer</code>来的<code>Handle</code>到关联的<code>Event Handler</code>。</p>
+<p><strong>Event Handler</strong><br>
+事件处理器，以供<code>Dispatcher</code>回调使用。</p>
+<p><strong>Concrete Event Handler</strong>
+具体的<code>Event Handler</code>实现。</p>
+<p>下面使用一张图来表现以上各个模块之间的关系:<br>
+<img src="/img/network/reactor_modules_relationship.png" alt="Reactor Modules Relationship"></p>
+
+      
+    <h2>参考</h2>
+    <ul>
+        
+            
+        
+    </ul>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/network/">Network</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#模块">模块</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/network/http2/" class="button left"><span>http2协议解析及解决哪些问题</span></a>
+    
+    
+      <a href="/blog/cache/redis/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85/" class="button right"><span>Redis发布订阅模式和事件通知</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Network
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

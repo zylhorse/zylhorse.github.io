@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Security on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/security/</link>
+    <description>Recent content in Security on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 22 May 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/security/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>申请免费SSL证书</title>
+      <link>https://zylhorse.github.io/blog/security/%E7%94%B3%E8%AF%B7%E5%85%8D%E8%B4%B9%E8%AF%81%E4%B9%A6/</link>
+      <pubDate>Wed, 22 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/security/%E7%94%B3%E8%AF%B7%E5%85%8D%E8%B4%B9%E8%AF%81%E4%B9%A6/</guid>
+      <description>证书申请 ssl证书申请的3个主要步骤
+  制作CSR文件
+所谓CSR就是由申请人制作的Certificate Secure Request证书请求文件。制作过程中，系统会产生2个密钥，一个是公钥就是这个CSR文件，另外一个是私钥，存放在服务器上。要制作CSR文件，申请人可以参考WEB SERVER的文档，一般APACHE等，使用OPENssl命令行来生成KEY+CSR2个文件，Tomcat，JBoss，Resin等使用KEYTOOL来生成JKS和CSR文件，IIS通过向导建立一个挂起的请求和一个CSR文件。
+  CA认证
+将CSR提交给CA，CA一般有2种认证方式：
+   域名认证：一般通过对管理员邮箱认证的方式，这种方式认证速度快，但是签发的证书中没有企业的名称; 企业文档认证：需要提供企业的营业执照。 也有需要同时认证以上2种方式的证书，叫EV ssl证书，这种证书可以使IE7以上的浏览器地址栏变成绿色，所以认证也最严格。  证书安装
+在收到CA的证书后，可以将证书部署上服务器，一般APACHE文件直接将KEY+CER复制到文件上，然后修改httpD.CONF文件;TOMCAT等，需要将CA签发的证书CER文件导入JKS文件后，复制上服务器，然后修改SERVER.XML;IIS需要处理挂起的请求，将CER文件导入。   Letsencrypt证书申请   环境配置 $ sudo apt-get install letsencrypt
+  生成证书, 需要用到80端口，先停止相关进程：
+$ sudo letsencrypt certonly --email xxx@xxx.com -d www.example.comxxx@xxx.com 为邮箱,用于后续证书状态(过期)通知；
+www.example.com 为生成服务器证书域名；
+  多域名证书(收费)
+*.zylhorse.com 通配符证书匹配所有三级域名，eg：ys.zylhorse.comys1.zylhorse.compin.zylhorse.com  </description>
+    </item>
+    
+    <item>
+      <title>高防IP服务工作原理和配置</title>
+      <link>https://zylhorse.github.io/blog/security/%E9%AB%98%E9%98%B2ip/</link>
+      <pubDate>Wed, 13 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/security/%E9%AB%98%E9%98%B2ip/</guid>
+      <description>概念 高防IP是针对互联网服务器遭受大流量的DDos攻击后， 导致服务不可用的情况下。 用户通过配置高防IP， 将攻击流量引流到高防IP， 并配置一定的转发规则， 将合法的请求转发到源站；
+高防IP包含  SYN Flood UDP Flood ICMP Flood IGMP Flood ACK Flood Ping Sweep  </description>
+    </item>
+    
+    <item>
+      <title>详解hash</title>
+      <link>https://zylhorse.github.io/blog/security/hash/</link>
+      <pubDate>Fri, 03 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/security/hash/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>详解安全传输协议SSL TLS</title>
+      <link>https://zylhorse.github.io/blog/security/ssl-tls/</link>
+      <pubDate>Fri, 03 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/security/ssl-tls/</guid>
+      <description>tls 传输层安全协议 包含两部分：
+ 握手协议（handshake protocol）： 客户端和服务端进行协商，确定一组用于数据传输加密的密钥串 记录协议（record protocol）： 通过握手协议确定的密钥串进行数据加密传输  握手和密钥协商过程FullHandshake 客户端ClientHello 客户端发起请求，以明文传输请求信息包含：
+ version： 支持最高TLS协议版本, 从低到高：SSLV1、SSLV3、TLSV1、TLSV1.1、TLSV1.2 cipher suites： 客户端支持的加密套件列表： Kx = Key Exchange 密钥协商算法Au = Authentication 身份认证算法Enc = Encrypt 加密算法Mac = Message Authentication Code 信息摘要算法 compression methods：压缩算法列表，用于后续信息压缩传输 random_C：客户端随机数，用于后续密钥生成 extensions： 扩展字段，支持协议与算法相关参数及辅助信息 session id： 会话id，后续连接到同一台服务器，可以避免完全握手；  如果客户端时第一次连接服务器，则该字段为空。
+   服务器ServerHello 服务端返回协商的结果信息， 包含：
+ version： 选择使用的TLS协议版本 cipher suite： 选择使用的加密套件 compression method： 选择使用的压缩算法 random_S: 服务器随机数 ，用于后续密钥生成 session id： 会话id  握手成功，服务器会缓存session 参数到tls缓存中， 并生成对应的session id 返回该session id 给客户端，客户端将session id存储在浏览器并设置时限 后续连接到同一台服务器，则发送session id， 服务器验证后， 使用以前使用过的对称密钥来恢复session</description>
+    </item>
+    
+    <item>
+      <title>生成自签名SSL证书</title>
+      <link>https://zylhorse.github.io/blog/security/%E7%94%9F%E6%88%90%E8%AF%81%E4%B9%A6/</link>
+      <pubDate>Mon, 22 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/security/%E7%94%9F%E6%88%90%E8%AF%81%E4%B9%A6/</guid>
+      <description>#!/bin/sh# create self-signed server certificate:SSLDIR=$PWD/sslSERVERDIR=$SSLDIR/serverCLIENTDIR=$SSLDIR/clientOPENSSLFILE=$PWD/openssl.cnfsu rootsudo rm -rf $SSLDIRsudo mkdir $SSLDIRsudo mkdir $SERVERDIRsudo mkdir $CLIENTDIRsudo mkdir $SSLDIR/demoCAsudo mkdir $SSLDIR/demoCA/newcertssudo touch $SSLDIR/demoCA/index.txtsudo touch $SSLDIR/demoCA/serialsudo echo 01 &amp;gt; $SSLDIR/demoCA/serialcd $SSLDIRread -p &amp;quot;Enter your domain [www.example.com]: &amp;quot; DOMAINsudo sed -e &amp;quot;s|192.168.10.33|$DOMAIN|g&amp;quot; -i $OPENSSLFILESUBJECT=&amp;quot;/C=CN/ST=Beijing/L=Beigjing/O=YongNuo/OU=CEO/CN=$DOMAIN/emailAddress=zylhorse@126.com&amp;quot;echo &amp;quot;Create Ca key / cert ...&amp;quot;sudo openssl req -new -x509 -subj $SUBJECT -keyout $SSLDIR/ca.</description>
+    </item>
+    
+    <item>
+      <title>生成自签名SSL免密证书</title>
+      <link>https://zylhorse.github.io/blog/security/%E7%94%9F%E6%88%90%E5%85%8D%E5%AF%86%E8%AF%81%E4%B9%A6/</link>
+      <pubDate>Sat, 13 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/security/%E7%94%9F%E6%88%90%E5%85%8D%E5%AF%86%E8%AF%81%E4%B9%A6/</guid>
+      <description>#!/bin/sh# create self-signed server certificate:SSLDIR=$PWD/sslSERVERDIR=$SSLDIR/serverCLIENTDIR=$SSLDIR/clientOPENSSLFILE=$PWD/openssl.cnfsudo rm -rf $SSLDIRsudo mkdir $SSLDIRsudo mkdir $SERVERDIRsudo mkdir $CLIENTDIRsudo mkdir $SSLDIR/demoCAsudo mkdir $SSLDIR/demoCA/newcertssudo touch $SSLDIR/demoCA/index.txtsudo touch $SSLDIR/demoCA/serialsudo echo 01 &amp;gt; $SSLDIR/demoCA/serialcd $SSLDIRread -p &amp;quot;Enter your domain [www.example.com]: &amp;quot; DOMAINsudo sed -i &amp;quot;s/subjectAltName=IP.*/subjectAltName=IP:$DOMAIN/g&amp;quot; $OPENSSLFILESUBJECT=&amp;quot;/C=CN/ST=Beijing/L=Beigjing/O=YongNuo/OU=CEO/CN=$DOMAIN/emailAddress=zylhorse@126.com&amp;quot;echo &amp;quot;Create Ca key / cert ...&amp;quot;sudo openssl req -new -x509 -subj $SUBJECT -keyout $SSLDIR/ca.</description>
+    </item>
+    
+    <item>
+      <title>生成公私钥</title>
+      <link>https://zylhorse.github.io/blog/security/%E7%94%9F%E6%88%90%E5%85%AC%E7%A7%81%E9%92%A5/</link>
+      <pubDate>Wed, 03 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/security/%E7%94%9F%E6%88%90%E5%85%AC%E7%A7%81%E9%92%A5/</guid>
+      <description>$ openssl genrsa -out privatekey.pem 1024$ openssl pkcs8 -topk8 -inform PEM -in privatekey.pem -outform PEM -nocrypt$ openssl rsa -in privatekey.pem -pubout -out publickey.pem</description>
+    </item>
+    
+  </channel>
+</rss>

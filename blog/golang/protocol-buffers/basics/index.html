@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Protocol Buffer-Go基础知识 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Protocol Buffer-Go基础知识">
+<meta itemprop="description" content="这篇教程讲述了Go程序员使用protocol buffers的基本介绍，这里使用protocol buffers的proto3版本。 逐步的创建简单的示例程序，向你展示怎么去做。
+ 在.proto文件中定义message格式 使用protocol buffers 编译器 使用Go protocol buffer API读写message  这不是一篇全面的教程，教你怎么在Go中使用protocol buffers。 想要更详细的参考信息， 参见Protocol Buffer Language Guide, the Go API Reference, Go Generated Code Guide, Encoding Reference
+为什么使用Protocol Buffers 我们将要演示的示例是一个非常简单的通讯录应用，这个应用可以在文件中读写人们的联系方式。通讯录中的每个人都有名字，ID，email,电话号码。
+怎样去序列化和反序列化这些信息？有以下几种方法:
+ 使用gobs来序列化Go结构化对象。这在特定的Go语言环境中是好的解决方案，但是如果你需要 与其它平台编写的应用共享数据，这种方案就不太好用。 你可以发明专门的方法，将数据项编码到一个单独的字符串－比如将整数4 编码为&quot;12:3:-23:67&quot;。这是个简单而灵活的方法， 尽管它需要编写一次性编码和解析代码，而且解析的运行成本很小。这对于简单数据的编码最有效。 将数据序列化为XML。这个方法是非常有效的，因为XML是可读的，并且很多语言都有实现库。如果你想要和其它应用/项目共享数据， XML是一个很好的选择。但是，总所周知，XML是空间密集型的，并且XML的编解码会给应用带来很大的性能问题。此外操作XML的DOM树比操作 类中的简单字段要复杂的多。  Protocol Buffers 是灵活，高效，自动化的解决方案，刚好解决这个问题。使用Protocol buffer， 你需要编写一个想要存储的数据结构体的.proto描述。随后，protocol buffer 编译器创建一个类， 该类使用高效的二进制格式自动的编解码protocol buffer数据。该类为protocol buffer中的字段提供getter和setter， 并且负责将protocol buffer作为一个单元进行读写。重要的是，protocol buffer格式支持随时间推移扩展格式的思想， 这样代码仍然可以读取用旧格式编码的数据
+从哪里查找示例代码 我们的示例是一组命令行应用程序，用于管理使用protocol buffers编码的地址簿数据文件。 add_person_go命令向数据文件添加一个新条目。list_people_go命令解析数据文件并将数据打印到控制台。
+你可以在GitHub存储库的examples目录中找到完整的例子。
+定义你的协议格式 要创建您的地址簿应用程序，您需要从.proto文件开始。.proto文件中的定义很简单:为要序列化的每个数据结构添加一条消息， 然后为消息中的每个字段指定名称和类型。在我们的示例中，定义消息的.proto文件是addressbook.proto。
+.proto文件以包声明开始，这有助于防止不同项目之间的命名冲突
+syntax = &quot;proto3&quot;;package tutorial;import &quot;google/protobuf/timestamp."><meta itemprop="datePublished" content="2020-10-28T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-10-28T00:00:00+00:00" />
+<meta itemprop="wordCount" content="185">
+<meta itemprop="keywords" content="Protocol Buffers," /><meta property="og:title" content="Protocol Buffer-Go基础知识" />
+<meta property="og:description" content="这篇教程讲述了Go程序员使用protocol buffers的基本介绍，这里使用protocol buffers的proto3版本。 逐步的创建简单的示例程序，向你展示怎么去做。
+ 在.proto文件中定义message格式 使用protocol buffers 编译器 使用Go protocol buffer API读写message  这不是一篇全面的教程，教你怎么在Go中使用protocol buffers。 想要更详细的参考信息， 参见Protocol Buffer Language Guide, the Go API Reference, Go Generated Code Guide, Encoding Reference
+为什么使用Protocol Buffers 我们将要演示的示例是一个非常简单的通讯录应用，这个应用可以在文件中读写人们的联系方式。通讯录中的每个人都有名字，ID，email,电话号码。
+怎样去序列化和反序列化这些信息？有以下几种方法:
+ 使用gobs来序列化Go结构化对象。这在特定的Go语言环境中是好的解决方案，但是如果你需要 与其它平台编写的应用共享数据，这种方案就不太好用。 你可以发明专门的方法，将数据项编码到一个单独的字符串－比如将整数4 编码为&quot;12:3:-23:67&quot;。这是个简单而灵活的方法， 尽管它需要编写一次性编码和解析代码，而且解析的运行成本很小。这对于简单数据的编码最有效。 将数据序列化为XML。这个方法是非常有效的，因为XML是可读的，并且很多语言都有实现库。如果你想要和其它应用/项目共享数据， XML是一个很好的选择。但是，总所周知，XML是空间密集型的，并且XML的编解码会给应用带来很大的性能问题。此外操作XML的DOM树比操作 类中的简单字段要复杂的多。  Protocol Buffers 是灵活，高效，自动化的解决方案，刚好解决这个问题。使用Protocol buffer， 你需要编写一个想要存储的数据结构体的.proto描述。随后，protocol buffer 编译器创建一个类， 该类使用高效的二进制格式自动的编解码protocol buffer数据。该类为protocol buffer中的字段提供getter和setter， 并且负责将protocol buffer作为一个单元进行读写。重要的是，protocol buffer格式支持随时间推移扩展格式的思想， 这样代码仍然可以读取用旧格式编码的数据
+从哪里查找示例代码 我们的示例是一组命令行应用程序，用于管理使用protocol buffers编码的地址簿数据文件。 add_person_go命令向数据文件添加一个新条目。list_people_go命令解析数据文件并将数据打印到控制台。
+你可以在GitHub存储库的examples目录中找到完整的例子。
+定义你的协议格式 要创建您的地址簿应用程序，您需要从.proto文件开始。.proto文件中的定义很简单:为要序列化的每个数据结构添加一条消息， 然后为消息中的每个字段指定名称和类型。在我们的示例中，定义消息的.proto文件是addressbook.proto。
+.proto文件以包声明开始，这有助于防止不同项目之间的命名冲突
+syntax = &quot;proto3&quot;;package tutorial;import &quot;google/protobuf/timestamp." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/protocol-buffers/basics/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2020-10-28T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-10-28T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Protocol Buffer-Go基础知识"/>
+<meta name="twitter:description" content="这篇教程讲述了Go程序员使用protocol buffers的基本介绍，这里使用protocol buffers的proto3版本。 逐步的创建简单的示例程序，向你展示怎么去做。
+ 在.proto文件中定义message格式 使用protocol buffers 编译器 使用Go protocol buffer API读写message  这不是一篇全面的教程，教你怎么在Go中使用protocol buffers。 想要更详细的参考信息， 参见Protocol Buffer Language Guide, the Go API Reference, Go Generated Code Guide, Encoding Reference
+为什么使用Protocol Buffers 我们将要演示的示例是一个非常简单的通讯录应用，这个应用可以在文件中读写人们的联系方式。通讯录中的每个人都有名字，ID，email,电话号码。
+怎样去序列化和反序列化这些信息？有以下几种方法:
+ 使用gobs来序列化Go结构化对象。这在特定的Go语言环境中是好的解决方案，但是如果你需要 与其它平台编写的应用共享数据，这种方案就不太好用。 你可以发明专门的方法，将数据项编码到一个单独的字符串－比如将整数4 编码为&quot;12:3:-23:67&quot;。这是个简单而灵活的方法， 尽管它需要编写一次性编码和解析代码，而且解析的运行成本很小。这对于简单数据的编码最有效。 将数据序列化为XML。这个方法是非常有效的，因为XML是可读的，并且很多语言都有实现库。如果你想要和其它应用/项目共享数据， XML是一个很好的选择。但是，总所周知，XML是空间密集型的，并且XML的编解码会给应用带来很大的性能问题。此外操作XML的DOM树比操作 类中的简单字段要复杂的多。  Protocol Buffers 是灵活，高效，自动化的解决方案，刚好解决这个问题。使用Protocol buffer， 你需要编写一个想要存储的数据结构体的.proto描述。随后，protocol buffer 编译器创建一个类， 该类使用高效的二进制格式自动的编解码protocol buffer数据。该类为protocol buffer中的字段提供getter和setter， 并且负责将protocol buffer作为一个单元进行读写。重要的是，protocol buffer格式支持随时间推移扩展格式的思想， 这样代码仍然可以读取用旧格式编码的数据
+从哪里查找示例代码 我们的示例是一组命令行应用程序，用于管理使用protocol buffers编码的地址簿数据文件。 add_person_go命令向数据文件添加一个新条目。list_people_go命令解析数据文件并将数据打印到控制台。
+你可以在GitHub存储库的examples目录中找到完整的例子。
+定义你的协议格式 要创建您的地址簿应用程序，您需要从.proto文件开始。.proto文件中的定义很简单:为要序列化的每个数据结构添加一条消息， 然后为消息中的每个字段指定名称和类型。在我们的示例中，定义消息的.proto文件是addressbook.proto。
+.proto文件以包声明开始，这有助于防止不同项目之间的命名冲突
+syntax = &quot;proto3&quot;;package tutorial;import &quot;google/protobuf/timestamp."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/protocol-buffers/basics/">Protocol Buffer-Go基础知识</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2020-10-28 00:00:00 &#43;0000 UTC">2020-10-28</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <p>这篇教程讲述了Go程序员使用protocol buffers的基本介绍，这里使用protocol buffers的proto3版本。 
+逐步的创建简单的示例程序，向你展示怎么去做。</p>
+<ul>
+<li>在<code>.proto</code>文件中定义message格式</li>
+<li>使用protocol buffers 编译器</li>
+<li>使用Go protocol buffer API读写message</li>
+</ul>
+<p>这不是一篇全面的教程，教你怎么在Go中使用protocol buffers。 想要更详细的参考信息，
+参见<a href="/blog/data-structure/protocol-buffers/guide">Protocol Buffer Language Guide</a>, 
+<a href="https://pkg.go.dev/google.golang.org/protobuf/proto">the Go API Reference</a>, 
+<a href="/blog/golang/protocol-buffers/generated">Go Generated Code Guide</a>, 
+<a href="/blog/data-structure/protocol-buffers/encoding">Encoding Reference</a></p>
+<p><strong>为什么使用Protocol Buffers</strong>
+我们将要演示的示例是一个非常简单的通讯录应用，这个应用可以在文件中读写人们的联系方式。通讯录中的每个人都有名字，ID，email,电话号码。</p>
+<p>怎样去序列化和反序列化这些信息？有以下几种方法:</p>
+<ul>
+<li>使用<a href="https://golang.org/pkg/encoding/gob/">gobs</a>来序列化Go结构化对象。这在特定的Go语言环境中是好的解决方案，但是如果你需要
+与其它平台编写的应用共享数据，这种方案就不太好用。</li>
+<li>你可以发明专门的方法，将数据项编码到一个单独的字符串－比如将整数4 编码为&quot;12:3:-23:67&quot;。这是个简单而灵活的方法，
+尽管它需要编写一次性编码和解析代码，而且解析的运行成本很小。这对于简单数据的编码最有效。</li>
+<li>将数据序列化为XML。这个方法是非常有效的，因为XML是可读的，并且很多语言都有实现库。如果你想要和其它应用/项目共享数据，
+XML是一个很好的选择。但是，总所周知，XML是空间密集型的，并且XML的编解码会给应用带来很大的性能问题。此外操作XML的DOM树比操作
+类中的简单字段要复杂的多。</li>
+</ul>
+<p>Protocol Buffers 是灵活，高效，自动化的解决方案，刚好解决这个问题。使用Protocol buffer，
+你需要编写一个想要存储的数据结构体的<code>.proto</code>描述。随后，protocol buffer 编译器创建一个类，
+该类使用高效的二进制格式自动的编解码protocol buffer数据。该类为protocol buffer中的字段提供getter和setter，
+并且负责将protocol buffer作为一个单元进行读写。重要的是，protocol buffer格式支持随时间推移扩展格式的思想，
+这样代码仍然可以读取用旧格式编码的数据</p>
+<p><strong>从哪里查找示例代码</strong>
+我们的示例是一组命令行应用程序，用于管理使用protocol buffers编码的地址簿数据文件。
+<code>add_person_go</code>命令向数据文件添加一个新条目。<code>list_people_go</code>命令解析数据文件并将数据打印到控制台。</p>
+<p>你可以在GitHub存储库的<a href="https://github.com/protocolbuffers/protobuf/tree/master/examples">examples目录</a>中找到完整的例子。</p>
+<p><strong>定义你的协议格式</strong> 
+要创建您的地址簿应用程序，您需要从<code>.proto</code>文件开始。<code>.proto</code>文件中的定义很简单:为要序列化的每个数据结构添加一条消息，
+然后为消息中的每个字段指定名称和类型。在我们的示例中，定义消息的<code>.proto</code>文件是<a href="https://github.com/protocolbuffers/protobuf/blob/master/examples/addressbook.proto">addressbook.proto</a>。</p>
+<p><code>.proto</code>文件以包声明开始，这有助于防止不同项目之间的命名冲突</p>
+<pre tabindex="0"><code>syntax = &quot;proto3&quot;;
+package tutorial;
+
+import &quot;google/protobuf/timestamp.proto&quot;;
+</code></pre><p><code>go_package</code>选项定义了包的导入路径，该路径将包含为该文件生成的所有代码。
+Go包名将是导入路径的最后一个路径组件。例如，我们的示例将使用名为“tutorialpb”的包名。</p>
+<pre tabindex="0"><code>option go_package = &quot;github.com/protocolbuffers/protobuf/examples/go/tutorialpb&quot;;
+</code></pre><p>然后，定义你的<code>message</code>。<code>message</code>只是包含一组类型化字段的集合。许多标准的简单数据类型都可以作为字段类型，
+包括bool、int32、float、double和string。您还可以通过使用其他<code>message</code>类型作为字段类型向<code>message</code>添加进一步的结构。</p>
+<pre tabindex="0"><code>message Person {
+  string name = 1;
+  int32 id = 2;  // Unique ID number for this person.
+  string email = 3;
+
+  enum PhoneType {
+    MOBILE = 0;
+    HOME = 1;
+    WORK = 2;
+  }
+
+  message PhoneNumber {
+    string number = 1;
+    PhoneType type = 2;
+  }
+
+  repeated PhoneNumber phones = 4;
+
+  google.protobuf.Timestamp last_updated = 5;
+}
+
+// Our address book file is just one of these.
+message AddressBook {
+  repeated Person people = 1;
+}
+</code></pre><p>在上面的示例中，<code>Person</code>包含<code>PhoneNumber</code>，而<code>AddressBook</code>包含<code>Person</code>。您甚至可以定义嵌套在其他<code>message</code>中的<code>message</code>类型—如您所见，
+<code>PhoneNumber</code>类型是在<code>Person</code>内部定义的。如果希望某个字段具有预定义的值列表之一，
+还可以定义enum类型——这里希望指定一个电话号码可以是MOBILE、HOME或WORK中的一个。</p>
+<p>每个元素上的“= 1”、“= 2”标记标识字段在二进制编码中使用的唯一&quot;标记&quot;。编号1-15需要的编码字节比更大的数字少，因此作为一种优化，
+您可以决定对常用的或重复的元素使用这些编号，而对不常用的可选元素使用编号16或更高。
+重复字段中的每个元素都需要对编号进行重新编码，因此重复字段特别适合于这种优化。</p>
+<p>如果一个字段<code>repeated</code>，该字段可以重复任意次数(包括0)。重复值的顺序将保留在protocol buffers中。可以将重复字段看作动态大小的数组。
+您可以在protocol buffers语言指南中找到编写<code>.proto</code>文件的完整指南——包括所有可能的字段类型。
+但是，不要寻找类似于类继承的工具——protocol buffers不会这样做。</p>
+<p><strong>Protocol Buffers 延申</strong>
+在您发布使用protocol buffers的代码之后，您无疑会希望“改进”protocol buffers的定义。如果您希望您的新proto向后兼容，
+而您的旧proto向后兼容——您几乎肯定希望这样——那么您需要遵循一些规则。在protocol buffers的新版本中:</p>
+<ul>
+<li>一定不要修改现有字段的编号</li>
+<li>可以删除字段</li>
+<li>增加的新字段必须使用新的字段编号(在protocol buffer中从未使用过的编号以及删除的字段编号)</li>
+</ul>
+<p>如果您遵循这些规则，旧代码将愉快地读取新消息，并简单地忽略任何新字段。对于旧的代码，被删除的单一字段将只保留它们的默认值，
+而被删除的重复字段将为空。新代码也将透明地读取旧消息。</p>
+<p>但是，请记住，新字段不会出现在旧消息中，因此您需要对默认值做一些合理的操作。使用特定类型的默认值:对于字符串，默认值为空字符串。
+对于布尔值，默认值是false。对于数字类型，默认值为零。</p>
+
+      
+    <h2>参考</h2>
+    <ul>
+        
+            
+                <li><a target="_blank" href="https://developers.google.com/protocol-buffers/docs/gotutorial">Protocol Buffer Basics: Go</a></li>
+            
+        
+    </ul>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/protocol-buffers/">Protocol Buffers</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents"></nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/golang/protocol-buffers/generated/" class="button left"><span>Protocol Buffer-Go代码生成</span></a>
+    
+    
+      <a href="/blog/log-system/logging/" class="button right"><span>日志业务思考和规则</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

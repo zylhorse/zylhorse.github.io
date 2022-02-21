@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>I/O on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/i/o/</link>
+    <description>Recent content in I/O on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language><atom:link href="https://zylhorse.github.io/tags/i/o/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>I/O多路复用-select/poll/epoll</title>
+      <link>https://zylhorse.github.io/blog/concurrence/io/epoll/</link>
+      <pubDate>Fri, 09 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/concurrence/io/epoll/</guid>
+      <description>概述 i/o 多路复用:在单线程中通过记录跟踪多个sock 状态， 来同时管理多路I/O流。用以提高服务器的吞吐能力
+select  select会修改传入的参数数组 任何sock状态改变，select只返回并不告诉是哪个sock状态改变，需要手动遍历 最高监听1024个sock连接； 线程不安全，如果在其他线程关闭sock会导致未知错误  poll  poll 修复很多select 问题， 不在修改参数数组；不在限制sock连接数量； poll 仍然线程不安全  epoll epoll 修复大多数select和poll问题， 线程安全， 并通知哪个sock状态改变；
+epoll工作过程  epoll_create()系统调用。此调用返回一个句柄，之后所有的使用都依靠这个句柄来标识。 epoll_ctl()系统调用。通过此调用向epoll对象中添加、删除、修改事件，并注册回调函数，返回0标识成功，返回-1表示失败。 epoll_wait()系统调用。通过此调用收集收集在epoll监控中已经发生的事件。  epoll 内部工作原理  创建一个红黑树rbr， 用户存放添加到epoll中的监控事件； 创建双链表rdlist， 存放已触发的事件，返回给用户； 当监控事件被触发时，epoll会给每个事件创建epItem结构体，并使用内核回调函数ep_poll_callback将发生的事件添加到rdlist； 调用epoll_wait， 检查rdlist中是否有epItem；如果rdlist不为空， 则将事件复制到用户态， 并将事件数量返回给用户；  epoll 高效原理 </description>
+    </item>
+    
+    <item>
+      <title>多类型I/O操作流程</title>
+      <link>https://zylhorse.github.io/blog/concurrence/io/io/</link>
+      <pubDate>Fri, 03 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/concurrence/io/io/</guid>
+      <description>I/O IO分为两个阶段：
+ 数据准备阶段 内核空间复制数据到用户进程缓冲区（用户空间）阶段  IO类型   阻塞IO 用户线程进行IO读写操作时发生阻塞，等待数据准备就绪
+  非阻塞IO 用户线程进行IO读写操作时不阻塞，但是循环询问内核数据是否就绪
+  多路复用IO
+ 轮询多个IO连接， 只有当真正的事件发生时，采取调用实际的IO操作； 轮询多个IO状态，发生在内核空间；    信号驱动IO
+ 用户线程发起sigaction 系统调用， 给socket注册信号函数后， 继续执行 内核数据准备就绪后，发送信号给用户线程 用户线程收到信号，再发起recvfrom系统调用，将数据复制到用户空间； 用户下线程操作数据；    异步IO
+ 用户线程发起aio_read 系统调用后继续执行 内核处理完IO操作，发送信号给用户线程 IO操作完成； 用户线程直接操作数据；    阻塞IO和非阻塞IO 区别在于第一步数据准备阶段是否阻塞；即IO请求是否阻塞；
+同步IO和异步IO 区别在于第二部内核空间到用户空间进行数据拷贝都会阻塞用户线程；</description>
+    </item>
+    
+  </channel>
+</rss>

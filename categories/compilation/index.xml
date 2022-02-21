@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Compilation on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/compilation/</link>
+    <description>Recent content in Compilation on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 26 Apr 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/compilation/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Makefile是怎样让make工作的</title>
+      <link>https://zylhorse.github.io/blog/compilation/makefile/</link>
+      <pubDate>Sat, 26 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/compilation/makefile/</guid>
+      <description>make版本 GNU make 3.8.1
+Makefile文件告诉make命令怎样去编译和链接程序
+Makefile的规则 target ... : prerequisites ...command... target就是一个目标文件，可以是中间文件，也可以时目标文件。 prerequisites就是生成target所依赖的文件 command就是make需要执行的命令  一个例子 edit : main.o kbd.o command.o display.o \insert.o search.o files.o utils.occ -o edit main.o kbd.o command.o display.o \insert.o search.o files.o utils.omain.o : main.c defs.hcc -c main.ckbd.o : kbd.c defs.h command.hcc -c kbd.ccommand.o : command.c defs.h command.hcc -c command.cdisplay.o : display.c defs.h buffer.hcc -c display.</description>
+    </item>
+    
+    <item>
+      <title>编译器为什么要对代码做自动优化</title>
+      <link>https://zylhorse.github.io/blog/compilation/%E7%BC%96%E8%AF%91%E4%BC%98%E5%8C%96/</link>
+      <pubDate>Thu, 07 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/compilation/%E7%BC%96%E8%AF%91%E4%BC%98%E5%8C%96/</guid>
+      <description>概括  高级编程语言提供的函数、条件语句、循环这样的抽象编程结构极大的提高了编程效率，然而，这也潜在的使性能显著下降。 编译器尝试自动优化代码以提高性能，编译器可以转化循环、条件语句和递归函数、消除代码快和利用目标指令集的优势让代码变得高效而简洁。 因此对于程序员来说写出可读性高的代码比手动优化后变得神秘而难以维护更加可贵。事实上手工优化的代码可能让编译器难以进行额外和更加有效的优化。 比起手动优化代码，程序员更应该考虑程序设计的各个方面，比如使用更快算法，引入线程级并行机制和框架特性。  </description>
+    </item>
+    
+    <item>
+      <title>struct为什么会有字节对齐这个概念</title>
+      <link>https://zylhorse.github.io/blog/compilation/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/</link>
+      <pubDate>Sun, 13 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/compilation/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/</guid>
+      <description>结构体struct  struct 是一种复合数据类型， 它是由基本数据类型组合而成(char, int, float, ...) 编译器将struct中的成员按其alignment分配空间，各个成员在内存中顺序存储 struct中的第一个成员地址为struct的首地址 struct中的每个成员地址具有对齐的特性，如int32其起始地址应该为4的倍数  字节对齐  计算机内存空间按照byte划分 各种类型数据按照规则在内存空间上排列，数据只能从特定的内存地址进行存取  为什么  某些cpu在访问没有进行对齐的变量时，会报错。比如oracle sparc系统 比较常见的没有字节对齐，会损失数据的存取效率。  大部分平台读内存都是从偶地址开始 如果int32存放在偶地址，则一个读周期就可以读出数据 如果放在奇地址，则需要2个读周期    规则  基本类型自身的对齐值  char 1byte short 2byte int/float/double 等 4byte   结构体对齐值 为其成员中对齐值最大的那个 指定/取消对齐值  指定：  #pragma pack (value) __attribute__ ((__packed__))   取消: #pragma pack ()    代码示例 struct A{int a;char b;short c;};struct B{char b;int a;short c;};#pragma pack (2)struct C{char b;int a;short c;};#pragma pack ()#pragma pack (1)struct D{char b;int a;short c;};#pragma pack ()结果是:sizeof(strcut A)值为8sizeof(struct B)的值却是12sizeof(struct C)值是8。sizeof(struct D)值为7。</description>
+    </item>
+    
+    <item>
+      <title>高级语言编译类型</title>
+      <link>https://zylhorse.github.io/blog/compilation/%E7%BC%96%E8%AF%91%E7%B1%BB%E5%9E%8B/</link>
+      <pubDate>Fri, 04 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/compilation/%E7%BC%96%E8%AF%91%E7%B1%BB%E5%9E%8B/</guid>
+      <description>概述 高级语言所编制的程序不能直接被计算机识别，必须经过转换才能被执行
+类型  静态编译（static compilation）  静态编译的程序在执行前全部被翻译成机器码。   解释型（interpretation）  解释型的程序在执行时一句一句的解释执行。   即时编译（Just-in-time compilation）  又称动态翻译，混合static compilation 和 interpretation，运行时将中间码转换成机器码编译。 JIT 首先是compilation，对代码有优化，某个函数或者任意代码第一次调用时进行编译并cache，再次遇到该函数时直接从cache中执行已经编译好的机器码，也不用像interpretation一样对代码重复解释。    </description>
+    </item>
+    
+    <item>
+      <title>进程启动后怎样申请和分配内存空间</title>
+      <link>https://zylhorse.github.io/blog/compilation/%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/</link>
+      <pubDate>Mon, 02 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/compilation/%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/</guid>
+      <description>栈区 stack 由编译器自动分配和释放， 存放程序运行时函数分配的局部变量、函数参数、返回数据等。操作类似数据结构中的栈。
+堆区 heap 由程序分配和手动释放。 如果程序没有主动释放，程序结束后OS回收。 分配类似于数据结构中的链表
+全局区 存放全局变量、静态数据。程序结束由OS回收。 分为已初始化全局区（data）和未初始化全局区（bss）
+常量区 存放常量字符串。程序结束后由OS回收
+代码区 存放函数体的二进制代码
+堆栈区别 申请  栈： 只要系统栈内存空间大于申请空间， 系统将为程序提供内存，否则报异常提示栈溢出； 堆： 操作系统会记录空闲内存地址的链表， 系统收到程序的申请时遍历该链表，找到大于申请空间的堆节点，将其从量表删除并分配给程序同时在该内存空间的首地址标记大小用于delete。 另外由于分配的空间不一定正好等于申请的空间大小， 系统会自动将多余的空间重新放入空闲内存地址列表；  大小限制  栈： 是向低地址扩展的数据结构， 是一块连续的内存区域。栈顶地址和栈的容量由系统预先设定。 堆： 是向高地址扩展的数据结构， 是不连续的内存区域。堆大小受限于计算机系统中有效的虚拟内存。  申请效率  栈： 由系统自动分配， 速度快。程序无法控制 堆： 由new 等分配， 速度慢，且内存不连续容易产生碎片。但是容易管理。  </description>
+    </item>
+    
+  </channel>
+</rss>

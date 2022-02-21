@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="zylhorse blog">
+<meta itemprop="description" content=""><meta property="og:title" content="zylhorse blog" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://zylhorse.github.io/" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="zylhorse blog"/>
+<meta name="twitter:description" content=""/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  
+      
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/log-system/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/">日志业务系统架构设计</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2020-10-27 00:00:00 &#43;0000 UTC">2020-10-27</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="日志业务">日志业务</h2>
+<p>两种日志收集架构</p>
+<ol>
+<li>应用产生日志-&gt; 根据大小/时间 写入文件-&gt; rotation 日志文件 -&gt; 定期查看/定期删除</li>
+<li>应用产生日志-&gt; 传输 -&gt; 过滤/转&hellip;</li></ol>
+  </div>
+  <footer>
+    <a href="/blog/log-system/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/misc/">Golang代码开发杂计</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2020-10-10 00:00:00 &#43;0000 UTC">2020-10-10</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <ul>
+<li>string bytes 互转，可以使用unitptr</li>
+<li>map 会按需扩张，需要内存拷贝和重新hash。 尽量预设定容量空间；</li>
+<li>defer 会多次函数调用参数复制，缓存等问题。所以除了异常捕获外， &hellip;</li></ul>
+  </div>
+  <footer>
+    <a href="/blog/golang/misc/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/browser/chrome-debug/">chrome浏览器手机debug</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2020-08-28 00:00:00 &#43;0000 UTC">2020-08-28</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="环境准备">环境准备</h2>
+<ol>
+<li>手机打开开发人员选项</li>
+<li>用数据线将手机连接到主机</li>
+</ol>
+<h2 id="调试">调试</h2>
+<ol>
+<li>chrome进入<code>inspect</code>:地址栏输入<code>chrome://inspect</code><br>
+<img src="/screenshot/chrome_inspect.png" alt="如图"></li>
+<li>点击对应网址的<code>inspect&hellip;</code></li></ol>
+  </div>
+  <footer>
+    <a href="/blog/browser/chrome-debug/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/graceful/">Golang实现服务优雅的重启</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2020-07-13 00:00:00 &#43;0000 UTC">2020-07-13</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <p><a href="https://grisha.org/blog/2014/06/03/graceful-restart-in-golang/">https://grisha.org/blog/2014/06/03/graceful-restart-in-golang/</a></p>
+
+  </div>
+  <footer>
+    <a href="/blog/golang/graceful/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/%E9%83%A8%E5%88%86%E5%87%BD%E6%95%B0/">Golang API实例</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2020-06-11 00:00:00 &#43;0000 UTC">2020-06-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="setfinalizer">SetFinalizer</h2>
+<ul>
+<li>
+<p><code>func SetFinalizer(obj interface{}, finalizer interface{})</code></p>
+<ol>
+<li>参数<code>obj</code>必须是指针类型。</li>
+<li>参数<code>finalizer</code>是&hellip;</li></ol></li></ul>
+  </div>
+  <footer>
+    <a href="/blog/golang/%E9%83%A8%E5%88%86%E5%87%BD%E6%95%B0/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+      <div class="pagination">
+          
+              <a href="/page/9/" class="button left"><span>上页</span></a>
+          
+          
+              <a href="/page/11/" class="button right"><span>下页</span></a>
+          
+      </div>
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

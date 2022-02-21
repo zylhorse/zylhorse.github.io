@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Docker部署和配置nsqbeat - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Docker部署和配置nsqbeat">
+<meta itemprop="description" content="############################# Nsqbeat ######################################nsqbeat:# A list of NSQ Lookup Daemons to connect tolookupdhttpaddrs: [&quot;192.168.20.99:4161&quot;]# a Topic to sucscribe totopic: &quot;logic.log&quot;# The channel name to joinchannel: &quot;nsqbeat&quot;# How many in Flightsmaxinflight: 200# If data in the topic is Json then use the decoder, if not set to something else like plaincodec: &quot;text&quot;# use Golang time format layout to define if @timestamp exists and has a different formattimelayout: &quot;2006-01-02T15:04:05."><meta itemprop="datePublished" content="2020-12-03T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-12-03T00:00:00+00:00" />
+<meta itemprop="wordCount" content="817">
+<meta itemprop="keywords" content="NSQ," /><meta property="og:title" content="Docker部署和配置nsqbeat" />
+<meta property="og:description" content="############################# Nsqbeat ######################################nsqbeat:# A list of NSQ Lookup Daemons to connect tolookupdhttpaddrs: [&quot;192.168.20.99:4161&quot;]# a Topic to sucscribe totopic: &quot;logic.log&quot;# The channel name to joinchannel: &quot;nsqbeat&quot;# How many in Flightsmaxinflight: 200# If data in the topic is Json then use the decoder, if not set to something else like plaincodec: &quot;text&quot;# use Golang time format layout to define if @timestamp exists and has a different formattimelayout: &quot;2006-01-02T15:04:05." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/log-system/docker%E5%AE%89%E8%A3%85nsqbeat/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2020-12-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-12-03T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Docker部署和配置nsqbeat"/>
+<meta name="twitter:description" content="############################# Nsqbeat ######################################nsqbeat:# A list of NSQ Lookup Daemons to connect tolookupdhttpaddrs: [&quot;192.168.20.99:4161&quot;]# a Topic to sucscribe totopic: &quot;logic.log&quot;# The channel name to joinchannel: &quot;nsqbeat&quot;# How many in Flightsmaxinflight: 200# If data in the topic is Json then use the decoder, if not set to something else like plaincodec: &quot;text&quot;# use Golang time format layout to define if @timestamp exists and has a different formattimelayout: &quot;2006-01-02T15:04:05."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/log-system/docker%E5%AE%89%E8%A3%85nsqbeat/">Docker部署和配置nsqbeat</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2020-12-03 00:00:00 &#43;0000 UTC">2020-12-03</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <pre tabindex="0"><code>
+############################# Nsqbeat ######################################
+
+nsqbeat:
+    # A list of NSQ Lookup Daemons to connect to
+    lookupdhttpaddrs: [&quot;192.168.20.99:4161&quot;]
+    # a Topic to sucscribe to
+    topic: &quot;logic.log&quot;
+    # The channel name to join
+    channel: &quot;nsqbeat&quot;
+    # How many in Flights
+    maxinflight: 200
+    # If data in the topic is Json then use the decoder, if not set to something else like plain
+    codec: &quot;text&quot;
+    # use Golang time format layout to define if @timestamp exists and has a different format
+    timelayout: &quot;2006-01-02T15:04:05.000Z&quot;
+
+
+#================================ General =====================================
+
+# The name of the shipper that publishes the network data. It can be used to group
+# all the transactions sent by a single shipper in the web interface.
+#name:
+
+# The tags of the shipper are included in their own field with each
+# transaction published.
+#tags: [&quot;service-X&quot;, &quot;web-tier&quot;]
+
+# Optional fields that you can specify to add additional information to the
+# output.
+#fields:
+#  env: staging
+
+
+#============================== Dashboards =====================================
+# These settings control loading the sample dashboards to the Kibana index. Loading
+# the dashboards is disabled by default and can be enabled either by setting the
+# options here, or by using the `-setup` CLI flag or the `setup` command.
+#setup.dashboards.enabled: false
+
+# The URL from where to download the dashboards archive. By default this URL
+# has a value which is computed based on the Beat name and version. For released
+# versions, this URL points to the dashboard archive on the artifacts.elastic.co
+# website.
+#setup.dashboards.url:
+
+#============================== Kibana =====================================
+
+# Starting with Beats version 6.0.0, the dashboards are loaded via the Kibana API.
+# This requires a Kibana endpoint configuration.
+setup.kibana:
+
+  # Kibana Host
+  # Scheme and port can be left out and will be set to the default (http and 5601)
+  # In case you specify and additional path, the scheme is required: http://localhost:5601/path
+  # IPv6 addresses should always be defined as: https://[2001:db8::1]:5601
+  host: &quot;192.168.20.99:5601&quot;
+
+#============================= Elastic Cloud ==================================
+
+# These settings simplify using nsqbeat with the Elastic Cloud (https://cloud.elastic.co/).
+
+# The cloud.id setting overwrites the `output.elasticsearch.hosts` and
+# `setup.kibana.host` options.
+# You can find the `cloud.id` in the Elastic Cloud web UI.
+#cloud.id:
+
+# The cloud.auth setting overwrites the `output.elasticsearch.username` and
+# `output.elasticsearch.password` settings. The format is `&lt;user&gt;:&lt;pass&gt;`.
+#cloud.auth:
+
+#================================ Outputs =====================================
+
+# Configure what output to use when sending the data collected by the beat.
+
+#-------------------------- Elasticsearch output ------------------------------
+output.elasticsearch:
+  # Array of hosts to connect to.
+  hosts: [&quot;192.168.20.99:9200&quot;]
+
+  # Optional protocol and basic auth credentials.
+  #protocol: &quot;https&quot;
+  #username: &quot;elastic&quot;
+  #password: &quot;changeme&quot;
+
+#============================== Template =====================================
+
+# A template is used to set the mapping in Elasticsearch
+# By default template loading is enabled and the template is loaded.
+# These settings can be adjusted to load your own template or overwrite existing ones.
+
+# Set to false to disable template loading.
+setup.template.enabled: false
+
+# Template name. By default the template name is &quot;nsqbeat-%{[beat.version]}&quot;
+# The template name and pattern has to be set in case the elasticsearch index pattern is modified.
+#setup.template.name: &quot;nsqbeat-%{[beat.version]}&quot;
+
+# Template pattern. By default the template pattern is &quot;-%{[beat.version]}-*&quot; to apply to the default index settings.
+# The first part is the version of the beat and then -* is used to match all daily indices.
+# The template name and pattern has to be set in case the elasticsearch index pattern is modified.
+#setup.template.pattern: &quot;nsqbeat-%{[beat.version]}-*&quot;
+
+# Path to fields.yml file to generate the template
+#setup.template.fields: &quot;${path.config}/fields.yml&quot;
+
+# Overwrite existing template
+#setup.template.overwrite: false
+
+# Elasticsearch template settings
+setup.template.settings:
+
+  # A dictionary of settings to place into the settings.index dictionary
+  # of the Elasticsearch template. For more details, please check
+  # https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html
+  #index:
+    #number_of_shards: 1
+    #codec: best_compression
+    #number_of_routing_shards: 30
+
+  # A dictionary of settings for the _source field. For more details, please check
+  # https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-source-field.html
+  #_source:
+    #enabled: false
+
+#----------------------------- Logstash output --------------------------------
+#output.logstash:
+  # The Logstash hosts
+  #hosts: [&quot;localhost:5044&quot;]
+
+  # Optional SSL. By default is off.
+  # List of root certificates for HTTPS server verifications
+  #ssl.certificate_authorities: [&quot;/etc/pki/root/ca.pem&quot;]
+
+  # Certificate for SSL client authentication
+  #ssl.certificate: &quot;/etc/pki/client/cert.pem&quot;
+
+  # Client Certificate Key
+  #ssl.key: &quot;/etc/pki/client/cert.key&quot;
+
+#================================ Logging =====================================
+
+# Sets log level. The default log level is info.
+# Available log levels are: error, warning, info, debug
+logging.level: debug
+
+# At debug level, you can selectively enable logging only for some components.
+# To enable all selectors use [&quot;*&quot;]. Examples of other selectors are &quot;beat&quot;,
+# &quot;publish&quot;, &quot;service&quot;.
+#logging.selectors: [&quot;*&quot;]
+
+#============================== Xpack Monitoring ===============================
+# nsqbeat can export internal metrics to a central Elasticsearch monitoring
+# cluster.  This requires xpack monitoring to be enabled in Elasticsearch.  The
+# reporting is disabled by default.
+
+# Set to true to enable the monitoring reporter.
+#xpack.monitoring.enabled: false
+
+# Uncomment to send the metrics to Elasticsearch. Most settings from the
+# Elasticsearch output are accepted here as well. Any setting that is not set is
+# automatically inherited from the Elasticsearch output configuration, so if you
+# have the Elasticsearch output configured, you can simply uncomment the
+# following line.
+#xpack.monitoring.elasticsearch:
+
+</code></pre>
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/log-system/">Log System</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/nsq/">NSQ</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents"></nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/elk/elk/" class="button left"><span>ELK简介及日志收集、服务监控、性能监控</span></a>
+    
+    
+      <a href="/blog/distribution-system/%E9%99%90%E6%B5%81/" class="button right"><span>服务治理-限流</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Log&#32;System
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

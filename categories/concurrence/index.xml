@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Concurrence on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/concurrence/</link>
+    <description>Recent content in Concurrence on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 16 Jan 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/concurrence/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>并发编程-乐观锁和悲观锁</title>
+      <link>https://zylhorse.github.io/blog/concurrence/%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81/</link>
+      <pubDate>Fri, 16 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/concurrence/%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81/</guid>
+      <description>乐观锁 乐观锁假设数据一般不会修改， 所以在数据提交修改的时候， 才会对数据冲突进行检查；如果冲突则交给用户决定如何去做；对数据竞争持乐观态度
+乐观锁实现 cas（compare and swap）  CAS机制当中使用了3个基本操作数：内存地址V，旧的预期值A，要修改的新值B。 更新一个变量的时候，只有当变量的预期值A和内存地址V当中的实际值相同时，才会将内存地址V对应的值修改为B。 CAS一般需要加for循环，实现类似自旋乐观锁。  mvcc（Multi-Version Concurrency Control）  每行数据都增加两个隐藏字段，一个记录创建的版本号，一个记录删除的版本号 在多版本并发控制中，为了保证数据操作在多线程过程中，保证事务隔离的机制，降低锁竞争的压力，保证较高的并发量。 在每开启一个事务时，会生成一个事务的版本号，被操作的数据会生成一条新的数据行（临时），但是在提交前对其他事务是不可见的，对于数据的更新（包括增删改）操作成功，会将这个版本号更新到数据的行中，事务提交成功，将新的版本号更新到此数据行中，这样保证了每个事务操作的数据，都是互不影响的，也不存在锁的问题。  悲观锁 悲观锁具有强烈的独占性和排他性；一般认为数据被并发修改的概率较大，所以需要在修改前先加锁；对数据竞争持态度。</description>
+    </item>
+    
+    <item>
+      <title>并发编程-线程锁和死锁</title>
+      <link>https://zylhorse.github.io/blog/concurrence/%E7%BA%BF%E7%A8%8B%E9%94%81/</link>
+      <pubDate>Fri, 16 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/concurrence/%E7%BA%BF%E7%A8%8B%E9%94%81/</guid>
+      <description>锁 在多线程编程中， 对共享资源竞争的保护机制；
+锁缺点  引起线程阻塞 申请和释放锁， 增加线程的调度切换， 影响系统性能 容易造成死锁和活锁等问题 优先级反转 不公平 效率低  公平锁 在锁上等待时间最长的线程优先获取锁的使用权
+非公平锁 线程获取锁的使用权是随机的， cpu时间片轮到哪个线程， 哪个线程就获取到锁；
+锁类型  自旋锁（spin lock） ： 自旋锁如果已经被其他线程获取，则调用者就一直循环等待；自旋锁时非阻塞锁， 循环等待时会不断消耗cpu， 不会使线程挂起； 互斥锁（mutex lock）： 互斥锁被其他线程获取， 则调用者会阻塞线程， 线程被挂起， 不会消耗cpu； 读写锁（read write lock）：读写锁允许资源可以同时被多个线程读取， 但是读写时互斥的且同时只能有一个线程去写； 条件锁 （condition lock）：条件锁检查条件，如果条件不满足则线程阻塞等待， 并解锁mutex。当收到其他线程的notify条件状态改变后，线程苏醒，获取mutex并上锁。  响应中断  一个线程霸占锁， 手动中断该线程后，使得该锁发出中断响应； 其他等待线程收到该中断信息，就可以获取到锁；  限时等待 线程在获取锁时， 设置等待时间， 超过该时间， 则停止等待， 获取锁失败；
+死锁 多个线程在运行中因争夺共享资源出现互相等待的现象
+死锁发生条件  互斥： 资源一次只能被一个进程占用；其他进程请求需要等待； 请求和保持： 一个进程至少占用一个资源， 并等待申请其他资源， 而该资源被其他进程占用。 不剥夺：进程占用的资源只能自己释放， 其他进程不能强行夺取； 循环等待：有一组等待进程 {P0，P1，…，Pn}，P0 等待的资源为 P1 占有，P1 等待的资源为 P2 占有，……，Pn-1 等待的资源为 Pn 占有，Pn 等待的资源为 P0 占有   四个条件必须同时成立才会出现死锁。</description>
+    </item>
+    
+    <item>
+      <title>I/O多路复用-select/poll/epoll</title>
+      <link>https://zylhorse.github.io/blog/concurrence/io/epoll/</link>
+      <pubDate>Fri, 09 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/concurrence/io/epoll/</guid>
+      <description>概述 i/o 多路复用:在单线程中通过记录跟踪多个sock 状态， 来同时管理多路I/O流。用以提高服务器的吞吐能力
+select  select会修改传入的参数数组 任何sock状态改变，select只返回并不告诉是哪个sock状态改变，需要手动遍历 最高监听1024个sock连接； 线程不安全，如果在其他线程关闭sock会导致未知错误  poll  poll 修复很多select 问题， 不在修改参数数组；不在限制sock连接数量； poll 仍然线程不安全  epoll epoll 修复大多数select和poll问题， 线程安全， 并通知哪个sock状态改变；
+epoll工作过程  epoll_create()系统调用。此调用返回一个句柄，之后所有的使用都依靠这个句柄来标识。 epoll_ctl()系统调用。通过此调用向epoll对象中添加、删除、修改事件，并注册回调函数，返回0标识成功，返回-1表示失败。 epoll_wait()系统调用。通过此调用收集收集在epoll监控中已经发生的事件。  epoll 内部工作原理  创建一个红黑树rbr， 用户存放添加到epoll中的监控事件； 创建双链表rdlist， 存放已触发的事件，返回给用户； 当监控事件被触发时，epoll会给每个事件创建epItem结构体，并使用内核回调函数ep_poll_callback将发生的事件添加到rdlist； 调用epoll_wait， 检查rdlist中是否有epItem；如果rdlist不为空， 则将事件复制到用户态， 并将事件数量返回给用户；  epoll 高效原理 </description>
+    </item>
+    
+    <item>
+      <title>多类型I/O操作流程</title>
+      <link>https://zylhorse.github.io/blog/concurrence/io/io/</link>
+      <pubDate>Fri, 03 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/concurrence/io/io/</guid>
+      <description>I/O IO分为两个阶段：
+ 数据准备阶段 内核空间复制数据到用户进程缓冲区（用户空间）阶段  IO类型   阻塞IO 用户线程进行IO读写操作时发生阻塞，等待数据准备就绪
+  非阻塞IO 用户线程进行IO读写操作时不阻塞，但是循环询问内核数据是否就绪
+  多路复用IO
+ 轮询多个IO连接， 只有当真正的事件发生时，采取调用实际的IO操作； 轮询多个IO状态，发生在内核空间；    信号驱动IO
+ 用户线程发起sigaction 系统调用， 给socket注册信号函数后， 继续执行 内核数据准备就绪后，发送信号给用户线程 用户线程收到信号，再发起recvfrom系统调用，将数据复制到用户空间； 用户下线程操作数据；    异步IO
+ 用户线程发起aio_read 系统调用后继续执行 内核处理完IO操作，发送信号给用户线程 IO操作完成； 用户线程直接操作数据；    阻塞IO和非阻塞IO 区别在于第一步数据准备阶段是否阻塞；即IO请求是否阻塞；
+同步IO和异步IO 区别在于第二部内核空间到用户空间进行数据拷贝都会阻塞用户线程；</description>
+    </item>
+    
+  </channel>
+</rss>

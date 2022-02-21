@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang代码开发杂计 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Golang代码开发杂计">
+<meta itemprop="description" content=" string bytes 互转，可以使用unitptr map 会按需扩张，需要内存拷贝和重新hash。 尽量预设定容量空间； defer 会多次函数调用参数复制，缓存等问题。所以除了异常捕获外， 资源释放等可以使用goto closure 闭包 隐式携带上下文环境； 接口调用这种动态绑定的方式性能不如对象赋值的直接调用；call(obj)&amp;call(interface) reflect 性能问题； setFinalizer（延长生命周期，等待第二次gc） 避免内存清理时，对象互相依赖导致循环等待，内存释放不了；  优雅的打印  fmt打印  type Pretty struct {Ugg stringApp string}p1 := Pretty{Ugg: &quot;fly&quot;,App: &quot;bird&quot;,}fmt.Printf(&quot;%&#43;v\n&quot;, p1)fmt.Printf(&quot;%#v\n&quot;, p1)output:{Ugg:fly App:bird}pkg.Pretty{Ugg:&quot;fly&quot;, App:&quot;bird&quot;}"><meta itemprop="datePublished" content="2020-10-10T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-10-10T00:00:00+00:00" />
+<meta itemprop="wordCount" content="45">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Golang代码开发杂计" />
+<meta property="og:description" content=" string bytes 互转，可以使用unitptr map 会按需扩张，需要内存拷贝和重新hash。 尽量预设定容量空间； defer 会多次函数调用参数复制，缓存等问题。所以除了异常捕获外， 资源释放等可以使用goto closure 闭包 隐式携带上下文环境； 接口调用这种动态绑定的方式性能不如对象赋值的直接调用；call(obj)&amp;call(interface) reflect 性能问题； setFinalizer（延长生命周期，等待第二次gc） 避免内存清理时，对象互相依赖导致循环等待，内存释放不了；  优雅的打印  fmt打印  type Pretty struct {Ugg stringApp string}p1 := Pretty{Ugg: &quot;fly&quot;,App: &quot;bird&quot;,}fmt.Printf(&quot;%&#43;v\n&quot;, p1)fmt.Printf(&quot;%#v\n&quot;, p1)output:{Ugg:fly App:bird}pkg.Pretty{Ugg:&quot;fly&quot;, App:&quot;bird&quot;}" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/misc/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2020-10-10T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-10-10T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang代码开发杂计"/>
+<meta name="twitter:description" content=" string bytes 互转，可以使用unitptr map 会按需扩张，需要内存拷贝和重新hash。 尽量预设定容量空间； defer 会多次函数调用参数复制，缓存等问题。所以除了异常捕获外， 资源释放等可以使用goto closure 闭包 隐式携带上下文环境； 接口调用这种动态绑定的方式性能不如对象赋值的直接调用；call(obj)&amp;call(interface) reflect 性能问题； setFinalizer（延长生命周期，等待第二次gc） 避免内存清理时，对象互相依赖导致循环等待，内存释放不了；  优雅的打印  fmt打印  type Pretty struct {Ugg stringApp string}p1 := Pretty{Ugg: &quot;fly&quot;,App: &quot;bird&quot;,}fmt.Printf(&quot;%&#43;v\n&quot;, p1)fmt.Printf(&quot;%#v\n&quot;, p1)output:{Ugg:fly App:bird}pkg.Pretty{Ugg:&quot;fly&quot;, App:&quot;bird&quot;}"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/misc/">Golang代码开发杂计</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2020-10-10 00:00:00 &#43;0000 UTC">2020-10-10</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <ul>
+<li>string bytes 互转，可以使用unitptr</li>
+<li>map 会按需扩张，需要内存拷贝和重新hash。 尽量预设定容量空间；</li>
+<li>defer 会多次函数调用参数复制，缓存等问题。所以除了异常捕获外， 资源释放等可以使用goto</li>
+<li>closure 闭包 隐式携带上下文环境；</li>
+<li>接口调用这种动态绑定的方式性能不如对象赋值的直接调用；call(obj)&amp;call(interface)</li>
+<li>reflect 性能问题；</li>
+<li>setFinalizer（延长生命周期，等待第二次gc） 避免内存清理时，对象互相依赖导致循环等待，内存释放不了；</li>
+</ul>
+<h2 id="优雅的打印">优雅的打印</h2>
+<ol>
+<li>fmt打印</li>
+</ol>
+<pre tabindex="0"><code>type Pretty struct {
+	Ugg string
+	App string
+}
+p1 := Pretty{
+    Ugg: &quot;fly&quot;,
+    App: &quot;bird&quot;,
+}
+
+fmt.Printf(&quot;%+v\n&quot;, p1)
+fmt.Printf(&quot;%#v\n&quot;, p1)
+
+output:
+{Ugg:fly App:bird}
+pkg.Pretty{Ugg:&quot;fly&quot;, App:&quot;bird&quot;}
+</code></pre>
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#优雅的打印">优雅的打印</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/log-system/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/" class="button left"><span>日志业务系统架构设计</span></a>
+    
+    
+      <a href="/blog/browser/chrome-debug/" class="button right"><span>chrome浏览器手机debug</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

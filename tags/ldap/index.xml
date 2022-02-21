@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>LDAP on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/ldap/</link>
+    <description>Recent content in LDAP on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 03 Jul 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/ldap/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LDAP协议简介</title>
+      <link>https://zylhorse.github.io/blog/web/ldap/</link>
+      <pubDate>Wed, 03 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/web/ldap/</guid>
+      <description>概述 LDAP: light diretory access protocol, 轻量级目录访问协议； LDAP 目录服务，由目录数据库和访问协议组成；
+目录树  目录树： 在目录服务系统中， 整个目录信息集， 都可以表示为一个目录信息树。树中的每个节点是一个条目； 条目： 每个条目是一条记录， 每个条目有自己唯一的名称（DN） 对象类： 与某个实体类型对应的一组属性，可以继承。这样父类的属性也会被继承下来。 属性： 描述条目的某方面信息。 一个属性由一个属性类型和一个或多个属性值组成， 属性由必须属性和非必须属性。  关键字    关键字 英文全称 含义     dc domain Component 域名的部分，其格式是将完整的域名分成几部分，如域名为example.com变成dc=example,dc=com（一条记录的所属位置）   uid User Id 用户ID songtao.xu（一条记录的ID）   ou Organization Unit 组织单位，组织单位可以包含其他各种对象（包括其他组织单元），如“oa组”（一条记录的所属组织）   cn Common Name 公共名称，如“Thomas Johansson”（一条记录的名称）   sn Surname 姓，如“许”   dn Distinguished Name “uid=songtao.</description>
+    </item>
+    
+  </channel>
+</rss>

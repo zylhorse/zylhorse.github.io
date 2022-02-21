@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Erlang并发编程错误 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Erlang并发编程错误">
+<meta itemprop="description" content="错误处理理念  并发Erlang程序里的错误处理建立在远程检测和处理错误的概念上。我们选择让发生错误的进程崩溃，然后在其它进程里面进行纠错处理。 在设计容错式的系统时就假设错误会发生，进程会崩溃。因此能够在错误发生时检测出来，可能的话也需要纠正他们。同时避免系统用户注意到任何故障，或者在错误修复过程中遭受服务终端。 检测错误和找出故障原因是内建于Erlang虚拟机底层的功能，也是Erlang语言编程的一部分。标准OTP库提供了构建互相监视的进程组和检测到错误时采取纠正措施的功能。本章介绍的是语言层面的错误检测和恢复。 总结为两句话：“让其它进程修复错误&quot;和&quot;任其崩溃&quot;  让其它进程修复错误  要让一个进程监控另一个，需要在这两个进程之间建立链接(link)或者(monitor)。如果被链接或者监视的进程挂了，监控进程会收到通知。 监控进程可以实现跨机器的透明运作，因此运行在某一台机器上的进程可以监视运行在不同机器上进程的行为。这是编写容错式系统的基础。不能在一台机器上构建容错式系统，因为崩溃的可能是整台机器。一台机器负责计算，其它的机器负责监控它，并在一台机器崩溃时接管计算。  任其崩溃  在Erlang中，我们把应用程序构建成两部分：一部分负责解决问题，另一部分负责在错误发生时纠正他们。 负责解决问题的部分尽可能少的编写防御性代码，并假设函数所有参数是正确的，程序运行正常。 负责纠正错误的部分往往是通用的，因此同一段错误纠正代码可以用在许多不同的应用程序里面。例如：如果数据库的某个事务出错，就简单终止该事务，让系统把数据库恢复到出错之前的状态；如果操作系统里面的某个进程崩溃，就让操作系统关闭所有打开的文件和套接字，然后让系统恢复到某个稳定状态。  任其崩溃意义  不必编写防御性代码来防止错误，直接崩溃就好。 不必思考应对措施，选择直接崩溃，让别人来修复错误。 不会使错误恶化，无需在知道出错后进行额外的计算。 如果错误发生后第一时间通知，就能得到非常好的错误诊断。错误发生后继续运行会导致更多的错误，让调试更困难。 编写错误恢复代码时不用担心崩溃的原因，只要把注意力放到事后的清理上。 简化系统架构，这样我们就能把应用程序和错误恢复当成两个独立的问题来思考。  错误处理的术语含义  进程   进程有两种：普通进程和系统进程。spawn创建的是普通进程。普通进程可以执行内置函数process_flag（trap_exit,true)变成系统进程。
+ 连接   进程可以互相连接。如果A和B两个进程有连接，而A出于某种原因终止了，就会向B发送一个错误信号，反之亦然。
+ 连接组   进程P的连接组是指与进程P相连的一组进程。
+ 监视   监视和连接相似，但它是单向的。如果A监视B，而B出于某种原因终止了，就会向A发送一个&quot;宕机&quot;的消息，但反过来就不行了。
+ 消息和错误信号   进程协作的方式是交换消息和错误信号。消息是通过基本函数send发送的，错误信号则是进程崩溃或终止的时候自动发送的。错误信号会发送给终止进程的连接组。
+ 错误信号的接受   当系统进程收到错误信号时，该信号被转换成{&lsquo;Exit&rsquo;,Pid,Why}形式的信息。Pid是终止进程的标识，Why是终止的原因。如果无错误终止，Why就会是原子normal，否则会是错误描述。当普通进程收到错误信号时，如果退出原因不是normal，该进程就会终止。当它终止时，同样会向它的连接组广播一个退出信号。
+ 显示错误信号   任何执行exit(Why)的进程都会终止（如果代码不是在catch或者try的范围内执行的话），并向它的连接组广播一个带有原因Why的退出信号。进程可以通过执行exit(Pid,Why)来发送一个&quot;虚假&quot;的错误信号。这种情况Pid会收到一个带有原因Why的退出信号。调用exit/2的进程则不会终止。
+ 不可捕捉的退出信号   进程收到摧毁信号(kill signal)时会终止。摧毁信号通过调用exit(Pid,kill)生成。这种信号会绕过常规的错误信号处理机制，不会被转换成消息。摧毁信号只应该用在其它错误处理机制无法终止的顽固进程上。
+ 创建链接 调用接口：link(Pid)。建立调用进程与Pid进程之间的连接。"><meta itemprop="datePublished" content="2016-02-05T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2016-02-05T00:00:00+00:00" />
+<meta itemprop="wordCount" content="114">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Erlang并发编程错误" />
+<meta property="og:description" content="错误处理理念  并发Erlang程序里的错误处理建立在远程检测和处理错误的概念上。我们选择让发生错误的进程崩溃，然后在其它进程里面进行纠错处理。 在设计容错式的系统时就假设错误会发生，进程会崩溃。因此能够在错误发生时检测出来，可能的话也需要纠正他们。同时避免系统用户注意到任何故障，或者在错误修复过程中遭受服务终端。 检测错误和找出故障原因是内建于Erlang虚拟机底层的功能，也是Erlang语言编程的一部分。标准OTP库提供了构建互相监视的进程组和检测到错误时采取纠正措施的功能。本章介绍的是语言层面的错误检测和恢复。 总结为两句话：“让其它进程修复错误&quot;和&quot;任其崩溃&quot;  让其它进程修复错误  要让一个进程监控另一个，需要在这两个进程之间建立链接(link)或者(monitor)。如果被链接或者监视的进程挂了，监控进程会收到通知。 监控进程可以实现跨机器的透明运作，因此运行在某一台机器上的进程可以监视运行在不同机器上进程的行为。这是编写容错式系统的基础。不能在一台机器上构建容错式系统，因为崩溃的可能是整台机器。一台机器负责计算，其它的机器负责监控它，并在一台机器崩溃时接管计算。  任其崩溃  在Erlang中，我们把应用程序构建成两部分：一部分负责解决问题，另一部分负责在错误发生时纠正他们。 负责解决问题的部分尽可能少的编写防御性代码，并假设函数所有参数是正确的，程序运行正常。 负责纠正错误的部分往往是通用的，因此同一段错误纠正代码可以用在许多不同的应用程序里面。例如：如果数据库的某个事务出错，就简单终止该事务，让系统把数据库恢复到出错之前的状态；如果操作系统里面的某个进程崩溃，就让操作系统关闭所有打开的文件和套接字，然后让系统恢复到某个稳定状态。  任其崩溃意义  不必编写防御性代码来防止错误，直接崩溃就好。 不必思考应对措施，选择直接崩溃，让别人来修复错误。 不会使错误恶化，无需在知道出错后进行额外的计算。 如果错误发生后第一时间通知，就能得到非常好的错误诊断。错误发生后继续运行会导致更多的错误，让调试更困难。 编写错误恢复代码时不用担心崩溃的原因，只要把注意力放到事后的清理上。 简化系统架构，这样我们就能把应用程序和错误恢复当成两个独立的问题来思考。  错误处理的术语含义  进程   进程有两种：普通进程和系统进程。spawn创建的是普通进程。普通进程可以执行内置函数process_flag（trap_exit,true)变成系统进程。
+ 连接   进程可以互相连接。如果A和B两个进程有连接，而A出于某种原因终止了，就会向B发送一个错误信号，反之亦然。
+ 连接组   进程P的连接组是指与进程P相连的一组进程。
+ 监视   监视和连接相似，但它是单向的。如果A监视B，而B出于某种原因终止了，就会向A发送一个&quot;宕机&quot;的消息，但反过来就不行了。
+ 消息和错误信号   进程协作的方式是交换消息和错误信号。消息是通过基本函数send发送的，错误信号则是进程崩溃或终止的时候自动发送的。错误信号会发送给终止进程的连接组。
+ 错误信号的接受   当系统进程收到错误信号时，该信号被转换成{&lsquo;Exit&rsquo;,Pid,Why}形式的信息。Pid是终止进程的标识，Why是终止的原因。如果无错误终止，Why就会是原子normal，否则会是错误描述。当普通进程收到错误信号时，如果退出原因不是normal，该进程就会终止。当它终止时，同样会向它的连接组广播一个退出信号。
+ 显示错误信号   任何执行exit(Why)的进程都会终止（如果代码不是在catch或者try的范围内执行的话），并向它的连接组广播一个带有原因Why的退出信号。进程可以通过执行exit(Pid,Why)来发送一个&quot;虚假&quot;的错误信号。这种情况Pid会收到一个带有原因Why的退出信号。调用exit/2的进程则不会终止。
+ 不可捕捉的退出信号   进程收到摧毁信号(kill signal)时会终止。摧毁信号通过调用exit(Pid,kill)生成。这种信号会绕过常规的错误信号处理机制，不会被转换成消息。摧毁信号只应该用在其它错误处理机制无法终止的顽固进程上。
+ 创建链接 调用接口：link(Pid)。建立调用进程与Pid进程之间的连接。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/erlang/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2016-02-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2016-02-05T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Erlang并发编程错误"/>
+<meta name="twitter:description" content="错误处理理念  并发Erlang程序里的错误处理建立在远程检测和处理错误的概念上。我们选择让发生错误的进程崩溃，然后在其它进程里面进行纠错处理。 在设计容错式的系统时就假设错误会发生，进程会崩溃。因此能够在错误发生时检测出来，可能的话也需要纠正他们。同时避免系统用户注意到任何故障，或者在错误修复过程中遭受服务终端。 检测错误和找出故障原因是内建于Erlang虚拟机底层的功能，也是Erlang语言编程的一部分。标准OTP库提供了构建互相监视的进程组和检测到错误时采取纠正措施的功能。本章介绍的是语言层面的错误检测和恢复。 总结为两句话：“让其它进程修复错误&quot;和&quot;任其崩溃&quot;  让其它进程修复错误  要让一个进程监控另一个，需要在这两个进程之间建立链接(link)或者(monitor)。如果被链接或者监视的进程挂了，监控进程会收到通知。 监控进程可以实现跨机器的透明运作，因此运行在某一台机器上的进程可以监视运行在不同机器上进程的行为。这是编写容错式系统的基础。不能在一台机器上构建容错式系统，因为崩溃的可能是整台机器。一台机器负责计算，其它的机器负责监控它，并在一台机器崩溃时接管计算。  任其崩溃  在Erlang中，我们把应用程序构建成两部分：一部分负责解决问题，另一部分负责在错误发生时纠正他们。 负责解决问题的部分尽可能少的编写防御性代码，并假设函数所有参数是正确的，程序运行正常。 负责纠正错误的部分往往是通用的，因此同一段错误纠正代码可以用在许多不同的应用程序里面。例如：如果数据库的某个事务出错，就简单终止该事务，让系统把数据库恢复到出错之前的状态；如果操作系统里面的某个进程崩溃，就让操作系统关闭所有打开的文件和套接字，然后让系统恢复到某个稳定状态。  任其崩溃意义  不必编写防御性代码来防止错误，直接崩溃就好。 不必思考应对措施，选择直接崩溃，让别人来修复错误。 不会使错误恶化，无需在知道出错后进行额外的计算。 如果错误发生后第一时间通知，就能得到非常好的错误诊断。错误发生后继续运行会导致更多的错误，让调试更困难。 编写错误恢复代码时不用担心崩溃的原因，只要把注意力放到事后的清理上。 简化系统架构，这样我们就能把应用程序和错误恢复当成两个独立的问题来思考。  错误处理的术语含义  进程   进程有两种：普通进程和系统进程。spawn创建的是普通进程。普通进程可以执行内置函数process_flag（trap_exit,true)变成系统进程。
+ 连接   进程可以互相连接。如果A和B两个进程有连接，而A出于某种原因终止了，就会向B发送一个错误信号，反之亦然。
+ 连接组   进程P的连接组是指与进程P相连的一组进程。
+ 监视   监视和连接相似，但它是单向的。如果A监视B，而B出于某种原因终止了，就会向A发送一个&quot;宕机&quot;的消息，但反过来就不行了。
+ 消息和错误信号   进程协作的方式是交换消息和错误信号。消息是通过基本函数send发送的，错误信号则是进程崩溃或终止的时候自动发送的。错误信号会发送给终止进程的连接组。
+ 错误信号的接受   当系统进程收到错误信号时，该信号被转换成{&lsquo;Exit&rsquo;,Pid,Why}形式的信息。Pid是终止进程的标识，Why是终止的原因。如果无错误终止，Why就会是原子normal，否则会是错误描述。当普通进程收到错误信号时，如果退出原因不是normal，该进程就会终止。当它终止时，同样会向它的连接组广播一个退出信号。
+ 显示错误信号   任何执行exit(Why)的进程都会终止（如果代码不是在catch或者try的范围内执行的话），并向它的连接组广播一个带有原因Why的退出信号。进程可以通过执行exit(Pid,Why)来发送一个&quot;虚假&quot;的错误信号。这种情况Pid会收到一个带有原因Why的退出信号。调用exit/2的进程则不会终止。
+ 不可捕捉的退出信号   进程收到摧毁信号(kill signal)时会终止。摧毁信号通过调用exit(Pid,kill)生成。这种信号会绕过常规的错误信号处理机制，不会被转换成消息。摧毁信号只应该用在其它错误处理机制无法终止的顽固进程上。
+ 创建链接 调用接口：link(Pid)。建立调用进程与Pid进程之间的连接。"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF/">Erlang并发编程错误</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-02-05 00:00:00 &#43;0000 UTC">2016-02-05</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h1 id="错误处理理念">错误处理理念</h1>
+<ul>
+<li>并发Erlang程序里的错误处理建立在远程检测和处理错误的概念上。我们选择让发生错误的进程崩溃，然后在其它进程里面进行纠错处理。</li>
+<li>在设计容错式的系统时就假设错误会发生，进程会崩溃。因此能够在错误发生时检测出来，可能的话也需要纠正他们。同时避免系统用户注意到任何故障，或者在错误修复过程中遭受服务终端。</li>
+<li>检测错误和找出故障原因是内建于Erlang虚拟机底层的功能，也是Erlang语言编程的一部分。标准OTP库提供了构建互相监视的进程组和检测到错误时采取纠正措施的功能。本章介绍的是语言层面的错误检测和恢复。</li>
+<li>总结为两句话：“让其它进程修复错误&quot;和&quot;任其崩溃&quot;</li>
+</ul>
+<h1 id="让其它进程修复错误">让其它进程修复错误</h1>
+<ul>
+<li>要让一个进程监控另一个，需要在这两个进程之间建立链接(link)或者(monitor)。如果被链接或者监视的进程挂了，监控进程会收到通知。</li>
+<li>监控进程可以实现跨机器的透明运作，因此运行在某一台机器上的进程可以监视运行在不同机器上进程的行为。这是编写容错式系统的基础。不能在一台机器上构建容错式系统，因为崩溃的可能是整台机器。一台机器负责计算，其它的机器负责监控它，并在一台机器崩溃时接管计算。</li>
+</ul>
+<h1 id="任其崩溃">任其崩溃</h1>
+<ul>
+<li>在Erlang中，我们把应用程序构建成两部分：一部分负责解决问题，另一部分负责在错误发生时纠正他们。</li>
+<li>负责解决问题的部分尽可能少的编写防御性代码，并假设函数所有参数是正确的，程序运行正常。</li>
+<li>负责纠正错误的部分往往是通用的，因此同一段错误纠正代码可以用在许多不同的应用程序里面。例如：如果数据库的某个事务出错，就简单终止该事务，让系统把数据库恢复到出错之前的状态；如果操作系统里面的某个进程崩溃，就让操作系统关闭所有打开的文件和套接字，然后让系统恢复到某个稳定状态。</li>
+</ul>
+<h2 id="任其崩溃意义">任其崩溃意义</h2>
+<ol>
+<li>不必编写防御性代码来防止错误，直接崩溃就好。</li>
+<li>不必思考应对措施，选择直接崩溃，让别人来修复错误。</li>
+<li>不会使错误恶化，无需在知道出错后进行额外的计算。</li>
+<li>如果错误发生后第一时间通知，就能得到非常好的错误诊断。错误发生后继续运行会导致更多的错误，让调试更困难。</li>
+<li>编写错误恢复代码时不用担心崩溃的原因，只要把注意力放到事后的清理上。</li>
+<li>简化系统架构，这样我们就能把应用程序和错误恢复当成两个独立的问题来思考。</li>
+</ol>
+<h1 id="错误处理的术语含义">错误处理的术语含义</h1>
+<ol>
+<li>进程</li>
+</ol>
+<blockquote>
+<p>进程有两种：普通进程和系统进程。spawn创建的是普通进程。普通进程可以执行内置函数process_flag（trap_exit,true)变成系统进程。</p>
+</blockquote>
+<ol start="2">
+<li>连接</li>
+</ol>
+<blockquote>
+<p>进程可以互相连接。如果A和B两个进程有连接，而A出于某种原因终止了，就会向B发送一个错误信号，反之亦然。</p>
+</blockquote>
+<ol start="3">
+<li>连接组</li>
+</ol>
+<blockquote>
+<p>进程P的连接组是指与进程P相连的一组进程。</p>
+</blockquote>
+<ol start="4">
+<li>监视</li>
+</ol>
+<blockquote>
+<p>监视和连接相似，但它是单向的。如果A监视B，而B出于某种原因终止了，就会向A发送一个&quot;宕机&quot;的消息，但反过来就不行了。</p>
+</blockquote>
+<ol start="5">
+<li>消息和错误信号</li>
+</ol>
+<blockquote>
+<p>进程协作的方式是交换消息和错误信号。消息是通过基本函数send发送的，错误信号则是进程崩溃或终止的时候自动发送的。错误信号会发送给终止进程的连接组。</p>
+</blockquote>
+<ol start="6">
+<li>错误信号的接受</li>
+</ol>
+<blockquote>
+<p>当系统进程收到错误信号时，该信号被转换成{&lsquo;Exit&rsquo;,Pid,Why}形式的信息。Pid是终止进程的标识，Why是终止的原因。如果无错误终止，Why就会是原子normal，否则会是错误描述。当普通进程收到错误信号时，如果退出原因不是normal，该进程就会终止。当它终止时，同样会向它的连接组广播一个退出信号。</p>
+</blockquote>
+<ol start="7">
+<li>显示错误信号</li>
+</ol>
+<blockquote>
+<p>任何执行exit(Why)的进程都会终止（如果代码不是在catch或者try的范围内执行的话），并向它的连接组广播一个带有原因Why的退出信号。进程可以通过执行exit(Pid,Why)来发送一个&quot;虚假&quot;的错误信号。这种情况Pid会收到一个带有原因Why的退出信号。调用exit/2的进程则不会终止。</p>
+</blockquote>
+<ol start="8">
+<li>不可捕捉的退出信号</li>
+</ol>
+<blockquote>
+<p>进程收到摧毁信号(kill signal)时会终止。摧毁信号通过调用exit(Pid,kill)生成。这种信号会绕过常规的错误信号处理机制，不会被转换成消息。摧毁信号只应该用在其它错误处理机制无法终止的顽固进程上。</p>
+</blockquote>
+<h1 id="创建链接">创建链接</h1>
+<p>调用接口：link(Pid)。建立调用进程与Pid进程之间的连接。</p>
+<h1 id="同步终止的进程组">同步终止的进程组</h1>
+<ul>
+<li>当多个进程合作解决问题而某个进程出现问题时，有时可以恢复。当恢复不了时，就会希望之前所做的一切事情都停止下来。它和事务这个概念很像，进程要么做它该做的事，要么全部杀死。</li>
+<li>Erlang中当一些互联的进程中有一个进程挂掉，错误信号就会发送给连接组中的进程，这些进程会一起终止。最后错误信号会扩散到整个关联的进程。</li>
+</ul>
+<h1 id="设立防火墙">设立防火墙</h1>
+<p>有时候我们不希望相连的进程全部终止，而是想让系统里的错误停止扩散。我们可以在某个进程里面执行process_flag(trap_exit, ture)，将其转换成系统进程（它可以捕获退出信号).错误的信号的扩散会在该进程处停止。</p>
+<h1 id="监视">监视</h1>
+<p>监视与连接类似，但有几处明显区别：</p>
+<ol>
+<li>监视是单项的。如果A监视B，而B挂了，就会向A发送一个退出消息。反过来B挂了，就不会向A发送退出的消息。</li>
+<li>如果被监事的进程挂了，就会向监视进程发送&quot;宕机&quot;的消息，而不是退出的信号。这意味着监视进程即使不是系统进程也能够处理错误。</li>
+</ol>
+<h1 id="基本错误处理函数">基本错误处理函数</h1>
+<ol>
+<li>连接</li>
+</ol>
+<pre tabindex="0"><code>-spec spawn_link(Fun) -&gt; Pid
+-spec spawn_link(Mod, Fun, Args) -&gt; Pid
+</code></pre><p>它们的行为类似于spawn(Fun)、spawn(Mod, Fun, Args)。同时还会在父子进程间创建连接。</p>
+<pre tabindex="0"><code>-spec link(Pid) -&gt; true
+</code></pre><ul>
+<li>它会创建一个与进程Pid的连接。连接是双向的，如果进程A执行了link(B)，就会与B相连，实际效果和B执行link(A)一样。</li>
+<li>如果进程Pid不存在，就会抛出一个noproc的异常。</li>
+<li>如果执行link(B)时A已经连接上了B，这个调用会被忽略。</li>
+</ul>
+<pre tabindex="0"><code>-spec unlink(Pid) -&gt; true
+</code></pre><blockquote>
+<p>它会移除当前进程与进程pid之间额所有连接。</p>
+</blockquote>
+<ol start="2">
+<li>监视</li>
+</ol>
+<pre tabindex="0"><code>-spec spawn_monitor(Fun) -&gt;{Pid, Ref}
+-spec spawn_monitor(Mod, Fun, Args) -&gt; {Pid, Ref}
+</code></pre><blockquote>
+<p>创建监视。Pid是新创建进程的进程标识符，Ref是该进程的引用。如果这个进程因为Why终止了，消息{&lsquo;DOWN&rsquo;,Ref, process, Pid, Why}就会被发往父进程。</p>
+</blockquote>
+<pre tabindex="0"><code>-spec erlang:monitor(process, Item) -&gt;Ref
+</code></pre><blockquote>
+<p>设立一个监视，Item可以是pid，也可以是其注册名。</p>
+</blockquote>
+<pre tabindex="0"><code>-spec demonitor(Ref) -&gt;true
+</code></pre><blockquote>
+<p>它会移除对Ref引用进程的监视。</p>
+</blockquote>
+<ol start="3">
+<li>exit</li>
+</ol>
+<pre tabindex="0"><code>-spec exit(Why) -&gt; none()
+</code></pre><blockquote>
+<p>它会使当前进程因Why终止。如果执行这一语句的子句不是在catch语句的范围内，此进程就会向当前连接的所有进程广播带有Why的退出信号。他还会向所有监视它的进程广播一个DOWN的消息。</p>
+</blockquote>
+<pre tabindex="0"><code>-spec exit(Pid, Why) -&gt; true
+</code></pre><blockquote>
+<p>它会向进程Pid发送一个带有Why的退出信号。执行该语句的进程不会终止，可以用于伪造退出信号。</p>
+</blockquote>
+<h1 id="容错式编程">容错式编程</h1>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#任其崩溃意义">任其崩溃意义</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/cache/redis/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="button left"><span>Redis有没有数据库的概念</span></a>
+    
+    
+      <a href="/blog/electron/kylinos/" class="button right"><span>Electron-银河麒麟运行和打包环境配置</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Erlang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang源码阅读-chan - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Golang源码阅读-chan">
+<meta itemprop="description" content="描述 channel 是golang实现CSP理念的重点。channel实现一个进程内不同协程之间的通信方式。
+结构体 channel 实际上是一个环形队列，实际的队列空间就是在这个channel结构体之后申请的空间。
+type hchan struct {qcount uint // 缓冲队列中的元素计数器dataqsiz uint // 缓冲队列，=make(chan T, x)中的xbuf unsafe.Pointer // 缓冲队列，数组类型elemsize uint16 // 元素大小，单位为字节closed uint32 // chan关闭标记elemtype *_type // 元素类型sendx uint // 待发送元素在缓冲器中的索引recvx uint // 待接收元素在缓冲器中的索引recvq waitq // 阻塞等待读channel的G队列sendq waitq // 阻塞等待写channel的G队列lock mutex // 互斥锁} elem 大小不能超过65536个字节，超过会抛异常  特性  当chan缓冲中还有数据时，关闭chan后，接受者不会立刻接收到chan的关闭信号， 而是等缓冲中所有的数据被全部读取后接受者才会收到chan的关闭信号； 没有被初始化的chan在调用发送或者接收的时候会被阻塞 当chan被close之后不能被写入，但是可以被读取； chan不能被重复close，chan可以不被close；可以被系统自动回收；  make chan  新建channel时调用func makechan(t *chantype, size int) *hchan函数"><meta itemprop="datePublished" content="2019-08-11T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-08-11T00:00:00+00:00" />
+<meta itemprop="wordCount" content="255">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Golang源码阅读-chan" />
+<meta property="og:description" content="描述 channel 是golang实现CSP理念的重点。channel实现一个进程内不同协程之间的通信方式。
+结构体 channel 实际上是一个环形队列，实际的队列空间就是在这个channel结构体之后申请的空间。
+type hchan struct {qcount uint // 缓冲队列中的元素计数器dataqsiz uint // 缓冲队列，=make(chan T, x)中的xbuf unsafe.Pointer // 缓冲队列，数组类型elemsize uint16 // 元素大小，单位为字节closed uint32 // chan关闭标记elemtype *_type // 元素类型sendx uint // 待发送元素在缓冲器中的索引recvx uint // 待接收元素在缓冲器中的索引recvq waitq // 阻塞等待读channel的G队列sendq waitq // 阻塞等待写channel的G队列lock mutex // 互斥锁} elem 大小不能超过65536个字节，超过会抛异常  特性  当chan缓冲中还有数据时，关闭chan后，接受者不会立刻接收到chan的关闭信号， 而是等缓冲中所有的数据被全部读取后接受者才会收到chan的关闭信号； 没有被初始化的chan在调用发送或者接收的时候会被阻塞 当chan被close之后不能被写入，但是可以被读取； chan不能被重复close，chan可以不被close；可以被系统自动回收；  make chan  新建channel时调用func makechan(t *chantype, size int) *hchan函数" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/chan/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-08-11T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-08-11T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang源码阅读-chan"/>
+<meta name="twitter:description" content="描述 channel 是golang实现CSP理念的重点。channel实现一个进程内不同协程之间的通信方式。
+结构体 channel 实际上是一个环形队列，实际的队列空间就是在这个channel结构体之后申请的空间。
+type hchan struct {qcount uint // 缓冲队列中的元素计数器dataqsiz uint // 缓冲队列，=make(chan T, x)中的xbuf unsafe.Pointer // 缓冲队列，数组类型elemsize uint16 // 元素大小，单位为字节closed uint32 // chan关闭标记elemtype *_type // 元素类型sendx uint // 待发送元素在缓冲器中的索引recvx uint // 待接收元素在缓冲器中的索引recvq waitq // 阻塞等待读channel的G队列sendq waitq // 阻塞等待写channel的G队列lock mutex // 互斥锁} elem 大小不能超过65536个字节，超过会抛异常  特性  当chan缓冲中还有数据时，关闭chan后，接受者不会立刻接收到chan的关闭信号， 而是等缓冲中所有的数据被全部读取后接受者才会收到chan的关闭信号； 没有被初始化的chan在调用发送或者接收的时候会被阻塞 当chan被close之后不能被写入，但是可以被读取； chan不能被重复close，chan可以不被close；可以被系统自动回收；  make chan  新建channel时调用func makechan(t *chantype, size int) *hchan函数"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/chan/">Golang源码阅读-chan</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-08-11 00:00:00 &#43;0000 UTC">2019-08-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="描述">描述</h2>
+<p>channel 是golang实现CSP理念的重点。channel实现一个进程内不同协程之间的通信方式。</p>
+<h2 id="结构体">结构体</h2>
+<p>channel 实际上是一个环形队列，实际的队列空间就是在这个channel结构体之后申请的空间。</p>
+<pre tabindex="0"><code>type hchan struct {
+	qcount   uint           // 缓冲队列中的元素计数器
+	dataqsiz uint           // 缓冲队列，=make(chan T, x)中的x
+	buf      unsafe.Pointer // 缓冲队列，数组类型
+	elemsize uint16         // 元素大小，单位为字节
+	closed   uint32         // chan关闭标记
+	elemtype *_type         // 元素类型
+	sendx    uint           // 待发送元素在缓冲器中的索引
+	recvx    uint           // 待接收元素在缓冲器中的索引
+	recvq    waitq          // 阻塞等待读channel的G队列
+	sendq    waitq          // 阻塞等待写channel的G队列
+	lock     mutex          // 互斥锁
+}
+</code></pre><ol>
+<li>elem 大小不能超过65536个字节，超过会抛异常</li>
+</ol>
+<h2 id="特性">特性</h2>
+<ol>
+<li>当chan缓冲中还有数据时，关闭chan后，接受者不会立刻接收到chan的关闭信号， 而是等缓冲中所有的数据被全部读取后接受者才会收到chan的关闭信号；</li>
+<li>没有被初始化的chan在调用发送或者接收的时候会被阻塞</li>
+<li>当chan被close之后不能被写入，但是可以被读取；</li>
+<li>chan不能被重复close，chan可以不被close；可以被系统自动回收；</li>
+</ol>
+<h3 id="make-chan">make chan</h3>
+<blockquote>
+<p>新建channel时调用<code>func makechan(t *chantype, size int) *hchan</code>函数</p>
+</blockquote>
+<p>函数接收两个参数， 一个是channel里面保存元素的类型， 一个是缓冲的容量（为0则表示非缓冲buffer），创建流程如下：</p>
+<ol>
+<li>根据传递传冲大小size是否为0， 分别创建不带buffer的channel或者带size大小buffer的channel
+<ol>
+<li>对于不带缓冲channel， 申请hchan数据结构大小的内存</li>
+<li>对于带缓冲channel， new 一个hchan对象， 并初始化size大小的buffer</li>
+</ol>
+</li>
+<li>初始化dataqsiz: 缓冲区大小</li>
+<li>初始化elemsize: 元素值大小；不能超过65536；</li>
+<li>初始化elemtype: 元素类型</li>
+</ol>
+<h3 id="--chan">&lt;- chan</h3>
+<blockquote>
+<p>接收channel时调用<code>chanrecv(c *hchan, ep unsafe.Pointer, block bool) (selected, received bool)</code>函数；</p>
+</blockquote>
+<p>该函数表示从channel中接收数据，并将接收到的数据写入到ep指向的对象中。接收流程如下：</p>
+<ul>
+<li>case1
+<ul>
+<li>前置channel为nil的场景
+<ol>
+<li>如果block 为非阻塞(false)，直接return</li>
+<li>如果block 为阻塞(true)， 调用gopark()阻塞当前goroutine，并抛出异常</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>case2
+<ul>
+<li>block为非阻塞且(channel为非缓冲队列且sendq等待队列为空 或 channel为缓冲队列但是没有数据)且channel未关闭 直接return</li>
+</ul>
+</li>
+<li>lock(&amp;c.lock) 锁住channel</li>
+<li>case3
+<ul>
+<li>channel 被关闭且channel缓冲中没有数据， 直接return</li>
+</ul>
+</li>
+<li>case4
+<ul>
+<li>sendq(sender 等待队列)非空，调用<code>func recv(c *hchan, sg *sudog, ep unsafe.Pointer, unlockf func(), skip int)</code>函数：
+<ul>
+<li>如果是非缓冲channel，直接调用recvDirect函数直接从sendq中recv数据到ep中， 这样只复制一次；</li>
+<li>如果是有缓冲channel：
+<ol>
+<li>将缓冲队列读指针(recvx)指向的数据复制到ep中</li>
+<li>将缓冲队列读指针(recvx)后移一位(循环后移，大于缓冲队列大小则从0开始)</li>
+<li>将缓冲队列写指针(sendx)指向当前缓冲队列被读元素位置(recvx), 用于sendq将队头元素数据复制到channel的缓冲队列，这样缓冲队列就不用移动数据了</li>
+</ol>
+</li>
+<li>释放channel锁</li>
+<li>调用goready()函数将发送消息的goroutine设置为就绪状态，等待调度</li>
+</ul>
+</li>
+<li>直接return</li>
+</ul>
+</li>
+<li>case5
+<ul>
+<li>sendq为空且缓冲队列不为空
+<ol>
+<li>将缓冲队列读指针(recvx)指向的数据复制到ep中</li>
+<li>将缓冲队列读指针(recvx)后移一位(循环后移，大于缓冲队列大小则从0开始)</li>
+<li>将缓冲队列的元素计数器减一(qcount&ndash;)</li>
+<li>释放channel锁</li>
+<li>直接return</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>case6
+<ul>
+<li>sendq为空且缓冲队列为空且不阻塞协程</li>
+<li>释放channel锁</li>
+<li>直接return</li>
+</ul>
+</li>
+<li>case7
+<ul>
+<li>sendq为空且缓冲队列为空
+<ol>
+<li>将goroutine 加入recvq，并阻塞，</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="chan--">chan &lt;-</h3>
+<blockquote>
+<p>发送channel时调用<code>func chansend(c *hchan, ep unsafe.Pointer, block bool, callerpc uintptr) bool</code>函数</p>
+</blockquote>
+<p>该函数表示将ep中的数据写入到channel， 主要流程如下：</p>
+<ul>
+<li>case1
+<ul>
+<li>前置channel为nil情景
+<ol>
+<li>如果block为非阻塞(false), 直接return</li>
+<li>如果block为阻塞(true),调用gopark()函数阻塞当前goroutine，并抛出异常</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>case2
+<ul>
+<li>blcok非阻塞且channel未close且(非缓冲channel且recvq等待队列为空 或 缓冲channel且缓冲队列已满)， 则直接return</li>
+</ul>
+</li>
+<li>lock(&amp;c.lock) 锁住channel</li>
+<li>case3
+<ul>
+<li>channel 已经close
+<ol>
+<li>释放channel锁</li>
+<li>抛异常(&ldquo;send on closed channel&rdquo;)</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>case4
+<ul>
+<li>recvq(receiver 等待队列)非空，调用<code>func send(c *hchan, sg *sudog, ep unsafe.Pointer, unlockf func(), skip int)</code>函数：
+<ul>
+<li>直接调用sendDirect函数将ep中数据复制到recvq上， 这样只复制一次</li>
+<li>释放channel锁</li>
+<li>调用goready()函数将接收消息的goroutine设置为就绪状态，等待调度</li>
+</ul>
+</li>
+<li>直接return</li>
+</ul>
+</li>
+<li>case5
+<ul>
+<li>如果缓冲队列未满
+<ol>
+<li>将ep中的数据拷贝到缓冲队列写指针(sendx)指向的位置</li>
+<li>将缓冲队列写指针(sendx)后移一位(循环后移，大于缓冲队列大小则从0开始)</li>
+<li>将缓冲队列的元素计数器加一(qcount++)</li>
+<li>释放channel锁</li>
+<li>直接return</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>case6
+<ul>
+<li>缓冲队列已满且recvq为空且不阻塞协程</li>
+<li>释放channel锁</li>
+<li>直接return</li>
+</ul>
+</li>
+<li>case7
+<ul>
+<li>缓冲队列已满且recvq为空
+<ol>
+<li>将goroutine 加入sendq，并阻塞，</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="closechan">close(chan)</h3>
+<blockquote>
+<p>关闭channel时调用<code>func closechan(c *hchan)</code>函数</p>
+</blockquote>
+<p>该函数表示关闭channel， 主要流程如下：</p>
+<ul>
+<li>如果channel为nil，则抛出异常(&ldquo;close of nil channel&rdquo;)</li>
+<li>lock(&amp;c.lock) 锁住channel</li>
+<li>如果channel已经关闭， 则抛出异常(&ldquo;close of nil channel&rdquo;)</li>
+<li>c.closed = 1 设置channel已关闭</li>
+<li>获取所有读goroutine， 并push到释放链表</li>
+<li>获取所有写goroutine， 并push到释放链表</li>
+<li>unlock(&amp;c.lock) 释放channel 锁</li>
+<li>调用goready()函数，将释放链表中的所有goroutine设置为就绪状态， 等待调度</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#描述">描述</a></li>
+    <li><a href="#结构体">结构体</a></li>
+    <li><a href="#特性">特性</a>
+      <ul>
+        <li><a href="#make-chan">make chan</a></li>
+        <li><a href="#--chan">&lt;- chan</a></li>
+        <li><a href="#chan--">chan &lt;-</a></li>
+        <li><a href="#closechan">close(chan)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/jenkins/jenkins%E5%AE%89%E8%A3%85/" class="button left"><span>Jenkins部署配置</span></a>
+    
+    
+      <a href="/blog/database/oracle/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="button right"><span>Oracle数据库安装配置</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

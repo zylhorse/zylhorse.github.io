@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>不同类型代码执行引擎 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="不同类型代码执行引擎">
+<meta itemprop="description" content="概述 代码在物理机器上执行过程：
+ 代码被编译成二进制文件 二进制文件运行， 加载程序到内存中 CPU通过总线将内存中指令取出并放入指令流水线， 对指令进行 译码、执行、缓冲、回写（参考arm7 三级流水 和 arm9 五级流水）  类似于程序在物理机器上运行， 虚拟机上代码执行过程：
+ 代码被编译成相关字节码，然后在虚拟机上运行 虚拟机对字节码进行取指令、译码、执行、结果回写  虚拟机实现概念  将源码编译成VM所能执行的字节码 包含指令和操作数的数据结构 一个包含所有函数操作的调用栈 一个指令指针，用于指向下一条要被执行的指令 一个虚拟的CPU（指令派发者）： 取指， 译码，执行  虚拟机分类 主要区别是操作数和结果的存储和检索机制不一样。
+栈虚拟机（stack vm）  基于栈的虚拟机有操作数栈的概念，首先从符号表中取出数据然后压入操作数栈 进行真正的运算时都是直接与操作数栈进行交互 运算时指令无需指定操作数， 因为默认操作数存放在操作数栈上， 直接从栈上pop出数据使用即可 运算后的将结果存入操作数栈顶  栈虚拟机优缺点 优点：
+ 不管任何操作都通过操作数栈进行， 可以无视具体的物理结构 指令紧凑，一两个字节即可存储 编译器实现简单 寄存器由硬件直接提供，不用进行寄存器分配 可移植性强  缺点：
+ 因为无论什么操作都要通过操作数栈， 所以速度慢  寄存器虚拟机 （register vm）  基于寄存器的虚拟机会分配虚拟寄存器，存放数据 进行运算时， 需要指定操作数的寄存器 虚拟机对寄存器进行解析，找出操作数的位置，然后取出操作数进行运算  寄存器虚拟机优缺点 优点：
+ 没有栈虚拟机在拷贝数据时进行大量的出入栈操作     栈式 VS 寄存器式 对比     指令条数 栈式 &gt; 寄存器式   代码尺寸 栈式 &lt; 寄存器式   移植性 栈式优于寄存器式   指令优化 栈式更不易优化   解释器执行速度 栈式解释器速度稍慢   代码生成难度 栈式简单   简易实现中的数据移动次数 栈式移动次数多    "><meta itemprop="datePublished" content="2017-01-23T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2017-01-23T00:00:00+00:00" />
+<meta itemprop="wordCount" content="77">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="不同类型代码执行引擎" />
+<meta property="og:description" content="概述 代码在物理机器上执行过程：
+ 代码被编译成二进制文件 二进制文件运行， 加载程序到内存中 CPU通过总线将内存中指令取出并放入指令流水线， 对指令进行 译码、执行、缓冲、回写（参考arm7 三级流水 和 arm9 五级流水）  类似于程序在物理机器上运行， 虚拟机上代码执行过程：
+ 代码被编译成相关字节码，然后在虚拟机上运行 虚拟机对字节码进行取指令、译码、执行、结果回写  虚拟机实现概念  将源码编译成VM所能执行的字节码 包含指令和操作数的数据结构 一个包含所有函数操作的调用栈 一个指令指针，用于指向下一条要被执行的指令 一个虚拟的CPU（指令派发者）： 取指， 译码，执行  虚拟机分类 主要区别是操作数和结果的存储和检索机制不一样。
+栈虚拟机（stack vm）  基于栈的虚拟机有操作数栈的概念，首先从符号表中取出数据然后压入操作数栈 进行真正的运算时都是直接与操作数栈进行交互 运算时指令无需指定操作数， 因为默认操作数存放在操作数栈上， 直接从栈上pop出数据使用即可 运算后的将结果存入操作数栈顶  栈虚拟机优缺点 优点：
+ 不管任何操作都通过操作数栈进行， 可以无视具体的物理结构 指令紧凑，一两个字节即可存储 编译器实现简单 寄存器由硬件直接提供，不用进行寄存器分配 可移植性强  缺点：
+ 因为无论什么操作都要通过操作数栈， 所以速度慢  寄存器虚拟机 （register vm）  基于寄存器的虚拟机会分配虚拟寄存器，存放数据 进行运算时， 需要指定操作数的寄存器 虚拟机对寄存器进行解析，找出操作数的位置，然后取出操作数进行运算  寄存器虚拟机优缺点 优点：
+ 没有栈虚拟机在拷贝数据时进行大量的出入栈操作     栈式 VS 寄存器式 对比     指令条数 栈式 &gt; 寄存器式   代码尺寸 栈式 &lt; 寄存器式   移植性 栈式优于寄存器式   指令优化 栈式更不易优化   解释器执行速度 栈式解释器速度稍慢   代码生成难度 栈式简单   简易实现中的数据移动次数 栈式移动次数多    " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/software-programming/%E8%99%9A%E6%8B%9F%E6%9C%BA/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2017-01-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2017-01-23T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="不同类型代码执行引擎"/>
+<meta name="twitter:description" content="概述 代码在物理机器上执行过程：
+ 代码被编译成二进制文件 二进制文件运行， 加载程序到内存中 CPU通过总线将内存中指令取出并放入指令流水线， 对指令进行 译码、执行、缓冲、回写（参考arm7 三级流水 和 arm9 五级流水）  类似于程序在物理机器上运行， 虚拟机上代码执行过程：
+ 代码被编译成相关字节码，然后在虚拟机上运行 虚拟机对字节码进行取指令、译码、执行、结果回写  虚拟机实现概念  将源码编译成VM所能执行的字节码 包含指令和操作数的数据结构 一个包含所有函数操作的调用栈 一个指令指针，用于指向下一条要被执行的指令 一个虚拟的CPU（指令派发者）： 取指， 译码，执行  虚拟机分类 主要区别是操作数和结果的存储和检索机制不一样。
+栈虚拟机（stack vm）  基于栈的虚拟机有操作数栈的概念，首先从符号表中取出数据然后压入操作数栈 进行真正的运算时都是直接与操作数栈进行交互 运算时指令无需指定操作数， 因为默认操作数存放在操作数栈上， 直接从栈上pop出数据使用即可 运算后的将结果存入操作数栈顶  栈虚拟机优缺点 优点：
+ 不管任何操作都通过操作数栈进行， 可以无视具体的物理结构 指令紧凑，一两个字节即可存储 编译器实现简单 寄存器由硬件直接提供，不用进行寄存器分配 可移植性强  缺点：
+ 因为无论什么操作都要通过操作数栈， 所以速度慢  寄存器虚拟机 （register vm）  基于寄存器的虚拟机会分配虚拟寄存器，存放数据 进行运算时， 需要指定操作数的寄存器 虚拟机对寄存器进行解析，找出操作数的位置，然后取出操作数进行运算  寄存器虚拟机优缺点 优点：
+ 没有栈虚拟机在拷贝数据时进行大量的出入栈操作     栈式 VS 寄存器式 对比     指令条数 栈式 &gt; 寄存器式   代码尺寸 栈式 &lt; 寄存器式   移植性 栈式优于寄存器式   指令优化 栈式更不易优化   解释器执行速度 栈式解释器速度稍慢   代码生成难度 栈式简单   简易实现中的数据移动次数 栈式移动次数多    "/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/software-programming/%E8%99%9A%E6%8B%9F%E6%9C%BA/">不同类型代码执行引擎</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2017-01-23 00:00:00 &#43;0000 UTC">2017-01-23</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="概述">概述</h2>
+<p>代码在物理机器上执行过程：</p>
+<ol>
+<li>代码被编译成二进制文件</li>
+<li>二进制文件运行， 加载程序到内存中</li>
+<li>CPU通过总线将内存中指令取出并放入指令流水线， 对指令进行 译码、执行、缓冲、回写（参考arm7 三级流水 和 arm9 五级流水）</li>
+</ol>
+<p>类似于程序在物理机器上运行， 虚拟机上代码执行过程：</p>
+<ol>
+<li>代码被编译成相关字节码，然后在虚拟机上运行</li>
+<li>虚拟机对字节码进行取指令、译码、执行、结果回写</li>
+</ol>
+<h2 id="虚拟机实现概念">虚拟机实现概念</h2>
+<ol>
+<li>将源码编译成VM所能执行的字节码</li>
+<li>包含指令和操作数的数据结构</li>
+<li>一个包含所有函数操作的调用栈</li>
+<li>一个指令指针，用于指向下一条要被执行的指令</li>
+<li>一个虚拟的CPU（指令派发者）： 取指， 译码，执行</li>
+</ol>
+<h2 id="虚拟机分类">虚拟机分类</h2>
+<p>主要区别是操作数和结果的存储和检索机制不一样。</p>
+<h3 id="栈虚拟机stack-vm">栈虚拟机（stack vm）</h3>
+<ol>
+<li>基于栈的虚拟机有操作数栈的概念，首先从符号表中取出数据然后压入操作数栈</li>
+<li>进行真正的运算时都是直接与操作数栈进行交互</li>
+<li>运算时指令无需指定操作数， 因为默认操作数存放在操作数栈上， 直接从栈上pop出数据使用即可</li>
+<li>运算后的将结果存入操作数栈顶</li>
+</ol>
+<h3 id="栈虚拟机优缺点">栈虚拟机优缺点</h3>
+<p>优点：</p>
+<ol>
+<li>不管任何操作都通过操作数栈进行， 可以无视具体的物理结构</li>
+<li>指令紧凑，一两个字节即可存储</li>
+<li>编译器实现简单</li>
+<li>寄存器由硬件直接提供，不用进行寄存器分配</li>
+<li>可移植性强</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>因为无论什么操作都要通过操作数栈， 所以速度慢</li>
+</ol>
+<h3 id="寄存器虚拟机-register-vm">寄存器虚拟机 （register vm）</h3>
+<ol>
+<li>基于寄存器的虚拟机会分配虚拟寄存器，存放数据</li>
+<li>进行运算时， 需要指定操作数的寄存器</li>
+<li>虚拟机对寄存器进行解析，找出操作数的位置，然后取出操作数进行运算</li>
+</ol>
+<h3 id="寄存器虚拟机优缺点">寄存器虚拟机优缺点</h3>
+<p>优点：</p>
+<ol>
+<li>没有栈虚拟机在拷贝数据时进行大量的出入栈操作</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>栈式 VS 寄存器式</th>
+<th>对比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>指令条数</td>
+<td>栈式 &gt; 寄存器式</td>
+</tr>
+<tr>
+<td>代码尺寸</td>
+<td>栈式 &lt; 寄存器式</td>
+</tr>
+<tr>
+<td>移植性</td>
+<td>栈式优于寄存器式</td>
+</tr>
+<tr>
+<td>指令优化</td>
+<td>栈式更不易优化</td>
+</tr>
+<tr>
+<td>解释器执行速度</td>
+<td>栈式解释器速度稍慢</td>
+</tr>
+<tr>
+<td>代码生成难度</td>
+<td>栈式简单</td>
+</tr>
+<tr>
+<td>简易实现中的数据移动次数</td>
+<td>栈式移动次数多</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/software-programming/">Software Programming</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#概述">概述</a></li>
+    <li><a href="#虚拟机实现概念">虚拟机实现概念</a></li>
+    <li><a href="#虚拟机分类">虚拟机分类</a>
+      <ul>
+        <li><a href="#栈虚拟机stack-vm">栈虚拟机（stack vm）</a></li>
+        <li><a href="#栈虚拟机优缺点">栈虚拟机优缺点</a></li>
+        <li><a href="#寄存器虚拟机-register-vm">寄存器虚拟机 （register vm）</a></li>
+        <li><a href="#寄存器虚拟机优缺点">寄存器虚拟机优缺点</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/data-structure/bitmap/" class="button left"><span>数据结构-Bitmap</span></a>
+    
+    
+      <a href="/blog/stories/%E6%9A%96%E4%B8%8E%E5%87%89/" class="button right"><span>暖与凉</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Software&#32;Programming
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

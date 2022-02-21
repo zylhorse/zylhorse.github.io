@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Erlang接口技术 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Erlang接口技术">
+<meta itemprop="description" content="接口技术 可以多种方式建立外部语言程序与Erlang之间的接口。
+ 让程序以外部操作系统进程的方式在erlang虚拟机以外运行。这是一种安全的方式，即使外部程序代码有问题，也不会让erlang程序崩溃。   Erlang 通过一种名为端口(port)的对象来控制外部进程，与外部进程的通信则是通过一个面向字节的通信信道。Erlang通过端口，控制外部进程的启动和结束。并监视外部进程，崩溃后启动。
+ 在Erlang内部运行操作系统命令并捕获结果。 在Erlang虚拟机的内部运行外部语言代码。这涉及链接外部代码和Erlang虚拟机代码。   外部语言代码的错误可能导致Erlang系统崩溃。虽然它不安全，但是这么做比使用外部进程更高效。
+  把代码连接到Erlang内核，只适用于C这样能生成目标代码的语言，不适用于Java这种自带虚拟机的语言。
+ Erlang如何与外部程序通信  对于程序员而言端口的行为就像一个进程。你可以向它发消息，可以注册它，诸如此类。如果外部程序崩溃，就会有一个退出信号发送给相连进程。如果相连进程挂了，外部程序就会被关闭。 使用端口与外部程序通信和使用套接字有区别。如果使用端口，它会表现的像Erlang进程，可以连接它，从某个远程的分布式Erlang节点上向它发送信息等。如果使用套接字就不会表现出类似进程的行为。 创建端口的进程被称为该端口的相连进程。相连进程有其特殊的重要性，所有发往端口的消息都必须包含相连进程的PID，所有来自外部程序的消息都会发往相连进程。  端口创建和使用 创建端口-spec open_port(PortName, [Opt]) -&gt; Port
+ PortName选项如下： {spawn, Command}   启动一个外部程序。Command是这个外部程序的名称。除非能找到一个名为Command的内链驱动，否则Command会在Erlang工作空间之外运行。
+  {fd, In, Out}   允许一个Erlang进程访问Erlang使用的任何当前打开文件描述符。文件描述符In可以用作标准输入，文件描述符Out可以用作标准输出。
+  Opt选项如下： {packet, N}   数据包(packet)前面有N(1、2、4)个字节的长度计数。
+  stream   发送消息时不带数据包长度信息。应用程序必须知道如何处理这些数据包。
+  {line, Max}   发送消息时使用一次一行的形式。如果有一行超过了Max字节，就会在Max字节处被拆分。
+  {cd, Dir}   只适用于{spawn,Command}选项。外部程序在Dir目录启动。"><meta itemprop="datePublished" content="2016-05-05T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2016-05-05T00:00:00+00:00" />
+<meta itemprop="wordCount" content="83">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Erlang接口技术" />
+<meta property="og:description" content="接口技术 可以多种方式建立外部语言程序与Erlang之间的接口。
+ 让程序以外部操作系统进程的方式在erlang虚拟机以外运行。这是一种安全的方式，即使外部程序代码有问题，也不会让erlang程序崩溃。   Erlang 通过一种名为端口(port)的对象来控制外部进程，与外部进程的通信则是通过一个面向字节的通信信道。Erlang通过端口，控制外部进程的启动和结束。并监视外部进程，崩溃后启动。
+ 在Erlang内部运行操作系统命令并捕获结果。 在Erlang虚拟机的内部运行外部语言代码。这涉及链接外部代码和Erlang虚拟机代码。   外部语言代码的错误可能导致Erlang系统崩溃。虽然它不安全，但是这么做比使用外部进程更高效。
+  把代码连接到Erlang内核，只适用于C这样能生成目标代码的语言，不适用于Java这种自带虚拟机的语言。
+ Erlang如何与外部程序通信  对于程序员而言端口的行为就像一个进程。你可以向它发消息，可以注册它，诸如此类。如果外部程序崩溃，就会有一个退出信号发送给相连进程。如果相连进程挂了，外部程序就会被关闭。 使用端口与外部程序通信和使用套接字有区别。如果使用端口，它会表现的像Erlang进程，可以连接它，从某个远程的分布式Erlang节点上向它发送信息等。如果使用套接字就不会表现出类似进程的行为。 创建端口的进程被称为该端口的相连进程。相连进程有其特殊的重要性，所有发往端口的消息都必须包含相连进程的PID，所有来自外部程序的消息都会发往相连进程。  端口创建和使用 创建端口-spec open_port(PortName, [Opt]) -&gt; Port
+ PortName选项如下： {spawn, Command}   启动一个外部程序。Command是这个外部程序的名称。除非能找到一个名为Command的内链驱动，否则Command会在Erlang工作空间之外运行。
+  {fd, In, Out}   允许一个Erlang进程访问Erlang使用的任何当前打开文件描述符。文件描述符In可以用作标准输入，文件描述符Out可以用作标准输出。
+  Opt选项如下： {packet, N}   数据包(packet)前面有N(1、2、4)个字节的长度计数。
+  stream   发送消息时不带数据包长度信息。应用程序必须知道如何处理这些数据包。
+  {line, Max}   发送消息时使用一次一行的形式。如果有一行超过了Max字节，就会在Max字节处被拆分。
+  {cd, Dir}   只适用于{spawn,Command}选项。外部程序在Dir目录启动。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/erlang/%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2016-05-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2016-05-05T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Erlang接口技术"/>
+<meta name="twitter:description" content="接口技术 可以多种方式建立外部语言程序与Erlang之间的接口。
+ 让程序以外部操作系统进程的方式在erlang虚拟机以外运行。这是一种安全的方式，即使外部程序代码有问题，也不会让erlang程序崩溃。   Erlang 通过一种名为端口(port)的对象来控制外部进程，与外部进程的通信则是通过一个面向字节的通信信道。Erlang通过端口，控制外部进程的启动和结束。并监视外部进程，崩溃后启动。
+ 在Erlang内部运行操作系统命令并捕获结果。 在Erlang虚拟机的内部运行外部语言代码。这涉及链接外部代码和Erlang虚拟机代码。   外部语言代码的错误可能导致Erlang系统崩溃。虽然它不安全，但是这么做比使用外部进程更高效。
+  把代码连接到Erlang内核，只适用于C这样能生成目标代码的语言，不适用于Java这种自带虚拟机的语言。
+ Erlang如何与外部程序通信  对于程序员而言端口的行为就像一个进程。你可以向它发消息，可以注册它，诸如此类。如果外部程序崩溃，就会有一个退出信号发送给相连进程。如果相连进程挂了，外部程序就会被关闭。 使用端口与外部程序通信和使用套接字有区别。如果使用端口，它会表现的像Erlang进程，可以连接它，从某个远程的分布式Erlang节点上向它发送信息等。如果使用套接字就不会表现出类似进程的行为。 创建端口的进程被称为该端口的相连进程。相连进程有其特殊的重要性，所有发往端口的消息都必须包含相连进程的PID，所有来自外部程序的消息都会发往相连进程。  端口创建和使用 创建端口-spec open_port(PortName, [Opt]) -&gt; Port
+ PortName选项如下： {spawn, Command}   启动一个外部程序。Command是这个外部程序的名称。除非能找到一个名为Command的内链驱动，否则Command会在Erlang工作空间之外运行。
+  {fd, In, Out}   允许一个Erlang进程访问Erlang使用的任何当前打开文件描述符。文件描述符In可以用作标准输入，文件描述符Out可以用作标准输出。
+  Opt选项如下： {packet, N}   数据包(packet)前面有N(1、2、4)个字节的长度计数。
+  stream   发送消息时不带数据包长度信息。应用程序必须知道如何处理这些数据包。
+  {line, Max}   发送消息时使用一次一行的形式。如果有一行超过了Max字节，就会在Max字节处被拆分。
+  {cd, Dir}   只适用于{spawn,Command}选项。外部程序在Dir目录启动。"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF/">Erlang接口技术</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-05-05 00:00:00 &#43;0000 UTC">2016-05-05</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h1 id="接口技术">接口技术</h1>
+<p>可以多种方式建立外部语言程序与Erlang之间的接口。</p>
+<ol>
+<li>让程序以外部操作系统进程的方式在erlang虚拟机以外运行。这是一种安全的方式，即使外部程序代码有问题，也不会让erlang程序崩溃。</li>
+</ol>
+<blockquote>
+<p>Erlang 通过一种名为端口(port)的对象来控制外部进程，与外部进程的通信则是通过一个面向字节的通信信道。Erlang通过端口，控制外部进程的启动和结束。并监视外部进程，崩溃后启动。</p>
+</blockquote>
+<ol start="2">
+<li>在Erlang内部运行操作系统命令并捕获结果。</li>
+<li>在Erlang虚拟机的内部运行外部语言代码。这涉及链接外部代码和Erlang虚拟机代码。</li>
+</ol>
+<blockquote>
+<p>外部语言代码的错误可能导致Erlang系统崩溃。虽然它不安全，但是这么做比使用外部进程更高效。</p>
+</blockquote>
+<blockquote>
+<p>把代码连接到Erlang内核，只适用于C这样能生成目标代码的语言，不适用于Java这种自带虚拟机的语言。</p>
+</blockquote>
+<h2 id="erlang如何与外部程序通信">Erlang如何与外部程序通信</h2>
+<ul>
+<li>对于程序员而言端口的行为就像一个进程。你可以向它发消息，可以注册它，诸如此类。如果外部程序崩溃，就会有一个退出信号发送给相连进程。如果相连进程挂了，外部程序就会被关闭。</li>
+<li>使用端口与外部程序通信和使用套接字有区别。如果使用端口，它会表现的像Erlang进程，可以连接它，从某个远程的分布式Erlang节点上向它发送信息等。如果使用套接字就不会表现出类似进程的行为。</li>
+<li>创建端口的进程被称为该端口的相连进程。相连进程有其特殊的重要性，所有发往端口的消息都必须包含相连进程的PID，所有来自外部程序的消息都会发往相连进程。</li>
+</ul>
+<h3 id="端口创建和使用">端口创建和使用</h3>
+<p>创建端口-spec open_port(PortName, [Opt]) -&gt; Port</p>
+<ul>
+<li>PortName选项如下：</li>
+<li>{spawn, Command}</li>
+</ul>
+<blockquote>
+<p>启动一个外部程序。Command是这个外部程序的名称。除非能找到一个名为Command的内链驱动，否则Command会在Erlang工作空间之外运行。</p>
+</blockquote>
+<ul>
+<li>{fd, In, Out}</li>
+</ul>
+<blockquote>
+<p>允许一个Erlang进程访问Erlang使用的任何当前打开文件描述符。文件描述符In可以用作标准输入，文件描述符Out可以用作标准输出。</p>
+</blockquote>
+<ul>
+<li>Opt选项如下：</li>
+<li>{packet, N}</li>
+</ul>
+<blockquote>
+<p>数据包(packet)前面有N(1、2、4)个字节的长度计数。</p>
+</blockquote>
+<ul>
+<li>stream</li>
+</ul>
+<blockquote>
+<p>发送消息时不带数据包长度信息。应用程序必须知道如何处理这些数据包。</p>
+</blockquote>
+<ul>
+<li>{line, Max}</li>
+</ul>
+<blockquote>
+<p>发送消息时使用一次一行的形式。如果有一行超过了Max字节，就会在Max字节处被拆分。</p>
+</blockquote>
+<ul>
+<li>{cd, Dir}</li>
+</ul>
+<blockquote>
+<p>只适用于{spawn,Command}选项。外部程序在Dir目录启动。</p>
+</blockquote>
+<ul>
+<li>{env, Env}</li>
+</ul>
+<blockquote>
+<p>只适用于{spawn,Command}选项。外部程序的环境通过Env列表中的环境变量进行扩展。Env列表由若干个{VarName, Value}对组成，其中VarName,Value是字符串。</p>
+</blockquote>
+<p>这里不是open_port接口的完整参数清单。下面消息可以被发往端口。这些消息里的PidC都是相连进程的PID。</p>
+<ul>
+<li>Port ! {PidC, {command, Data}}</li>
+</ul>
+<blockquote>
+<p>向端口发送Data(一个I/o列表)。</p>
+</blockquote>
+<ul>
+<li>Port ! {PidC, {connect, Pid1}}</li>
+</ul>
+<blockquote>
+<p>把相连进程的PID从PidC改为Pid1。</p>
+</blockquote>
+<ul>
+<li>Port ! {PidC, close}</li>
+</ul>
+<blockquote>
+<p>关闭端口</p>
+</blockquote>
+<p>相连进程可以使用以下方式从外部程序接受消息：</p>
+<pre tabindex="0"><code>receive
+    {Port, {data, Data}} -&gt;
+        ...
+</code></pre><h2 id="在erlang里调用shell脚本">在Erlang里调用shell脚本</h2>
+<p>使用库函数os:cmd(Str)</p>
+<blockquote>
+<p>它会运行字符串Str里的命令并捕捉结果。</p>
+</blockquote>
+<h2 id="高级接口技术">高级接口技术</h2>
+<ul>
+<li>内链驱动和之前讨论的端口驱动遵循相同的协议。要构建一个内链驱动，必须添加少量代码来初始化它，驱动本身必须被编译和链接到Erlang虚拟机上。</li>
+</ul>
+<pre tabindex="0"><code>git://github.com/erlang/linked_in_drives.git 里有最新的内链驱动范例。
+</code></pre><ul>
+<li>NIF 指原生实现函数。这些函数用C编写，并被链接到Erlang虚拟机中。NIF直接将参数传递到Erlang进程的栈上，还能直接访问所有的Erlang内部数据结构。</li>
+</ul>
+<pre tabindex="0"><code>git://github.com/erlang/nifs.git 提供了NIF的范例和最新消息
+</code></pre><ul>
+<li>C-node 用C实现节点，遵循Erlang分布式协议。一个真正的Erlang分布式节点不仅能够与C-node通信，还会bata把它当做一个Erlang节点</li>
+</ul>
+<pre tabindex="0"><code>http://www.erlang.rog/doc/tutorial/introduction.html 里的互操作性教程对C-node做了介绍。
+</code></pre>
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#erlang如何与外部程序通信">Erlang如何与外部程序通信</a>
+      <ul>
+        <li><a href="#端口创建和使用">端口创建和使用</a></li>
+      </ul>
+    </li>
+    <li><a href="#在erlang里调用shell脚本">在Erlang里调用shell脚本</a></li>
+    <li><a href="#高级接口技术">高级接口技术</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/erlang/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="button left"><span>Erlang分布式编程</span></a>
+    
+    
+      <a href="/blog/web/%E9%98%B2%E6%AD%A2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/" class="button right"><span>防止并发请求重复提交</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Erlang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Ubuntu安装配置v2ray - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Ubuntu安装配置v2ray">
+<meta itemprop="description" content="从软件源安装  debian/ubuntu 请确保已正确安装 v2ray-core
+我们提供了 Linux 下的一键安装脚本：
+ 运行下面的指令下载并安装 V2Ray。当 yum 或 apt-get 可用的情况下，此脚本会自动安装 unzip 和 daemon。 这两个组件是安装 V2Ray 的必要组件。如果你使用的系统不支持 yum 或 apt-get，请自行安装 unzip 和 daemon
+ # download scriptcurl -O https://cdn.jsdelivr.net/gh/v2rayA/v2rayA@master/install/go.sh# install v2ray-core from jsdelivrsudo bash go.sh准备完毕后：
+# add public keywget -qO - https://raw.fastgit.org/v2rayA/v2raya-apt/master/key/public-key.asc | sudo apt-key add -# add V2RayA&#39;s repositoryecho &quot;deb https://raw.fastgit.org/v2rayA/v2raya-apt/master/ v2raya main&quot; | sudo tee /etc/apt/sources.list.d/v2raya.listsudo apt update# install V2RayAsudo apt install v2raya部署完毕后，访问该机器的2017端口即可使用，如http://localhost:2017。"><meta itemprop="datePublished" content="2014-07-12T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2014-07-12T00:00:00+00:00" />
+<meta itemprop="wordCount" content="324">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Ubuntu安装配置v2ray" />
+<meta property="og:description" content="从软件源安装  debian/ubuntu 请确保已正确安装 v2ray-core
+我们提供了 Linux 下的一键安装脚本：
+ 运行下面的指令下载并安装 V2Ray。当 yum 或 apt-get 可用的情况下，此脚本会自动安装 unzip 和 daemon。 这两个组件是安装 V2Ray 的必要组件。如果你使用的系统不支持 yum 或 apt-get，请自行安装 unzip 和 daemon
+ # download scriptcurl -O https://cdn.jsdelivr.net/gh/v2rayA/v2rayA@master/install/go.sh# install v2ray-core from jsdelivrsudo bash go.sh准备完毕后：
+# add public keywget -qO - https://raw.fastgit.org/v2rayA/v2raya-apt/master/key/public-key.asc | sudo apt-key add -# add V2RayA&#39;s repositoryecho &quot;deb https://raw.fastgit.org/v2rayA/v2raya-apt/master/ v2raya main&quot; | sudo tee /etc/apt/sources.list.d/v2raya.listsudo apt update# install V2RayAsudo apt install v2raya部署完毕后，访问该机器的2017端口即可使用，如http://localhost:2017。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/linux/shadowsocks/v2raya/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2014-07-12T00:00:00+00:00" />
+<meta property="article:modified_time" content="2014-07-12T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ubuntu安装配置v2ray"/>
+<meta name="twitter:description" content="从软件源安装  debian/ubuntu 请确保已正确安装 v2ray-core
+我们提供了 Linux 下的一键安装脚本：
+ 运行下面的指令下载并安装 V2Ray。当 yum 或 apt-get 可用的情况下，此脚本会自动安装 unzip 和 daemon。 这两个组件是安装 V2Ray 的必要组件。如果你使用的系统不支持 yum 或 apt-get，请自行安装 unzip 和 daemon
+ # download scriptcurl -O https://cdn.jsdelivr.net/gh/v2rayA/v2rayA@master/install/go.sh# install v2ray-core from jsdelivrsudo bash go.sh准备完毕后：
+# add public keywget -qO - https://raw.fastgit.org/v2rayA/v2raya-apt/master/key/public-key.asc | sudo apt-key add -# add V2RayA&#39;s repositoryecho &quot;deb https://raw.fastgit.org/v2rayA/v2raya-apt/master/ v2raya main&quot; | sudo tee /etc/apt/sources.list.d/v2raya.listsudo apt update# install V2RayAsudo apt install v2raya部署完毕后，访问该机器的2017端口即可使用，如http://localhost:2017。"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/linux/shadowsocks/v2raya/">Ubuntu安装配置v2ray</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2014-07-12 00:00:00 &#43;0000 UTC">2014-07-12</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="从软件源安装">从软件源安装</h2>
+<hr>
+<p><strong>debian/ubuntu</strong>
+请确保已正确安装 v2ray-core</p>
+<p>我们提供了 Linux 下的一键安装脚本：</p>
+<blockquote>
+<p>运行下面的指令下载并安装 V2Ray。当 yum 或 apt-get 可用的情况下，此脚本会自动安装 unzip 和 daemon。
+这两个组件是安装 V2Ray 的必要组件。如果你使用的系统不支持 yum 或 apt-get，请自行安装 unzip 和 daemon</p>
+</blockquote>
+<pre tabindex="0"><code># download script
+curl -O https://cdn.jsdelivr.net/gh/v2rayA/v2rayA@master/install/go.sh
+
+# install v2ray-core from jsdelivr
+sudo bash go.sh
+</code></pre><p>准备完毕后：</p>
+<pre tabindex="0"><code># add public key
+wget -qO - https://raw.fastgit.org/v2rayA/v2raya-apt/master/key/public-key.asc | sudo apt-key add -
+
+# add V2RayA's repository
+echo &quot;deb https://raw.fastgit.org/v2rayA/v2raya-apt/master/ v2raya main&quot; | sudo tee /etc/apt/sources.list.d/v2raya.list
+sudo apt update
+
+# install V2RayA
+sudo apt install v2raya
+</code></pre><p>部署完毕后，访问该机器的2017端口即可使用，如http://localhost:2017。</p>
+<p><strong>archlinux/manjaro</strong>
+v2raya已发布于AUR中：</p>
+<pre tabindex="0"><code>git clone https://aur.archlinux.org/v2raya.git /tmp/v2raya
+cd /tmp/v2raya
+makepkg -si
+</code></pre><p>如果makepkg失败，运行<code>sudo pacman -S base-devel</code>后再试。</p>
+<p>如果通过archlinuxcn源安装，需要运行<code>systemctl enable --now v2raya</code>。</p>
+<p>部署完毕后，访问该机器的2017端口即可使用，如http://localhost:2017。</p>
+<h2 id="docker方式">Docker方式</h2>
+<hr>
+<p><strong>docker命令</strong>
+仅使用 docker 命令部署。</p>
+<pre tabindex="0"><code># run v2raya
+docker run -d \
+	--restart=always \
+	--privileged \
+	--network=host \
+	--name v2raya \
+	-v /etc/resolv.conf:/etc/resolv.conf \
+	-v /etc/v2raya:/etc/v2raya \
+	mzz2017/v2raya
+</code></pre><p>部署完毕后，访问该机器的2017端口即可使用，如http://localhost:2017。</p>
+<hr>
+<p>如果你使用MacOSX或其他不支持host模式的环境，在该情况下无法使用全局透明代理，docker命令会略有不同：</p>
+<pre tabindex="0"><code># run v2raya
+docker run -d \
+	-p 2017:2017 \
+	-p 20170-20172:20170-20172 \
+	--restart=always \
+	--name v2raya \
+	-v /etc/resolv.conf:/etc/resolv.conf \
+	-v /etc/v2raya:/etc/v2raya \
+	mzz2017/v2raya
+</code></pre><p>部署完毕后，访问该机器的2017端口即可使用，如http://localhost:2017。</p>
+<h2 id="二进制文件安装包">二进制文件、安装包</h2>
+<hr>
+<p>请确保已正确安装 v2ray-core</p>
+<p>我们提供了 Linux 下的一键安装脚本：</p>
+<blockquote>
+<p>运行下面的指令下载并安装 V2Ray。当 yum 或 apt-get 可用的情况下，此脚本会自动安装 unzip 和 daemon。
+这两个组件是安装 V2Ray 的必要组件。如果你使用的系统不支持 yum 或 apt-get，请自行安装 unzip 和 daemon</p>
+</blockquote>
+<pre tabindex="0"><code># download script
+curl -O https://cdn.jsdelivr.net/gh/v2rayA/v2rayA@master/install/go.sh
+# install v2ray-core from jsdelivr
+sudo bash go.sh
+</code></pre><p>准备完毕后，可下载<a href="https://github.com/v2rayA/V2RayA/releases">Releases</a>中的二进制文件启动V2RayA服务端，或下载安装包进行安装。</p>
+<p>部署完毕后，访问该机器的2017端口即可使用，如http://localhost:2017。</p>
+<h2 id="自行编译运行">自行编译运行</h2>
+<hr>
+<p>当然，你也可以选择拉取源码，编译为二进制文件运行：</p>
+<p>该方法同样需要正确安装v2ray-core，详情见上</p>
+<pre tabindex="0"><code>git clone https://github.com/v2rayA/V2RayA.git
+cd V2RayA/service
+# set goproxy.io as the proxy of go modules
+export GOPROXY=https://goproxy.io
+# compile
+go build -o v2raya
+# run
+sudo ./v2raya
+</code></pre><p>注意，尽管 golang 具有交叉编译的特性，但由于项目使用了大量 linux commands，导致该方法仍然不支持 windows。若想在 windows 体验，可尝试借助 Docker 或 WSL。</p>
+<h2 id="在nas或路由器使用">在NAS或路由器使用</h2>
+<hr>
+<p>分为以下几种情况：</p>
+<p><strong>daemon</strong>
+v2ray能够以daemon存在即在正确安装v2ray后，使用下述命令之一能够得到正确的反馈：</p>
+<pre tabindex="0"><code># if systemctl is available
+systemctl status v2ray
+# else if service is available
+service v2ray status
+</code></pre><p>那么可从软件源安装，或下载releases中的对应安装包进行安装。</p>
+<p><strong>docker</strong>
+若v2ray能够运行于docker，则可参照Docker方式使用</p>
+<h2 id="通用方法">通用方法</h2>
+<p>请自行安装v2ray，并确保v2ray、v2ctl均被包含在PATH中，否则请将上述文件放于<code>echo $PATH</code>中的任一目录下。</p>
+<p>下载releases中最新版本的对应CPU架构的二进制文件，或自行使用golang交叉编译。</p>
+<p>使用参数<code>--config=V2RAYA_CONFIG_PATH --mode=universal</code>启动V2RayA服务端，参数含义可执行<code>--help</code>查看。</p>
+<p>请将上述V2RAYA_CONFIG_PATH替换为一个可读写的，并且你喜欢的路径。</p>
+<h2 id="安装完毕后如何使用">安装完毕后如何使用</h2>
+<p>如果v2rayA正常运行（启动或许需要一定时间）则开放2017作为管理端口，通过浏览器访问即可进行管理。</p>
+<p>导入并连接正常工作的节点后，设置全局透明代理即可使用。</p>
+<p>如果不使用全局透明代理，可使用浏览器插件如SwitchyOmega通过下述端口进行代理：</p>
+<p>默认情况下开放三个代理端口：20170(socks5)、20171(http)、20172(带分流规则的http)</p>
+<p>或使用桌面环境提供的系统代理进行达到类似全局代理的效果。</p>
+<p>注意，如果通过archlinuxcn源安装，需要运行<code>systemctl enable --now v2raya</code>。</p>
+<h2 id="环境变量">环境变量</h2>
+<p><code>V2RAYA_ADDRESS</code>: 监听地址 (默认 &ldquo;:::2017&rdquo;)</p>
+<p><code>V2RAYA_CONFIG</code>: v2rayA 配置文件目录 (default &ldquo;/etc/v2raya&rdquo;)</p>
+<p><code>V2RAYA_V2RAY_BIN</code>: v2ray 可执行文件路径. 留空将自动检测. 可修改为 v2ray 分支如 xray 等文件路径</p>
+<p><code>V2RAYA_V2RAY_CONFDIR</code>: 附加的 v2ray 配置文件目录, 该目录中的 v2ray 配置文件会与 v2rayA 生成的配置文件进行组合</p>
+<p><code>V2RAYA_WEBDIR</code>: v2rayA 前端 GUI 文件目录 (默认 &ldquo;/etc/v2raya/web&rdquo;)</p>
+<p><code>V2RAYA_PLUGINLISTPORT</code>: v2rayA 内部插件端口 (默认 32346)</p>
+<p><code>V2RAYA_PASSCHECKROOT</code>: 跳过 root 权限检测, 确认你有 root 权限而 v2rayA 判断出错时使用</p>
+<p><code>V2RAYA_RESET_PASSWORD</code>: 重设密码</p>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#从软件源安装">从软件源安装</a></li>
+    <li><a href="#docker方式">Docker方式</a></li>
+    <li><a href="#二进制文件安装包">二进制文件、安装包</a></li>
+    <li><a href="#自行编译运行">自行编译运行</a></li>
+    <li><a href="#在nas或路由器使用">在NAS或路由器使用</a></li>
+    <li><a href="#通用方法">通用方法</a></li>
+    <li><a href="#安装完毕后如何使用">安装完毕后如何使用</a></li>
+    <li><a href="#环境变量">环境变量</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/linux/shadowsocks/shadowsocks/" class="button left"><span>Ubuntu安装配置shadowsocks</span></a>
+    
+    
+      <a href="/blog/vmware/vmware-ubuntu-%E6%89%A9%E5%AE%B9%E7%A3%81%E7%9B%98/" class="button right"><span>VMWare之Linux系统磁盘扩容</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Linux
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang-package-unsafe - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Golang-package-unsafe">
+<meta itemprop="description" content="本文主要分析unsafe.Pointer和uintptr的主要工作和区别，以及我们在项目中的使用场景
+unsafe.Pointer
+unsafe包 unsafe包主要包含绕过Go程序类型安全的操作。
+包中引入unsafe可能是不可移植的，并且不受Go 1兼容性指南的保护。
+func Alignof
+func Alignof(x ArbitraryType) uintptr
+Alignof接受任意类型的表达式x，并且返回变量v(假设的)需要的内存对齐字节数。它的值m是v的地址对m取余为0的最大值。 它与reflect.TypeOf(x).Align()返回值相同。
+特定情况下，如果变量s是struct类型，并且f是struct中的field，那么Alignof(s.f)返回f需要的内存对齐字节数。 这种情况下它与reflect.TypeOf(s.f).FieldAlign()返回值相同。
+Alignof的返回值是Go常量。
+func Offsetof
+func Offsetof(x ArbitraryType) uintptr
+Offsetof返回x表示的field在struct中的偏移量,x必须是structValue.field类型。换言之,它返回struct开始和field开始之间的字节数。
+Offset的返回值是Go常量。
+func Sizeof
+func Sizeof(x ArbitraryType) uintptr
+接受任意类型的表达式x，并且返回变量v(假设的)的内存大小,单位是字节。它的值不包含任何可能被x引用的内存。
+举个例子,如果x是一个slice，sizeof返回slice的内存大小，不包含slice中引用的内存大小。
+Sizeof的返回值是Go常量。
+type ArbitraryType type ArbitraryType int
+ArbitraryType这里仅用于文档说明，它不属于unsafe包。它表示任意类型的Go表达式
+type Pointer
+type Pointer *ArbitraryTypePointer表示指向任意类型的指针。type Pointer有四种指定的操作可用，其它不可用：
+ 任意类型的指针可以转换为Pointer Pointer可以转换为任意类型的指针 uintptr可以转换为Pointer Pointer可以转换为uintptr Pointer允许程序使类型检测失效，可以读写任意的内存。因此使用时要小心。  以下使用Pointer的模式是有效的。未使用以下模式的代码可能是无效的，可能将来也是无效的。
+即使是有效的模式也有重要的注意事项。
+执行go vet可以帮助检测不符合使用Pointer模式的地方，但是go vet的沉默不能保证代码是有效的。
+(1) 将*T1转换为指向*T2的指针 前提是T2不大于T1，并且两者共享相同的内存布局，这种转换允许讲一种类型的数据转换为另一种类型的数据。
+一项示例是math.Float64bits的实现:
+func Float64bits(f float64) uint64 {return *(*uint64)(unsafe.Pointer(&amp;f))(2) 将Pointer转换为uintptr(但是不能再转换为Pointer)"><meta itemprop="datePublished" content="2019-05-23T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-05-23T00:00:00+00:00" />
+<meta itemprop="wordCount" content="239">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Golang-package-unsafe" />
+<meta property="og:description" content="本文主要分析unsafe.Pointer和uintptr的主要工作和区别，以及我们在项目中的使用场景
+unsafe.Pointer
+unsafe包 unsafe包主要包含绕过Go程序类型安全的操作。
+包中引入unsafe可能是不可移植的，并且不受Go 1兼容性指南的保护。
+func Alignof
+func Alignof(x ArbitraryType) uintptr
+Alignof接受任意类型的表达式x，并且返回变量v(假设的)需要的内存对齐字节数。它的值m是v的地址对m取余为0的最大值。 它与reflect.TypeOf(x).Align()返回值相同。
+特定情况下，如果变量s是struct类型，并且f是struct中的field，那么Alignof(s.f)返回f需要的内存对齐字节数。 这种情况下它与reflect.TypeOf(s.f).FieldAlign()返回值相同。
+Alignof的返回值是Go常量。
+func Offsetof
+func Offsetof(x ArbitraryType) uintptr
+Offsetof返回x表示的field在struct中的偏移量,x必须是structValue.field类型。换言之,它返回struct开始和field开始之间的字节数。
+Offset的返回值是Go常量。
+func Sizeof
+func Sizeof(x ArbitraryType) uintptr
+接受任意类型的表达式x，并且返回变量v(假设的)的内存大小,单位是字节。它的值不包含任何可能被x引用的内存。
+举个例子,如果x是一个slice，sizeof返回slice的内存大小，不包含slice中引用的内存大小。
+Sizeof的返回值是Go常量。
+type ArbitraryType type ArbitraryType int
+ArbitraryType这里仅用于文档说明，它不属于unsafe包。它表示任意类型的Go表达式
+type Pointer
+type Pointer *ArbitraryTypePointer表示指向任意类型的指针。type Pointer有四种指定的操作可用，其它不可用：
+ 任意类型的指针可以转换为Pointer Pointer可以转换为任意类型的指针 uintptr可以转换为Pointer Pointer可以转换为uintptr Pointer允许程序使类型检测失效，可以读写任意的内存。因此使用时要小心。  以下使用Pointer的模式是有效的。未使用以下模式的代码可能是无效的，可能将来也是无效的。
+即使是有效的模式也有重要的注意事项。
+执行go vet可以帮助检测不符合使用Pointer模式的地方，但是go vet的沉默不能保证代码是有效的。
+(1) 将*T1转换为指向*T2的指针 前提是T2不大于T1，并且两者共享相同的内存布局，这种转换允许讲一种类型的数据转换为另一种类型的数据。
+一项示例是math.Float64bits的实现:
+func Float64bits(f float64) uint64 {return *(*uint64)(unsafe.Pointer(&amp;f))(2) 将Pointer转换为uintptr(但是不能再转换为Pointer)" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/pointer/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-05-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-05-23T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang-package-unsafe"/>
+<meta name="twitter:description" content="本文主要分析unsafe.Pointer和uintptr的主要工作和区别，以及我们在项目中的使用场景
+unsafe.Pointer
+unsafe包 unsafe包主要包含绕过Go程序类型安全的操作。
+包中引入unsafe可能是不可移植的，并且不受Go 1兼容性指南的保护。
+func Alignof
+func Alignof(x ArbitraryType) uintptr
+Alignof接受任意类型的表达式x，并且返回变量v(假设的)需要的内存对齐字节数。它的值m是v的地址对m取余为0的最大值。 它与reflect.TypeOf(x).Align()返回值相同。
+特定情况下，如果变量s是struct类型，并且f是struct中的field，那么Alignof(s.f)返回f需要的内存对齐字节数。 这种情况下它与reflect.TypeOf(s.f).FieldAlign()返回值相同。
+Alignof的返回值是Go常量。
+func Offsetof
+func Offsetof(x ArbitraryType) uintptr
+Offsetof返回x表示的field在struct中的偏移量,x必须是structValue.field类型。换言之,它返回struct开始和field开始之间的字节数。
+Offset的返回值是Go常量。
+func Sizeof
+func Sizeof(x ArbitraryType) uintptr
+接受任意类型的表达式x，并且返回变量v(假设的)的内存大小,单位是字节。它的值不包含任何可能被x引用的内存。
+举个例子,如果x是一个slice，sizeof返回slice的内存大小，不包含slice中引用的内存大小。
+Sizeof的返回值是Go常量。
+type ArbitraryType type ArbitraryType int
+ArbitraryType这里仅用于文档说明，它不属于unsafe包。它表示任意类型的Go表达式
+type Pointer
+type Pointer *ArbitraryTypePointer表示指向任意类型的指针。type Pointer有四种指定的操作可用，其它不可用：
+ 任意类型的指针可以转换为Pointer Pointer可以转换为任意类型的指针 uintptr可以转换为Pointer Pointer可以转换为uintptr Pointer允许程序使类型检测失效，可以读写任意的内存。因此使用时要小心。  以下使用Pointer的模式是有效的。未使用以下模式的代码可能是无效的，可能将来也是无效的。
+即使是有效的模式也有重要的注意事项。
+执行go vet可以帮助检测不符合使用Pointer模式的地方，但是go vet的沉默不能保证代码是有效的。
+(1) 将*T1转换为指向*T2的指针 前提是T2不大于T1，并且两者共享相同的内存布局，这种转换允许讲一种类型的数据转换为另一种类型的数据。
+一项示例是math.Float64bits的实现:
+func Float64bits(f float64) uint64 {return *(*uint64)(unsafe.Pointer(&amp;f))(2) 将Pointer转换为uintptr(但是不能再转换为Pointer)"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/pointer/">Golang-package-unsafe</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-05-23 00:00:00 &#43;0000 UTC">2019-05-23</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <p>本文主要分析<code>unsafe.Pointer</code>和<code>uintptr</code>的主要工作和区别，以及我们在项目中的使用场景</p>
+<p><strong>unsafe.Pointer</strong></p>
+<h2 id="unsafe包">unsafe包</h2>
+<p><code>unsafe</code>包主要包含绕过Go程序类型安全的操作。</p>
+<p>包中引入<code>unsafe</code>可能是不可移植的，并且不受<code>Go 1</code>兼容性指南的保护。</p>
+<p><strong>func Alignof</strong><br>
+<code>func Alignof(x ArbitraryType) uintptr</code><br>
+<code>Alignof</code>接受任意类型的表达式<code>x</code>，并且返回变量<code>v</code>(假设的)需要的内存对齐字节数。它的值<code>m</code>是<code>v</code>的地址对<code>m</code>取余为0的最大值。
+它与<code>reflect.TypeOf(x).Align()</code>返回值相同。<br>
+特定情况下，如果变量<code>s</code>是<code>struct</code>类型，并且<code>f</code>是<code>struct</code>中的<code>field</code>，那么<code>Alignof(s.f)</code>返回<code>f</code>需要的内存对齐字节数。
+这种情况下它与<code>reflect.TypeOf(s.f).FieldAlign()</code>返回值相同。<br>
+<code>Alignof</code>的返回值是Go常量。</p>
+<p><strong>func Offsetof</strong><br>
+<code>func Offsetof(x ArbitraryType) uintptr</code><br>
+<code>Offsetof</code>返回<code>x</code>表示的<code>field</code>在<code>struct</code>中的偏移量,<code>x</code>必须是<code>structValue.field</code>类型。换言之,它返回<code>struct</code>开始和<code>field</code>开始之间的字节数。<br>
+<code>Offset</code>的返回值是Go常量。</p>
+<p><strong>func Sizeof</strong><br>
+<code>func Sizeof(x ArbitraryType) uintptr</code><br>
+接受任意类型的表达式<code>x</code>，并且返回变量<code>v</code>(假设的)的内存大小,单位是字节。它的值不包含任何可能被<code>x</code>引用的内存。<br>
+举个例子,如果<code>x</code>是一个<code>slice</code>，<code>sizeof</code>返回<code>slice</code>的内存大小，不包含<code>slice</code>中引用的内存大小。<br>
+<code>Sizeof</code>的返回值是<code>Go</code>常量。</p>
+<p><strong>type ArbitraryType</strong>
+<code>type ArbitraryType int</code><br>
+<code>ArbitraryType</code>这里仅用于文档说明，它不属于<code>unsafe</code>包。它表示任意类型的Go表达式</p>
+<p><strong>type Pointer</strong></p>
+<pre tabindex="0"><code>type Pointer *ArbitraryType
+</code></pre><p><code>Pointer</code>表示指向任意类型的指针。<code>type Pointer</code>有四种指定的操作可用，其它不可用：</p>
+<ul>
+<li>任意类型的指针可以转换为<code>Pointer</code></li>
+<li><code>Pointer</code>可以转换为任意类型的指针</li>
+<li><code>uintptr</code>可以转换为<code>Pointer</code></li>
+<li><code>Pointer</code>可以转换为<code>uintptr</code>
+<code>Pointer</code>允许程序使类型检测失效，可以读写任意的内存。因此使用时要小心。</li>
+</ul>
+<p>以下使用<code>Pointer</code>的模式是有效的。未使用以下模式的代码可能是无效的，可能将来也是无效的。<br>
+即使是有效的模式也有重要的注意事项。</p>
+<p>执行<code>go vet</code>可以帮助检测不符合使用<code>Pointer</code>模式的地方，但是<code>go vet</code>的沉默不能保证代码是有效的。<br>
+(1) 将<code>*T1</code>转换为指向<code>*T2</code>的指针
+前提是<code>T2</code>不大于<code>T1</code>，并且两者共享相同的内存布局，这种转换允许讲一种类型的数据转换为另一种类型的数据。<br>
+一项示例是<code>math.Float64bits</code>的实现:</p>
+<pre tabindex="0"><code>func Float64bits(f float64) uint64 {
+    return *(*uint64)(unsafe.Pointer(&amp;f))
+</code></pre><p>(2) 将<code>Pointer</code>转换为<code>uintptr</code>(但是不能再转换为<code>Pointer</code>)<br>
+将<code>Pointer</code>转换为<code>uintptr</code>，会生成这个值指向的内存地址，是整数形式。 <code>uintptr</code>的通常使用方式是打印它。<br>
+将<code>uintptr</code>转换回<code>Pointer</code>通常是无效的。</p>
+<p><code>uintptr</code>是整数值，不是引用。将<code>Pointer</code>转换为<code>uintptr</code>,会创建一个不是指针语义的整数值。即使<code>uintptr</code>保存了某个对象的地址，
+<strong>垃圾清理器在对象移动时不会更新<code>uintpr</code>的值，同时这个<code>uintptr</code>也不会阻止对象被回收。</strong></p>
+<p>以下模式枚举了<code>uintptr</code>转换为<code>Pointer</code>的唯一有效方式。
+(3) 将<code>Pointer</code>转换为<code>uintptr</code>和反转，使用算术计算
+如果<code>p</code>指向一个已经分配的对象，它可以通过转换为<code>uintptr</code>并增加一个偏移量，然后转换为<code>Pointer</code>来访问该对象。<br>
+<code>p = unsaafe.Pointer(uintptr(p) + offset)</code> <br>
+通常使用这种模式来访问<code>struct</code>中的<code>field</code>或者数组中的元素:</p>
+<pre tabindex="0"><code>// 等同于: f := unsafe.Pointer(&amp;s.f)
+f := unsafe.Pointer(uintptr(unsafe.Pointer(&amp;s)) + unsafe.Offsetof(s.f))
+
+// 等同于: e := unsafe.Pointer(&amp;x[i])
+e := unsafe.Pinter(uintptr(unsafe.Pointer(&amp;x[0]) + i*unsafe.Sizeof(x[0]))
+</code></pre><p>在指针上加减偏移量的方式是有效的。使用<code>&amp;^</code>来操作指针同样有效，一般用于对齐。在所有场景中，结果必须继续指向原始分配的对象。</p>
+<p>与<code>C</code>不同的是，移动指针超出原始分配对象的末尾是无效的：</p>
+<pre tabindex="0"><code>// 无效: 终点超出已分配的空间
+var s thing
+end = unsafe.Pointer(uintptr(unsafe.Pointer(&amp;s)) + unsafe.Sizeof(s))
+
+// 无效: 终点超出已分配的空间
+b := make([]byte, n)
+end = unsafe.Pointer(uintptr(unsafe.Pointer(&amp;b[0])) + uintptr(n))
+</code></pre><p>注意，两种转换必须放在同一表达式中，它们中间只能有算术表达式:</p>
+<pre tabindex="0"><code>// 无效: 在转换为Pointer之前，uinptr不能保存在变量中
+u := uintptr(p)
+p = unsafe.Pointer(u + offset)
+</code></pre><p>注意，指针必须指向已分配对象，因此指针不能为nil:</p>
+<pre tabindex="0"><code>// 无效: 转换空指针
+u := unsafe.Pointer(nil)
+p := unsafe.Pointer(uintptr(u) + offset)
+</code></pre><p>(4) 在调用<code>syscall.Syscall</code>时转换<code>Pointer</code>为<code>uintptr</code>.<br>
+函数<code>Syscall</code>将<code>uintptr</code>参数直接传递给操作系统，然后根据调用的详情，将其中的一些参数直接转换为指针类型。
+也就是说，系统调用时隐式的将一些参数从<code>uintptr</code>转回指针。</p>
+<p>如果一个指针类型的参数必须转换为<code>uintptr</code>类型，才能使用，那么转换语句必须在调用表达式中：</p>
+<pre tabindex="0"><code>syscall.Syscall(SYS_READ,uintptr(fd), uintptr(unsafe.Pointer(p)), uintptr(n))
+</code></pre><p>编译器处理参数列表中的<code>Pointer</code>转换为<code>uintptr</code>时，引用的分配对象需要保留，直到调用完成才能移动。 
+即使从类型来看，在调用期间似乎也不再需要该对象。</p>
+<p>要让编译器识别这种模式，转换语句必须在参数列表中:</p>
+<pre tabindex="0"><code>// 无效: 在系统调用隐式转换回指针前，uintptr不能保存在中间变量中，
+u := uintptr(unsafe.Pointer(p))
+syscall.Syscall(SYS_READ, uintptr(fd), u, uintptr(n))
+</code></pre><p>(5) 将<code>reflect.Value.Pointer</code>或<code>reflect.Value.UnsafeAddr</code>从<code>unitptr</code>转换成<code>Pointer</code>. 
+<code>reflect</code>包中<code>Value</code>的<code>Pointer()</code>和<code>UnsafeAddr</code>方法，返回值类型是<code>uintptr</code>而不是<code>unsafe.Pointer</code>, 
+是为了避免调用者将结果转换为任意类型(不使用<code>unsafe.Pointer</code>)。但是这意味着它们的返回值是脆弱的，因此在<code>reflect.Value.Pointer()</code>和
+<code>reflect.Value.UnsafeAddr()</code>调用后需要在<strong>同一表达式中</strong>立刻转换成<code>unsafe.Pointer</code>:</p>
+<pre tabindex="0"><code>p := (*int)(unsafe.Pointer(reflect.ValueOf(new(int)).Pointer()))
+</code></pre><p>如上所述，在转换前将结果保存在中间变量中是无效的:</p>
+<pre tabindex="0"><code>// 无效: 在转换前将uintptr保存在中间变量中是无效的
+u := reflect.ValueOf(new(int)).Pointer()
+p := (*int)(unsafe.Pointer(u))
+</code></pre><p>(6) 转换<code>reflect.SliceHeader</code>或<code>reflect.StringHeader</code>为<code>unsafe.Pointer</code>。
+如上所述，<code>SliceHeader</code>和<code>StringHeader</code>结构中声明的<code>field</code>类型为<code>uintptr</code>，用来防止调用者将结果转换为任意类型(不使用<code>unsafe.Pointer</code>).
+这意味着，<code>SliceHeader</code>和<code>StringHeader</code>只在诠释<code>slice</code>或<code>string</code>时是有效的。</p>
+<pre tabindex="0"><code>var s string
+hdr := (*refelct.StringHeader)(unsafe.Pointer(&amp;s)) // case (1)
+hdr.Data = uintptr(unsafe.Pointer(p))              // case (6)
+hdr.Len = n
+</code></pre><p>在上述使用中，<code>hdr.Data</code>是字符串header中引用底层指针的另一种方法，而不是<code>uintptr</code>变量本身。</p>
+<p>通常<code>reflect.SliceHeader</code>和<code>reflect.StringHeader</code>的使用方法只能是使用<code>*reflect.SliceHeader</code>和<code>*reflect.StringHeader</code>
+指向<code>slice</code>或<code>string</code>，而不是其它<code>struct</code>。 程序不应该使用这两种类型声明和分配变量。</p>
+<pre tabindex="0"><code>// 无效：直接声明的header， 不会将数据作为引用保存。
+var hdr reflect.StringHeader
+hdr.Data = uintptr(unsafe.Pointer(p))
+hdr.Len = n
+s := *(*string)(unsafe.Pointer(&amp;hdr)) // p possibly already lost
+</code></pre>
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#unsafe包">unsafe包</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/golang/effective_go/" class="button left"><span>Golang-Effective Go</span></a>
+    
+    
+      <a href="/blog/security/%E7%94%B3%E8%AF%B7%E5%85%8D%E8%B4%B9%E8%AF%81%E4%B9%A6/" class="button right"><span>申请免费SSL证书</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

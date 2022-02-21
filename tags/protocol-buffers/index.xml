@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Protocol Buffers on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/protocol-buffers/</link>
+    <description>Recent content in Protocol Buffers on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 28 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/protocol-buffers/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Protocol Buffers - FAQ</title>
+      <link>https://zylhorse.github.io/blog/data-structure/protocol-buffers/faq/</link>
+      <pubDate>Thu, 28 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/data-structure/protocol-buffers/faq/</guid>
+      <description>本文讨论一些Protocol Buffers 开源项目的一些常见问题。 如果你有一些问题，这里没有回答，请加入讨论组并提问。
+普通问题 为什么发布Protocol Buffers？
+有以下几个原因:
+ Protocol Buffers 在Google中几乎被每个人使用。我们有许多想要开源发布的项目在使用protocol buffers, 因此我们需要首先发布protocol bufeers。事实上，一些技术已经可以在开源项目中找到 - 如果你深入Google AppEngine 代码，你会发现它们。 我们愿意提供接收protocol buffers和XML的公共API, 因为这非常高效，而且我们只是把XML转换成protocol buffers。 我们认为Google之外的人会发现protocol buffers会很有用 将protocol buffers变成我们乐意发布的形式是有趣20%的项目。  为什么首次发布版本2？版本1发生了什么？
+protocol buffers的初始版本(亦名Proto1)最早在2001年在Google内开始开发，经过多年的发展，当有人需要并且愿意自己做，就会萌生出新的特性。 就像任何以这种方式创造出来的东西一样，它有点混乱。我们得出的结论是，按照现在的样子发布代码是不可行的。
+版本2(Proto2)是一个完全重写的版本，尽管它保留了大部分的设计并使用了许多来自Proto1的实现思想。添加了一些功能，删除了一些。 然而，最重要的是，代码被清理干净，并且没有任何依赖于尚未开放源码的Google库。
+为什么命名为&amp;quot;Protocol Buffers&amp;quot;？
+这个名称源于该格式的早期，那时还没有协议缓冲区编译器来为我们生成类。 当时，有一个名为ProtocolBuffer的类，它实际上充当了单个方法的缓冲区。 用户可以通过调用AddValue(tag, value)等方法将tag/value对分别添加到这个缓冲区。 原始字节被存储在一个缓冲区中，一旦消息被构造好，这个缓冲区就可以被写出来。
+从那时起，名称中的“buffers”部分就失去了意义，但它仍然是我们使用的名称。今天，人们通常使用术语“protocol message”来指抽象意义上的message， “protocol buffer”指消息的序列化副本，“protocol message object”指表示已解析消息的内存对象。
+Google还有Protocol Buffers的任何专利吗？
+Google目前没有关于Protocol Buffers的授权专利，我们很高兴解决人们可能有的关于协议缓冲区和专利的任何担忧。
+技术类问题  Similar Technologies
+ Protocol Buffers 和 XML 有什么不同?
+答案见概述页
+Protocol Buffers和ASN.1,COM,CORBA,Thrift,etc 有什么不同？
+我们认为所有这些系统都有优点和缺点。Google内部依赖protocol buffers，并且它是我们成功的重要组成部分， 但是这并不意味着它是所有问题的理想解决方案。你应该在自己项目中评估以上每一个选项。
+但是，值得注意的是，这些技术中有几种同时定义了交换格式和RPC(远程过程调用)协议。协议缓冲区只是一种交换格式。 它们可以很容易地用于RPC——实际上，它们对定义RPC services 的支持是有限的——但是它们没有绑定到任何一个RPC实现或协议。</description>
+    </item>
+    
+    <item>
+      <title>Protocol Buffers - Version 3指南</title>
+      <link>https://zylhorse.github.io/blog/data-structure/protocol-buffers/guide/</link>
+      <pubDate>Thu, 28 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/data-structure/protocol-buffers/guide/</guid>
+      <description>本指南描述如何使用Protocol Buffers语言来构建Protocol Buffers数据结构。 包括.proto文件语法以及如何从.proto文件生成数据访问类。
+ 所有示例指定语言为Go
+[PB2] 表示pb version2 的指南
+[PB3] 表示pb version3 的指南
+ 定义Message  Defining A Message Type
+ 首先看一个简单的例子。这里我们定义一个搜索请求的message格式，每条搜索请求包含查询字符串，整数页码和每页结果条数。
+示例:
+[PB2]syntax = &amp;quot;proto2&amp;quot;;message SearchRequest {required string query = 1;optional int32 page_number = 2;optional int32 result_per_page = 3;}[PB3]syntax = &amp;quot;proto3&amp;quot;;message SearchRequest {string query = 1;int32 page_number = 2;int32 result_per_page = 3;}SearchRequest 定义了三个字段, 每个字段包含：type name = filed number; (参考规范)</description>
+    </item>
+    
+    <item>
+      <title>Protocol Buffers - 技巧</title>
+      <link>https://zylhorse.github.io/blog/data-structure/protocol-buffers/techniques/</link>
+      <pubDate>Thu, 28 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/data-structure/protocol-buffers/techniques/</guid>
+      <description>本文描述处理protocol buffer的一些常用设计模式。你也可以发送设计和使用问题到Protocol Buffers 讨论组
+流化多个Message  Streaming Multiple Messages
+ 如果你想要写多个message到单个文件或流中，由你确定跟踪一个message结束位置和下一个message开始的位置。protocol buffer格式不是自定义的， 因此protocol buffer解析器无法自行确定消息的结束位置。解决这个问题最简单的方法是在写message之前，先写message大小。 当你读入message时，先读大小，然后读取字节到一个单独的缓冲区，再从缓冲区解析。(如果你想要避免拷贝字节到一个独立的缓冲区， 请检查CodedInputStrem类(C++和Java中)，它可以告知将读取限制为特定的字节数)
+大数据集  Large Data Sets
+ protocol buffer不是为处理大型message而设计的。根据一般经验，如果每个处理的message都大于1M字节, 那么需要考虑替代方案。
+这就是说，protocol buffer非常适合处理大型数据集中的单个message。通常，大型数据集实际上只是小块的集合，其中每小块可能是结构化的数据块。 尽管protocol buffer不能一次处理整个集合，使用protocol buffer来编码每块可以大大简化你的问题: 现在你只需要处理一组字节字符串，而不是一组结构。
+protocol buffer不包含对大数据集的内置支持，因为不同的情况需要不同的解决方案。有些时候一个简单的记录列表就可以， 而其它时候你需要一个类似数据库的东西。每一种解决方案应该作为单独的库来开发，这样只有需要它的人才需要支付成本。
+自描述Message  Self-describing Messages
+ protocol buffer不包含它们自己类型的描述。因此，只给出一条原始message，而没有定义其类型的对应的.proto文件，这很难提取出任何有用的数据。
+但是，注意，.proto文件的内容本身可以使用protocol buffer表示。src/google/protobuf/descriptor.proto文件定义了所涉及的message类型。 protoc可以输出一个FileDescriptorSet－表示一组.proto文件－使用--descriptor_set_out选项。这样，你可以像以下定义一个自描述的message：
+syntax = &amp;quot;proto3&amp;quot;;import &amp;quot;google/protobuf/any.proto&amp;quot;;import &amp;quot;google/protobuf/descriptor.proto&amp;quot;;message SelfDescribingMessage {// Set of FileDescriptorProtos which describe the type and its dependencies.google.protobuf.FileDescriptorSet descriptor_set = 1;// The message and its type, encoded as an Any message.</description>
+    </item>
+    
+    <item>
+      <title>Protocol Buffers - 简介</title>
+      <link>https://zylhorse.github.io/blog/data-structure/protocol-buffers/instroduction/</link>
+      <pubDate>Thu, 28 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/data-structure/protocol-buffers/instroduction/</guid>
+      <description>概述 Protocol Buffers 是一种语言无关、平台无关，可扩展的序列化结构数据的机制。- 类似XML，但是更小、更快、更简单。 只需定义一次数据结构，就可以生成指定的源代码，使用不同的语言向数据流读取和写入结构数据。
+Protocol Buffers目前支持生成Java、Python、Objective-C和C++等语言的代码。 在proto3版本中，新增Dart、Go、Ruby和C#等更多语言。</description>
+    </item>
+    
+    <item>
+      <title>Protocol Buffers - 编码规范</title>
+      <link>https://zylhorse.github.io/blog/data-structure/protocol-buffers/style_guide/</link>
+      <pubDate>Thu, 28 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/data-structure/protocol-buffers/style_guide/</guid>
+      <description>这篇文章讲述.proto文件的编写规范。根据以下约定，将会使你的protocol buffer messgae定义和它们对应的类保持一致并易于阅读。
+注意，protocol buffer规范是随着时间改变的，因此你可能会看到用不同的约定或格式编写的.proto文件。 当你修改这些文件的时候，请尊重现有的格式。保持一致就好。但是当你创建新的.proto文件时，最好采用当前的格式。
+标准文件格式  Standard file formatting
+  保持每一行长度限制在80字符内 使用2个空格缩进 字符串最好使用双引号  文件结构  File structure
+ 文件应该命名为: lower_snake_case.proto
+所有的文件应该按照以下习惯排列：
+ License header File overview(文件概述) Syntax Package Imports (需要排序) File options(文件选项) Everything else (其它声明)  Packages package名称应该时小写，并且应该对应目录层级。e.g.,如果文件在my/package中，那么package名字应该是my.package。
+Message和字段名  Message and field names
+ message: 使用驼峰命名法(首字母大写),例如: SongServerRequest.
+字段: 使用underscore_separated_names命名(包括oneof和extension),例如: song_name。 Use CamelCase (with an initial capital) for message names – for example, SongServerRequest. Use underscore_separated_names for field names (including oneof field and extension names) – for example, song_name.</description>
+    </item>
+    
+    <item>
+      <title>Protocol Buffers - 规范</title>
+      <link>https://zylhorse.github.io/blog/data-structure/protocol-buffers/reference/</link>
+      <pubDate>Thu, 28 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/data-structure/protocol-buffers/reference/</guid>
+      <description>本文是Protocol Buffers语言规范的参考文档。语法使用EBNF.
+ [PB2] 表示pb version2 的规范
+[PB3] 表示pb version3 的规范
+ | alternation() grouping[] option (zero or one time){} repetition (any number of times)词法元素  Lexical elements
+ 字母和数字  Letters and digits
+ letter = &amp;quot;A&amp;quot; … &amp;quot;Z&amp;quot; | &amp;quot;a&amp;quot; … &amp;quot;z&amp;quot;[PB2] capitalLetter = &amp;quot;A&amp;quot; … &amp;quot;Z&amp;quot;decimalDigit = &amp;quot;0&amp;quot; … &amp;quot;9&amp;quot;octalDigit = &amp;quot;0&amp;quot; … &amp;quot;7&amp;quot;hexDigit = &amp;quot;0&amp;quot; … &amp;quot;9&amp;quot; | &amp;quot;A&amp;quot; … &amp;quot;F&amp;quot; | &amp;quot;a&amp;quot; … &amp;quot;f&amp;quot;标识符  Identifiers</description>
+    </item>
+    
+    <item>
+      <title>Protocol Buffer-Go FAQ</title>
+      <link>https://zylhorse.github.io/blog/golang/protocol-buffers/faq/</link>
+      <pubDate>Wed, 28 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/golang/protocol-buffers/faq/</guid>
+      <description>版本  Versions
+ github.com/golang/protobuf和google.golang.org/protobuf有什么区别?
+github.com/golang/protobuf 模块是原始的Go protocol buffer API
+google.golang.org/protobuf 模块是Go protocol buffer API的更新版本, 旨在更加简洁、易用和安全。 更新API的主要特性是支持反射， 以及将面向用户的API与底层实现分离。
+推荐在新代码中使用google.golang.org/protobuf。
+github.com/golang/protobuf的v1.4.0版本及更高版本封装了新的实现，并且允许程序逐步的采用新的API。 例如, github.com/golang/protobuf/ptypes中定义的知名类型在新模块中只是简单的别名。因此， google.golang.org/protobuf/types/known/emptypb和github.com/golang/protobuf/ptypes/empty是可以互换使用的。
+proto1,proto2,proto3有什么区别? 这些都是protocol buffer语言的修订版。 它不同于protobufs的Go 实现。
+ proto3是当前版本。这是该语言最常用的版本。我们鼓励新代码使用proto3。 proto2是旧版本。尽管被proto3取代，但proto2仍然受到完全支持。 proto1是废弃版本。它从未以开源的形式发布。有关proto1的更多信息，请参阅FAQ。  有几种不同的Message类型。我应该用哪个？
+ &amp;ldquo;google.golang.org/protobuf/proto&amp;rdquo;.Message是接口类型， 当前版本的protocol buffer编译器生成的所有message都要实现它。操作任意message的方法，如proto.Marshal或proto.Clone， 接收或返回该值。 &amp;ldquo;google.golang.org/protobuf/reflect/protoreflect&amp;rdquo;.Message 是一个描述message反射视图的接口类型。
+调用proto.Message的ProtoReflect方法，获取protoreflect.Message。 &amp;ldquo;google.golang.org/protobuf/reflect/protoreflect&amp;rdquo;.ProtoMessage 是&amp;quot;google.golang.org/protobuf/proto&amp;quot;.Message的别名。这两种类型是可以互换的。 &amp;ldquo;github.com/golang/protobuf/proto&amp;rdquo;.Message 是由遗留的Go Protocol Buffer API定义的接口类型。所有生成的message都需要实现该接口，但是该接口没有描述期望从这些message中得到的行为。 新代码应该避免使用这个类型。  常见问题  Common problems
+ &amp;ldquo;go install&amp;rdquo;: working directory is not part of a module
+你已经设置环境变量GO111MODULE=on，并且在模块目录之外运行go install命令。
+设置GO111MODULE=auto，或者取消设置该环境变量。
+constant -1 overflows protoimpl.</description>
+    </item>
+    
+    <item>
+      <title>Protocol Buffer-Go代码生成</title>
+      <link>https://zylhorse.github.io/blog/golang/protocol-buffers/generated/</link>
+      <pubDate>Wed, 28 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/golang/protocol-buffers/generated/</guid>
+      <description>生成代码  Go Generated Code
+ 本章详细描述protocol buffer编译器为协议定义的类型生成对应的Go代码。 proto2和proto3生成代码的任何差异都会突出显示————注意: 文档中描述的差异都在生成的代码中，而不是两个版本都相同的基础API中。 在读这篇文章之前，请先阅读protocol buffer guide
+编译器使用  Compiler Invocation
+ 编译器需要安装插件来生成Go代码。 安装如下:
+go install google.golang.org/protobuf/cmd/protoc-gen-go此命令在$GOBIN下安装protoc-gen-go命令。安装之前修改环境变量$GOBIN的值来改变protoc-gen-go安装目录。 为了编译器找到命令，安装目录必须添加到环境变量$PATH中。
+ 当编译器被调用时设置参数--go_out,会创建输出目录,--go_out指定你想要编译器生成Go输出的目录。 编译器会为每个传入的.proto文件创建源文件,并替换文件的扩展名.proto为.pb.go  .proto文件需要包含go_package选项，用以指定包含生成代码的Go包的完整import路径。
+示例:
+option go_package = &amp;quot;example.com/foo/bar&amp;quot;;输出文件所在输出目录的子目录，取决于go_package选项和编译器参数:
+ 默认情况，输出文件被放在以Go包导入路径命名的目录下。例如:
+设置上述go_pacakge选项的protos/foo.proto文件的输出文件名是example.com/foo/bar/foo.pb.go 如果命令行参数设置--go_opt=module=$PREFIX,指定目录前缀从输出文件名中删除。例如：
+设置上述go_pacakge选项和 --go_opt=module=example.com/foo的protos/foo.proto文件的输出文件名是bar/foo.pb.go 如果命令行参数设置--go_opt=paths=source_relative,输出文件被放在与输入文件相同的相对目录下。例如: 设置上述go_pacakge选项的protos/foo.proto文件的输出文件名是protos/foo.pb.go  当运行以下编译器命令时:
+protoc --proto_path=src --go_out=build/gen --go_opt=paths=source_relative src/foo.proto src/bar/baz.proto编译器读取文件src/foo.proto和src/bar/baz.proto。生成两个输出文件: build/gen/foo.pb.go和build/gen/bar/baz.pb.go
+编译器会自动生成目录build/gen/bar,但是不会创建目录build或build/gen。这两层目录必须已经存在。
+包  Packages
+ .proto源文件需要包含go_package选项，指定包含该文件的Go包的完整导入路径。 如果没有指定选项go_package,编译器会猜测一个。 将来的编译器版本，会设置go_package选项为必选的。
+生成Go包名为go_package选项定义路径的最后一个元素。 例如:
+// The Go package name is &amp;quot;timestamppb&amp;quot;.</description>
+    </item>
+    
+    <item>
+      <title>Protocol Buffer-Go基础知识</title>
+      <link>https://zylhorse.github.io/blog/golang/protocol-buffers/basics/</link>
+      <pubDate>Wed, 28 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/golang/protocol-buffers/basics/</guid>
+      <description>这篇教程讲述了Go程序员使用protocol buffers的基本介绍，这里使用protocol buffers的proto3版本。 逐步的创建简单的示例程序，向你展示怎么去做。
+ 在.proto文件中定义message格式 使用protocol buffers 编译器 使用Go protocol buffer API读写message  这不是一篇全面的教程，教你怎么在Go中使用protocol buffers。 想要更详细的参考信息， 参见Protocol Buffer Language Guide, the Go API Reference, Go Generated Code Guide, Encoding Reference
+为什么使用Protocol Buffers 我们将要演示的示例是一个非常简单的通讯录应用，这个应用可以在文件中读写人们的联系方式。通讯录中的每个人都有名字，ID，email,电话号码。
+怎样去序列化和反序列化这些信息？有以下几种方法:
+ 使用gobs来序列化Go结构化对象。这在特定的Go语言环境中是好的解决方案，但是如果你需要 与其它平台编写的应用共享数据，这种方案就不太好用。 你可以发明专门的方法，将数据项编码到一个单独的字符串－比如将整数4 编码为&amp;quot;12:3:-23:67&amp;quot;。这是个简单而灵活的方法， 尽管它需要编写一次性编码和解析代码，而且解析的运行成本很小。这对于简单数据的编码最有效。 将数据序列化为XML。这个方法是非常有效的，因为XML是可读的，并且很多语言都有实现库。如果你想要和其它应用/项目共享数据， XML是一个很好的选择。但是，总所周知，XML是空间密集型的，并且XML的编解码会给应用带来很大的性能问题。此外操作XML的DOM树比操作 类中的简单字段要复杂的多。  Protocol Buffers 是灵活，高效，自动化的解决方案，刚好解决这个问题。使用Protocol buffer， 你需要编写一个想要存储的数据结构体的.proto描述。随后，protocol buffer 编译器创建一个类， 该类使用高效的二进制格式自动的编解码protocol buffer数据。该类为protocol buffer中的字段提供getter和setter， 并且负责将protocol buffer作为一个单元进行读写。重要的是，protocol buffer格式支持随时间推移扩展格式的思想， 这样代码仍然可以读取用旧格式编码的数据
+从哪里查找示例代码 我们的示例是一组命令行应用程序，用于管理使用protocol buffers编码的地址簿数据文件。 add_person_go命令向数据文件添加一个新条目。list_people_go命令解析数据文件并将数据打印到控制台。
+你可以在GitHub存储库的examples目录中找到完整的例子。
+定义你的协议格式 要创建您的地址簿应用程序，您需要从.proto文件开始。.proto文件中的定义很简单:为要序列化的每个数据结构添加一条消息， 然后为消息中的每个字段指定名称和类型。在我们的示例中，定义消息的.proto文件是addressbook.proto。
+.proto文件以包声明开始，这有助于防止不同项目之间的命名冲突
+syntax = &amp;quot;proto3&amp;quot;;package tutorial;import &amp;quot;google/protobuf/timestamp.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>OpenTracing on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/opentracing/</link>
+    <description>Recent content in OpenTracing on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 03 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/opentracing/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenTracing-系统集成</title>
+      <link>https://zylhorse.github.io/blog/opentracing/integration/</link>
+      <pubDate>Wed, 03 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/opentracing/integration/</guid>
+      <description>概述 这里讲解集成OpenTracing到你的系统中，需要做的工作。
+服务端修改
+ 过滤器，拦截器，中间件等处理入站请求的组件 Span的载体 tracer的配置：开启/采样率/日志等  客户端修改
+ 过滤器，拦截器，中间件等处理出站请求的组件 tracer的配置：开启/采样率/日志等  提醒 操作名(operation name) 每个Span被创建时，都需要指定其操作名。操作名需要遵循一定的规范。
+一些默认命名示例：
+ 请求处理方法名称 web资源名称 RPC服务和方法连接名称  确认需要追踪的方法 有些系统需要追踪所有请求， 有些系统需要追踪特定请求。 程序应该提供配置，满足这两种场景，允许用户设置。
+追踪请求属性 程序有时需要记录请求的一些属性。一般避免手动设置Span的Tag信息， 有以下两种方式：
+ gRPC的Span Decorator // SpanDecorator binds a function that decorates gRPC Spans.func SpanDecorator(decorator SpanDecoratorFunc) Option {return func(o *options) {o.decorator = decorator}} 添加属性配置列表TRACED_REQUEST_ATTRIBUTES, 在追踪过滤器中确认需要添加的Tags for attr in settings.TRACED_REQUEST_ATTRIBUTES:if hasattr(request, attr):payload = str(getattr(request, attr))Span.</description>
+    </item>
+    
+    <item>
+      <title>OpenTracing-Jaeger Demo</title>
+      <link>https://zylhorse.github.io/blog/opentracing/jaeger/</link>
+      <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/opentracing/jaeger/</guid>
+      <description>Jaeger ENV JAEGER_SERVICE_NAME	The service name.
+JAEGER_AGENT_HOST	The hostname for communicating with agent via UDP (default localhost).
+JAEGER_AGENT_PORT	The port for communicating with agent via UDP (default 6831).
+JAEGER_ENDPOINT	The HTTP endpoint for sending spans directly to a collector, i.e. http://jaeger-collector:14268/api/traces. If specified, the agent host/port are ignored.
+JAEGER_USER	Username to send as part of &amp;ldquo;Basic&amp;rdquo; authentication to the collector endpoint.
+JAEGER_PASSWORD	Password to send as part of &amp;ldquo;Basic&amp;rdquo; authentication to the collector endpoint.</description>
+    </item>
+    
+    <item>
+      <title>OpenTracing-概念和关键字</title>
+      <link>https://zylhorse.github.io/blog/opentracing/concepts/</link>
+      <pubDate>Fri, 26 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/opentracing/concepts/</guid>
+      <description>Span   Example Span
+ t=0 operation name: db_query t=x+-----------------------------------------------------+| · · · · · · · · · · Span · · · · · · · · · · |+-----------------------------------------------------+Tags:- db.instance:&amp;quot;customers&amp;quot;- db.statement:&amp;quot;SELECT * FROM mytable WHERE foo=&#39;bar&#39;&amp;quot;- peer.address:&amp;quot;mysql://127.0.0.1:3306/customers&amp;quot;Logs:- message:&amp;quot;Can&#39;t connect to mysql server on &#39;127.0.0.1&#39;(10061)&amp;quot;SpanContext:- trace_id:&amp;quot;abc123&amp;quot;- span_id:&amp;quot;xyz789&amp;quot;- Baggage Items:- special_id:&amp;quot;vsid1738&amp;quot;  Span 是分布式追踪系统的主要构成模块，表示分布式系统中单个独立的工作单元</description>
+    </item>
+    
+    <item>
+      <title>OpenTracing-示例练习</title>
+      <link>https://zylhorse.github.io/blog/opentracing/practices/</link>
+      <pubDate>Thu, 25 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/opentracing/practices/</guid>
+      <description>Tracing函数 func TopLevelFunc() {span1 := opentracing.GlobalTracer().StartSpan(&amp;quot;TopLevelFunc&amp;quot;)defer span1.Finish()... // 业务逻辑} 后续，作为上述业务逻辑一部分，我们调用了function2，也想tracing。为了将此函数也附着在正在进行的trace上， 我们需要一个获取span1的方法，后续我们再讨论如何实现，现在我们假设有这样一个方法GetCurrentSpan可以获取span1:
+func function2(){span1 := GetCurrentSpan()if span1 != nil {span2 := opentracing.GlobalTracer().StartSpan(&amp;quot;function2&amp;quot;, opentracing.ChildOf(span1.Context())) defer span2.Finish() } ... //业务逻辑} 假设调用者没有启动tracing，也不想在function2中创建新的tracing，需要考虑GetCurrentSpan可能返回nil
+ 通常情况下，开发者不希望追踪的代码混在业务代码中，而是用其他方式。 如：注解. 参考function decorator in Python: @traced_functiondef top_level_function():... # business logic
+Tracing服务端 当服务想tracing一个请求的执行，需要以下几步:
+ 尝试从request中获取SpanContext(防止tracing已经在客户端开始)，如果无法获取request中的SpanContext则新开始一个tracing 将新创建的Span保存到request context中，request context会跟随应用程序代码或RPC框架在整个系统中传播。 最后，当服务完成请求处理后，使用span.finish()关闭Span  从请求中提取SpanContext 假设我们有一个HTTP服务，并且SpanContext已经通过HTTP headers，从客户端传递到服务器，可以通过req.Headers访问到:
+extractedCtx := opentracing.GlobalTracer().Extract(opentracing.HTTP_HEADER_FORMAT, opentracing.HTTPHeadersCarrier(req.Headers) 这里我们使用headers作为载体，Tracer对象知道读取哪些headers，并将tracer数据和Baggage解构。</description>
+    </item>
+    
+    <item>
+      <title>OpenTracing-简介</title>
+      <link>https://zylhorse.github.io/blog/opentracing/introduction/</link>
+      <pubDate>Wed, 24 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/opentracing/introduction/</guid>
+      <description>为什么Tracing  研发团队因为系统组件的水平扩展、开发团队小型化、解耦各种需求等，正在使用微服务架构替换老旧的单体系统。 这个过程中需要面临一系列的问题：由于没有内存调用和堆栈追踪，怎样在复杂的网络环境中调试和监测分布式事务。 分布式追踪系统旨在解决这些问题  模式 大多数追踪系统的Mental Model来源于这篇论文(Google&amp;rsquo;s Dapper paper)。 OpenTracing使用相似的关键词和定义。
+ Trace: 在分布式系统中运行的事务的描述 Span: 工作流中的一部分被命名和定时的操作  Spans 接受k:v 标签，以及细粒度、时间戳、结构化日志附加到指定的Span实例中
+  Span Context: 伴随分布式事务的追踪信息，包含它在服务间传递的时间  Span Context包含traceId，SpanId，以及追踪系统需要传递给下游服务器的其他任何数据
+   追踪系统划分  从应用层分布式追踪系统的角度看，软件系统如下图：
+ 软件系统中的组件可以被分成以下三类：  应用和业务逻辑(自己的代码) 第三方库 第三方服务   这三类组件有不同的需求，并且推动了分布式追踪系统的设计，用于监控应用程序。最终的设计产生四个重要部分：  追踪API 通信协议 数据格式 分析系统: 用于处理追踪数据的数据库和交互式UI    OpenTracing   OpenTracing通过提供标准的、厂商无关的工具框架
+  如果开发人员尝试不同的分布式跟踪系统，只需要简单的修改追踪器的配置，而不是修改整个系统的trace代码。
+  OpenTracing是轻量级标准化层， 位于程序/类库和监控系统之间。
+ +-------------+ +---------+ +----------+ +------------+| Application | | Library | | OSS | | RPC/IPC || Code | | Code | | Services | | Frameworks |+-------------+ +---------+ +----------+ +------------+| | | || | | |v v v v+-----------------------------------------------------+| · · · · · · · · · · OpenTracing · · · · · · · · · · |+-----------------------------------------------------+| | | || | | |v v v v+-----------+ +-------------+ +-------------+ +-----------+| Tracing | | Logging | | Metrics | | Tracing || System A | | Framework B | | Framework C | | System D |+-----------+ +-------------+ +-------------+ +-----------+上述模块简介:</description>
+    </item>
+    
+    <item>
+      <title>OpenTracing-语义规范</title>
+      <link>https://zylhorse.github.io/blog/opentracing/specification/</link>
+      <pubDate>Wed, 24 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/opentracing/specification/</guid>
+      <description>OpenTracing Data Model 在OpenTracing中，Trace是由Span隐式定义的。 Trace可以看作是Spans的有向无环图(DAG)，Spans之间的边界称之为References.
+例如以下的Trace由8个Spans组成：
+Causal relationships between Spans in a single Trace[Span A] ←←←(the root span)|+------+------+| |[Span B] [Span C] ←←←(Span C is a `ChildOf` Span A)| |[Span D] +---+-------+| |[Span E] [Span F] &amp;gt;&amp;gt;&amp;gt; [Span G] &amp;gt;&amp;gt;&amp;gt; [Span H]↑↑↑(Span G `FollowsFrom` Span F)使用时间轴对Trace进行可视化表示看起来更直观些:
+Temporal relationships between Spans in a single Trace––|–––––––|–––––––|–––––––|–––––––|–––––––|–––––––|–––––––|–&amp;gt; time[Span A···················································][Span B··············································][Span D··········································][Span C········································][Span E·······] [Span F··] [Span G··] [Span H··]Span Reference Span可以被其他Span引用， 因此多个Span存在因果关系。 OpenTracing定义了以下两种关系:</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Websocket on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/websocket/</link>
+    <description>Recent content in Websocket on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 20 Jul 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/websocket/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>从GW和IM实战描述websocket协议</title>
+      <link>https://zylhorse.github.io/blog/network/websocket/</link>
+      <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/network/websocket/</guid>
+      <description>描述 用于在单个tcp连接上进行全双工通信的协议；RFC6455标准；</description>
+    </item>
+    
+  </channel>
+</rss>

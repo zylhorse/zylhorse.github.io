@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>ubutnu本地安装实操 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="ubutnu本地安装实操">
+<meta itemprop="description" content="ubuntu U盘安装 遇到类似加载镜像文件问题，最简单粗暴的解决方案就是把挂载ubuntu server镜像文件至cdrom目录
+具体步骤如下：
+  复制安装镜像至U盘
+  进入ubuntu控制台，可以直接通过Alt&#43;F2进入终端环境
+  查看u盘设备号 通过命令：ls /dev/sd*
+查看U盘设备，通常U盘设备为sdb,sdc,sdd等名称或以此为前缀名称。
+ 如果不确定，可以将U盘拔出，然后再用 ls /dev/sd*命令查看设备，发现少了的那个就是U盘。 但一般情况下，再次插入，U盘设备号会有所改变，例如原来是sdb4，重新插入，查看一下可能是sdb5，以最后插入查看的设备号为准。    查看到U盘设备号后，卸载设备，如下：
+umount /dev/sdb4 #sdb4就是当前查看得到U盘设备  重新挂载U盘,可以创建一个目录，然后将U盘挂载至新建目录，目的是为了找到U盘里的ubuntu server安装镜像文件，操作命令如下：
+mkdir /mnt/usbmount /dev/sdb4 /mnt/usb # 将U盘挂载到该目录下  挂载ubuntu server安装镜像文件至cdrom目录, 进入U盘目录(/mnt/usb )，找到ubuntu server安装镜像文件，并挂载镜像，操作参考如下：
+cd /mnt/usbmount ubuntu-16.04.4-server-amd64.iso /cdrom #挂载镜像文件位于U盘根目录  退出shell，进入安装向导界面安装系统。可以通过Alt&#43;F1或者输入exit退出shell
+  ">
+<meta itemprop="datePublished" content="2014-03-11T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2014-03-11T00:00:00+00:00" />
+<meta itemprop="wordCount" content="40">
+
+
+
+<meta itemprop="keywords" content="," />
+<meta property="og:title" content="ubutnu本地安装实操" />
+<meta property="og:description" content="ubuntu U盘安装 遇到类似加载镜像文件问题，最简单粗暴的解决方案就是把挂载ubuntu server镜像文件至cdrom目录
+具体步骤如下：
+  复制安装镜像至U盘
+  进入ubuntu控制台，可以直接通过Alt&#43;F2进入终端环境
+  查看u盘设备号 通过命令：ls /dev/sd*
+查看U盘设备，通常U盘设备为sdb,sdc,sdd等名称或以此为前缀名称。
+ 如果不确定，可以将U盘拔出，然后再用 ls /dev/sd*命令查看设备，发现少了的那个就是U盘。 但一般情况下，再次插入，U盘设备号会有所改变，例如原来是sdb4，重新插入，查看一下可能是sdb5，以最后插入查看的设备号为准。    查看到U盘设备号后，卸载设备，如下：
+umount /dev/sdb4 #sdb4就是当前查看得到U盘设备  重新挂载U盘,可以创建一个目录，然后将U盘挂载至新建目录，目的是为了找到U盘里的ubuntu server安装镜像文件，操作命令如下：
+mkdir /mnt/usbmount /dev/sdb4 /mnt/usb # 将U盘挂载到该目录下  挂载ubuntu server安装镜像文件至cdrom目录, 进入U盘目录(/mnt/usb )，找到ubuntu server安装镜像文件，并挂载镜像，操作参考如下：
+cd /mnt/usbmount ubuntu-16.04.4-server-amd64.iso /cdrom #挂载镜像文件位于U盘根目录  退出shell，进入安装向导界面安装系统。可以通过Alt&#43;F1或者输入exit退出shell
+  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/linux/ubuntu-%E5%AE%89%E8%A3%85/" />
+<meta property="article:published_time" content="2014-03-11T00:00:00+00:00" />
+<meta property="article:modified_time" content="2014-03-11T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ubutnu本地安装实操"/>
+<meta name="twitter:description" content="ubuntu U盘安装 遇到类似加载镜像文件问题，最简单粗暴的解决方案就是把挂载ubuntu server镜像文件至cdrom目录
+具体步骤如下：
+  复制安装镜像至U盘
+  进入ubuntu控制台，可以直接通过Alt&#43;F2进入终端环境
+  查看u盘设备号 通过命令：ls /dev/sd*
+查看U盘设备，通常U盘设备为sdb,sdc,sdd等名称或以此为前缀名称。
+ 如果不确定，可以将U盘拔出，然后再用 ls /dev/sd*命令查看设备，发现少了的那个就是U盘。 但一般情况下，再次插入，U盘设备号会有所改变，例如原来是sdb4，重新插入，查看一下可能是sdb5，以最后插入查看的设备号为准。    查看到U盘设备号后，卸载设备，如下：
+umount /dev/sdb4 #sdb4就是当前查看得到U盘设备  重新挂载U盘,可以创建一个目录，然后将U盘挂载至新建目录，目的是为了找到U盘里的ubuntu server安装镜像文件，操作命令如下：
+mkdir /mnt/usbmount /dev/sdb4 /mnt/usb # 将U盘挂载到该目录下  挂载ubuntu server安装镜像文件至cdrom目录, 进入U盘目录(/mnt/usb )，找到ubuntu server安装镜像文件，并挂载镜像，操作参考如下：
+cd /mnt/usbmount ubuntu-16.04.4-server-amd64.iso /cdrom #挂载镜像文件位于U盘根目录  退出shell，进入安装向导界面安装系统。可以通过Alt&#43;F1或者输入exit退出shell
+  "/>
+<link rel="stylesheet" href="/css/bundle.min.1e02bb992195ca398d746df5f9dd547068b745164f5e47eab62b93e6f424e2f1.css" integrity="sha256-HgK7mSGVyjmNdG31&#43;d1UcGi3RRZPXkfqtiuT5vQk4vE="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  
+  <header>
+    
+  </header>
+  <main>
+    
+  </main>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/linux/ubuntu-%E5%AE%89%E8%A3%85/">ubutnu本地安装实操</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2014-03-11 00:00:00 &#43;0000 UTC">2014-03-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h1 id="ubuntu-u盘安装">ubuntu U盘安装</h1>
+<p>遇到类似加载镜像文件问题，最简单粗暴的解决方案就是把挂载ubuntu server镜像文件至cdrom目录</p>
+<p>具体步骤如下：</p>
+<ol>
+<li>
+<p>复制安装镜像至U盘</p>
+</li>
+<li>
+<p>进入ubuntu控制台，可以直接通过Alt+F2进入终端环境</p>
+</li>
+<li>
+<p>查看u盘设备号
+通过命令：ls /dev/sd*<br>
+查看U盘设备，通常U盘设备为sdb,sdc,sdd等名称或以此为前缀名称。</p>
+<ul>
+<li>如果不确定，可以将U盘拔出，然后再用 ls /dev/sd*命令查看设备，发现少了的那个就是U盘。</li>
+<li>但一般情况下，再次插入，U盘设备号会有所改变，例如原来是sdb4，重新插入，查看一下可能是sdb5，以最后插入查看的设备号为准。</li>
+</ul>
+</li>
+<li>
+<p>查看到U盘设备号后，卸载设备，如下：</p>
+<pre><code>umount /dev/sdb4 #sdb4就是当前查看得到U盘设备
+</code></pre></li>
+<li>
+<p>重新挂载U盘,可以创建一个目录，然后将U盘挂载至新建目录，目的是为了找到U盘里的ubuntu server安装镜像文件，操作命令如下：</p>
+<pre><code>mkdir /mnt/usb
+mount /dev/sdb4 /mnt/usb # 将U盘挂载到该目录下
+</code></pre></li>
+<li>
+<p>挂载ubuntu server安装镜像文件至cdrom目录, 进入U盘目录(/mnt/usb )，找到ubuntu server安装镜像文件，并挂载镜像，操作参考如下：</p>
+<pre><code>cd /mnt/usb
+mount ubuntu-16.04.4-server-amd64.iso /cdrom #挂载镜像文件位于U盘根目录
+</code></pre></li>
+<li>
+<p>退出shell，进入安装向导界面安装系统。可以通过Alt+F1或者输入exit退出shell</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents"></nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/linux/%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/" class="button left"><span>linux磁盘管理和lvm磁盘扩容</span></a>
+    
+    
+      <a href="/blog/github/git/" class="button right"><span>git工作原理、常用命令、常见问题及解决方案</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Linux
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      </main>
+      <section id="site-sidebar">
+  
+
+  
+    <section id="categories">
+      <header>
+        <h1><a href="/categories">分类</a></h1>
+      </header>
+      <ul>
+        
+        
+        <li>
+          <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/cache/">cache<span class="count">23</span></a>
+          
+        <li>
+          <a href="/categories/compilation/">compilation<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/concurrence/">concurrence<span class="count">4</span></a>
+          
+        <li>
+          <a href="/categories/data-structure/">data-structure<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/database/">database<span class="count">9</span></a>
+          
+        <li>
+          <a href="/categories/distribution-system/">distribution-system<span class="count">10</span></a>
+          
+        <li>
+          <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
+          
+        </li>
+      </ul>
+      
+        <footer class="see-more">
+          <a href="/categories" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+        </footer>
+      
+    </section>
+  
+
+  
+      <section id="tags">
+        <header>
+          <h1><a href="/tags">标签</a></h1>
+        </header>
+        <ul>
+          
+          
+          <li>
+            <a href="/tags/algorithm/">algorithm<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/audio/">audio<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/cdn/">cdn<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/certificate/">certificate<span class="count">4</span></a>
+            
+          <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/diagnostics/">diagnostics<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/http/">http<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/i/o/">i/o<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/ide/">ide<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/kafka/">kafka<span class="count">1</span></a>
+            
+          </li>
+        </ul>
+        
+          <footer class="see-more">
+            <a href="/tags" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+          </footer>
+        
+      </section>
+  
+
+  
+</section>
+      <footer id="site-footer">
+  
+  <p class="copyright">
+      
+      <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
+      <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
+      <br/>© 2020 zylhorse
+      <br>
+    由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.7e8b85fb814aa446375b535c9ecd0857b9de7637062ea359390ae8675c7761d8.js" integrity="sha256-fouF&#43;4FKpEY3W1Ncns0IV7nedjcGLqNZOQroZ1x3Ydg="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </div>
+  </body>
+</html>

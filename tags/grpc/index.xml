@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gRPC on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/grpc/</link>
+    <description>Recent content in gRPC on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 03 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/grpc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>gRPC-Go快速入门</title>
+      <link>https://zylhorse.github.io/blog/golang/grpc/quick-start/</link>
+      <pubDate>Tue, 03 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/golang/grpc/quick-start/</guid>
+      <description>准备  Go 最新的三个主版本
+安装: https://golang.org/doc/install Protocol Buffer 编译器 protoc
+安装: https://www.grpc.io/docs/protoc-installation/ Protocol Buffer Go 插件  安装: $ export GO111MODULE=on # Enable module mode$ go get google.golang.org/protobuf/cmd/protoc-gen-go \google.golang.org/grpc/cmd/protoc-gen-go-grpc 更新环境变量 $ export PATH=&amp;quot;$PATH:$(go env GOPATH)/bin&amp;quot;    </description>
+    </item>
+    
+  </channel>
+</rss>

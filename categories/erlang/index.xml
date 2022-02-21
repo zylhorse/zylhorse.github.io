@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Erlang on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/erlang/</link>
+    <description>Recent content in Erlang on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 17 May 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/erlang/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Erlang分布式编程</title>
+      <link>https://zylhorse.github.io/blog/erlang/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Tue, 17 May 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/erlang/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%96%E7%A8%8B/</guid>
+      <description>分布式编程 分布式编程需求  性能   通过安排程序的不同部分在不同的机器上并行运行，让程序跑的更快。
+ 可靠性   通过让系统运行到数台机器上来实现容错系统，如果一台机器故障，可以在另一台机器上继续。
+ 可扩展性   随着应用程序越做越大，即使机器的处理能力再强大也会被耗尽。这时我们需要添加更多的机器来提升处理能力。添加新机器应当是一次简单的操作，不需对程序架构做大的修改。
+ 天生分布式的程序   许多应用程序天生分布式。如编写一个聊天系统，就会有来自世界各地的分散用户。如果我们在某个地理位置拥有大量用户，就希望把计算资源放在接近这些用户的地方。
+ 两种分布式模型 我们构建程序的基本单位是进程，编写分布式 Erlang程序是很容易的，要做的就是在正确的机器上分裂出进程，然后一切就能像之前那样运行。
+ 分布式Erlang   在分布式Erlang里，我们编写的程序会在Erlang的节点(node)上运行。节点是一个独立的Erlang系统，包含一个自带地址空间和进程组的完整虚拟机。
+  可以在任意节点上分裂进程，所有消息传递和错误处理基本函数也都能像在单节点上那样工作。
+  分布式Erlang应用程序，运行在一个可信环境中。因为任何节点都可以在其他Erlang节点上执行任意操作，所以这涉及高度的信任。虽然分布式Erlang应用程序可以运行在开放式网络上，但他们通常是运行在属于同一个局域网的集群上，并受防火墙保护。
+ 基于套接字的分布式模型   可以用Tcp/Ip套接字来编写运行在不可信环境中的分布式应用程序。这个编程模型不如分布式Erlang那样强大，但是更安全。
+ 编写一个分布式程序 步骤  在一个常规的非分布式Erlang系统上编写和测试程序。 在同一台机器的两个节点上测试程序。 在同一个局域网内分属两台不同机器的节点上测试程序。 在分属不同国家和域的两台机器上测试程序。  最后两步可能会带来问题。如果所运行的机器属于相同的管理域，就很少有问题。但当相关节点属于不同域上的机器时，就可能遇到连接问题，而且必须确保系统防火墙和安全设置都已经正确配置。
+创建名称服务器 同一局域网的不同机器上 erl -name NodeName -setcookie Cookie
+ 用-name参数启动Erlang。我们在同一台机器上运行两个节点时使用了&amp;quot;短&amp;quot;（short）名称（通过-sname标识体现）。但如果它们属于不同的网络，我们就要使用-name。   当两台机器位于同一个子网时我们也可以使用-sname，如果没有DNS服务，-sname是唯一的可行方式。
+ 确保两个节点拥有相同的cookie。这正是启动两个节点时都使用命令行参数-setcookie abc的原因。 确保相关节点的完全限定主机名可以被DNS解析。 确保两个系统相同版本的代码和相同版本的Erlang。  测试节点互联 net_adm:ping(Node).</description>
+    </item>
+    
+    <item>
+      <title>Erlang接口技术</title>
+      <link>https://zylhorse.github.io/blog/erlang/%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF/</link>
+      <pubDate>Thu, 05 May 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/erlang/%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF/</guid>
+      <description>接口技术 可以多种方式建立外部语言程序与Erlang之间的接口。
+ 让程序以外部操作系统进程的方式在erlang虚拟机以外运行。这是一种安全的方式，即使外部程序代码有问题，也不会让erlang程序崩溃。   Erlang 通过一种名为端口(port)的对象来控制外部进程，与外部进程的通信则是通过一个面向字节的通信信道。Erlang通过端口，控制外部进程的启动和结束。并监视外部进程，崩溃后启动。
+ 在Erlang内部运行操作系统命令并捕获结果。 在Erlang虚拟机的内部运行外部语言代码。这涉及链接外部代码和Erlang虚拟机代码。   外部语言代码的错误可能导致Erlang系统崩溃。虽然它不安全，但是这么做比使用外部进程更高效。
+  把代码连接到Erlang内核，只适用于C这样能生成目标代码的语言，不适用于Java这种自带虚拟机的语言。
+ Erlang如何与外部程序通信  对于程序员而言端口的行为就像一个进程。你可以向它发消息，可以注册它，诸如此类。如果外部程序崩溃，就会有一个退出信号发送给相连进程。如果相连进程挂了，外部程序就会被关闭。 使用端口与外部程序通信和使用套接字有区别。如果使用端口，它会表现的像Erlang进程，可以连接它，从某个远程的分布式Erlang节点上向它发送信息等。如果使用套接字就不会表现出类似进程的行为。 创建端口的进程被称为该端口的相连进程。相连进程有其特殊的重要性，所有发往端口的消息都必须包含相连进程的PID，所有来自外部程序的消息都会发往相连进程。  端口创建和使用 创建端口-spec open_port(PortName, [Opt]) -&amp;gt; Port
+ PortName选项如下： {spawn, Command}   启动一个外部程序。Command是这个外部程序的名称。除非能找到一个名为Command的内链驱动，否则Command会在Erlang工作空间之外运行。
+  {fd, In, Out}   允许一个Erlang进程访问Erlang使用的任何当前打开文件描述符。文件描述符In可以用作标准输入，文件描述符Out可以用作标准输出。
+  Opt选项如下： {packet, N}   数据包(packet)前面有N(1、2、4)个字节的长度计数。
+  stream   发送消息时不带数据包长度信息。应用程序必须知道如何处理这些数据包。
+  {line, Max}   发送消息时使用一次一行的形式。如果有一行超过了Max字节，就会在Max字节处被拆分。
+  {cd, Dir}   只适用于{spawn,Command}选项。外部程序在Dir目录启动。</description>
+    </item>
+    
+    <item>
+      <title>Erlang二进制语法</title>
+      <link>https://zylhorse.github.io/blog/erlang/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%92%8C%E4%BD%8D%E8%AF%AD%E6%B3%95/</link>
+      <pubDate>Mon, 21 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/erlang/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%92%8C%E4%BD%8D%E8%AF%AD%E6%B3%95/</guid>
+      <description>二进制型（binary）  用一种节省空间的方式来保存大批量的无结构原始数据。 多数情况二进制型的位数都是8的整数倍，因此对应一个字节串。如果位数不是8的整数倍，我们叫这段数据为位串（bitstring）。 将二进制型、位串、位级模式匹配引入Erlang 是为了简化网络编程。  格式  &amp;laquo;5,9,10&amp;raquo; : 二进制型的编写和打印形式。 在二进制型里面使用整数时，整数范围0~255.  操作二进制型  list_to_binary(L) -&amp;gt; Bin: 将io列表（iolist）L中的所有元素转换成二进制型。 split_binary(Bin, Pos) -&amp;gt; {Bin1, Bin2}: 将二进制型Bin一分为二。 term_to_binary(Term) -&amp;gt; Bin :将任意Erlang数据类型转换成二进制型。此方法使用了所谓的外部数据格式（external term format）。 binary_to_term(Bin) -&amp;gt; Term : 这是term_to_binary的逆向函数。 byte_size(Bin) -&amp;gt; Size: 返回二进制型里面的字节数。  位语法 位语法是一种表示法，用于从二进制数据里提取或加入单独的位或者位串。开发位语法是为了进行协议编程，以及生成操作二进制数据的高效代码。
+位语法表达式 &amp;lt;&amp;lt; E1,E2,...,E3&amp;gt;&amp;gt;每个Ei元素都标示出二进制型或位串里的一个片段。单个Ei元素可以有四种形式：Ei = Value |Value:Size |Value/TypeSpecifierList |Value:Size/TypeSpecifierList 如果表达式的总位数是８的倍数则会构建一个二进制型，否则构建一个位串。　 当构建二进制型时，Value必须是已绑定变量、字符串，或是能够得出整数、浮点数或二进制型的表达式。　当它被用来模式匹配时，Value可以是绑定或未绑定的。 Size必须是一个能得出整数的表达式。在模式匹配里，Size必须是一个整数，或是值为整数的已绑定变量。 Size的值指明了片段的位数大小。它的默认值取决于不同的数据类型：  整数：8浮点数：64binary: 1 在模式匹配里面，默认值只对最后的元素有效，如果未指定大小，就采用默认值。 TypeSpecifierList(类型指定列表)是一个用连字符分割的列表，形式是End-Sign-Type-Unit。 End可以是 big | little | native : 机器的字节顺序，默认big。这一项只和从二进制型里面打包和解包整数和浮点数有关。term_to_binary 和 binary_to_term可以解决打包和解包整数的问题。 Sign可以是signed | unsigned, 这个参数只用于模式匹配，默认值是unsigned。 Type可以是integer | float | binary | bytes | bitstring | bits | utf8 | utf16 | utf32,默认值是integer。　 Unit的写法是unit:1|2|&amp;hellip;256 : integer、float和bitstring的Unit默认值是１，binary则是８。utf8、utf16、utf32类型无需提供值。 一个片段的总长度是Size * Unit字节。  </description>
+    </item>
+    
+    <item>
+      <title>Erlang并发编程错误</title>
+      <link>https://zylhorse.github.io/blog/erlang/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF/</link>
+      <pubDate>Fri, 05 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/erlang/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF/</guid>
+      <description>错误处理理念  并发Erlang程序里的错误处理建立在远程检测和处理错误的概念上。我们选择让发生错误的进程崩溃，然后在其它进程里面进行纠错处理。 在设计容错式的系统时就假设错误会发生，进程会崩溃。因此能够在错误发生时检测出来，可能的话也需要纠正他们。同时避免系统用户注意到任何故障，或者在错误修复过程中遭受服务终端。 检测错误和找出故障原因是内建于Erlang虚拟机底层的功能，也是Erlang语言编程的一部分。标准OTP库提供了构建互相监视的进程组和检测到错误时采取纠正措施的功能。本章介绍的是语言层面的错误检测和恢复。 总结为两句话：“让其它进程修复错误&amp;quot;和&amp;quot;任其崩溃&amp;quot;  让其它进程修复错误  要让一个进程监控另一个，需要在这两个进程之间建立链接(link)或者(monitor)。如果被链接或者监视的进程挂了，监控进程会收到通知。 监控进程可以实现跨机器的透明运作，因此运行在某一台机器上的进程可以监视运行在不同机器上进程的行为。这是编写容错式系统的基础。不能在一台机器上构建容错式系统，因为崩溃的可能是整台机器。一台机器负责计算，其它的机器负责监控它，并在一台机器崩溃时接管计算。  任其崩溃  在Erlang中，我们把应用程序构建成两部分：一部分负责解决问题，另一部分负责在错误发生时纠正他们。 负责解决问题的部分尽可能少的编写防御性代码，并假设函数所有参数是正确的，程序运行正常。 负责纠正错误的部分往往是通用的，因此同一段错误纠正代码可以用在许多不同的应用程序里面。例如：如果数据库的某个事务出错，就简单终止该事务，让系统把数据库恢复到出错之前的状态；如果操作系统里面的某个进程崩溃，就让操作系统关闭所有打开的文件和套接字，然后让系统恢复到某个稳定状态。  任其崩溃意义  不必编写防御性代码来防止错误，直接崩溃就好。 不必思考应对措施，选择直接崩溃，让别人来修复错误。 不会使错误恶化，无需在知道出错后进行额外的计算。 如果错误发生后第一时间通知，就能得到非常好的错误诊断。错误发生后继续运行会导致更多的错误，让调试更困难。 编写错误恢复代码时不用担心崩溃的原因，只要把注意力放到事后的清理上。 简化系统架构，这样我们就能把应用程序和错误恢复当成两个独立的问题来思考。  错误处理的术语含义  进程   进程有两种：普通进程和系统进程。spawn创建的是普通进程。普通进程可以执行内置函数process_flag（trap_exit,true)变成系统进程。
+ 连接   进程可以互相连接。如果A和B两个进程有连接，而A出于某种原因终止了，就会向B发送一个错误信号，反之亦然。
+ 连接组   进程P的连接组是指与进程P相连的一组进程。
+ 监视   监视和连接相似，但它是单向的。如果A监视B，而B出于某种原因终止了，就会向A发送一个&amp;quot;宕机&amp;quot;的消息，但反过来就不行了。
+ 消息和错误信号   进程协作的方式是交换消息和错误信号。消息是通过基本函数send发送的，错误信号则是进程崩溃或终止的时候自动发送的。错误信号会发送给终止进程的连接组。
+ 错误信号的接受   当系统进程收到错误信号时，该信号被转换成{&amp;lsquo;Exit&amp;rsquo;,Pid,Why}形式的信息。Pid是终止进程的标识，Why是终止的原因。如果无错误终止，Why就会是原子normal，否则会是错误描述。当普通进程收到错误信号时，如果退出原因不是normal，该进程就会终止。当它终止时，同样会向它的连接组广播一个退出信号。
+ 显示错误信号   任何执行exit(Why)的进程都会终止（如果代码不是在catch或者try的范围内执行的话），并向它的连接组广播一个带有原因Why的退出信号。进程可以通过执行exit(Pid,Why)来发送一个&amp;quot;虚假&amp;quot;的错误信号。这种情况Pid会收到一个带有原因Why的退出信号。调用exit/2的进程则不会终止。
+ 不可捕捉的退出信号   进程收到摧毁信号(kill signal)时会终止。摧毁信号通过调用exit(Pid,kill)生成。这种信号会绕过常规的错误信号处理机制，不会被转换成消息。摧毁信号只应该用在其它错误处理机制无法终止的顽固进程上。
+ 创建链接 调用接口：link(Pid)。建立调用进程与Pid进程之间的连接。</description>
+    </item>
+    
+    <item>
+      <title>Erlang并发编程</title>
+      <link>https://zylhorse.github.io/blog/erlang/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Wed, 03 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/erlang/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
+      <description>概述 Erlang的并发是基于进程的。进程是一些独立的小型虚拟机。 在Erlang里面：
+ 创建和销毁进程是非常迅速的 在进程之间发送消息是非常迅速的 进程在所有操作系统上都具有相同的行为方式 可以生成大量进程 进程不共享内存，完全独立 进程唯一交互方式是消息传递  基本并发函数  Pid = spawn(Mod, Func, Args)   创建一个新的并发进程来执行apply(Mod, Func, Args)。这个新进程和调用进程并列运行。spawn返回一个Pid，可以使用Pid给此进程发送消息。这里参数为Args的Func必须从Mod模块导出。
+ Pid = spawn(Fun)   创建一个新的并发进程来执行Fun()。这种形式的spawn总是使用被执行fun的当前值，而且这个Fun无需从模块中导出。 这两种spawn形式的本质区别与动态代码升级有关。
+ Pid ! Message   向标识符为Pid的进程发送消息Message,消息发送是异步的。发送方并不等待，而是会继续之前的工作。Pid1 ! Pid2 ! &amp;hellip;. ! Message的意思是把消息Msg发送给Pid1、Pid2等所有进程。
+ receive &amp;hellip; end   接受发送给某个进程的消息，阻塞等待。语法如下：
+ receivePattern1 [when Guard1] -&amp;gt;Expressions1;Pattern2 [when Guard2] -&amp;gt;Expressions2;...end 当某个消息到达进程后，系统尝试将它与Pattern1进行匹配，如果成功则执行Expressions1。如果不成功则以此类推。如果没有匹配的模式，消息就会被保存起来供以后处理，进程则会开始等待下一条信息。
+  当spawn命令被执行时，系统会创建一个新的进程，并给每个进程同步创建一个邮箱。给进程发送消息后，消息会被放入该进程的邮箱，只有程序执行接受语句时才会读取邮箱。</description>
+    </item>
+    
+    <item>
+      <title>Erlang大数据存储</title>
+      <link>https://zylhorse.github.io/blog/erlang/ets%E5%92%8Cdets%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/</link>
+      <pubDate>Fri, 22 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/erlang/ets%E5%92%8Cdets%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/</guid>
+      <description>概述 ets和dets是Erlang用于高效存储大量Erlang数据条目的两个系统模块。提供大型的&amp;quot;键-值&amp;quot;搜索表。
+ETS(Erlang Term Storage) ETS驻留在内存，ETS非常高效。
+DETS(Disk ETS) DETS驻留在硬盘，DETS要比ETS慢，但是比ETS更省内存。</description>
+    </item>
+    
+    <item>
+      <title>Erlang类型检查</title>
+      <link>https://zylhorse.github.io/blog/erlang/%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5/</link>
+      <pubDate>Tue, 15 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/erlang/%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5/</guid>
+      <description>类型检测 9.3　dialyzer(待补充) </description>
+    </item>
+    
+    <item>
+      <title>Erlang类型表示法</title>
+      <link>https://zylhorse.github.io/blog/erlang/%E7%B1%BB%E5%9E%8B/</link>
+      <pubDate>Tue, 01 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/erlang/%E7%B1%BB%E5%9E%8B/</guid>
+      <description>类型 Erlang有一种类型表示法，可以用来定义新的数据类型并给代码添加类型注解。类型注解让代码更容易理解和维护，还可以在编译时检测错误。
+指定数据和函数类型 -module(...).-export([plan_route/2]).-spec play_route(point(), point()) -&amp;gt; route().-type direction() :: north | south | east | west.-type point() :: {integer(), integer()}.-type route() :: [{go, direction(), integer()}]. 这个模块导出一个名为plan_route/2的函数。该函数的输入和返回数据类型由类型声明(type)定义了三个新数据类型。该函数由类型规范(spec)指定输入和返回数据类型。 为了增加类型的表达能力，可以添加类型注解： -spec plan_route(From::point(), To::point()) -&amp;gt; ....  类型语法   类型定义可以使用一下的非正式语法： T1 :: A | B | C
+ 它的意思是T1被定义为A、B或C其中之一。
+ 用这些表示法，可以定义一些Erlang类型如下：Type :: any() | none() | pid() | port() | reference() | [] | Atom |binary() | float() | Fun | Integer | [Type] | Tuple | Union | UserDefinedUnion :: Type1 | Type2 | .</description>
+    </item>
+    
+    <item>
+      <title>Erlang套接字编程</title>
+      <link>https://zylhorse.github.io/blog/erlang/%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B%E6%9C%AA%E5%AE%8C/</link>
+      <pubDate>Wed, 11 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/erlang/%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B%E6%9C%AA%E5%AE%8C/</guid>
+      <description>客户端  gen_tcp:connect(Host, Port, [Options]) -&amp;gt; {ok, Socket} | {error, Reason}  与指定域名、端口号的服务器建立连接。  gen_tcp: send(Socket, Msg) -&amp;gt; ok | {error, Reason}
+向Socket发送消息（二进制字节流）
+  接受服务器传递消息
+  receive{tcp,Socket, Bin} -&amp;gt; ...;{tcp_closed, Socket} -&amp;gt;...end. gen_tcp:close(Socket) -&amp;gt; ok
+关闭Socket  服务器  gen_tcp:listen(Port, [Options]) -&amp;gt; {ok, Listen} | {error, Reason} 监听端口Port。 gen_tcp:accept(Listen) -&amp;gt; {ok, Socket} | {error, Reason}
+接受监听的Socket连接，返回当前连接Socket。 gen_tcp:close(Listen) -&amp;gt; ok 关闭监听，不再接受新的连接。  并发套接字编程 注意：</description>
+    </item>
+    
+    <item>
+      <title>Erlang单元测试</title>
+      <link>https://zylhorse.github.io/blog/erlang/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95eunit/</link>
+      <pubDate>Thu, 22 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/erlang/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95eunit/</guid>
+      <description>概述 eunit是erlang的测试框架。 eunit使用了很多预处理宏，这些宏被设计成非入侵式的，不会与现有代码冲突。给模块添加eunit的测试集，一般不需要修改现有代码。测试模块导出函数的测试，可以放在完全独立的模块中，避免冲突。
+单元测试 单元测试是指对程序相对独立的单元进行测试。一个单元可以是一个函数，一个模块，甚至是完整的应用程序。
+为了测试一个单元，指定测试用例，并搭建测试需要的最基本环境。运行测试集并收集结果，为了能够再次测试需要进行必要的清理工作。
+单元测试框架就是为了帮助单元测试过程的每个阶段，使单元测试更容易编写，容易运行，容易检查测试错误。
+单元测试优点 减少改变程序的风险 大多数程序在生命周期内会被修改：bug修复，功能增加，优化，重构，清理。每次程序修改都会引入新bug风险，而使用一组单元测试用例可以很容易的发现代码是否正常工作（回归测试：对旧代码的修改，进行重新测试，确保不会引入新的问题）。
+引导和提高开发进度 编写能通过测试的代码，让程序开发更有效率。通过测试来推动开发的进行（测试驱动开发“TDD”：测试驱动开发）。
+帮助实现接口分离 当程序员编写测试集时可以发现依赖关系不存在、哪些依赖需要抽象出来。更多的依赖接口开发，实现松耦合设计。有助于提前消除坏的依赖关系。
+简化组件集成 自下而上的测试，从最小单元的测试通过，使集成了若干个这种单元的程序更容易测试。（集成测试）
+自文档化 测试集可以被视为使用文档。
+入门 包含EUnit头文件 在Erlang模块中使用EUnit的最简单方法是在模块一开始的地方（在模块声明的后面，在函数定义的前面）添加下面这行：
+-include_lib(&amp;quot;eunit/include/eunit.hrl&amp;quot;).这会有以下作用：
+ 创建一个导出函数test(),它可以执行模块中定义的所有单元测试集。（除非测试关闭，或者模块不包含函数test()) 自动导出命名匹配_test() 、 _ test_ ()的所有函数。（除非测试关闭或者定义了EUNIT_NOAUTO宏） 使EUnit所有的预处理宏可用，帮助编写测试集。
+注：
+为了使 -include_lib(&amp;hellip;)有效，Erlang 模块的搜索路径必须包含 eunit/bin目录（eunit/ebin是EUnit安装目录下的子目录）。如果EUnit安装在Erlang/OTP系统目录的子目录lib/eunit下，eunit/ebin目录在Erlang启动时会被自动添加到搜索路径。其他情况就需要显示添加到搜索路径: 在命令行中添加 -pa &amp;ldquo;path/eunit/ebin&amp;rdquo; 在主目录的.erlang文件中添加:code:add_patha(&amp;ldquo;path/eunit/ebin&amp;rdquo;).  编写简单测试功能 使用EUnit框架可以在Elang中非常简单的编写单元测试。有几种不同的方式来编写。
+以_test()名称结尾的函数可以被EUnit识别为测试函数。它没有参数，不需要被导出。执行成功会返回EUnit抛出的任意值，执行失败会抛出异常（如果不停止，过一会会被终止）。
+一个简单的测试函数的例子：
+reverse_test() -&amp;gt; lists:reverse([1,2,3]).这不是一个好的测试编写方式。
+使用异常报告 添加更多的场景测试，如果测试结果不符合预期则报异常。一个简单的方法是使用匹配表达式=去匹配测试结果和预期结果：
+reverse_nil_test() -&amp;gt; [] = lists:reverse([]).reverse_one_test() -&amp;gt; [1] = lists:reverse([1]).reverse_two_test() -&amp;gt; [2,1] = lists:reverse([1,2]).使用断言 length_test() -&amp;gt; ?assert(lenght([1,2,3]) =:= 3).</description>
+    </item>
+    
+    <item>
+      <title>Erlang文本编程</title>
+      <link>https://zylhorse.github.io/blog/erlang/%E6%96%87%E6%9C%AC%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Wed, 07 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/erlang/%E6%96%87%E6%9C%AC%E7%BC%96%E7%A8%8B/</guid>
+      <description>文本编程 操作文件的模块  file   包含打开、关闭、读写文件的方法。
+  filename   这个模块的方法能够跨平台的操作文件名，这样可以在不同的操作系统上运行相同的代码。
+  filelib   此模块是file的扩展。它包含的许多工具函数能够列出文件、检查文件类型。其中大多数是由file里的函数编写。
+  io   这个模块有一些操作已打开文件的方法。它可以解析文件数据，也可以将数据格式化写入文件。
+ 读取文件的几种方法  file:consult(FileName)   读取erlang数据格式的文件数据。
+ code:which(Module) 查看已载入模块源码文件地址
+格式命令  ~n 输出换行符 ~p 把参数打印为美观形式 ~s 参数是一个字符串、I/O列表或原子，打印时不带引号 ~w 输出各种Erlang数据类型  </description>
+    </item>
+    
+    <item>
+      <title>Erlang顺序编程补遗</title>
+      <link>https://zylhorse.github.io/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E8%A1%A5%E9%81%97/</link>
+      <pubDate>Mon, 21 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E8%A1%A5%E9%81%97/</guid>
+      <description>apply  内置函数apply(mod,func,[arg1,arg2,arg3,&amp;hellip;,argn])。会将参数arg1,arg2,&amp;hellip;,argn应用到模块mod里的函数func上。它等价于：mod:func(arg1,arg2,&amp;hellip;,argn)。 与直接调用函数的区别在于模块名和函数名可以动态的计算得出。 应当尽量避免使用apply。如果使用apply对函数进行调用，许多分析工具就无法得知发生了什么，一些特定的编译器优化也不能进行。  算术表达式  操作符	描述	参数类型	优先级+X	正数	整数	1-X	负数	整数	1X*Y	X乘以Y	整数	2X/Y	X除以Y，浮点数除法	整数	2bnot X	对X执行按位取反	整数	2X div Y	X除以Y的商，整数	整数	2X rem Y	X除以Y的余数	整数	2X band Y	X和Y位与	整数	2X bor Y	X和Y位或	整数	3X bxor Y	X与Y按位异或	整数	3X bsl N	X向左位移N个算术位	整数	3X bsr N	X向右位移N个算术位	整数	3X + Y	X 加 Y	整数	3X - Y	X 减 Y	整数	3 元数  一个函数的元数(arity)是该函数所拥有的参数数量。在Erlang里，同一个模块里的两个名称相同，元数不同的函数是完全不同的函数。 根据惯例Erlang程序员经常将名称相同、元数不同的函数作为辅助函数使用。我们通常通过不导出辅助函数，来隐藏他们。  模块属性  模块属性的语法是 -AtomTag(&amp;hellip;),它们被用来定义文件的某些属性。 模块属性包括预定义型和用户定义型。 预定义型：   模块属性有着预先定义的含义，必须放置在任何函数定义之前。</description>
+    </item>
+    
+    <item>
+      <title>Erlang顺序编程错误处理</title>
+      <link>https://zylhorse.github.io/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/</link>
+      <pubDate>Fri, 11 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/</guid>
+      <description>概括  Erlang中当错误出现时，需要发现并纠正，然后继续。 构建真正容错的系统，需要不止一台计算机，毕竟可能整台机器崩溃。因此故障检测和别处重启计算的概念需要扩展到联网的计算机上。  顺序代码里面的错误处理  异常错误发生时，可以显示调用throw(Exception),exit(Exception),error(Exception) 触发。 永远不能让函数对非法的参数返回值，而是抛出一个异常错误。 exit(Why):当你确实想要终止当前进程时就用它。如果此异常没有被捕获，信号{&amp;lsquo;Exit&amp;rsquo;,Pid,Why}就会被广播给当前进程链接的所有进程。 throw(Why):这个函数的作用是抛出一个调用者想要捕获的异常错误。因此我们可以将调用封装到try&amp;hellip;catch表达式里面，然后对错误进行处理。 error(Why):这个函数的作用是指示“崩溃性错误”，调用者没有准备好处理非常严重的问题。  捕获异常错误 两种方法：
+ 把抛出异常错误的调用函数封装在try&amp;hellip;catch中 把调用封装在一个catch表达式中？？？  try ... catch 结构%执行函数或表达式try FuncOrExpressionSeq of%执行过程无异常则匹配以下模式Pattern1 [when Guard1] -&amp;gt; Expressions1;Pattern2 [when Guard2] -&amp;gt; Expressions2;catch%执行过程出现异常则匹配以下异常模式，ExceptionType：error throw exit其中之一ExceptionType1: ExPattern1 [when ExGuard1] -&amp;gt; ExExpressions1;ExceptionType2: ExPattern2 [when ExGuard2] -&amp;gt; ExExpressions2after%after区域的代码实在FuncorExpressSeq结束后执行清理工作的。这段代码无论是否抛出异常都会在函数调用执行完立刻执行。AfterExpressions返回值会被丢弃。AfterExpressionsendtry ... catch 表达式也有值。注：Erlang里的一切都是表达式，表达式都有值。针对异常处理的编程方式  改进错误消息：内置函数error/1。 经常返回错误时代码：{ok,Value}, {error,Reason} 捕捉一切可能的错误：try Expr of catch : -&amp;gt; &amp;hellip; end %这里处理所有的异常错误。 如果代码漏写标签：try Expr of catch _ -&amp;gt; &amp;hellip; end %这里只处理throw 异常。  栈跟踪 捕获到一个异常错误后，可以调用erlang:get_stacktrace() 来找到最近栈跟踪信息。</description>
+    </item>
+    
+    <item>
+      <title>Erlang模块和函数</title>
+      <link>https://zylhorse.github.io/blog/erlang/erlang%E6%A8%A1%E5%9D%97%E5%92%8C%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Thu, 20 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/erlang/erlang%E6%A8%A1%E5%9D%97%E5%92%8C%E5%87%BD%E6%95%B0/</guid>
+      <description>模块  模块是Erlang中代码的基本单元，我们编写的所有函数都存放在模块中，模块文件的扩展名通常为.erl。 编译后的文件扩展名为.beam,   注： beam 是 Erlang虚拟机（Bogdan‘s Erlang Abstract Machine）的所写。Erlang虚拟机最早的版本是 Joe Armstrong编写的基于栈的虚拟机JAM（Joe&amp;rsquo;s Abstract Machine）。后来，Bogumil(Bogdan) Hausman在1993年编写了基于寄存器的虚拟机BEAM（Bogdan&amp;rsquo;t Abstract Machine), 执行效率有了 大幅度提高。
+  erlang虚拟机执行代码的原理：http://www.mamicode.com/info-detail-671999.html  函数  函数由子句构成，子句以分号分隔，最后一条子语句以句号结束。每一个函数由函数头和函数体组成，函数头由函数名和随后以括号括起来的模式组成，函数体由一系列表达式组成。 shell中编译模块文件： c(文件名） 引用模块中函数： moduleName:funcName(模式）。 模块中函数调用是顺序的从第一个子句开始进行模式匹配。 在erlang中做相同的事情，只需要编写模式及表达式，erlang编译器会自动生成优化的模式匹配代码。  同名不同目的函数  在Erlang中，同一个模块的两个函数，如果同名但是参数不同，则这两个函数被认为完全不同。 为了方便同名不同目的函数经常被用来作为辅助函数使用。  fun fun就是匿名函数,fun可以有任意参数（目：arity）。
+高阶函数（high-order function） 这些能返回fun或接受fun作为参数的函数，被称作高阶函数。
+什么时候使用高阶函数  编写返回fun的高阶函数不容易调试 高阶函数可以用来解决延迟求值、可重入的解析器、解析组合子等问题。  -import 和 -export 声明  声明 -import(lists,[map/2,sum/1]) 意味着函数 map/2,sum/1是从lists模块中导入。 声明 -export([total/1]) 意味着total/1能够在模块之外被调用。只有从一个模块中导出的函数才能在模块外调用。  简单的列表处理  lists:map(Fun,List): 将方法Fun应用到列表List的每一个元素中，输出操作后的元素列表。 lists:member(Ele,List): 判断元素Ele是否是列表List中的元素，输出true/false。 lists:filter(Fun,List): 用方法Fun过滤列表List中的每一个元素，输出符合要求的元素列表。 lists: sum(List):计算列表中所有元素的和。 lists: seq(1,N): 返回一个包含1到N的整数列表。 lists:reverse(L) : 将列表中元素顺序反转。  列表推导  列表推导无需使用fun、map或filter等表达式来创建列表。  1&amp;gt;L= [1,2,3,4].</description>
+    </item>
+    
+    <item>
+      <title>Erlang记录和映射组</title>
+      <link>https://zylhorse.github.io/blog/erlang/%E8%AE%B0%E5%BD%95%E5%92%8C%E6%98%A0%E5%B0%84%E7%BB%84/</link>
+      <pubDate>Sat, 15 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/erlang/%E8%AE%B0%E5%BD%95%E5%92%8C%E6%98%A0%E5%B0%84%E7%BB%84/</guid>
+      <description>数据容器 元组（tuple）：保存固定数量的元素列表（list）：保存可变数量的元素记录（record）：是元组的另一种形式，通过记录给元组里面的各个元素关联一个名字，映射组（map）：是键-值对关联性的集合。键可以是任意类型的Erlang数据类型。 使用记录和映射组 记录使用一组固定且预定义的关联名称映射组可以动态添加新的关联名称；映射组比元组占用更多存储空间，查找慢。但是映射组比元祖灵活。 何时使用映射组或记录 记录 -record（Name,{%% 以下两个键带默认值key1 = Default，key2 = Default，...%%下一行Key3 = undefinedkey3,...}).记录既可以保存在源代码的文件里，也可以保存在扩展名为.hrl的文件中，然后包含到源文件中。注意：文件包含是唯一确保多个Erlang模块共享相同记录的方式。命令行中读取记录文件 ：rr(&amp;quot;myrecord.hrl&amp;quot;).命令行中删除记录定义：rf(&amp;quot;myrecord.hrl&amp;quot;). 映射组(R17版本及以上引入) #{Key1 op Val1, Key2 op Val2, Key3 op Val3,...}语法与记录相似，只是散列符号（#）后面少了记录名，而op是符号 =&amp;gt;或者:=中的其中之一。键和值是任何有效的Erlang数据类型。表达式 Key =&amp;gt;Val有两种用途，一种是给映射组添加一个全新的 Key=&amp;gt;Val，另一种是更新 映射组里面Key对应的值。表达式 Key := Val ，作用是将现有键Key的值更新为新值Val。如果被更新的映射组中不包含键Key，则提示更新失败。注： 由于本地Erlang版本为R16B, 映射组（map）数据类型在 Erlang R17版本中才引入，因此此处不予学习，练习，待后续跟进。 </description>
+    </item>
+    
+    <item>
+      <title>Erlang基本数据结构</title>
+      <link>https://zylhorse.github.io/blog/erlang/erlang%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+      <pubDate>Sun, 19 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/erlang/erlang%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
+      <description>Erlang Erlang 创始人Joe Armstrong，基于Prolog开发。Erlang 是通用的面向并发的编程语言，由瑞典电信设备制造商爱立信所辖CS-Lab开发。于1987年开发，1988年开源。Erlang是运行于虚拟机上的解释型语言。 Erlang 编写的程序运行时通常由大量的轻量级进程组成，并通过消息传递进行通讯。Erlang 目前包含 乌普萨拉大学的高性能计划（Hipe）开发的本地代码编译器，自R11B04版本开始erlang 支持脚本式解释器。 注： erlang 的hipe 相当于jit（Just-in-time compilation），根据语言评测有hipe支持的erlang运算上快2-3倍。
+Shell 启动：$&amp;gt; erl停止(受控方式)：1&amp;gt;q().init:stop().立即停止： erlang:halt().切换erl 中shell命令： CTRL + P ， CTRL + N。shell 只能对erlang 的表达式求值，不能在shell中输入Erlang文件中代码（.erl文件中的句法形式不是表达式），不能输入模块注释（如：-module，-export）。编写分布式程序时，集群中会有许多正运行的erlang系统节点，可以将shell随意附着在他们中的任何一个上， 甚至可以用ssh向一个运行着erlang系统的计算机上发起一个直连接，通过这个方法，在erlang 的节点集群中你能与其中的任何节点上的任意一个程序打交道 注释 % ： 代表一行注释的开始，被erlang 和 shell 忽略。 整数运算： 采用不定长整数进行运算，整数运算没有误差不会溢出。 进制表达： 进制#值： 16#1(16进制1)， 2#111(2进制111)。 变量 变量首字母大写变量是单一赋值，只能一次性给定，重复赋值是错误的。一个变量如果被赋值，则被称为绑定变量，否则为自由变量。一开始所有的变量都是自由变量。下划线（_） 是匿名变量，与常规变量不同，在同一模式下_可以绑定不同的值。f() 会释放shell之前进行过绑定的变量。 等号（=） =是一个模式匹配运算符，当变量是自由变量时，其行为相当于赋值运算。 变量绑定表： 变量经过赋值，shell就会形成一个变量绑定表。形如： {X |-&amp;gt; 111, Y |-&amp;gt; 222} 原子 原子是全局有效的，无需使用宏定义或者包含文件。 原子是以小写字母开头，后面跟数字、字母、下划线、邮件符号（@）的字符。使用单引号的字符也是原子。这种形式使得我们可以用大些字母开头或者包含特殊字符。原子的值是原子本身。 元组（tuple） 将若干个以逗号分割的值用一对花括号括起来就形成一个元组。元组是匿名的，元组中的字段没有名字，因此推荐元组的第一个元素用原子来表明这个元组所代表的含义。eg:  Person={person, {name,zyl}, {age,27}, {height,1.</description>
+    </item>
+    
+    <item>
+      <title>Erlang编译和运行</title>
+      <link>https://zylhorse.github.io/blog/erlang/%E7%BC%96%E8%AF%91%E5%92%8C%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F/</link>
+      <pubDate>Thu, 16 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/erlang/%E7%BC%96%E8%AF%91%E5%92%8C%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F/</guid>
+      <description>代码搜索路径  Erlang运行时系统使用一种代码自动载入机制，要让它正确工作，必须设置一些搜索路径来找到正确版本代码。 代码的载入是按需进行的，当系统尝试调用的函数属于一个尚未加载的模块时，就会出现异常，系统尝试查找缺失模块代码文件。代码载入器会在代码载入路径所有目录里查找缺失模块代码文件。只要找到相符的文件，搜索停止，载入该文件的目标代码。 以下是两个最常用来操作载入路径的函数：   -spec code::add_patha(Dir) =&amp;gt; true | {error, bad_directory}. 向载入路径的开头添加一个新目录Dir。
+  -spec code::add_pathz(Dir) =&amp;gt; true | {error, bad_directory}. 向载入路径的末尾添加一个新目录Dir。
+  通常的惯例是将这些命令放到主目录下的一个.erlang文件中。 也可以在启动erl时添加代码搜索路径：  $ erl -pa Dir1 -pa Dir2 ... -pz Dirk1 -pz Dirk2-pa: 把Dir添加到搜索路径的开头-pz:把Dir添加到搜索路径的结尾在系统启动时执行.erlang里的命令  启动erlang时，它会首先读取并执行.erlang中的所有命令。当前目录下的.erlang优先级高于主目录下的.erlang Erlang认为的主目录的位置获取:init:get_argument(home). code:clash()会报告代码搜索路径里面所有重复的模块。  运行程序的不同方式 程序 hello.erl-module(hello).-export([start/0]).start() -&amp;gt; io:format(&amp;quot;Hello World ~n&amp;quot;).在erlang shell里面编译运行： 1&amp;gt;c(hello).2&amp;gt;hello:start().快速脚本编程：  在命令行中执行任意的erlang函数：  erl -eval &#39;io:format(&amp;quot;Memory: ~p~n&amp;quot;, [erlang:memory(total)]).</description>
+    </item>
+    
+  </channel>
+</rss>

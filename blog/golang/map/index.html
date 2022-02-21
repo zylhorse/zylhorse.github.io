@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang源码阅读-map - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Golang源码阅读-map">
+<meta itemprop="description" content="map 声明 var m map[string]stringmap声明默认值是nil， 此时取值，返回的是value对应类型的零值
+初始化 // 声明之后必须初始化，才能使用m = make(map[string]int)m = map[string]int{}// 声明并初始化m = make(map[string]int, 10)m = map[string]int{&quot;x&quot;:1}向未初始化的map赋值引起： panic: assignment to entry in nil map
+key/value 限制  key 一定是可以比较的类型（支持==操作），如果是非法的key会报invalid map key type value可以是任意类型  遍历  map 本身是无序的 在iterate 整个map时， 使用delete 是安全的。这里和C&#43;&#43; 不一样， C&#43;&#43; 不能再迭代的时候删除元素，会导致map的红黑树结构发生变化  函数传参 golang中没有引用传递， 均为值传递。意味参数是一种数据拷贝。
+map 本身是引用类型，作为形参或返回值时，传递的是地址的拷贝。
+扩容时也不会改变这个地址。
+map 基础数据结构 map实现的底层结构是hmap
+// A header for a Go map."><meta itemprop="datePublished" content="2019-07-08T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-07-08T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1929">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Golang源码阅读-map" />
+<meta property="og:description" content="map 声明 var m map[string]stringmap声明默认值是nil， 此时取值，返回的是value对应类型的零值
+初始化 // 声明之后必须初始化，才能使用m = make(map[string]int)m = map[string]int{}// 声明并初始化m = make(map[string]int, 10)m = map[string]int{&quot;x&quot;:1}向未初始化的map赋值引起： panic: assignment to entry in nil map
+key/value 限制  key 一定是可以比较的类型（支持==操作），如果是非法的key会报invalid map key type value可以是任意类型  遍历  map 本身是无序的 在iterate 整个map时， 使用delete 是安全的。这里和C&#43;&#43; 不一样， C&#43;&#43; 不能再迭代的时候删除元素，会导致map的红黑树结构发生变化  函数传参 golang中没有引用传递， 均为值传递。意味参数是一种数据拷贝。
+map 本身是引用类型，作为形参或返回值时，传递的是地址的拷贝。
+扩容时也不会改变这个地址。
+map 基础数据结构 map实现的底层结构是hmap
+// A header for a Go map." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/map/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-07-08T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-07-08T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang源码阅读-map"/>
+<meta name="twitter:description" content="map 声明 var m map[string]stringmap声明默认值是nil， 此时取值，返回的是value对应类型的零值
+初始化 // 声明之后必须初始化，才能使用m = make(map[string]int)m = map[string]int{}// 声明并初始化m = make(map[string]int, 10)m = map[string]int{&quot;x&quot;:1}向未初始化的map赋值引起： panic: assignment to entry in nil map
+key/value 限制  key 一定是可以比较的类型（支持==操作），如果是非法的key会报invalid map key type value可以是任意类型  遍历  map 本身是无序的 在iterate 整个map时， 使用delete 是安全的。这里和C&#43;&#43; 不一样， C&#43;&#43; 不能再迭代的时候删除元素，会导致map的红黑树结构发生变化  函数传参 golang中没有引用传递， 均为值传递。意味参数是一种数据拷贝。
+map 本身是引用类型，作为形参或返回值时，传递的是地址的拷贝。
+扩容时也不会改变这个地址。
+map 基础数据结构 map实现的底层结构是hmap
+// A header for a Go map."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/map/">Golang源码阅读-map</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-07-08 00:00:00 &#43;0000 UTC">2019-07-08</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h1 id="map">map</h1>
+<h2 id="声明">声明</h2>
+<pre tabindex="0"><code>var m map[string]string
+</code></pre><p>map声明默认值是nil， 此时取值，返回的是value对应类型的零值</p>
+<h2 id="初始化">初始化</h2>
+<pre tabindex="0"><code>// 声明之后必须初始化，才能使用
+m = make(map[string]int)
+m = map[string]int{}
+
+// 声明并初始化
+m = make(map[string]int, 10)
+m = map[string]int{&quot;x&quot;:1}
+</code></pre><p>向未初始化的map赋值引起： panic: assignment to entry in nil map</p>
+<h2 id="keyvalue-限制">key/value 限制</h2>
+<ol>
+<li>key 一定是可以比较的类型（支持==操作），如果是非法的key会报invalid map key type</li>
+<li>value可以是任意类型</li>
+</ol>
+<h2 id="遍历">遍历</h2>
+<ol>
+<li>map 本身是无序的</li>
+<li>在iterate 整个map时， 使用delete 是安全的。这里和C++ 不一样， C++ 不能再迭代的时候删除元素，会导致map的红黑树结构发生变化</li>
+</ol>
+<h2 id="函数传参">函数传参</h2>
+<p>golang中没有引用传递， 均为值传递。意味参数是一种数据拷贝。</p>
+<p>map 本身是引用类型，作为形参或返回值时，传递的是地址的拷贝。</p>
+<p>扩容时也不会改变这个地址。</p>
+<h2 id="map-基础数据结构">map 基础数据结构</h2>
+<p>map实现的底层结构是hmap</p>
+<pre tabindex="0"><code>// A header for a Go map.
+type hmap struct {
+	// Note: the format of the hmap is also encoded in cmd/compile/internal/gc/reflect.go.
+	// Make sure this stays in sync with the compiler's definition.
+	// 记录 map 当前元素个数
+	count     int // # live cells == size of map.  Must be first (used by len() builtin)
+	// 记录 map当前状态： 读、写、扩容等标记
+	flags     uint8
+	// 用于计算桶大小， 2^B
+	B         uint8  // log_2 of # of buckets (can hold up to loadFactor * 2^B items)
+	// 溢出的bucket 个数, 是个近似值
+	noverflow uint16 // approximate number of overflow buckets; see incrnoverflow for details
+	// 计算key哈希值的种子， 保证一个key在不同的map中，存放的位置是随机的
+	hash0     uint32 // hash seed
+    // 当前哈希桶的首地址
+	buckets    unsafe.Pointer // array of 2^B Buckets. may be nil if count==0.
+	// 旧哈希桶地址
+	oldbuckets unsafe.Pointer // previous bucket array of half the size, non-nil only when growing
+	// 已迁移桶个数
+	nevacuate  uintptr        // progress counter for evacuation (buckets less than this have been evacuated)
+    // 扩展字段
+	extra *mapextra // optional fields
+}
+</code></pre><p>bucket实现的底层结构是bmap， 下面的机构体中只包含了一个tophash用于桶内快速查询。 从下面Followed定义可以看出， 
+hmap结构只给出了部分字段的描述，下面还有 K/V 以及 指向溢出桶的指针。 由于K/V 大小会实时变化，所以而这两个字段的数据只能通过指针偏移的方式获取</p>
+<pre tabindex="0"><code>// A bucket for a Go map.
+type bmap struct {
+	// tophash generally contains the top byte of the hash value
+	// for each key in this bucket. If tophash[0] &lt; minTopHash,
+	// tophash[0] is a bucket evacuation state instead.
+	// 长度为8的数组， 用于存放桶中每个key hash值的高8位，用于后续快速查找桶内元素
+	tophash [bucketCnt]uint8
+	// Followed by bucketCnt keys and then bucketCnt elems.
+	// NOTE: packing all the keys together and then all the elems together makes the
+	// code a bit more complicated than alternating key/elem/key/elem/... but it allows
+	// us to eliminate padding which would be needed for, e.g., map[int64]int8.
+	// Followed by an overflow pointer.
+}
+</code></pre><h3 id="名称解释">名称解释</h3>
+<ul>
+<li>哈希桶
+<code>是hmap结构中的buckets数组， 数组内的每个元素为一个桶</code></li>
+<li>桶链
+<code>是桶以及该桶下挂着的所有溢出桶</code></li>
+<li>桶 (bucket)
+<code>是bmap结构， 是哈希桶的一个元素</code></li>
+<li>溢出桶(overflow bucket)
+<code>是bmap结构， 挂在桶下</code></li>
+<li>负载因子(loadfactor)
+<code>表示平均每个桶中元素的个数, 主要用于判断当前map是否需要扩容。如果当前map有20个元素，哈希桶长为4， 则负载因子为5。</code></li>
+<li>新旧哈希桶
+<code>是hmap结构中的buckets和oldbuckets数组， 此概念仅存在于map扩容阶段。在哈希桶扩容时，会申请一个新的哈希桶，原来的哈希桶成为旧哈希桶。然后会分步将旧哈希桶上的元素迁移到新哈希桶桶，当旧哈希桶被迁移完成，就会被释放掉。</code></li>
+</ul>
+<h3 id="文件组成">文件组成</h3>
+<p>map源码都在src/runtime下， 主要有四个文件组成：</p>
+<pre tabindex="0"><code>map.go  // 源代码实现主体
+map_fast32.go // 针对key类型为int32/uint32做了优化
+map_fast64.go // 针对key类型为int64/uint64做了优化
+map_faststr.go // 针对key类型为string做了优化
+</code></pre><h4 id="优化功能">优化功能</h4>
+<ul>
+<li>查询上的优化
+<ul>
+<li>当只有一个桶时，不做hash，直接遍历桶</li>
+<li>当多个桶时
+<ul>
+<li>fast 32/64 省略tophash的比较， 直接比较key值</li>
+<li>string 省略tophash比较，多了字符串长度比较和首尾4个字符的比较，且在实际key比较时直接使用内置memequal。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>内存管理优化</li>
+</ul>
+<h2 id="源码解析">源码解析</h2>
+<h3 id="map-创建">map 创建</h3>
+<h4 id="语法">语法</h4>
+<ul>
+<li>不带参数  <code>make(map[keyType]valueType)</code></li>
+<li>带参数    <code>make(map[keyType]valueType,size)</code></li>
+</ul>
+<h4 id="源码-分析">源码 分析</h4>
+<ul>
+<li>创建map
+<pre tabindex="0"><code>func makemap(t *maptype, hint int, h *hmap) *hmap {
+    // 校验hint大小是否操作内存限制， 32系统限制1&lt;&lt;32， 64系统限制1&lt;&lt;48
+	mem, overflow := math.MulUintptr(uintptr(hint), t.bucket.size)
+	if overflow || mem &gt; maxAlloc {
+		hint = 0
+	}
+
+	// initialize Hmap
+	if h == nil {
+		h = new(hmap)
+	}
+	// 获取随机种子， 保证同一个key再不同的map中hash值不一样（安全） 
+	h.hash0 = fastrand()
+
+	// Find the size parameter B which will hold the requested # of elements.
+	// For hint &lt; 0 overLoadFactor returns false since hint &lt; bucketCnt.
+	// 计算哈希桶大小
+	B := uint8(0)
+	for overLoadFactor(hint, B) {
+		B++
+	}
+	h.B = B
+
+	// allocate initial hash table
+	// if B == 0, the buckets field is allocated lazily later (in mapassign)
+	// If hint is large zeroing this memory could take a while.
+	// 如果哈希桶大小不为0， 则创建哈希桶，有必要还要创建溢出桶结构 
+	if h.B != 0 {
+		var nextOverflow *bmap
+		h.buckets, nextOverflow = makeBucketArray(t, h.B, nil)
+		if nextOverflow != nil {
+			h.extra = new(mapextra)
+			h.extra.nextOverflow = nextOverflow
+		}
+	}
+
+	return h
+}
+</code></pre></li>
+<li>计算哈希桶大小
+<pre tabindex="0"><code>// 1. 哈希桶大小为2的整次幂
+// 2. 哈希桶大小为size/6.5 
+func overLoadFactor(count int, B uint8) bool {
+    return count &gt; bucketCnt &amp;&amp; uintptr(count) &gt; loadFactorNum*(bucketShift(B)/loadFactorDen)
+}
+</code></pre></li>
+</ul>
+<h3 id="map查找">map查找</h3>
+<h4 id="语法-1">语法</h4>
+<p><code>m := make(map[string]int)</code></p>
+<ul>
+<li><code>v := m[key]</code>  只返回value， 如果key不存在则返回对应的 空对象(对应源码： mapaccess1)</li>
+<li><code>v, ok := m[key]</code> 返回value 以及key是否存在标志(对应源码： mapaccess2)</li>
+<li><code>for k, v := range m</code> 返回key和value 仅用于range迭代场景(对应源码： mapaccessK)</li>
+</ul>
+<h4 id="源码-分析-1">源码 分析</h4>
+<ul>
+<li>查找map
+<pre tabindex="0"><code>func mapaccess2(t *maptype, h *hmap, key unsafe.Pointer) (unsafe.Pointer, bool) {
+	if raceenabled &amp;&amp; h != nil {
+		callerpc := getcallerpc()
+		pc := funcPC(mapaccess2)
+		racereadpc(unsafe.Pointer(h), callerpc, pc)
+		raceReadObjectPC(t.key, key, callerpc, pc)
+	}
+	if msanenabled &amp;&amp; h != nil {
+		msanread(key, t.key.size)
+	}
+	// 如果是nil 或者 空map， 直接返回 空对象和key不存在
+	if h == nil || h.count == 0 {
+		if t.hashMightPanic() {
+			t.key.alg.hash(key, 0) // see issue 23734
+		}
+		return unsafe.Pointer(&amp;zeroVal[0]), false
+	}
+	// 如果map正在写入，则直接报错
+	if h.flags&amp;hashWriting != 0 {
+		throw(&quot;concurrent map read and map write&quot;)
+	}
+	// 计算key的hash
+	alg := t.key.alg
+	hash := alg.hash(key, uintptr(h.hash0))
+	// 获取哈希桶中key 所在的桶链首地址
+	m := bucketMask(h.B)
+	b := (*bmap)(unsafe.Pointer(uintptr(h.buckets) + (hash&amp;m)*uintptr(t.bucketsize)))
+	// 如果哈希桶正在扩容，则去旧哈希桶中获取key 所在的桶链首地址
+	if c := h.oldbuckets; c != nil {
+	    // 如果不是等量扩容， 则重新计算旧哈希桶为当前的一半
+		if !h.sameSizeGrow() {
+			// There used to be half as many buckets; mask down one more power of two.
+			m &gt;&gt;= 1
+		}
+		oldb := (*bmap)(unsafe.Pointer(uintptr(c) + (hash&amp;m)*uintptr(t.bucketsize)))
+		if !evacuated(oldb) {
+			b = oldb
+		}
+	}
+	// 计算key的tophash
+	top := tophash(hash)
+	// 遍历桶链中所有桶和溢出桶
+bucketloop:
+	for ; b != nil; b = b.overflow(t) {
+	    // 遍历桶里所有元素
+		for i := uintptr(0); i &lt; bucketCnt; i++ {
+		    // 匹配key的tophash
+			if b.tophash[i] != top {
+				if b.tophash[i] == emptyRest {
+					break bucketloop
+				}
+				continue
+			}
+			// 取得桶里当前位置对应key值
+			k := add(unsafe.Pointer(b), dataOffset+i*uintptr(t.keysize))
+			if t.indirectkey() {
+				k = *((*unsafe.Pointer)(k))
+			}
+			// 如果key匹配，说明找到了，直接返回 value 和 true
+			if alg.equal(key, k) {
+				e := add(unsafe.Pointer(b), dataOffset+bucketCnt*uintptr(t.keysize)+i*uintptr(t.elemsize))
+				if t.indirectelem() {
+					e = *((*unsafe.Pointer)(e))
+				}
+				return e, true
+			}
+		}
+	}
+	// 一直没找到，返回默认空对象和false
+	return unsafe.Pointer(&amp;zeroVal[0]), false
+}
+</code></pre></li>
+</ul>
+<h3 id="map-插入和更新">map 插入和更新</h3>
+<h4 id="语法-2">语法</h4>
+<p><code>m := make(map[string]int, 10)</code></p>
+<ul>
+<li><code>m[&quot;key&quot;] = value</code> map 的插入和更新都通过这一个表达式</li>
+</ul>
+<h4 id="源码分析">源码分析</h4>
+<ul>
+<li>插入和更新
+<pre tabindex="0"><code>func mapassign(t *maptype, h *hmap, key unsafe.Pointer) unsafe.Pointer {
+    // 不允许向未初始化的map插入key
+	if h == nil {
+		panic(plainError(&quot;assignment to entry in nil map&quot;))
+	}
+	if raceenabled {
+		callerpc := getcallerpc()
+		pc := funcPC(mapassign)
+		racewritepc(unsafe.Pointer(h), callerpc, pc)
+		raceReadObjectPC(t.key, key, callerpc, pc)
+	}
+	if msanenabled {
+		msanread(key, t.key.size)
+	}
+	// 如果map 正在写入，则抛错： concurrent map writes
+	if h.flags&amp;hashWriting != 0 {
+		throw(&quot;concurrent map writes&quot;)
+	}
+	// 计算key 哈希值
+	alg := t.key.alg
+	hash := alg.hash(key, uintptr(h.hash0))
+
+	// Set hashWriting after calling alg.hash, since alg.hash may panic,
+	// in which case we have not actually done a write.
+	// 设置map fags 为正在写入
+	h.flags ^= hashWriting
+
+    // 如果哈希桶为空， 则创建哈希桶，大小为1
+	if h.buckets == nil {
+		h.buckets = newobject(t.bucket) // newarray(t.bucket, 1)
+	}
+
+again:
+    // 计算key分布到的桶链位置
+	bucket := hash &amp; bucketMask(h.B)
+	// 如果哈希桶在扩容则进行扩容处理
+	if h.growing() {
+		growWork(t, h, bucket)
+	}
+	// 计算key分布到的桶
+	b := (*bmap)(unsafe.Pointer(uintptr(h.buckets) + bucket*uintptr(t.bucketsize)))
+	// 计算key的tophash
+	top := tophash(hash)
+
+    // 记录存放key的tophash和桶中位置
+	var inserti *uint8
+	var insertk unsafe.Pointer
+	var elem unsafe.Pointer
+bucketloop:
+    // 遍历桶链的每个桶和溢出桶
+	for {
+		for i := uintptr(0); i &lt; bucketCnt; i++ {
+		    // 如果元素key的tophash 和 key的不一致则继续
+			if b.tophash[i] != top {
+			    // 记录元素为空的位置
+				if isEmpty(b.tophash[i]) &amp;&amp; inserti == nil {
+					inserti = &amp;b.tophash[i]
+					insertk = add(unsafe.Pointer(b), dataOffset+i*uintptr(t.keysize))
+					elem = add(unsafe.Pointer(b), dataOffset+bucketCnt*uintptr(t.keysize)+i*uintptr(t.elemsize))
+				}
+				// 如果桶中元素及后续元素都标记为空，则退出循环
+				if b.tophash[i] == emptyRest {
+					break bucketloop
+				}
+				continue
+			}
+			// 获取元素对应的key值
+			k := add(unsafe.Pointer(b), dataOffset+i*uintptr(t.keysize))
+			if t.indirectkey() {
+				k = *((*unsafe.Pointer)(k))
+			}
+			// 元素对应key值和key不一致则继续
+			if !alg.equal(key, k) {
+				continue
+			}
+			// already have a mapping for key. Update it.
+			// 如果元素对应key值和key一致，则更新value
+			if t.needkeyupdate() {
+				typedmemmove(t.key, k, key)
+			}
+			elem = add(unsafe.Pointer(b), dataOffset+bucketCnt*uintptr(t.keysize)+i*uintptr(t.elemsize))
+			goto done
+		}
+		// 继续遍历溢出桶
+		ovf := b.overflow(t)
+		if ovf == nil {
+			break
+		}
+		b = ovf
+	}
+
+	// Did not find mapping for key. Allocate new cell &amp; add entry.
+
+	// If we hit the max load factor or we have too many overflow buckets,
+	// and we're not already in the middle of growing, start growing.
+	// 如果所有桶的平均负载因子超出6.5 或者 溢出桶个数超过 1&lt;&lt; 15
+	if !h.growing() &amp;&amp; (overLoadFactor(h.count+1, h.B) || tooManyOverflowBuckets(h.noverflow, h.B)) {
+		hashGrow(t, h)
+		goto again // Growing the table invalidates everything, so try again
+	}
+
+    // 如果当前桶链中没有空位置， 则创建新的溢出桶
+	if inserti == nil {
+		// all current buckets are full, allocate a new one.
+		newb := h.newoverflow(t, b)
+		inserti = &amp;newb.tophash[0]
+		insertk = add(unsafe.Pointer(newb), dataOffset)
+		elem = add(insertk, bucketCnt*uintptr(t.keysize))
+	}
+
+	// store new key/elem at insert position
+	// 保存key和value到指定位置
+	if t.indirectkey() {
+		kmem := newobject(t.key)
+		*(*unsafe.Pointer)(insertk) = kmem
+		insertk = kmem
+	}
+	if t.indirectelem() {
+		vmem := newobject(t.elem)
+		*(*unsafe.Pointer)(elem) = vmem
+	}
+	typedmemmove(t.key, insertk, key)
+	*inserti = top
+	// map总元素个数加一
+	h.count++
+
+done:
+	if h.flags&amp;hashWriting == 0 {
+		throw(&quot;concurrent map writes&quot;)
+	}
+	// 清空写入标记
+	h.flags &amp;^= hashWriting
+	if t.indirectelem() {
+		elem = *((*unsafe.Pointer)(elem))
+	}
+	return elem
+}
+</code></pre></li>
+<li>扩容
+<ul>
+<li>扩容条件
+<ul>
+<li>为了保证访问效率， 当新元素添加到map时，都会检查是否需要扩容， 扩容实际上以空间换时间</li>
+<li>条件：
+<ol>
+<li>哈希桶的平均负载因子&gt; 6.5时， 即平均每个桶存储的键值对大于6.5</li>
+<li>溢出桶的数量大于 2^15时</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>增量扩容
+<ol>
+<li>当负载因子过大时，新建哈希桶， 新哈希桶是旧哈希桶长度的两倍</li>
+<li>考虑如果map存储键值对太多，一次性搬迁延时较大，采用逐步搬迁策略</li>
+<li>每次访问map时都会触发搬迁，每次搬迁两个键值对</li>
+</ol>
+</li>
+<li>等量扩容
+<ol>
+<li>在极端条件下， 不断地增删key，而这些操作集中到一个桶上，就会导致溢出桶很多，而负载因子不高，导致无法增量搬迁</li>
+<li>这种情况下做一次等量扩容，哈希桶的长度不变， 把松散的键值重新排列，让桶的利用率增高。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="map删除">map删除</h3>
+<h4 id="语法-3">语法</h4>
+<ul>
+<li><code>delete(m, key)</code> 删除map中某个键</li>
+</ul>
+<h4 id="源码分析-1">源码分析</h4>
+<ul>
+<li>删除map
+<pre tabindex="0"><code>func mapdelete(t *maptype, h *hmap, key unsafe.Pointer) {
+	if raceenabled &amp;&amp; h != nil {
+		callerpc := getcallerpc()
+		pc := funcPC(mapdelete)
+		racewritepc(unsafe.Pointer(h), callerpc, pc)
+		raceReadObjectPC(t.key, key, callerpc, pc)
+	}
+	if msanenabled &amp;&amp; h != nil {
+		msanread(key, t.key.size)
+	}
+	// 如果是nil map或者空map，则直接 返回 
+	if h == nil || h.count == 0 {
+		if t.hashMightPanic() {
+			t.key.alg.hash(key, 0) // see issue 23734
+		}
+		return
+	}
+	// 如果map正在写入，则抛错
+	if h.flags&amp;hashWriting != 0 {
+		throw(&quot;concurrent map writes&quot;)
+	}
+    // 计算key的hash值
+	alg := t.key.alg
+	hash := alg.hash(key, uintptr(h.hash0))
+
+	// Set hashWriting after calling alg.hash, since alg.hash may panic,
+	// in which case we have not actually done a write (delete).
+	// 设置map的状态标志为正在写入
+	h.flags ^= hashWriting
+
+    // 计算key 分布的桶链
+	bucket := hash &amp; bucketMask(h.B)
+	if h.growing() {
+		growWork(t, h, bucket)
+	}
+	// 计算key 分布所在的桶
+	b := (*bmap)(add(h.buckets, bucket*uintptr(t.bucketsize)))
+	bOrig := b
+	// 计算key 的tophash值
+	top := tophash(hash)
+search:
+    // 遍历桶链中所有的桶和溢出桶
+	for ; b != nil; b = b.overflow(t) {
+	    // 遍历桶里面所有元素
+		for i := uintptr(0); i &lt; bucketCnt; i++ {
+		    // 如果tophash不相等，继续遍历桶中元素
+			if b.tophash[i] != top {
+			    // 如果
+				if b.tophash[i] == emptyRest {
+					break search
+				}
+				continue
+			}
+			// 元素tophash和key的一致，获取当前元素key值
+			k := add(unsafe.Pointer(b), dataOffset+i*uintptr(t.keysize))
+			k2 := k
+			// 如果元素的key值是指针类型，则取其值
+			if t.indirectkey() {
+				k2 = *((*unsafe.Pointer)(k2))
+			}
+			// 如果当前元素key值和key不一致，则继续
+			if !alg.equal(key, k2) {
+				continue
+			}
+			// Only clear key if there are pointers in it.
+			// 如果当前元素key值是指针类型，则赋nil，否则清空该段内存
+			if t.indirectkey() {
+				*(*unsafe.Pointer)(k) = nil
+			} else if t.key.ptrdata != 0 {
+				memclrHasPointers(k, t.key.size)
+			}
+			e := add(unsafe.Pointer(b), dataOffset+bucketCnt*uintptr(t.keysize)+i*uintptr(t.elemsize))
+			if t.indirectelem() {
+				*(*unsafe.Pointer)(e) = nil
+			} else if t.elem.ptrdata != 0 {
+				memclrHasPointers(e, t.elem.size)
+			} else {
+				memclrNoHeapPointers(e, t.elem.size)
+			}
+			// 将元素对应的tophash位标记为空
+			b.tophash[i] = emptyOne
+			// If the bucket now ends in a bunch of emptyOne states,
+			// change those to emptyRest states.
+			// It would be nice to make this a separate function, but
+			// for loops are not currently inlineable.
+			if i == bucketCnt-1 {
+				if b.overflow(t) != nil &amp;&amp; b.overflow(t).tophash[0] != emptyRest {
+					goto notLast
+				}
+			} else {
+				if b.tophash[i+1] != emptyRest {
+					goto notLast
+				}
+			}
+			// 如果后续元素无赋值key， 则将元素及后续元素对应的tophash 置为空
+			for {
+				b.tophash[i] = emptyRest
+				if i == 0 {
+					if b == bOrig {
+						break // beginning of initial bucket, we're done.
+					}
+					// Find previous bucket, continue at its last entry.
+					c := b
+					for b = bOrig; b.overflow(t) != c; b = b.overflow(t) {
+					}
+					i = bucketCnt - 1
+				} else {
+					i--
+				}
+				if b.tophash[i] != emptyOne {
+					break
+				}
+			}
+		notLast:
+		    // map 总元素个数减一
+			h.count--
+			break search
+		}
+	}
+
+
+	if h.flags&amp;hashWriting == 0 {
+		throw(&quot;concurrent map writes&quot;)
+	}
+	// 清空写标记
+	h.flags &amp;^= hashWriting
+}
+</code></pre></li>
+</ul>
+<h3 id="清空map">清空map</h3>
+<h4 id="语法-4">语法</h4>
+<pre tabindex="0"><code>for k, v := range m {
+    delete(m, k)
+}
+</code></pre><h4 id="源码分析-2">源码分析</h4>
+<ul>
+<li>mapclear
+<pre tabindex="0"><code>func mapclear(t *maptype, h *hmap) {
+	if raceenabled &amp;&amp; h != nil {
+		callerpc := getcallerpc()
+		pc := funcPC(mapclear)
+		racewritepc(unsafe.Pointer(h), callerpc, pc)
+	}
+    // 如果nil map 或 空map 则直接返回
+	if h == nil || h.count == 0 {
+		return
+	}
+    // 如果 map正在写入，则抛出错误
+	if h.flags&amp;hashWriting != 0 {
+		throw(&quot;concurrent map writes&quot;)
+	}
+    // 标记map为正在写入
+	h.flags ^= hashWriting
+
+    // 清空hmap 中成员
+	h.flags &amp;^= sameSizeGrow
+	h.oldbuckets = nil
+	h.nevacuate = 0
+	h.noverflow = 0
+	h.count = 0
+
+	// Keep the mapextra allocation but clear any extra information.
+	if h.extra != nil {
+		*h.extra = mapextra{}
+	}
+
+	// makeBucketArray clears the memory pointed to by h.buckets
+	// and recovers any overflow buckets by generating them
+	// as if h.buckets was newly alloced.
+	// 清空溢出桶
+	_, nextOverflow := makeBucketArray(t, h.B, h.buckets)
+	if nextOverflow != nil {
+		// If overflow buckets are created then h.extra
+		// will have been allocated during initial bucket creation.
+		h.extra.nextOverflow = nextOverflow
+	}
+    // 清空写入标记
+	if h.flags&amp;hashWriting == 0 {
+		throw(&quot;concurrent map writes&quot;)
+	}
+	h.flags &amp;^= hashWriting
+}
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#声明">声明</a></li>
+    <li><a href="#初始化">初始化</a></li>
+    <li><a href="#keyvalue-限制">key/value 限制</a></li>
+    <li><a href="#遍历">遍历</a></li>
+    <li><a href="#函数传参">函数传参</a></li>
+    <li><a href="#map-基础数据结构">map 基础数据结构</a>
+      <ul>
+        <li><a href="#名称解释">名称解释</a></li>
+        <li><a href="#文件组成">文件组成</a></li>
+      </ul>
+    </li>
+    <li><a href="#源码解析">源码解析</a>
+      <ul>
+        <li><a href="#map-创建">map 创建</a></li>
+        <li><a href="#map查找">map查找</a></li>
+        <li><a href="#map-插入和更新">map 插入和更新</a></li>
+        <li><a href="#map删除">map删除</a></li>
+        <li><a href="#清空map">清空map</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/golang/slice/" class="button left"><span>Golang源码阅读-slice</span></a>
+    
+    
+      <a href="/blog/golang/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" class="button right"><span>Golang 代码规范</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

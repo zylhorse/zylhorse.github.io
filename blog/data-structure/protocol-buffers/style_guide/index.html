@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Protocol Buffers - 编码规范 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Protocol Buffers - 编码规范">
+<meta itemprop="description" content="这篇文章讲述.proto文件的编写规范。根据以下约定，将会使你的protocol buffer messgae定义和它们对应的类保持一致并易于阅读。
+注意，protocol buffer规范是随着时间改变的，因此你可能会看到用不同的约定或格式编写的.proto文件。 当你修改这些文件的时候，请尊重现有的格式。保持一致就好。但是当你创建新的.proto文件时，最好采用当前的格式。
+标准文件格式  Standard file formatting
+  保持每一行长度限制在80字符内 使用2个空格缩进 字符串最好使用双引号  文件结构  File structure
+ 文件应该命名为: lower_snake_case.proto
+所有的文件应该按照以下习惯排列：
+ License header File overview(文件概述) Syntax Package Imports (需要排序) File options(文件选项) Everything else (其它声明)  Packages package名称应该时小写，并且应该对应目录层级。e.g.,如果文件在my/package中，那么package名字应该是my.package。
+Message和字段名  Message and field names
+ message: 使用驼峰命名法(首字母大写),例如: SongServerRequest.
+字段: 使用underscore_separated_names命名(包括oneof和extension),例如: song_name。 Use CamelCase (with an initial capital) for message names – for example, SongServerRequest. Use underscore_separated_names for field names (including oneof field and extension names) – for example, song_name."><meta itemprop="datePublished" content="2021-10-28T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-10-28T00:00:00+00:00" />
+<meta itemprop="wordCount" content="174">
+<meta itemprop="keywords" content="Protocol Buffers," /><meta property="og:title" content="Protocol Buffers - 编码规范" />
+<meta property="og:description" content="这篇文章讲述.proto文件的编写规范。根据以下约定，将会使你的protocol buffer messgae定义和它们对应的类保持一致并易于阅读。
+注意，protocol buffer规范是随着时间改变的，因此你可能会看到用不同的约定或格式编写的.proto文件。 当你修改这些文件的时候，请尊重现有的格式。保持一致就好。但是当你创建新的.proto文件时，最好采用当前的格式。
+标准文件格式  Standard file formatting
+  保持每一行长度限制在80字符内 使用2个空格缩进 字符串最好使用双引号  文件结构  File structure
+ 文件应该命名为: lower_snake_case.proto
+所有的文件应该按照以下习惯排列：
+ License header File overview(文件概述) Syntax Package Imports (需要排序) File options(文件选项) Everything else (其它声明)  Packages package名称应该时小写，并且应该对应目录层级。e.g.,如果文件在my/package中，那么package名字应该是my.package。
+Message和字段名  Message and field names
+ message: 使用驼峰命名法(首字母大写),例如: SongServerRequest.
+字段: 使用underscore_separated_names命名(包括oneof和extension),例如: song_name。 Use CamelCase (with an initial capital) for message names – for example, SongServerRequest. Use underscore_separated_names for field names (including oneof field and extension names) – for example, song_name." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/data-structure/protocol-buffers/style_guide/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-10-28T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-10-28T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Protocol Buffers - 编码规范"/>
+<meta name="twitter:description" content="这篇文章讲述.proto文件的编写规范。根据以下约定，将会使你的protocol buffer messgae定义和它们对应的类保持一致并易于阅读。
+注意，protocol buffer规范是随着时间改变的，因此你可能会看到用不同的约定或格式编写的.proto文件。 当你修改这些文件的时候，请尊重现有的格式。保持一致就好。但是当你创建新的.proto文件时，最好采用当前的格式。
+标准文件格式  Standard file formatting
+  保持每一行长度限制在80字符内 使用2个空格缩进 字符串最好使用双引号  文件结构  File structure
+ 文件应该命名为: lower_snake_case.proto
+所有的文件应该按照以下习惯排列：
+ License header File overview(文件概述) Syntax Package Imports (需要排序) File options(文件选项) Everything else (其它声明)  Packages package名称应该时小写，并且应该对应目录层级。e.g.,如果文件在my/package中，那么package名字应该是my.package。
+Message和字段名  Message and field names
+ message: 使用驼峰命名法(首字母大写),例如: SongServerRequest.
+字段: 使用underscore_separated_names命名(包括oneof和extension),例如: song_name。 Use CamelCase (with an initial capital) for message names – for example, SongServerRequest. Use underscore_separated_names for field names (including oneof field and extension names) – for example, song_name."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/data-structure/protocol-buffers/style_guide/">Protocol Buffers - 编码规范</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2021-10-28 00:00:00 &#43;0000 UTC">2021-10-28</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <p>这篇文章讲述<code>.proto</code>文件的编写规范。根据以下约定，将会使你的<code>protocol buffer messgae</code>定义和它们对应的类保持一致并易于阅读。</p>
+<p>注意，<code>protocol buffer</code>规范是随着时间改变的，因此你可能会看到用不同的约定或格式编写的<code>.proto</code>文件。
+当你修改这些文件的时候，请尊重现有的格式。保持一致就好。但是当你创建新的<code>.proto</code>文件时，最好采用当前的格式。</p>
+<h2 id="标准文件格式">标准文件格式</h2>
+<blockquote>
+<p>Standard file formatting</p>
+</blockquote>
+<ul>
+<li>保持每一行长度限制在80字符内</li>
+<li>使用2个空格缩进</li>
+<li>字符串最好使用双引号</li>
+</ul>
+<h2 id="文件结构">文件结构</h2>
+<blockquote>
+<p>File structure</p>
+</blockquote>
+<p>文件应该命名为: <code>lower_snake_case.proto</code></p>
+<p>所有的文件应该按照以下习惯排列：</p>
+<ol>
+<li>License header</li>
+<li>File overview(文件概述)</li>
+<li>Syntax</li>
+<li>Package</li>
+<li>Imports (需要排序)</li>
+<li>File options(文件选项)</li>
+<li>Everything else (其它声明)</li>
+</ol>
+<h2 id="packages">Packages</h2>
+<p><code>package</code>名称应该时小写，并且应该对应目录层级。e.g.,如果文件在<code>my/package</code>中，那么<code>package</code>名字应该是<code>my.package</code>。</p>
+<h2 id="message和字段名">Message和字段名</h2>
+<blockquote>
+<p>Message and field names</p>
+</blockquote>
+<p><code>message</code>: 使用驼峰命名法(首字母大写),例如: <code>SongServerRequest</code>.<br>
+字段: 使用<code>underscore_separated_names</code>命名(包括<code>oneof</code>和<code>extension</code>),例如: <code>song_name</code>。
+Use CamelCase (with an initial capital) for message names – for example, SongServerRequest. 
+Use underscore_separated_names for field names (including oneof field and extension names) – for example, song_name.</p>
+<pre tabindex="0"><code>message SongServerRequest {
+  required string song_name = 1;
+}
+</code></pre><p>对字段名使用这种命名约定，会得到以下访问器:</p>
+<pre tabindex="0"><code>C++:
+  const string&amp; song_name() { ... }
+  void set_song_name(const string&amp; x) { ... }
+
+Java:
+  public String getSongName() { ... }
+  public Builder setSongName(String v) { ... }
+
+Go:
+SongServerRequest.SongName = ...
+func (x *SongServerRequest) GetSongName() string {...}
+</code></pre><p>如果你的字段名包含数字，数字应该跟在字母后面而不是下划线后面。e.g.,使用<code>song_name1</code>而不是<code>song_name_1</code>。</p>
+<h2 id="repeated字段">Repeated字段</h2>
+<blockquote>
+<p>Repeated fields</p>
+</blockquote>
+<p><code>repeated</code>字段使用复数名称:</p>
+<pre tabindex="0"><code>  repeated string keys = 1;
+  ...
+  repeated MyMessage accounts = 17;
+</code></pre><h2 id="枚举">枚举</h2>
+<blockquote>
+<p>Enums</p>
+</blockquote>
+<p>使用驼峰(首字母大写)命名<code>enum</code>类型名称<br>
+使用<code>CAPITALS_WITH_UNDERSCORES</code>命名成员名:</p>
+<pre tabindex="0"><code>enum FooBar {
+  FOO_BAR_UNSPECIFIED = 0;
+  FOO_BAR_FIRST_VALUE = 1;
+  FOO_BAR_SECOND_VALUE = 2;
+}
+</code></pre><p>每个<code>enum</code>值后面以分号<code>;</code>结尾，而不是逗号<code>,</code>。 首选前缀命名，而不是将<code>enum</code>包含在<code>message</code>中。 0值应该拼接后缀<code>UNSPECIFIED</code>。</p>
+<h2 id="服务">服务</h2>
+<blockquote>
+<p>Services</p>
+</blockquote>
+<p>如果你的<code>.proto</code>文件定义了<code>RPC service</code>，你应该使用驼峰(首字母大写)命名<code>service</code>名称和<code>RPC</code>方法名。</p>
+<pre tabindex="0"><code>service FooService {
+  rpc GetSomething(FooRequest) returns (FooResponse);
+}
+</code></pre><h2 id="避免一些事情">避免一些事情</h2>
+<ul>
+<li>Required字段 (仅在proto2中使用)</li>
+<li>Groups (尽在proto2中使用)</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/data-structure/">Data Structure</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/protocol-buffers/">Protocol Buffers</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#标准文件格式">标准文件格式</a></li>
+    <li><a href="#文件结构">文件结构</a></li>
+    <li><a href="#packages">Packages</a></li>
+    <li><a href="#message和字段名">Message和字段名</a></li>
+    <li><a href="#repeated字段">Repeated字段</a></li>
+    <li><a href="#枚举">枚举</a></li>
+    <li><a href="#服务">服务</a></li>
+    <li><a href="#避免一些事情">避免一些事情</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/data-structure/protocol-buffers/instroduction/" class="button left"><span>Protocol Buffers - 简介</span></a>
+    
+    
+      <a href="/blog/data-structure/protocol-buffers/reference/" class="button right"><span>Protocol Buffers - 规范</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Data&#32;Structure
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>日志业务思考和规则 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="日志业务思考和规则">
+<meta itemprop="description" content="Logging&amp;&amp;Instrumentation思考 Logging 和 Instrumentation 在软件开发中是两个热门的话题， 尤其在微服务领域。
+当然具体，还有很多需要思考。
+关于Logging：要logging什么？logging到哪种详细的程度？流向哪里： syslog? file on disk? message queue?
+关于Instrumentation: 什么时候instrumenting代码？哪些信息需要instrumenting？ 使用哪些metrics系统？
+ logging,instrumentation,tracing最终都只是实现系统的可观测性。
+ Logging 服务应该只logging可操作信息，包括不限于:
+ 需要人为处理的严重的、致命级别的错误
+e.g. 数据库不可用的消息信号   人为处理的log应该是稀少的，如果没有错误，理想中可以不logging任何信息
+ 需要机器处理的结构化数据
+e.g. 媒体对象已经播放，logging下来以便批处理对版税进行日结算   机器处理的log应该是定义良好的格式化数据
+ 因为log包的适用性有局限，所以选择功能简单的包。 避免多个log级别(info/warn/error)，尤其是不要在运行时进行level配置。 只输出需要查看的log。当然debug log是个例外，开发和诊断错误时有用。
+log应当被视为事件流处理:
+ 服务不应该关心输出流的转存 服务不应该尝试写入或管理log文件 服务应当将事件流无缓冲的写入stdout 由操作系统或基础设施转存进程或容器的stdout/stderr到目的地，e.g. 集中log系统ELK stack, 持久化消息代理Kafka, 滚动日志服务runit  logging的代价是昂贵的，因此不要logging任何不符合上述标准的信息。e.g. 禁止logging每一个HTTP请求，尤其是热点路由上的，这些更适合instrumenting
+Instrumentation Instrumentation 用于服务相关的所有剩余诊断信息。
+与Log相比，服务应该尽可能的instrumenting每一个可以捕获的有意义的数据。
+Metrics记录和报告的成本是低廉的， Instrumentation系统包含的数据越多越有意义。
+ Instrumentation 表示一种“能够监测和度量某个系统的性能，分析系统错误，并能将追踪的数据进行记录”的监测工具
+ instrumenting包含信息包括不限于:
+ 排除在logging之外的信息 请求计数、请求延迟、请求错误计数  Brendan Gregg’s USE method 建议instrument所有系统资源的利用率，饱和度，错误计数。"><meta itemprop="datePublished" content="2020-10-27T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-10-27T00:00:00+00:00" />
+<meta itemprop="wordCount" content="91">
+<meta itemprop="keywords" content="Log," /><meta property="og:title" content="日志业务思考和规则" />
+<meta property="og:description" content="Logging&amp;&amp;Instrumentation思考 Logging 和 Instrumentation 在软件开发中是两个热门的话题， 尤其在微服务领域。
+当然具体，还有很多需要思考。
+关于Logging：要logging什么？logging到哪种详细的程度？流向哪里： syslog? file on disk? message queue?
+关于Instrumentation: 什么时候instrumenting代码？哪些信息需要instrumenting？ 使用哪些metrics系统？
+ logging,instrumentation,tracing最终都只是实现系统的可观测性。
+ Logging 服务应该只logging可操作信息，包括不限于:
+ 需要人为处理的严重的、致命级别的错误
+e.g. 数据库不可用的消息信号   人为处理的log应该是稀少的，如果没有错误，理想中可以不logging任何信息
+ 需要机器处理的结构化数据
+e.g. 媒体对象已经播放，logging下来以便批处理对版税进行日结算   机器处理的log应该是定义良好的格式化数据
+ 因为log包的适用性有局限，所以选择功能简单的包。 避免多个log级别(info/warn/error)，尤其是不要在运行时进行level配置。 只输出需要查看的log。当然debug log是个例外，开发和诊断错误时有用。
+log应当被视为事件流处理:
+ 服务不应该关心输出流的转存 服务不应该尝试写入或管理log文件 服务应当将事件流无缓冲的写入stdout 由操作系统或基础设施转存进程或容器的stdout/stderr到目的地，e.g. 集中log系统ELK stack, 持久化消息代理Kafka, 滚动日志服务runit  logging的代价是昂贵的，因此不要logging任何不符合上述标准的信息。e.g. 禁止logging每一个HTTP请求，尤其是热点路由上的，这些更适合instrumenting
+Instrumentation Instrumentation 用于服务相关的所有剩余诊断信息。
+与Log相比，服务应该尽可能的instrumenting每一个可以捕获的有意义的数据。
+Metrics记录和报告的成本是低廉的， Instrumentation系统包含的数据越多越有意义。
+ Instrumentation 表示一种“能够监测和度量某个系统的性能，分析系统错误，并能将追踪的数据进行记录”的监测工具
+ instrumenting包含信息包括不限于:
+ 排除在logging之外的信息 请求计数、请求延迟、请求错误计数  Brendan Gregg’s USE method 建议instrument所有系统资源的利用率，饱和度，错误计数。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/log-system/logging/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2020-10-27T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-10-27T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="日志业务思考和规则"/>
+<meta name="twitter:description" content="Logging&amp;&amp;Instrumentation思考 Logging 和 Instrumentation 在软件开发中是两个热门的话题， 尤其在微服务领域。
+当然具体，还有很多需要思考。
+关于Logging：要logging什么？logging到哪种详细的程度？流向哪里： syslog? file on disk? message queue?
+关于Instrumentation: 什么时候instrumenting代码？哪些信息需要instrumenting？ 使用哪些metrics系统？
+ logging,instrumentation,tracing最终都只是实现系统的可观测性。
+ Logging 服务应该只logging可操作信息，包括不限于:
+ 需要人为处理的严重的、致命级别的错误
+e.g. 数据库不可用的消息信号   人为处理的log应该是稀少的，如果没有错误，理想中可以不logging任何信息
+ 需要机器处理的结构化数据
+e.g. 媒体对象已经播放，logging下来以便批处理对版税进行日结算   机器处理的log应该是定义良好的格式化数据
+ 因为log包的适用性有局限，所以选择功能简单的包。 避免多个log级别(info/warn/error)，尤其是不要在运行时进行level配置。 只输出需要查看的log。当然debug log是个例外，开发和诊断错误时有用。
+log应当被视为事件流处理:
+ 服务不应该关心输出流的转存 服务不应该尝试写入或管理log文件 服务应当将事件流无缓冲的写入stdout 由操作系统或基础设施转存进程或容器的stdout/stderr到目的地，e.g. 集中log系统ELK stack, 持久化消息代理Kafka, 滚动日志服务runit  logging的代价是昂贵的，因此不要logging任何不符合上述标准的信息。e.g. 禁止logging每一个HTTP请求，尤其是热点路由上的，这些更适合instrumenting
+Instrumentation Instrumentation 用于服务相关的所有剩余诊断信息。
+与Log相比，服务应该尽可能的instrumenting每一个可以捕获的有意义的数据。
+Metrics记录和报告的成本是低廉的， Instrumentation系统包含的数据越多越有意义。
+ Instrumentation 表示一种“能够监测和度量某个系统的性能，分析系统错误，并能将追踪的数据进行记录”的监测工具
+ instrumenting包含信息包括不限于:
+ 排除在logging之外的信息 请求计数、请求延迟、请求错误计数  Brendan Gregg’s USE method 建议instrument所有系统资源的利用率，饱和度，错误计数。"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/log-system/logging/">日志业务思考和规则</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2020-10-27 00:00:00 &#43;0000 UTC">2020-10-27</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="logginginstrumentation思考">Logging&amp;&amp;Instrumentation思考</h2>
+<p>Logging 和 Instrumentation 在软件开发中是两个热门的话题， 尤其在微服务领域。<br>
+当然具体，还有很多需要思考。<br>
+关于Logging：要logging什么？logging到哪种详细的程度？流向哪里： syslog? file on disk? message queue?<br>
+关于Instrumentation: 什么时候instrumenting代码？哪些信息需要instrumenting？ 使用哪些metrics系统？</p>
+<blockquote>
+<p>logging,instrumentation,tracing最终都只是实现系统的可观测性。</p>
+</blockquote>
+<h2 id="logging">Logging</h2>
+<p>服务应该只logging<em><strong>可操作信息</strong></em>，包括不限于:</p>
+<ol>
+<li>需要人为处理的严重的、致命级别的错误<br>
+e.g. 数据库不可用的消息信号</li>
+</ol>
+<blockquote>
+<p>人为处理的log应该是稀少的，如果没有错误，理想中可以不logging任何信息</p>
+</blockquote>
+<ol start="2">
+<li>需要机器处理的结构化数据<br>
+e.g. 媒体对象已经播放，logging下来以便批处理对版税进行日结算</li>
+</ol>
+<blockquote>
+<p>机器处理的log应该是定义良好的格式化数据</p>
+</blockquote>
+<p>因为log包的适用性有局限，所以选择功能简单的包。 避免多个log级别(info/warn/error)，尤其是不要在运行时进行level配置。
+只输出需要查看的log。当然debug log是个例外，开发和诊断错误时有用。</p>
+<p>log应当被视为<a href="http://12factor.net/logs">事件流处理</a>:</p>
+<ul>
+<li>服务不应该关心输出流的转存</li>
+<li>服务不应该尝试写入或管理log文件</li>
+<li>服务应当将事件流无缓冲的写入<code>stdout</code></li>
+<li>由操作系统或基础设施转存进程或容器的stdout/stderr到目的地，e.g. 
+集中log系统<a href="https://www.elastic.co/webinars/introduction-elk-stack">ELK stack</a>,
+持久化消息代理<a href="https://kafka.apache.org/">Kafka</a>,
+滚动日志服务<a href="http://smarden.org/runit/">runit</a></li>
+</ul>
+<p>logging的代价是昂贵的，因此不要logging任何不符合上述标准的信息。e.g. 禁止logging每一个HTTP请求，尤其是热点路由上的，这些更适合instrumenting</p>
+<h2 id="instrumentation">Instrumentation</h2>
+<p>Instrumentation 用于服务相关的所有剩余诊断信息。<br>
+与Log相比，服务应该尽可能的instrumenting每一个可以捕获的有意义的数据。<br>
+Metrics记录和报告的成本是低廉的， Instrumentation系统包含的数据越多越有意义。</p>
+<blockquote>
+<p>Instrumentation 表示一种“能够监测和度量某个系统的性能，分析系统错误，并能将追踪的数据进行记录”的监测工具</p>
+</blockquote>
+<p>instrumenting包含信息包括不限于:</p>
+<ol>
+<li>排除在logging之外的信息</li>
+<li>请求计数、请求延迟、请求错误计数</li>
+</ol>
+<p><a href="http://www.brendangregg.com/usemethod.html">Brendan Gregg’s USE method</a> 建议instrument所有系统资源的利用率，饱和度，错误计数。<br>
+利用率(Utilization): 资源忙于服务工作的平均时间<br>
+饱和度(Saturation): 资源有其他额外工作的程度</p>
+<p>几乎任何语言都有很多instrumentation库。所有的库都有以下三个主要原语:<br>
+Counter:  用于记录发生的事件， e.g. 请求计数，错误请求数
+Gauge:  用于记录随时间波动的事件， e.g. 线程池大小
+Histogram: 用于记录观察值的标量， e.g. 请求时间</p>
+<p>老式的instrumentation库和系统，如Graphite，将原语和静态名称绑定。 这样可以创建一个名为http_request_duration的histogram，
+并通过在每个HTTP请求结束的位置调用history.Observer, 来instrumenting HTTP请求时间。 这已经足够我们来开始instrumenting；<br>
+最近精密的instrumentation系统，允许我们在每个metrics上指定更复杂的维度。 例如: 我们的http_request_duration metrics可能
+会有URL路径(e.g. &ldquo;/api/v1/foo&rdquo;)、状态码(e.g. 200)。 这种维度的数据，使得数据探索，故障排除，故障关联得到强有力的支撑。</p>
+<p>推荐使用<a href="https://prometheus.io/">Prometheus</a>作为instrumentation系统和监控基础设施。</p>
+
+      
+    <h2>参考</h2>
+    <ul>
+        
+            
+                <li><a target="_blank" href="https://peter.bourgon.org/blog/2016/02/07/logging-v-instrumentation.html">Logging v. instrumentation</a></li>
+            
+        
+    </ul>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/log-system/">Log System</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/log/">Log</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#logginginstrumentation思考">Logging&amp;&amp;Instrumentation思考</a></li>
+    <li><a href="#logging">Logging</a></li>
+    <li><a href="#instrumentation">Instrumentation</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/golang/protocol-buffers/basics/" class="button left"><span>Protocol Buffer-Go基础知识</span></a>
+    
+    
+      <a href="/blog/log-system/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84/" class="button right"><span>日志业务系统架构设计</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Log&#32;System
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

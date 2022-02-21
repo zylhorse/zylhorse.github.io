@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="zylhorse blog">
+<meta itemprop="description" content=""><meta property="og:title" content="zylhorse blog" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://zylhorse.github.io/" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="zylhorse blog"/>
+<meta name="twitter:description" content=""/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  
+      
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/sync.mutex/">Golang源码阅读-sync.Mutex</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-11-29 00:00:00 &#43;0000 UTC">2019-11-29</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="概述">概述</h2>
+<p>Go的互斥锁有两种模式: 正常模式和饥饿模式。</p>
+<ul>
+<li>
+<p>正常模式
+正常模式，等待队列按FIFO顺序排序，但是等待队列中被唤醒的G并不拥有互斥锁，
+而是与新来的G竞争所有权。新来的G有一个优势-它已经&hellip;</p></li></ul>
+  </div>
+  <footer>
+    <a href="/blog/golang/sync.mutex/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/sync.pool/">Golang源码阅读-sync.pool</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-11-29 00:00:00 &#43;0000 UTC">2019-11-29</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="基本概述">基本概述</h2>
+<p><code>Pool</code>定义在<code>package sync</code>中.</p>
+<p><code>Pool</code>是一组临时对象的集合， 可以用于保存和检索临时对象。</p>
+<p>存储在<code>Pool</code>中的任何对象，都可以在任何时间被自动删除，而不需要通知。&hellip;</p>
+  </div>
+  <footer>
+    <a href="/blog/golang/sync.pool/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/godoc/">Golang doc使用细则</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-11-23 00:00:00 &#43;0000 UTC">2019-11-23</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="简介">简介</h2>
+<p><code>go doc</code>和<code>godoc</code> 在<code>golang 1.13</code>版本被移除，可手动安装<code>go get golang.org/x/tools/cmd/godoc</code></p>
+<h2 id="go-doc">go doc</h2>
+<p><code>GO</code> 命令行工具， 打印和显示文档
+&hellip;</p>
+  </div>
+  <footer>
+    <a href="/blog/golang/godoc/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/goswagger/">Golang swagger应用</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-11-23 00:00:00 &#43;0000 UTC">2019-11-23</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="简介">简介</h2>
+<p><code>goswagger</code>包含了<code>Swagger 2.0</code>的<code>golang</code>实现。</p>
+<h2 id="swag方式">swag方式</h2>
+<p>参考: <a href="https://github.com/swaggo/swag">README</a></p>
+<h2 id="swagger">swagger</h2>
+<p>采用源码安装方式：</p>
+<pre tabindex="0"><code>git clone&hellip;</code></pre>
+  </div>
+  <footer>
+    <a href="/blog/golang/goswagger/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+          <article class="post">
+  <header>
+  <div class="title">
+    
+      <h2><a href="/blog/distribution-system/%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0/">服务治理-服务注册和发现</a></h2>
+    
+    
+  </div>
+</header>
+  <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-11-11 00:00:00 &#43;0000 UTC">2019-11-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+</div>
+  <div class="content">
+    
+    
+    <h2 id="概述">概述</h2>
+
+  </div>
+  <footer>
+    <a href="/blog/distribution-system/%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0/" class="button big">阅读全文</a>
+  </footer>
+</article>
+
+      
+      <div class="pagination">
+          
+              <a href="/page/12/" class="button left"><span>上页</span></a>
+          
+          
+              <a href="/page/14/" class="button right"><span>下页</span></a>
+          
+      </div>
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

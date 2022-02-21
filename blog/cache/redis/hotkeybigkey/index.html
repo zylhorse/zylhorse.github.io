@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Redis的hotkey和bigkey监控和处理 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Redis的hotkey和bigkey监控和处理">
+<meta itemprop="description" content="bigkey  单个key 存储value很大 hash set list zset 等存储元素过多  如何发现  redis-cli &ndash;bigkeys rdbtools 分析rdb 文件 redis-rdb-cli 第三方工具  怎么解决  减少list hash set zset 成员， 对成员过多的数据进行取模分片 string类型的big value 不建议存入 redis， 可以用文档型数据库mongodb或cdn等方式优化。  hotkey  并发访问量很大的热点key  如何发现 收集所有redis请求，统计分析
+ redis-cli &ndash;hotkeys 在proxy 层，对每一个redis请求进行收集上报，统计分析 对redis端口的tcp数据包进行抓包统计； 基于lfu（最近最少使用） 根据使用频率进行统计  怎么解决 产生随机值（0-2N, N 为集群节点数），作为key的后缀， 将key分布到集群的多个实例中。并设置随机过期时间；
+const M = N * 2//生成随机数random = GenRandom(0, M)//构造备份新keybakHotKey = hotKey &#43; “_” &#43; randomdata = redis."><meta itemprop="datePublished" content="2016-10-23T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2016-10-23T00:00:00+00:00" />
+<meta itemprop="wordCount" content="91">
+<meta itemprop="keywords" content="Redis," /><meta property="og:title" content="Redis的hotkey和bigkey监控和处理" />
+<meta property="og:description" content="bigkey  单个key 存储value很大 hash set list zset 等存储元素过多  如何发现  redis-cli &ndash;bigkeys rdbtools 分析rdb 文件 redis-rdb-cli 第三方工具  怎么解决  减少list hash set zset 成员， 对成员过多的数据进行取模分片 string类型的big value 不建议存入 redis， 可以用文档型数据库mongodb或cdn等方式优化。  hotkey  并发访问量很大的热点key  如何发现 收集所有redis请求，统计分析
+ redis-cli &ndash;hotkeys 在proxy 层，对每一个redis请求进行收集上报，统计分析 对redis端口的tcp数据包进行抓包统计； 基于lfu（最近最少使用） 根据使用频率进行统计  怎么解决 产生随机值（0-2N, N 为集群节点数），作为key的后缀， 将key分布到集群的多个实例中。并设置随机过期时间；
+const M = N * 2//生成随机数random = GenRandom(0, M)//构造备份新keybakHotKey = hotKey &#43; “_” &#43; randomdata = redis." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/cache/redis/hotkeybigkey/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2016-10-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2016-10-23T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Redis的hotkey和bigkey监控和处理"/>
+<meta name="twitter:description" content="bigkey  单个key 存储value很大 hash set list zset 等存储元素过多  如何发现  redis-cli &ndash;bigkeys rdbtools 分析rdb 文件 redis-rdb-cli 第三方工具  怎么解决  减少list hash set zset 成员， 对成员过多的数据进行取模分片 string类型的big value 不建议存入 redis， 可以用文档型数据库mongodb或cdn等方式优化。  hotkey  并发访问量很大的热点key  如何发现 收集所有redis请求，统计分析
+ redis-cli &ndash;hotkeys 在proxy 层，对每一个redis请求进行收集上报，统计分析 对redis端口的tcp数据包进行抓包统计； 基于lfu（最近最少使用） 根据使用频率进行统计  怎么解决 产生随机值（0-2N, N 为集群节点数），作为key的后缀， 将key分布到集群的多个实例中。并设置随机过期时间；
+const M = N * 2//生成随机数random = GenRandom(0, M)//构造备份新keybakHotKey = hotKey &#43; “_” &#43; randomdata = redis."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/cache/redis/hotkeybigkey/">Redis的hotkey和bigkey监控和处理</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-10-23 00:00:00 &#43;0000 UTC">2016-10-23</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="bigkey">bigkey</h2>
+<ol>
+<li>单个key 存储value很大</li>
+<li>hash set list zset 等存储元素过多</li>
+</ol>
+<h3 id="如何发现">如何发现</h3>
+<ol>
+<li>redis-cli &ndash;bigkeys</li>
+<li>rdbtools 分析rdb 文件</li>
+<li>redis-rdb-cli 第三方工具</li>
+</ol>
+<h3 id="怎么解决">怎么解决</h3>
+<ol>
+<li>减少list hash set zset 成员， 对成员过多的数据进行取模分片</li>
+<li>string类型的big value 不建议存入 redis， 可以用文档型数据库mongodb或cdn等方式优化。</li>
+</ol>
+<h2 id="hotkey">hotkey</h2>
+<ol>
+<li>并发访问量很大的热点key</li>
+</ol>
+<h3 id="如何发现-1">如何发现</h3>
+<p>收集所有redis请求，统计分析</p>
+<ol>
+<li>redis-cli &ndash;hotkeys</li>
+<li>在proxy 层，对每一个redis请求进行收集上报，统计分析</li>
+<li>对redis端口的tcp数据包进行抓包统计；</li>
+<li>基于lfu（最近最少使用） 根据使用频率进行统计</li>
+</ol>
+<h3 id="怎么解决-1">怎么解决</h3>
+<p>产生随机值（0-2N, N 为集群节点数），作为key的后缀， 将key分布到集群的多个实例中。并设置随机过期时间；</p>
+<pre tabindex="0"><code>const M = N * 2
+//生成随机数
+random = GenRandom(0, M)
+//构造备份新key
+bakHotKey = hotKey + “_” + random
+data = redis.GET(bakHotKey)
+if data == NULL {
+    data = redis.GET(hostKey)
+    if data == NULL {
+     data = GetFromDB()
+     redis.SET(bakHotKey, expireTime + GenRandom(0,5))   
+    }
+}
+</code></pre><h3 id="自动处理hostkey">自动处理hostkey</h3>
+<ol>
+<li>监控hotkey</li>
+<li>通知程序处理</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/cache/">Cache</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/redis/">Redis</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#bigkey">bigkey</a>
+      <ul>
+        <li><a href="#如何发现">如何发现</a></li>
+        <li><a href="#怎么解决">怎么解决</a></li>
+      </ul>
+    </li>
+    <li><a href="#hotkey">hotkey</a>
+      <ul>
+        <li><a href="#如何发现-1">如何发现</a></li>
+        <li><a href="#怎么解决-1">怎么解决</a></li>
+        <li><a href="#自动处理hostkey">自动处理hostkey</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/cache/redis/%E9%AB%98%E5%8F%AF%E7%94%A8ha-high-available/" class="button left"><span>Redis高可用解决方案</span></a>
+    
+    
+      <a href="/blog/stories/%E4%BB%80%E4%B9%88%E4%BA%BA%E9%83%BD%E6%9C%89/" class="button right"><span>什么人都有</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Cache
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

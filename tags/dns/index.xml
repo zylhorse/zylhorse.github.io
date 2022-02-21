@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DNS on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/dns/</link>
+    <description>Recent content in DNS on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 03 Sep 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/dns/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bind-ubuntu部署配置</title>
+      <link>https://zylhorse.github.io/blog/network/dns/bind/</link>
+      <pubDate>Wed, 03 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/network/dns/bind/</guid>
+      <description>本文主要讲解bind部署以及配置应用。
+docker部署  拉取镜像: docker pull sameersbn/bind:latest 启动容器: mkdir -p ~/bind \docker run --name=&#39;bind&#39; -d --restart=always -p 53:53/udp -p 10000:10000/tcp \-e WEBMIN_ENABLED=true \-v ~/bind:/data \sameersbn/bind:latest参数说明:  -p 53:53/udp DNS默认端口 -p 10000:1000 Webmin图形化管理页面端口 -e WEBMIN_ENABLED=true 开启图形化界面管理器 -v ~/bind:/data 配置DNS存储目录   备注: 确认53端口不被占用。ubuntu系统中容器启动前需要禁用system-resolved服务。 sudo systemctl disable systemd-resolvedsudo systemctl stop systemd-resolved
+  检查服务端口状态  检查53端口 $ ss -lnupState Recv-Q Send-Q Local Address:Port Peer Address:Port Process UNCONN 0 0 0.</description>
+    </item>
+    
+  </channel>
+</rss>

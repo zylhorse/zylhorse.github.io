@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Prometheus on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/prometheus/</link>
+    <description>Recent content in Prometheus on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 10 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/prometheus/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Prometheus-Pushgateway</title>
+      <link>https://zylhorse.github.io/blog/prometheus/pushgateway/</link>
+      <pubDate>Sun, 10 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/prometheus/pushgateway/</guid>
+      <description>为什么Push Pushgateway是一个中间服务，用于接收无法直接抓取的服务推送的metrics
+建议 仅建议再有限的情况下使用Pushgateway。与Promethues的pull模式收集metrics相比， Pushgateway有以下几个问题:
+ 当通过单个Pushgateway监控多个实例时， 它既是单点故障也是性能瓶颈 失去Prometheus对实例自动的健康监测(通过up metrics) Pushgateway永远不会丢弃push给它的数据，暴露所有数据给Prometheus除非你调用Pushgateway的接口手动删除。  部署 docker  命令 sudo docker run -d -p 9091:9091 -v /opt/prometheus/pushgateway.yml:/etc/prometheus/pushgateway.yml --name pushgateway prom/pushgateway --web.enable-admin-api --web.config.file=/etc/prometheus/pushgateway.yml pushgateway.yml  basic_auth_users:username: $2y$10$OhmMjosTa7QjcjFKZyFCw.wixAen5yGsvsIRoGenvxjFwRG.fkGn2 配置basic_auth_users  安装htpasswd：sudo apt install apache2-utils 生成密码: htpasswd -nBC 10 &amp;quot;&amp;quot; | tr -d &#39;:\n&#39;    </description>
+    </item>
+    
+    <item>
+      <title>Prometheus-Job和Instance</title>
+      <link>https://zylhorse.github.io/blog/prometheus/jobinstance/</link>
+      <pubDate>Fri, 24 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/prometheus/jobinstance/</guid>
+      <description>在Prometheus的术语中，可以观测的终端称为instance，通常对应的是单个进程。
+一组具有相同目的的instance，例如: 为了可靠性或扩展性而复制的进程， 称为job。
+如下， 一个job和四个instance:
+ job: api-server  instance 1: 1.2.3.4:5670 instance 2: 1.2.3.4:5671 instance 3: 5.6.7.8:5670 instance 4: 5.6.7.8:5671    自动生成labels和时间序列
+当Prometheus采集目标节点数据时，会自动附加一些labels到时间序列上，用以标识采集的目标：
+ job: 配置的job名称 instance：目标节点URL部分中的&amp;lt;host&amp;gt;:&amp;lt;port&amp;gt;  如果这些label已经存在于采集的数据中，则取决于配置项honor_labels。 具体参考scrape configuration
+对于每一个instance， Prometheus在以下的每个时间序列中都保存一个样本:
+ up{job=&amp;quot;&amp;lt;job-name&amp;gt;&amp;quot;, instance=&amp;quot;&amp;lt;instance-id&amp;gt;&amp;quot;}:1标识instance是健康的，0标识prometheus采集失败 scrape_duration_seconds{job=&amp;quot;&amp;lt;job-name&amp;gt;&amp;quot;, instance=&amp;quot;&amp;lt;instance-id&amp;gt;&amp;quot;}: 采集的频率 scrape_samples_post_metric_relabeling{job=&amp;quot;&amp;lt;job-name&amp;gt;&amp;quot;, instance=&amp;quot;&amp;lt;instance-id&amp;gt;&amp;quot;}: metric重新设置label后剩余的样本数量 scrape_samples_scraped{job=&amp;quot;&amp;lt;job-name&amp;gt;&amp;quot;, instance=&amp;quot;&amp;lt;instance-id&amp;gt;&amp;quot;}: 目标节点暴露的样本数量 scrape_series_added{job=&amp;quot;&amp;lt;job-name&amp;gt;&amp;quot;, instance=&amp;quot;&amp;lt;instance-id&amp;gt;&amp;quot;}: 本次采集中新时间序列的大致数量  </description>
+    </item>
+    
+    <item>
+      <title>Prometheus-metric类型</title>
+      <link>https://zylhorse.github.io/blog/prometheus/metrictypes/</link>
+      <pubDate>Fri, 24 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/prometheus/metrictypes/</guid>
+      <description>Prometheus的client库提供四个核心的metric类型。它们目前只在client库和传输协议中有区别。 Prometheus的server 还没有使用这些信息类型，并将所有的数据扁平化为无类型的时间序列。将来这种处理方式可能会改变。
+Counter counter是一个累加的metric,表示单个单调递增的计数器， 它只能累加或者在重启时重置为0. 例如，你可以使用counter表示 请求服务、完成任务或产生错误的数量。
+不要使用counter表示可能发生递减的metric。例如, 不要用counter表示当前正在运行的进程的数量，用gauge表示。
+Gauge gauge表示一个数值可以增加或减少的metric。
+gauge通常用于表示测量值，比如温度或者当前内存的使用情况。也用来计数，这些计数可以增加或减少，比如并发请求的数量。
+Histogram histogram用于对观测结果进行抽样(通常是请求延时或响应数据大小),并在配置的buckets中进行计数。同时提供所有观测值的总和。
+histogram有一个基础名称&amp;lt;basename&amp;gt;,在收集期间暴露多个时间序列:
+ 观测bucket的计数器,暴露为&amp;lt;basename&amp;gt;_bucket{le=&amp;quot;上边界值&amp;quot;} 所有观测值的总和，暴露为&amp;lt;basename&amp;gt;_sum 所有观测事件的计数，暴露为&amp;lt;basename&amp;gt;_count(同: &amp;lt;basename&amp;gt;_count{le=&amp;quot;+Inf&amp;quot;})  使用函数histogram_quantile()可以计算整个histogram甚至histogram的每个集合的分位数。 当操作bucket时，histogram是累加的。
+Summary 类似于histogram， summary对观测结果进行抽样(通常是请求延时或响应数据大小)。 它同样提供了观测的总次数和观测值的总和。 它通过滑动时间窗口来计算分位数。
+summary有一个基础名称&amp;lt;basename&amp;gt;,在收集期间暴露多个时间序列:
+ 观测事件的分位数(0 ≤ φ ≤ 1), 暴露为： &amp;lt;basename&amp;gt;{quantile=&amp;quot;&amp;lt;φ&amp;gt;&amp;quot;} 所有观测值的总和，暴露为&amp;lt;basename&amp;gt;_sum 所有观测事件的计数，暴露为&amp;lt;basename&amp;gt;_count  </description>
+    </item>
+    
+    <item>
+      <title>Prometheus-数据模型</title>
+      <link>https://zylhorse.github.io/blog/prometheus/datamodel/</link>
+      <pubDate>Fri, 24 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/prometheus/datamodel/</guid>
+      <description>Prometheus本质上将数据存储为时间序列(以时间顺序索引的一系列的数据点): 带有时间戳的数据流属于 同一metrics和labels集合的维度。
+除了存储时间序列，Prometheus还会生成临时的时间序列作为查询的结果。
+名字和标签 每个时间序列，都由metrics名字和可选的labels唯一标识。
+metrics名称
+ 指定要测量系统的一般特性(e.g. http_requests_total: 表示HTTP接收的所有请求数量) 命名格式包含ASICC字母和数字，也可以有下划线和冒号。格式需要匹配正则表达式：[a-zA-Z_:][a-zA-Z0-9_:]*   冒号保留给用户自定义的记录规则。它们不能被导出者或直接仪器使用
+ labels
+ 开启Prometheus的维度数据模型：指定任意组合的labels给相同名称的metrics,表示该metrics的一个特殊维度实例。 例如: http_requests_total{method: &amp;quot;POST&amp;quot;, handler: &amp;quot;/api/tracks&amp;quot;} 查询语句允许根据这些维度进行过滤和聚合 修改任意label的值，包含添加和删除， 将会创建一个新的时间序列 命名格式包含ASICC字母，数字，也可以有下划线。 格式需要匹配正则表达式: [a-zA-Z_][a-zA-Z0-9_]。 以_开头的label名称，保留为内部使用。 label值可以包含任意Unicode字符 label值为空，被视为无此标签  样本 样本组成了实际的时间序列数据。 每个样本由以下组成:
+ 一个float64值 一个毫秒精度的时间戳  表示法 给定一个metrics名和一组labels， 时间序列一般使用下面的表示法:
+&amp;lt;metric name&amp;gt;{&amp;lt;label name&amp;gt;=&amp;lt;label value&amp;gt;, ...}例如: 一个时间序列，metrics名字是api_http_requests_total，labels是method=&amp;quot;POST&amp;quot;和handler=&amp;quot;/messages&amp;quot;, 可以用以下表示法:
+api_http_requests_total{method=&amp;quot;POST&amp;quot;, handler=&amp;quot;/messages&amp;quot;}</description>
+    </item>
+    
+    <item>
+      <title>Prometheus-简介</title>
+      <link>https://zylhorse.github.io/blog/prometheus/introduction/</link>
+      <pubDate>Fri, 24 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/prometheus/introduction/</guid>
+      <description>Prometheus是一个开源的系统监控和报警工具，最初由SoundCloud构建。 从2012年开始编写，2015年开源后很多公司和组织采用Prometheus, 该项目有很多活跃的开发者和用户社区。现在Prometheus作为独立的开源项目， 独立于任何的公司。 为了强调这一点，并阐明该项目的组织结构， Prometheus在2016年加入CNCF,成为继Kubernetes后的第二个成员。
+了解更多的Prometheus信息，可以参考Awesome
+特性  多维数据模型，其时间序列数据由metric名称和labels键值对构成 PromQL是一种灵活的查询语句，来利用这个维度 不依赖分布式存储；单服务器节点是自治的， 支持local和remote多种模式 通过http协议的pull模式，采集时序数据 支持通过中间网关推送时序 监控目标，采用服务发现或者静态配置 支持多模式的图形和仪表盘展现  组件 Prometheus生态由很多组件组成，它们大多数是可选的：
+ Prometheus server，它负责时序数据的收集和存储 Client libraries,对接Prometheus server，上报和查询数据 push gateway, 用于短期业务的监控数据推送 exporters, 用于指定服务的exporter，e.g., node exporter, redis exporter, mysql exporter alertmanager, 用于告警通知管理  架构 下图说明了Prometheus的基础架构和生态系统中的一些组件:
+从上图可以看到：
+ 监控目标, 可以是静态配置或者服务发现 获取metrics, 可以直接从监控目标拉取，或者拉取监控目标推送到push gateway的数据 当采样的数据大于配置的缓存区大小时，Prometheus将数据持久化到local或remote 当配置alert rules时， Prometheus会定时查询数据，当规则被触发的时候，生成alert并推送到Alertmanager Alertmanager收到alert， 根据配置对alert去重，聚合，降噪， 通过email,pagerduty等途径进行告警 使用Prometheus web ui,Grafana或API等对收集的数据进行可视化  适用于 Prometheus记录纯数字的时序数据。既适用于以机器为中心的监控，也适用于面向服务架构的监控。在微服务的世界里， 其优势是支持对多维数据的收集和查询。
+Prometheus是为可靠性设计的， 当系统在运行时出现问题时，可以帮助你快速的定位问题。每个Prometheus服务都是独立的， 不依赖于任何网络、存储或其它远程服务。 当其他基础设施出现问题时，你可以依赖它，并且使用Prometheus不需要安装额外的基础设施。
+不适用于 Prometheus的值是可靠的。可以随时查看你系统的可用统计信息，即使在故障的条件下。如果你需要100%的精确度，例如每个请求的计费， Prometheus不是一个很好的选择，因为其收集的信息不够详细和完整， 仅收集某个时间段的数据。在这种情况下，你最好使用专门的审计系统。</description>
+    </item>
+    
+    <item>
+      <title>Prometheus-部署</title>
+      <link>https://zylhorse.github.io/blog/prometheus/deploy/</link>
+      <pubDate>Fri, 24 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/prometheus/deploy/</guid>
+      <description>本文讲解Prometheus的docker部署方式
+服务器网路配置 monitor.service.com
+   服务 开放端口     prometheus 9089   pushgateway 9091   grafana 3030    prometheus 配置  创建文件 /opt/prometheus/prometheus.yml global:scrape_interval: 60sevaluation_interval: 60sscrape_configs:- job_name: pushgatewayhonor_labels: truestatic_configs:- targets: [&#39;monitor.service.com:9091&#39;]labels:instance: pushgatewaybasic_auth:username: adminpassword: 123456 配置nginx  cd /etc/nginx/conf.d 生成密码文件:htpasswd -c ./.htpasswd admin, 输入密码: 123456 创建配置文件prometheus.conf server {server_name monitor.service.com;listen 9089;listen [::]:9089;location /{auth_basic &amp;quot;Prometheus&amp;quot;;auth_basic_user_file /etc/nginx/conf.</description>
+    </item>
+    
+  </channel>
+</rss>

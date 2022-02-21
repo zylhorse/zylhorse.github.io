@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Erlang顺序编程错误处理 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Erlang顺序编程错误处理">
+<meta itemprop="description" content="概括  Erlang中当错误出现时，需要发现并纠正，然后继续。 构建真正容错的系统，需要不止一台计算机，毕竟可能整台机器崩溃。因此故障检测和别处重启计算的概念需要扩展到联网的计算机上。  顺序代码里面的错误处理  异常错误发生时，可以显示调用throw(Exception),exit(Exception),error(Exception) 触发。 永远不能让函数对非法的参数返回值，而是抛出一个异常错误。 exit(Why):当你确实想要终止当前进程时就用它。如果此异常没有被捕获，信号{&lsquo;Exit&rsquo;,Pid,Why}就会被广播给当前进程链接的所有进程。 throw(Why):这个函数的作用是抛出一个调用者想要捕获的异常错误。因此我们可以将调用封装到try&hellip;catch表达式里面，然后对错误进行处理。 error(Why):这个函数的作用是指示“崩溃性错误”，调用者没有准备好处理非常严重的问题。  捕获异常错误 两种方法：
+ 把抛出异常错误的调用函数封装在try&hellip;catch中 把调用封装在一个catch表达式中？？？  try ... catch 结构%执行函数或表达式try FuncOrExpressionSeq of%执行过程无异常则匹配以下模式Pattern1 [when Guard1] -&gt; Expressions1;Pattern2 [when Guard2] -&gt; Expressions2;catch%执行过程出现异常则匹配以下异常模式，ExceptionType：error throw exit其中之一ExceptionType1: ExPattern1 [when ExGuard1] -&gt; ExExpressions1;ExceptionType2: ExPattern2 [when ExGuard2] -&gt; ExExpressions2after%after区域的代码实在FuncorExpressSeq结束后执行清理工作的。这段代码无论是否抛出异常都会在函数调用执行完立刻执行。AfterExpressions返回值会被丢弃。AfterExpressionsendtry ... catch 表达式也有值。注：Erlang里的一切都是表达式，表达式都有值。针对异常处理的编程方式  改进错误消息：内置函数error/1。 经常返回错误时代码：{ok,Value}, {error,Reason} 捕捉一切可能的错误：try Expr of catch : -&gt; &hellip; end %这里处理所有的异常错误。 如果代码漏写标签：try Expr of catch _ -&gt; &hellip; end %这里只处理throw 异常。  栈跟踪 捕获到一个异常错误后，可以调用erlang:get_stacktrace() 来找到最近栈跟踪信息。"><meta itemprop="datePublished" content="2015-09-11T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2015-09-11T00:00:00+00:00" />
+<meta itemprop="wordCount" content="103">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Erlang顺序编程错误处理" />
+<meta property="og:description" content="概括  Erlang中当错误出现时，需要发现并纠正，然后继续。 构建真正容错的系统，需要不止一台计算机，毕竟可能整台机器崩溃。因此故障检测和别处重启计算的概念需要扩展到联网的计算机上。  顺序代码里面的错误处理  异常错误发生时，可以显示调用throw(Exception),exit(Exception),error(Exception) 触发。 永远不能让函数对非法的参数返回值，而是抛出一个异常错误。 exit(Why):当你确实想要终止当前进程时就用它。如果此异常没有被捕获，信号{&lsquo;Exit&rsquo;,Pid,Why}就会被广播给当前进程链接的所有进程。 throw(Why):这个函数的作用是抛出一个调用者想要捕获的异常错误。因此我们可以将调用封装到try&hellip;catch表达式里面，然后对错误进行处理。 error(Why):这个函数的作用是指示“崩溃性错误”，调用者没有准备好处理非常严重的问题。  捕获异常错误 两种方法：
+ 把抛出异常错误的调用函数封装在try&hellip;catch中 把调用封装在一个catch表达式中？？？  try ... catch 结构%执行函数或表达式try FuncOrExpressionSeq of%执行过程无异常则匹配以下模式Pattern1 [when Guard1] -&gt; Expressions1;Pattern2 [when Guard2] -&gt; Expressions2;catch%执行过程出现异常则匹配以下异常模式，ExceptionType：error throw exit其中之一ExceptionType1: ExPattern1 [when ExGuard1] -&gt; ExExpressions1;ExceptionType2: ExPattern2 [when ExGuard2] -&gt; ExExpressions2after%after区域的代码实在FuncorExpressSeq结束后执行清理工作的。这段代码无论是否抛出异常都会在函数调用执行完立刻执行。AfterExpressions返回值会被丢弃。AfterExpressionsendtry ... catch 表达式也有值。注：Erlang里的一切都是表达式，表达式都有值。针对异常处理的编程方式  改进错误消息：内置函数error/1。 经常返回错误时代码：{ok,Value}, {error,Reason} 捕捉一切可能的错误：try Expr of catch : -&gt; &hellip; end %这里处理所有的异常错误。 如果代码漏写标签：try Expr of catch _ -&gt; &hellip; end %这里只处理throw 异常。  栈跟踪 捕获到一个异常错误后，可以调用erlang:get_stacktrace() 来找到最近栈跟踪信息。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2015-09-11T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-09-11T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Erlang顺序编程错误处理"/>
+<meta name="twitter:description" content="概括  Erlang中当错误出现时，需要发现并纠正，然后继续。 构建真正容错的系统，需要不止一台计算机，毕竟可能整台机器崩溃。因此故障检测和别处重启计算的概念需要扩展到联网的计算机上。  顺序代码里面的错误处理  异常错误发生时，可以显示调用throw(Exception),exit(Exception),error(Exception) 触发。 永远不能让函数对非法的参数返回值，而是抛出一个异常错误。 exit(Why):当你确实想要终止当前进程时就用它。如果此异常没有被捕获，信号{&lsquo;Exit&rsquo;,Pid,Why}就会被广播给当前进程链接的所有进程。 throw(Why):这个函数的作用是抛出一个调用者想要捕获的异常错误。因此我们可以将调用封装到try&hellip;catch表达式里面，然后对错误进行处理。 error(Why):这个函数的作用是指示“崩溃性错误”，调用者没有准备好处理非常严重的问题。  捕获异常错误 两种方法：
+ 把抛出异常错误的调用函数封装在try&hellip;catch中 把调用封装在一个catch表达式中？？？  try ... catch 结构%执行函数或表达式try FuncOrExpressionSeq of%执行过程无异常则匹配以下模式Pattern1 [when Guard1] -&gt; Expressions1;Pattern2 [when Guard2] -&gt; Expressions2;catch%执行过程出现异常则匹配以下异常模式，ExceptionType：error throw exit其中之一ExceptionType1: ExPattern1 [when ExGuard1] -&gt; ExExpressions1;ExceptionType2: ExPattern2 [when ExGuard2] -&gt; ExExpressions2after%after区域的代码实在FuncorExpressSeq结束后执行清理工作的。这段代码无论是否抛出异常都会在函数调用执行完立刻执行。AfterExpressions返回值会被丢弃。AfterExpressionsendtry ... catch 表达式也有值。注：Erlang里的一切都是表达式，表达式都有值。针对异常处理的编程方式  改进错误消息：内置函数error/1。 经常返回错误时代码：{ok,Value}, {error,Reason} 捕捉一切可能的错误：try Expr of catch : -&gt; &hellip; end %这里处理所有的异常错误。 如果代码漏写标签：try Expr of catch _ -&gt; &hellip; end %这里只处理throw 异常。  栈跟踪 捕获到一个异常错误后，可以调用erlang:get_stacktrace() 来找到最近栈跟踪信息。"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/">Erlang顺序编程错误处理</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-09-11 00:00:00 &#43;0000 UTC">2015-09-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h1 id="概括">概括</h1>
+<ul>
+<li>Erlang中当错误出现时，需要发现并纠正，然后继续。</li>
+<li>构建真正容错的系统，需要不止一台计算机，毕竟可能整台机器崩溃。因此故障检测和别处重启计算的概念需要扩展到联网的计算机上。</li>
+</ul>
+<h1 id="顺序代码里面的错误处理">顺序代码里面的错误处理</h1>
+<ul>
+<li>异常错误发生时，可以显示调用throw(Exception),exit(Exception),error(Exception) 触发。</li>
+<li>永远不能让函数对非法的参数返回值，而是抛出一个异常错误。</li>
+<li>exit(Why):当你确实想要终止当前进程时就用它。如果此异常没有被捕获，信号{&lsquo;Exit&rsquo;,Pid,Why}就会被广播给当前进程链接的所有进程。</li>
+<li>throw(Why):这个函数的作用是抛出一个调用者想要捕获的异常错误。因此我们可以将调用封装到try&hellip;catch表达式里面，然后对错误进行处理。</li>
+<li>error(Why):这个函数的作用是指示“崩溃性错误”，调用者没有准备好处理非常严重的问题。</li>
+</ul>
+<h1 id="捕获异常错误">捕获异常错误</h1>
+<p>两种方法：</p>
+<ol>
+<li>把抛出异常错误的调用函数封装在try&hellip;catch中</li>
+<li>把调用封装在一个catch表达式中？？？</li>
+</ol>
+<pre tabindex="0"><code>try ... catch 结构
+%执行函数或表达式
+try FuncOrExpressionSeq of
+    %执行过程无异常则匹配以下模式
+    Pattern1 [when Guard1] -&gt; Expressions1;
+    Pattern2 [when Guard2] -&gt; Expressions2;
+catch
+    %执行过程出现异常则匹配以下异常模式，ExceptionType：error throw exit其中之一
+    ExceptionType1: ExPattern1 [when ExGuard1] -&gt; ExExpressions1;
+    ExceptionType2: ExPattern2 [when ExGuard2] -&gt; ExExpressions2
+after
+    %after区域的代码实在FuncorExpressSeq结束后执行清理工作的。这段代码无论是否抛出异常都会在函数调用执行完立刻执行。AfterExpressions返回值会被丢弃。
+    AfterExpressions
+end
+
+try ... catch 表达式也有值。注：Erlang里的一切都是表达式，表达式都有值。
+</code></pre><h1 id="针对异常处理的编程方式">针对异常处理的编程方式</h1>
+<ol>
+<li>改进错误消息：内置函数error/1。</li>
+<li>经常返回错误时代码：{ok,Value}, {error,Reason}</li>
+<li>捕捉一切可能的错误：try Expr of catch <em>:</em>  -&gt; &hellip; end  %这里处理所有的异常错误。</li>
+<li>如果代码漏写标签：try Expr of catch _ -&gt; &hellip; end %这里只处理throw 异常。</li>
+</ol>
+<h1 id="栈跟踪">栈跟踪</h1>
+<p>捕获到一个异常错误后，可以调用erlang:get_stacktrace() 来找到最近栈跟踪信息。</p>
+<pre tabindex="0"><code>eg:
+try Expres of 
+catch 
+    _:_ -&gt; erlang:get_stacktrace()
+end
+</code></pre><ul>
+<li>erlang:getstacktrace()返回的信息，每个元组里面都是 {Module,Func,Arity,Info}. Module: 模块名， Func函数名，Arity参数个数，Info包含文件名和函数所在行数。</li>
+<li>栈跟踪信息不会记录函数被调用的位置，只会记录函数返回的位置。</li>
+<li>如果被调用的函数是表达式序列的最后一个函数，那么此函数的调用位置不会保存到栈中，因为Erlang会对这一类代码做尾调用优化（last-call-optimization)。</li>
+</ul>
+<h1 id="抛错要快而明显也要文明">抛错要快而明显，也要文明</h1>
+<ul>
+<li>在Erlang中，当系统内部或程序检测出错时，正确的做法是立刻崩溃，并生成一段有意义的错误信息。</li>
+<li>文明抛错，只有程序员才能看到程序崩溃时产生的详细错误，用户绝对看不到。另一方面用户应该得到警告，知晓有错误发生，以及可以采取什么措施来弥补。
+错误信息应当保存到永久的日志文件中。</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents"></nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E8%A1%A5%E9%81%97/" class="button left"><span>Erlang顺序编程补遗</span></a>
+    
+    
+      <a href="/blog/software-programming/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="button right"><span>编程范式-函数式编程</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Erlang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

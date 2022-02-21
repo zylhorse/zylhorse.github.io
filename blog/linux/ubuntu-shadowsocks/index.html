@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Ubuntu安装配置shadowsocks - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Ubuntu安装配置shadowsocks">
+<meta itemprop="description" content="ubuntu shadowsocks 描述 ubuntu 下 shadowssocks 安装
+安装shadowsocks-libev $ sudo apt-get install software-properties-common -y $ sudo add-apt-repository ppa:max-c-lv/shadowsocks-libev -y $ sudo apt-get update $ sudo apt install shadowsocks-libev 编写配置文件 配置文件需要写入你的shadowsocks账号的信息，启动shadowsocks时需要加载这些信息，具体如下： 创建配置文件： $ sudo vi /etc/shadowsocks-libev.json 在配置文件中输入以下信息： { &quot;server&quot;:&quot;XXXX服务器地址&quot;, &quot;server_port&quot;:XXXX端口, &quot;local_address&quot;:&quot;127.0.0.1&quot;, &quot;local_port&quot;:1080, &quot;password&quot;:&quot;XXXX密码&quot;, &quot;timeout&quot;:60, &quot;method&quot;:&quot;chacha20-ietf-poly1305&quot;, &quot;fast_open&quot;:false, &quot;workers&quot;:1 }  XXXX需要改成你的账号对应的具体信息，method就是加密方式，这里就是chacha20-ietf-poly1305,这个要看你的账号具体要求的加密方式。
+ 运行shadowsocks $ ss-local -c /etc/shadowsocks-libev.json &amp;  其中 &amp;是将其放在后台运行
+ 设置全局代理 进入 系统设置 -&gt; 网络 -&gt; 网络代理，方法选择手动，然后设置Socks主机127.0.0.1， 后面端口这是1080， 然后点击应用到整个系统，输入密码即可。
+ 缺点： 这样你使用的网络都是通过代理访问的，比如说我在登录微信的时候，居然提示我在未知地点登录，这样比较浪费流量，访问国内网络也使用代理，会导致访问国内网络网速较慢。所以可以使用浏览器代理，只在浏览器访问中使用代理。">
+<meta itemprop="datePublished" content="2014-07-12T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2014-07-12T00:00:00+00:00" />
+<meta itemprop="wordCount" content="352">
+
+
+
+<meta itemprop="keywords" content="," />
+<meta property="og:title" content="Ubuntu安装配置shadowsocks" />
+<meta property="og:description" content="ubuntu shadowsocks 描述 ubuntu 下 shadowssocks 安装
+安装shadowsocks-libev $ sudo apt-get install software-properties-common -y $ sudo add-apt-repository ppa:max-c-lv/shadowsocks-libev -y $ sudo apt-get update $ sudo apt install shadowsocks-libev 编写配置文件 配置文件需要写入你的shadowsocks账号的信息，启动shadowsocks时需要加载这些信息，具体如下： 创建配置文件： $ sudo vi /etc/shadowsocks-libev.json 在配置文件中输入以下信息： { &quot;server&quot;:&quot;XXXX服务器地址&quot;, &quot;server_port&quot;:XXXX端口, &quot;local_address&quot;:&quot;127.0.0.1&quot;, &quot;local_port&quot;:1080, &quot;password&quot;:&quot;XXXX密码&quot;, &quot;timeout&quot;:60, &quot;method&quot;:&quot;chacha20-ietf-poly1305&quot;, &quot;fast_open&quot;:false, &quot;workers&quot;:1 }  XXXX需要改成你的账号对应的具体信息，method就是加密方式，这里就是chacha20-ietf-poly1305,这个要看你的账号具体要求的加密方式。
+ 运行shadowsocks $ ss-local -c /etc/shadowsocks-libev.json &amp;  其中 &amp;是将其放在后台运行
+ 设置全局代理 进入 系统设置 -&gt; 网络 -&gt; 网络代理，方法选择手动，然后设置Socks主机127.0.0.1， 后面端口这是1080， 然后点击应用到整个系统，输入密码即可。
+ 缺点： 这样你使用的网络都是通过代理访问的，比如说我在登录微信的时候，居然提示我在未知地点登录，这样比较浪费流量，访问国内网络也使用代理，会导致访问国内网络网速较慢。所以可以使用浏览器代理，只在浏览器访问中使用代理。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/linux/ubuntu-shadowsocks/" />
+<meta property="article:published_time" content="2014-07-12T00:00:00+00:00" />
+<meta property="article:modified_time" content="2014-07-12T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ubuntu安装配置shadowsocks"/>
+<meta name="twitter:description" content="ubuntu shadowsocks 描述 ubuntu 下 shadowssocks 安装
+安装shadowsocks-libev $ sudo apt-get install software-properties-common -y $ sudo add-apt-repository ppa:max-c-lv/shadowsocks-libev -y $ sudo apt-get update $ sudo apt install shadowsocks-libev 编写配置文件 配置文件需要写入你的shadowsocks账号的信息，启动shadowsocks时需要加载这些信息，具体如下： 创建配置文件： $ sudo vi /etc/shadowsocks-libev.json 在配置文件中输入以下信息： { &quot;server&quot;:&quot;XXXX服务器地址&quot;, &quot;server_port&quot;:XXXX端口, &quot;local_address&quot;:&quot;127.0.0.1&quot;, &quot;local_port&quot;:1080, &quot;password&quot;:&quot;XXXX密码&quot;, &quot;timeout&quot;:60, &quot;method&quot;:&quot;chacha20-ietf-poly1305&quot;, &quot;fast_open&quot;:false, &quot;workers&quot;:1 }  XXXX需要改成你的账号对应的具体信息，method就是加密方式，这里就是chacha20-ietf-poly1305,这个要看你的账号具体要求的加密方式。
+ 运行shadowsocks $ ss-local -c /etc/shadowsocks-libev.json &amp;  其中 &amp;是将其放在后台运行
+ 设置全局代理 进入 系统设置 -&gt; 网络 -&gt; 网络代理，方法选择手动，然后设置Socks主机127.0.0.1， 后面端口这是1080， 然后点击应用到整个系统，输入密码即可。
+ 缺点： 这样你使用的网络都是通过代理访问的，比如说我在登录微信的时候，居然提示我在未知地点登录，这样比较浪费流量，访问国内网络也使用代理，会导致访问国内网络网速较慢。所以可以使用浏览器代理，只在浏览器访问中使用代理。"/>
+<link rel="stylesheet" href="/css/bundle.min.1e02bb992195ca398d746df5f9dd547068b745164f5e47eab62b93e6f424e2f1.css" integrity="sha256-HgK7mSGVyjmNdG31&#43;d1UcGi3RRZPXkfqtiuT5vQk4vE="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  
+  <header>
+    
+  </header>
+  <main>
+    
+  </main>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/linux/ubuntu-shadowsocks/">Ubuntu安装配置shadowsocks</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2014-07-12 00:00:00 &#43;0000 UTC">2014-07-12</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h1 id="ubuntu-shadowsocks">ubuntu shadowsocks</h1>
+<p>描述 <code>ubuntu</code> 下 <code>shadowssocks</code> 安装</p>
+<h2 id="安装shadowsocks-libev">安装shadowsocks-libev</h2>
+<pre><code>$ sudo apt-get install software-properties-common -y 
+$ sudo add-apt-repository ppa:max-c-lv/shadowsocks-libev -y 
+$ sudo apt-get update 
+$ sudo apt install shadowsocks-libev 
+</code></pre><h2 id="编写配置文件">编写配置文件</h2>
+<pre><code>配置文件需要写入你的shadowsocks账号的信息，启动shadowsocks时需要加载这些信息，具体如下： 
+创建配置文件： 
+$ sudo vi /etc/shadowsocks-libev.json 
+
+在配置文件中输入以下信息： 
+{ 
+    &quot;server&quot;:&quot;XXXX服务器地址&quot;, 
+    &quot;server_port&quot;:XXXX端口, 
+    &quot;local_address&quot;:&quot;127.0.0.1&quot;, 
+    &quot;local_port&quot;:1080, 
+    &quot;password&quot;:&quot;XXXX密码&quot;, 
+    &quot;timeout&quot;:60, 
+    &quot;method&quot;:&quot;chacha20-ietf-poly1305&quot;, 
+    &quot;fast_open&quot;:false, 
+    &quot;workers&quot;:1 
+ } 
+</code></pre><blockquote>
+<p>XXXX需要改成你的账号对应的具体信息，method就是加密方式，这里就是chacha20-ietf-poly1305,这个要看你的账号具体要求的加密方式。</p>
+</blockquote>
+<h2 id="运行shadowsocks">运行shadowsocks</h2>
+<pre><code>$ ss-local -c /etc/shadowsocks-libev.json &amp; 
+</code></pre><blockquote>
+<p>其中 &amp;是将其放在后台运行</p>
+</blockquote>
+<h2 id="设置全局代理">设置全局代理</h2>
+<p>进入 <code>系统设置</code> -&gt; <code>网络</code> -&gt; <code>网络代理</code>，方法选择<code>手动</code>，然后设置<code>Socks</code>主机<code>127.0.0.1</code>， 后面端口这是<code>1080</code>，
+然后点击<code>应用</code>到整个系统，输入密码即可。</p>
+<blockquote>
+<p>缺点： 这样你使用的网络都是通过代理访问的，比如说我在登录微信的时候，居然提示我在未知地点登录，这样比较浪费流量，访问国内网络也使用代理，会导致访问国内网络网速较慢。所以可以使用浏览器代理，只在浏览器访问中使用代理。</p>
+</blockquote>
+<h3 id="使用polipo全局代理">使用polipo全局代理</h3>
+<h2 id="设置浏览器代理">设置浏览器代理</h2>
+<p>在<code>firefox</code>中可以通过设置浏览器的代理来使用代理访问国外网络，具体可以参考网上教程。而在<code>ubuntu</code>中，<code>chrome</code>中是不能设置代理的，
+但是！但是！但是！有一个非常非常好用的插件，可以设置代理，叫<code>Proxy SwitchyOmega</code>, 后面菜花会给出<code>Proxy SwitchyOmega</code> 的简易使用教程。</p>
+<h2 id="设置开机自启动">设置开机自启动</h2>
+<p>服务脚本：</p>
+<pre><code>#!/bin/bash
+### BEGIN INIT INFO
+#
+# Provides:  location_server
+# Required-Start:   $local_fs  $remote_fs
+# Required-Stop:    $local_fs  $remote_fs
+# Default-Start:    2 3 4 5
+# Default-Stop:     0 1 6
+# Short-Description:    initscript
+# Description:  This file should be used to construct scripts to be placed in /etc/init.d.
+#
+### END INIT INFO
+
+## Fill in name of program here.
+PROG=&quot;ss-local&quot;
+PROG_PATH=&quot;/usr/bin/ss-local&quot; ## Not need, but sometimes helpful (if $PROG resides in /opt for example).
+PROG_ARGS=&quot;&quot; 
+PID_PATH=&quot;/var/run/&quot;
+
+start() {
+    if [ -e &quot;$PID_PATH/$PROG.pid&quot; ]; then
+        ## Program is running, exit with error.
+        echo &quot;Error! $PROG is currently running!&quot; 1&gt;&amp;2
+        exit 1
+    else
+        ## Change from /dev/null to something like /var/log/$PROG if you want to save output.
+        $PROG_PATH $PROG_ARGS 2&gt;&amp;1 &gt;/var/log/$PROG &amp;
+    	pid=`ps ax | grep -i 'ss-local' | sed 's/^\([0-9]\{1,\}\).*/\1/g' | head -n 1 | awk -F' ' '{print $1}'`
+
+        echo &quot;$PROG started&quot;
+        echo $pid &gt; &quot;$PID_PATH/$PROG.pid&quot;
+    fi
+}
+
+stop() {
+    echo &quot;begin stop&quot;
+    if [ -e &quot;$PID_PATH/$PROG.pid&quot; ]; then
+        ## Program is running, so stop it
+    	pid=`ps ax | grep -i 'ss-local' | sed 's/^\([0-9]\{1,\}\).*/\1/g' | head -n 1 | awk -F' ' '{print $1}'`
+    	kill $pid
+
+        rm -f  &quot;$PID_PATH/$PROG.pid&quot;
+        echo &quot;$PROG stopped&quot;
+    else
+        ## Program is not running, exit with error.
+        echo &quot;Error! $PROG not started!&quot; 1&gt;&amp;2
+        exit 1
+    fi
+}
+
+## Check to see if we are running as root first.
+## Found at http://www.cyberciti.biz/tips/shell-root-user-check-script.html
+if [ &quot;$(id -u)&quot; != &quot;0&quot; ]; then
+    echo &quot;This script must be run as root&quot; 1&gt;&amp;2
+    exit 1
+fi
+
+case &quot;$1&quot; in
+    start)
+        start
+        exit 0
+    ;;
+    stop)
+        stop
+        exit 0
+    ;;
+    reload|restart|force-reload)
+        stop
+        start
+        exit 0
+    ;;
+    **)
+        echo &quot;Usage: $0 {start|stop|reload}&quot; 1&gt;&amp;2
+        exit 1
+    ;;
+esac
+</code></pre>
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#安装shadowsocks-libev">安装shadowsocks-libev</a></li>
+    <li><a href="#编写配置文件">编写配置文件</a></li>
+    <li><a href="#运行shadowsocks">运行shadowsocks</a></li>
+    <li><a href="#设置全局代理">设置全局代理</a>
+      <ul>
+        <li><a href="#使用polipo全局代理">使用polipo全局代理</a></li>
+      </ul>
+    </li>
+    <li><a href="#设置浏览器代理">设置浏览器代理</a></li>
+    <li><a href="#设置开机自启动">设置开机自启动</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/windows/%E6%9C%AC%E5%9C%B0%E6%8A%93%E5%8C%85/" class="button left"><span>Windows下Wireshark抓包问题</span></a>
+    
+    
+      <a href="/blog/vmware/vmware-ubuntu-%E6%89%A9%E5%AE%B9%E7%A3%81%E7%9B%98/" class="button right"><span>VMWare之Linux系统磁盘扩容</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Linux
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      </main>
+      <section id="site-sidebar">
+  
+
+  
+    <section id="categories">
+      <header>
+        <h1><a href="/categories">分类</a></h1>
+      </header>
+      <ul>
+        
+        
+        <li>
+          <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
+          
+        <li>
+          <a href="/categories/browser/">browser<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/cache/">cache<span class="count">23</span></a>
+          
+        <li>
+          <a href="/categories/compilation/">compilation<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/concurrence/">concurrence<span class="count">4</span></a>
+          
+        <li>
+          <a href="/categories/data-structure/">data-structure<span class="count">5</span></a>
+          
+        <li>
+          <a href="/categories/database/">database<span class="count">9</span></a>
+          
+        <li>
+          <a href="/categories/distribution-system/">distribution-system<span class="count">10</span></a>
+          
+        <li>
+          <a href="/categories/docker/">docker<span class="count">2</span></a>
+          
+        <li>
+          <a href="/categories/elk/">elk<span class="count">9</span></a>
+          
+        </li>
+      </ul>
+      
+        <footer class="see-more">
+          <a href="/categories" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+        </footer>
+      
+    </section>
+  
+
+  
+      <section id="tags">
+        <header>
+          <h1><a href="/tags">标签</a></h1>
+        </header>
+        <ul>
+          
+          
+          <li>
+            <a href="/tags/algorithm/">algorithm<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/audio/">audio<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/cdn/">cdn<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/certificate/">certificate<span class="count">4</span></a>
+            
+          <li>
+            <a href="/tags/chrome/">chrome<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/diagnostics/">diagnostics<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/http/">http<span class="count">1</span></a>
+            
+          <li>
+            <a href="/tags/i/o/">i/o<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/ide/">ide<span class="count">2</span></a>
+            
+          <li>
+            <a href="/tags/kafka/">kafka<span class="count">1</span></a>
+            
+          </li>
+        </ul>
+        
+          <footer class="see-more">
+            <a href="/tags" title="查看更多" class="fas fa-angle-double-right">查看更多</a>
+          </footer>
+        
+      </section>
+  
+
+  
+</section>
+      <footer id="site-footer">
+  
+  <p class="copyright">
+      
+      <span id="busuanzi_container_site_uv" class="fas fa-user " title=访问客数><span id="busuanzi_value_site_uv"></span></span>
+      <span id="busuanzi_container_site_pv" class="fas fa-eye" title=总访问量><span id="busuanzi_value_site_pv"></span></span>
+      <br/>© 2020 zylhorse
+      <br>
+    由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.74.3'>Hugo</a> 驱动
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.7e8b85fb814aa446375b535c9ecd0857b9de7637062ea359390ae8675c7761d8.js" integrity="sha256-fouF&#43;4FKpEY3W1Ncns0IV7nedjcGLqNZOQroZ1x3Ydg="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </div>
+  </body>
+</html>

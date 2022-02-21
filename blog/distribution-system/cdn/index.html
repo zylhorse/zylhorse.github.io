@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>CDN内容分发网络工作过程和分类 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="CDN内容分发网络工作过程和分类">
+<meta itemprop="description" content="CDN  全称 Content Delivery Network，即内容分发网络 概念始于1996，美国麻省理工学院的研究小组，并于1999年创建CDN服务公司 CDN构建在现有网络基础上，依靠部署在各地的边缘服务器，通过中心平台的负载均衡、内容分发、调度等模块，是用户就近获取内容，降低网络拥塞，挺高用户访问的响应速度和命中率。 CDN的关键技术是内容存储和分发  一些前端开源CDN服务  基于github的cdn BootCDN  CDN基本工作过程 使用CDN可以简化网站的系统维护工作
+ 运维只需要将网站内容注入到CDN系统，就可以同通过CDN系统部署在各个物理位置的服务器进行全网分发，实现跨运营商、跨地域的用户覆盖 由于CDN将内容推送到网络边缘，大量用户访问被分散到网络边缘  不在构成网站出口、互联互通点的资源挤占 也不需要跨越长距离的IP路由    实现原理 关键字：
+ CNAME：即：别名记录。这种记录允许您将多个名字映射到同一台计算机。 GSLB： Global Server Load Balance, 全局负载均衡。 实现在广域网上不同地域服务器间的流量调配，保证使用最佳的服务器服务离自己最近的客户。  今天我们看到的网站系统基本上基于B/S架构，具体流程如下：
+ 未使用CDN，用户访问网站过程：    用户在自己的浏览器中输入要访问的网站域名 浏览器向本地的DNS服务器请求对该域名解析  本地DNS服务器中如果有缓存该域名的解析结果，则直接响应用户的解析请求 本地DNS服务器中如果没有缓存该域名的解析结果， 则以递归的方式向整个DNS系统请求解析，获得应答后将结果反馈给浏览器   浏览器得到域名的解析结果，就是该域名对应的服务器设备IP 浏览器向服务器请求内容 服务器将用户请求内容传输给浏览器     使用CDN，用户访问网站过程    当用户加载网站上的内容和资源URL时 经过本地DNS系统解析，DNS系统会将域名的解析权交给CNAME指向的CDN专用DNS服务器 CDN的专属DNS服务器将CDN的全局负载均衡设备IP返回给用户 用户向CDN的全局负载均衡设备发起内容URL的访问请求 CDN全局负载均衡设备根据用户IP和用户请求内容URL，选择一台用户所在区域的区域负载均衡设备， 告诉用户向这台设备发起请求 区域负载均衡设备会为用户选择一台合适的缓存服务器提供服务。选择依据：  判断哪台服务器距离用户最近 根据请求URL携带内容，判断哪一台服务器上有用户所需内容 查询当前服务器负载情况，判断哪一台有服务能力。 基于以上条件的综合分析后， 区域负载均衡设备会向全局负载均衡设备返回一台缓存服务器IP   全局负载均衡设备把缓存服务器的IP返回给用户 用户向缓存服务器发起请求，缓存服务器响应用户需求，返回用户请求内容  如果这台缓存服务器没有请求内容，而区域负载均衡设备依然将其分配给用户 这台缓存服务器会向它的上级缓存服务器请求内容，直到追溯到网站的源服务器将内容缓存到自身        CDN基于内容分类 关键字："><meta itemprop="datePublished" content="2019-06-23T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-06-23T00:00:00+00:00" />
+<meta itemprop="wordCount" content="123">
+<meta itemprop="keywords" content="CDN," /><meta property="og:title" content="CDN内容分发网络工作过程和分类" />
+<meta property="og:description" content="CDN  全称 Content Delivery Network，即内容分发网络 概念始于1996，美国麻省理工学院的研究小组，并于1999年创建CDN服务公司 CDN构建在现有网络基础上，依靠部署在各地的边缘服务器，通过中心平台的负载均衡、内容分发、调度等模块，是用户就近获取内容，降低网络拥塞，挺高用户访问的响应速度和命中率。 CDN的关键技术是内容存储和分发  一些前端开源CDN服务  基于github的cdn BootCDN  CDN基本工作过程 使用CDN可以简化网站的系统维护工作
+ 运维只需要将网站内容注入到CDN系统，就可以同通过CDN系统部署在各个物理位置的服务器进行全网分发，实现跨运营商、跨地域的用户覆盖 由于CDN将内容推送到网络边缘，大量用户访问被分散到网络边缘  不在构成网站出口、互联互通点的资源挤占 也不需要跨越长距离的IP路由    实现原理 关键字：
+ CNAME：即：别名记录。这种记录允许您将多个名字映射到同一台计算机。 GSLB： Global Server Load Balance, 全局负载均衡。 实现在广域网上不同地域服务器间的流量调配，保证使用最佳的服务器服务离自己最近的客户。  今天我们看到的网站系统基本上基于B/S架构，具体流程如下：
+ 未使用CDN，用户访问网站过程：    用户在自己的浏览器中输入要访问的网站域名 浏览器向本地的DNS服务器请求对该域名解析  本地DNS服务器中如果有缓存该域名的解析结果，则直接响应用户的解析请求 本地DNS服务器中如果没有缓存该域名的解析结果， 则以递归的方式向整个DNS系统请求解析，获得应答后将结果反馈给浏览器   浏览器得到域名的解析结果，就是该域名对应的服务器设备IP 浏览器向服务器请求内容 服务器将用户请求内容传输给浏览器     使用CDN，用户访问网站过程    当用户加载网站上的内容和资源URL时 经过本地DNS系统解析，DNS系统会将域名的解析权交给CNAME指向的CDN专用DNS服务器 CDN的专属DNS服务器将CDN的全局负载均衡设备IP返回给用户 用户向CDN的全局负载均衡设备发起内容URL的访问请求 CDN全局负载均衡设备根据用户IP和用户请求内容URL，选择一台用户所在区域的区域负载均衡设备， 告诉用户向这台设备发起请求 区域负载均衡设备会为用户选择一台合适的缓存服务器提供服务。选择依据：  判断哪台服务器距离用户最近 根据请求URL携带内容，判断哪一台服务器上有用户所需内容 查询当前服务器负载情况，判断哪一台有服务能力。 基于以上条件的综合分析后， 区域负载均衡设备会向全局负载均衡设备返回一台缓存服务器IP   全局负载均衡设备把缓存服务器的IP返回给用户 用户向缓存服务器发起请求，缓存服务器响应用户需求，返回用户请求内容  如果这台缓存服务器没有请求内容，而区域负载均衡设备依然将其分配给用户 这台缓存服务器会向它的上级缓存服务器请求内容，直到追溯到网站的源服务器将内容缓存到自身        CDN基于内容分类 关键字：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/distribution-system/cdn/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-06-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-06-23T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CDN内容分发网络工作过程和分类"/>
+<meta name="twitter:description" content="CDN  全称 Content Delivery Network，即内容分发网络 概念始于1996，美国麻省理工学院的研究小组，并于1999年创建CDN服务公司 CDN构建在现有网络基础上，依靠部署在各地的边缘服务器，通过中心平台的负载均衡、内容分发、调度等模块，是用户就近获取内容，降低网络拥塞，挺高用户访问的响应速度和命中率。 CDN的关键技术是内容存储和分发  一些前端开源CDN服务  基于github的cdn BootCDN  CDN基本工作过程 使用CDN可以简化网站的系统维护工作
+ 运维只需要将网站内容注入到CDN系统，就可以同通过CDN系统部署在各个物理位置的服务器进行全网分发，实现跨运营商、跨地域的用户覆盖 由于CDN将内容推送到网络边缘，大量用户访问被分散到网络边缘  不在构成网站出口、互联互通点的资源挤占 也不需要跨越长距离的IP路由    实现原理 关键字：
+ CNAME：即：别名记录。这种记录允许您将多个名字映射到同一台计算机。 GSLB： Global Server Load Balance, 全局负载均衡。 实现在广域网上不同地域服务器间的流量调配，保证使用最佳的服务器服务离自己最近的客户。  今天我们看到的网站系统基本上基于B/S架构，具体流程如下：
+ 未使用CDN，用户访问网站过程：    用户在自己的浏览器中输入要访问的网站域名 浏览器向本地的DNS服务器请求对该域名解析  本地DNS服务器中如果有缓存该域名的解析结果，则直接响应用户的解析请求 本地DNS服务器中如果没有缓存该域名的解析结果， 则以递归的方式向整个DNS系统请求解析，获得应答后将结果反馈给浏览器   浏览器得到域名的解析结果，就是该域名对应的服务器设备IP 浏览器向服务器请求内容 服务器将用户请求内容传输给浏览器     使用CDN，用户访问网站过程    当用户加载网站上的内容和资源URL时 经过本地DNS系统解析，DNS系统会将域名的解析权交给CNAME指向的CDN专用DNS服务器 CDN的专属DNS服务器将CDN的全局负载均衡设备IP返回给用户 用户向CDN的全局负载均衡设备发起内容URL的访问请求 CDN全局负载均衡设备根据用户IP和用户请求内容URL，选择一台用户所在区域的区域负载均衡设备， 告诉用户向这台设备发起请求 区域负载均衡设备会为用户选择一台合适的缓存服务器提供服务。选择依据：  判断哪台服务器距离用户最近 根据请求URL携带内容，判断哪一台服务器上有用户所需内容 查询当前服务器负载情况，判断哪一台有服务能力。 基于以上条件的综合分析后， 区域负载均衡设备会向全局负载均衡设备返回一台缓存服务器IP   全局负载均衡设备把缓存服务器的IP返回给用户 用户向缓存服务器发起请求，缓存服务器响应用户需求，返回用户请求内容  如果这台缓存服务器没有请求内容，而区域负载均衡设备依然将其分配给用户 这台缓存服务器会向它的上级缓存服务器请求内容，直到追溯到网站的源服务器将内容缓存到自身        CDN基于内容分类 关键字："/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/distribution-system/cdn/">CDN内容分发网络工作过程和分类</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-06-23 00:00:00 &#43;0000 UTC">2019-06-23</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="cdn">CDN</h2>
+<ol>
+<li>全称 Content Delivery Network，即内容分发网络</li>
+<li>概念始于1996，美国麻省理工学院的研究小组，并于1999年创建CDN服务公司</li>
+<li>CDN构建在现有网络基础上，依靠部署在各地的边缘服务器，通过中心平台的负载均衡、内容分发、调度等模块，是用户就近获取内容，降低网络拥塞，挺高用户访问的响应速度和命中率。</li>
+<li>CDN的关键技术是内容存储和分发</li>
+</ol>
+<h3 id="一些前端开源cdn服务">一些前端开源CDN服务</h3>
+<ol>
+<li>基于github的<a href="https://cdnjs.com">cdn</a></li>
+<li><a href="http://www.bootcdn.cn/">BootCDN</a></li>
+</ol>
+<h3 id="cdn基本工作过程">CDN基本工作过程</h3>
+<p>使用CDN可以简化网站的系统维护工作</p>
+<ul>
+<li>运维只需要将网站内容注入到CDN系统，就可以同通过CDN系统部署在各个物理位置的服务器进行全网分发，实现跨运营商、跨地域的用户覆盖</li>
+<li>由于CDN将内容推送到网络边缘，大量用户访问被分散到网络边缘
+<ul>
+<li>不在构成网站出口、互联互通点的资源挤占</li>
+<li>也不需要跨越长距离的IP路由</li>
+</ul>
+</li>
+</ul>
+<h3 id="实现原理">实现原理</h3>
+<p>关键字：</p>
+<ol>
+<li>CNAME：即：别名记录。这种记录允许您将多个名字映射到同一台计算机。</li>
+<li>GSLB： Global Server Load Balance, 全局负载均衡。 实现在广域网上不同地域服务器间的流量调配，保证使用最佳的服务器服务离自己最近的客户。</li>
+</ol>
+<p>今天我们看到的网站系统基本上基于B/S架构，具体流程如下：</p>
+<ul>
+<li>未使用CDN，用户访问网站过程：
+<ul>
+<li>
+<ol>
+<li>用户在自己的浏览器中输入要访问的网站域名</li>
+<li>浏览器向本地的DNS服务器请求对该域名解析
+<ul>
+<li>本地DNS服务器中如果有缓存该域名的解析结果，则直接响应用户的解析请求</li>
+<li>本地DNS服务器中如果没有缓存该域名的解析结果， 则以递归的方式向整个DNS系统请求解析，获得应答后将结果反馈给浏览器</li>
+</ul>
+</li>
+<li>浏览器得到域名的解析结果，就是该域名对应的服务器设备IP</li>
+<li>浏览器向服务器请求内容</li>
+<li>服务器将用户请求内容传输给浏览器</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>使用CDN，用户访问网站过程
+<ul>
+<li>
+<ol>
+<li>当用户加载网站上的内容和资源URL时</li>
+<li>经过本地DNS系统解析，DNS系统会将域名的解析权交给CNAME指向的CDN专用DNS服务器</li>
+<li>CDN的专属DNS服务器将CDN的全局负载均衡设备IP返回给用户</li>
+<li>用户向CDN的全局负载均衡设备发起内容URL的访问请求</li>
+<li>CDN全局负载均衡设备根据用户IP和用户请求内容URL，选择一台用户所在区域的区域负载均衡设备， 告诉用户向这台设备发起请求</li>
+<li>区域负载均衡设备会为用户选择一台合适的缓存服务器提供服务。选择依据：
+<ul>
+<li>判断哪台服务器距离用户最近</li>
+<li>根据请求URL携带内容，判断哪一台服务器上有用户所需内容</li>
+<li>查询当前服务器负载情况，判断哪一台有服务能力。</li>
+<li>基于以上条件的综合分析后， 区域负载均衡设备会向全局负载均衡设备返回一台缓存服务器IP</li>
+</ul>
+</li>
+<li>全局负载均衡设备把缓存服务器的IP返回给用户</li>
+<li>用户向缓存服务器发起请求，缓存服务器响应用户需求，返回用户请求内容
+<ul>
+<li>如果这台缓存服务器没有请求内容，而区域负载均衡设备依然将其分配给用户</li>
+<li>这台缓存服务器会向它的上级缓存服务器请求内容，直到追溯到网站的源服务器将内容缓存到自身</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="cdn基于内容分类">CDN基于内容分类</h3>
+<p>关键字：</p>
+<ol>
+<li>POP点： 网络服务提供点（或称局端），通常POP点越近则线路信号损耗越小，可为连接用户提供的带宽保障越高</li>
+</ol>
+<p>CDN的承载内容类型分为： 静态网页、动态网页、流媒体、下载类型和应用协议</p>
+<p>因此将CDN分为： 网页加速、流媒体加速、文件传输加速和应用协议加速</p>
+<ul>
+<li>网页加速
+<ul>
+<li>将网页的静态资源： 文字、图片、动画等静态内容缓存在各个CDN节点上</li>
+<li>并将用户请求调度到最有节点上来获取所需内容，从而加速页面响应速度</li>
+<li>主要面向： 每户网站、新闻发布类网站、访问量较大的行业网站、政府机构网站和企业门户网站等</li>
+</ul>
+</li>
+<li>流媒体加速
+<ul>
+<li>将流媒体内容推送到离用户最近的POP点，使得用户能够从网络边缘获取内容。 缩短访问时间，节省骨干网络流量，避免单一中心服务器瓶颈问题</li>
+<li>流媒体加速分为两类：
+<ul>
+<li>流媒体直播加速</li>
+<li>流媒体点播加速
+<ul>
+<li>将流媒体以内容类别、版本等为索引按片段存放再服务器上</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>文件传输加速
+<ul>
+<li>通过CDN的分布式POP点提供下载服务，将大量文件下载的性能压力和带宽压力交割CDN分担， 提高下载速度</li>
+<li>目前CDN支持HTTP下载、FTP下载和P2P下载方式</li>
+<li>主要用于软件厂商的补丁发布、杀毒软件厂商的病毒库更新、网络游戏运营商的游戏客户端下载等</li>
+</ul>
+</li>
+<li>应用协议加速
+<ul>
+<li>应用协议加速不针对特定内容类型进行加速，而是通过对TCP/IP等传输协议优化，改善用户在广域网上内容传输速度</li>
+<li>主要应用协议加速服务有以下集中：</li>
+<li>广域网应用加速
+<ul>
+<li>目的： 让广域网像局域网一样</li>
+<li>针对在局域网上正常运行， 但一到广域网就收到极大影响的应用和协议如： CIFS、NFS</li>
+<li>将分布式IT基础设施文件服务器、邮件服务器、网络附加存储(NAS)和远程办公备份等集中起来，整合到统一的数据中心。使得世界各地的文件共享边得简单高效</li>
+<li>还支持通过长距离广域网链路进行文件备份和复制，在不升级带宽的前提下，在现有广域网上提供更丰富的服务</li>
+</ul>
+</li>
+<li>SSl应用加速
+<ul>
+<li>CDN使用专用的SSL加速硬件进行网络请求的加解密运算工作</li>
+<li>用户源站只需信任有限的CDN cache， 无需面海量用户，从而减轻网站繁重的运算和认证压力</li>
+</ul>
+</li>
+<li>网页压缩
+<ul>
+<li>CDN利用网页压缩技术，对网页数据进行压缩传输，加快内容传输速度</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="cdn基于内容生成机制的分类和分层加速">CDN基于内容生成机制的分类和分层加速</h3>
+<p>从内容生成机制来看，互联网内容主要有两类：</p>
+<ul>
+<li>静态内容：内容完全由HTML文件组成，任何时间浏览静态内容看到的都是一样的东西</li>
+<li>动态内容：不同访问者或在不同时间访问同一个web页面，可能得到不同页面内容</li>
+</ul>
+<ol>
+<li>web网站都能在逻辑上划分为三层，即： 表现层、业务逻辑层、数据访问层。</li>
+<li>CDN实现网络加速主要依赖于内容边缘缓存和功能复制。本质是将web源站各个层次上的功能移植到CDN边缘Cache 上完成。</li>
+<li>根据不同层面的web功能转移，将CDN分为表示层复制和全站复制两大类</li>
+</ol>
+<ul>
+<li>表示层复制
+<ul>
+<li>静态内容加速可以通过CDN边缘Cache复制web系统的表示层来完成</li>
+<li>CDN的Cache设备以反向代理的角色接受用户发来的请求，在本地查找满足用户需求的数据
+<ul>
+<li>在Cache上命中的内容，则无需向源站web系统请求。</li>
+</ul>
+</li>
+<li>这种情况Cache上缓存的内容通常是完整的web内容实体，如： 脚本、样式、图片、多媒体文件</li>
+</ul>
+</li>
+<li>全站复制
+<ul>
+<li>动态内容的加速需要在CDN上复制和缓存业务逻辑层和后台数据访问层</li>
+<li>业务逻辑层在CDN Cache上的复制使之能够承担用户的请求处理、应用数据计算、动态内容生成等，此类方法称之为&quot;边缘计算&quot;
+<ul>
+<li>将web应用层序或组件直接安装到CDN Cache中，目的是在最接近用户的位置完成应用处理</li>
+</ul>
+</li>
+<li>数据访问层在CDN Cache上的复制，可以加速动态内容的生成
+<ul>
+<li>问题： 系统中多个副本间数据的一致性问题</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/distribution-system/">Distribution System</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/cdn/">CDN</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#cdn">CDN</a>
+      <ul>
+        <li><a href="#一些前端开源cdn服务">一些前端开源CDN服务</a></li>
+        <li><a href="#cdn基本工作过程">CDN基本工作过程</a></li>
+        <li><a href="#实现原理">实现原理</a></li>
+        <li><a href="#cdn基于内容分类">CDN基于内容分类</a></li>
+        <li><a href="#cdn基于内容生成机制的分类和分层加速">CDN基于内容生成机制的分类和分层加速</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/web/ldap/" class="button left"><span>LDAP协议简介</span></a>
+    
+    
+      <a href="/blog/golang/gotag/" class="button right"><span>golang-tags及扩展使用</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Distribution&#32;System
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang API实例 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Golang API实例">
+<meta itemprop="description" content="SetFinalizer   func SetFinalizer(obj interface{}, finalizer interface{})
+ 参数obj必须是指针类型。 参数finalizer是一个函数，其参数类型是obj的类型，并且没有返回值。 如果不满足以上规则，SetFinalizer会中断程序。    SetFinalizer将obj和finalizer关联， 当gc检测到unreachable对象有关联的 finalizer时，会取消关联关系并在单独的goroutine中执行finalizer。假如没有再次调用 SetFinalizer, gc下次检测对象为unreachable时，将释放对象。
+  SetFinalizer(obj, nil) 取消和对象关联的所有finalizer.
+  finalizer运行依赖顺序如下: 如果A指向B，两者都关联了finalizer并且标识为unreachable， 则只有A的finalizer执行；一旦A被释放，B的finalizer才可以执行。
+  如果*obj大小为0字节，则不保证finalizer会执行。
+  不保证包级别init()的对象变量的finalizer会执行。 因为该对象可能是链接器分配的，而不是堆分配。
+  在对象被 GC 进程选中并从内存中移除以前，SetFinalizer 都不会执行，即使程序正常结束或者发生错误。 finalizer可以用于避免用户错误使用导致的内存泄露，e.g. os.NewFile,net.newFD() 等注册了对文件描述符的SetFinalizer，用以避免忘记Close()导致的fd泄露。 但是依赖finalizer 来flush内存中的缓冲区例如bufio.Writer是错误的，因为不能保证程序退出时缓冲区会被flush。
+  如果对象存在循环引用方法，需要给其添加wrapper， 并将实际类型作为wrapper的匿名字段： ``` type Cache struct{ &hellip; stop chan bool }
+ // wrapper定义type CacheWrapper struct{*Cache}func New() *CacheWrapper {cc := &amp;Cache{."><meta itemprop="datePublished" content="2020-06-11T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-06-11T00:00:00+00:00" />
+<meta itemprop="wordCount" content="194">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Golang API实例" />
+<meta property="og:description" content="SetFinalizer   func SetFinalizer(obj interface{}, finalizer interface{})
+ 参数obj必须是指针类型。 参数finalizer是一个函数，其参数类型是obj的类型，并且没有返回值。 如果不满足以上规则，SetFinalizer会中断程序。    SetFinalizer将obj和finalizer关联， 当gc检测到unreachable对象有关联的 finalizer时，会取消关联关系并在单独的goroutine中执行finalizer。假如没有再次调用 SetFinalizer, gc下次检测对象为unreachable时，将释放对象。
+  SetFinalizer(obj, nil) 取消和对象关联的所有finalizer.
+  finalizer运行依赖顺序如下: 如果A指向B，两者都关联了finalizer并且标识为unreachable， 则只有A的finalizer执行；一旦A被释放，B的finalizer才可以执行。
+  如果*obj大小为0字节，则不保证finalizer会执行。
+  不保证包级别init()的对象变量的finalizer会执行。 因为该对象可能是链接器分配的，而不是堆分配。
+  在对象被 GC 进程选中并从内存中移除以前，SetFinalizer 都不会执行，即使程序正常结束或者发生错误。 finalizer可以用于避免用户错误使用导致的内存泄露，e.g. os.NewFile,net.newFD() 等注册了对文件描述符的SetFinalizer，用以避免忘记Close()导致的fd泄露。 但是依赖finalizer 来flush内存中的缓冲区例如bufio.Writer是错误的，因为不能保证程序退出时缓冲区会被flush。
+  如果对象存在循环引用方法，需要给其添加wrapper， 并将实际类型作为wrapper的匿名字段： ``` type Cache struct{ &hellip; stop chan bool }
+ // wrapper定义type CacheWrapper struct{*Cache}func New() *CacheWrapper {cc := &amp;Cache{." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/%E9%83%A8%E5%88%86%E5%87%BD%E6%95%B0/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2020-06-11T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-06-11T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang API实例"/>
+<meta name="twitter:description" content="SetFinalizer   func SetFinalizer(obj interface{}, finalizer interface{})
+ 参数obj必须是指针类型。 参数finalizer是一个函数，其参数类型是obj的类型，并且没有返回值。 如果不满足以上规则，SetFinalizer会中断程序。    SetFinalizer将obj和finalizer关联， 当gc检测到unreachable对象有关联的 finalizer时，会取消关联关系并在单独的goroutine中执行finalizer。假如没有再次调用 SetFinalizer, gc下次检测对象为unreachable时，将释放对象。
+  SetFinalizer(obj, nil) 取消和对象关联的所有finalizer.
+  finalizer运行依赖顺序如下: 如果A指向B，两者都关联了finalizer并且标识为unreachable， 则只有A的finalizer执行；一旦A被释放，B的finalizer才可以执行。
+  如果*obj大小为0字节，则不保证finalizer会执行。
+  不保证包级别init()的对象变量的finalizer会执行。 因为该对象可能是链接器分配的，而不是堆分配。
+  在对象被 GC 进程选中并从内存中移除以前，SetFinalizer 都不会执行，即使程序正常结束或者发生错误。 finalizer可以用于避免用户错误使用导致的内存泄露，e.g. os.NewFile,net.newFD() 等注册了对文件描述符的SetFinalizer，用以避免忘记Close()导致的fd泄露。 但是依赖finalizer 来flush内存中的缓冲区例如bufio.Writer是错误的，因为不能保证程序退出时缓冲区会被flush。
+  如果对象存在循环引用方法，需要给其添加wrapper， 并将实际类型作为wrapper的匿名字段： ``` type Cache struct{ &hellip; stop chan bool }
+ // wrapper定义type CacheWrapper struct{*Cache}func New() *CacheWrapper {cc := &amp;Cache{."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/%E9%83%A8%E5%88%86%E5%87%BD%E6%95%B0/">Golang API实例</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2020-06-11 00:00:00 &#43;0000 UTC">2020-06-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="setfinalizer">SetFinalizer</h2>
+<ul>
+<li>
+<p><code>func SetFinalizer(obj interface{}, finalizer interface{})</code></p>
+<ol>
+<li>参数<code>obj</code>必须是指针类型。</li>
+<li>参数<code>finalizer</code>是一个函数，其参数类型是<code>obj</code>的类型，并且没有返回值。</li>
+<li>如果不满足以上规则，<code>SetFinalizer</code>会中断程序。</li>
+</ol>
+</li>
+<li>
+<p><code>SetFinalizer</code>将<code>obj</code>和<code>finalizer</code>关联， 当<code>gc</code>检测到<code>unreachable</code>对象有关联的
+<code>finalizer</code>时，会取消关联关系并在单独的<code>goroutine</code>中执行<code>finalizer</code>。假如没有再次调用
+<code>SetFinalizer</code>, <code>gc</code>下次检测对象为<code>unreachable</code>时，将释放对象。</p>
+</li>
+<li>
+<p><code>SetFinalizer(obj, nil)</code> 取消和对象关联的所有<code>finalizer</code>.</p>
+</li>
+<li>
+<p><code>finalizer</code>运行依赖顺序如下: 如果A指向B，两者都关联了<code>finalizer</code>并且标识为<code>unreachable</code>，
+则只有A的<code>finalizer</code>执行；一旦A被释放，B的<code>finalizer</code>才可以执行。</p>
+</li>
+<li>
+<p>如果<code>*obj</code>大小为0字节，则不保证<code>finalizer</code>会执行。</p>
+</li>
+<li>
+<p>不保证包级别<code>init()</code>的对象变量的<code>finalizer</code>会执行。 因为该对象可能是链接器分配的，而不是堆分配。</p>
+</li>
+<li>
+<p>在对象被 GC 进程选中并从内存中移除以前，<code>SetFinalizer</code> 都不会执行，即使程序正常结束或者发生错误。
+<code>finalizer</code>可以用于避免用户错误使用导致的内存泄露，e.g. <code>os.NewFile</code>,<code>net.newFD()</code> 
+等注册了对文件描述符的<code>SetFinalizer</code>，用以避免忘记<code>Close()</code>导致的<code>fd</code>泄露。 但是依赖<code>finalizer</code>
+来<code>flush</code>内存中的缓冲区例如<code>bufio.Writer</code>是错误的，因为不能保证程序退出时缓冲区会被<code>flush</code>。</p>
+</li>
+<li>
+<p>如果对象存在循环引用方法，需要给其添加<code>wrapper</code>， 并将实际类型作为<code>wrapper</code>的匿名字段：
+```
+type Cache struct{
+&hellip;
+stop chan bool
+}</p>
+<pre><code>      // wrapper定义
+      type CacheWrapper struct{
+          *Cache
+      }
+
+      func New() *CacheWrapper {
+          cc := &amp;Cache{
+              ...
+          }
+          go cc.clear()
+
+          // 包一层
+          cw := &amp;CacheWrapper{cc}
+
+          // 重点在此:设置被回收时操作
+          runtime.SetFinalizer(cw, onGarbageCollect)
+          return cw
+      }
+
+      func (m *Cache) clear() {
+          for {
+              select {
+              // 关闭
+      		case &lt;-m.stop:
+      			return
+
+              //定期清理...
+      		}
+          }
+      }
+
+      func onGarbageCollect(m *Cache) {
+          m.stop &lt;- true
+      }
+```    
+</code></pre>
+</li>
+<li>
+<p>应用场景</p>
+<ul>
+<li>一个对象object被GC时，如果需要执行一些特殊操作，比如，发信号，或者写日志等，可以通过调用<code>SetFinalizer</code>.</li>
+</ul>
+</li>
+</ul>
+<h2 id="lockosthread">LockOSThread</h2>
+<ul>
+<li>定义
+<ul>
+<li>让goroutine 绑定并独立在一个系统线程M上执行</li>
+</ul>
+</li>
+<li>问题
+<ul>
+<li>子goroutine不能继承父goroutine的线程绑定；</li>
+</ul>
+</li>
+<li>应用场景
+<ul>
+<li>使用Go线程模型，对C代码，汇编代码或阻塞系统调用的调用与调用Go代码的线程相同
+<ol>
+<li>许多图形库（OS X Cocoa，OpenGL，SDL等）要求所有调用都必须在特定线程（某些情况下是主线程）上进行</li>
+<li>某些外部库基于 线程本地存储（TLS）功能。它们将一些上下文存储附加到线程的数据结构中。或API的某些功能提供其内存生命周期附加到线程的结果</li>
+</ol>
+</li>
+<li>将某个goroutine锁定到某个系统线程，这个线程只调度这个goroutine，进而可以被优先调度</li>
+</ul>
+</li>
+</ul>
+<h2 id="keepalive">KeepAlive</h2>
+<ul>
+<li>定义
+<code>KeepAlive</code>标记对象是<code>reachable</code>的。确保对象在调用<code>KeepAlive</code>之前不会被释放，并且不会触发对象注册的<code>finalizer</code>。</li>
+<li>使用
+<ul>
+<li><code>func KeepAlive(x interface{})</code>
+参数<code>x</code>必须是指针类型</li>
+<li>官方示例:
+<pre tabindex="0"><code>type File struct { d int }
+d, err := syscall.Open(&quot;/file/path&quot;, syscall.O_RDONLY, 0)
+// ... do something if err != nil ...
+p := &amp;File{d}
+runtime.SetFinalizer(p, func(p *File) { syscall.Close(p.d) })
+var buf [10]byte
+n, err := syscall.Read(p.d, buf[:])
+// Ensure p is not finalized until Read returns.
+runtime.KeepAlive(p)
+// No more uses of p after this point.
+</code></pre><blockquote>
+<p>如果没有调用<code>runtime.KeepAlive()</code>,<code>finalizer</code>会在<code>syscall.Read</code>之前被调用， 导致文件描述符已经<code>close</code>.</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="rang">rang</h2>
+<ul>
+<li>math/rand
+生成伪随机数， 使用default resource， 产生有规则的随机数。</li>
+<li>crypto/rand
+生成真随机数，使用time.now() 作为种子。</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#setfinalizer">SetFinalizer</a></li>
+    <li><a href="#lockosthread">LockOSThread</a></li>
+    <li><a href="#keepalive">KeepAlive</a></li>
+    <li><a href="#rang">rang</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/golang/graceful/" class="button left"><span>Golang实现服务优雅的重启</span></a>
+    
+    
+      <a href="/blog/elk/grafana/" class="button right"><span>Grafana搭建部署环境和配置</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MySQL on zylhorse blog</title>
+    <link>https://zylhorse.github.io/tags/mysql/</link>
+    <description>Recent content in MySQL on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 20 Nov 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL索引详解</title>
+      <link>https://zylhorse.github.io/blog/database/mysql/</link>
+      <pubDate>Sun, 20 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/database/mysql/</guid>
+      <description>是什么 为什么 索引可以大大的提高MySQL的检索速度。
+Explain key_len 索引长度限制
+INNODB引擎的每个索引列长度限制为767字节（bytes），所有组成索引列的长度和不能大于3072字节
+MYISM引擎的每个索引列长度限制为1000字节，所有组成索引列的长度和不能大于1000字节
+在MySQL5.5版本，引入了innodb_large_prefix，用来禁用大型前缀索引，以便与不支持大索引键前缀的早期版本的InnoDB兼容。 开启innodb_large_prefix可以使单索引的长度限制达到3072字节（但是联合索引总长度限制还是3072字节），禁用时单索引的长度限制为767字节
+在MySQL5.5版本与MySQL5.6版本，innodb_large_prefix是默认关闭的。
+在MySQL5.7及以上版本，innodb_large_prefix是默认开启的。
+在MySQL8.0版本中，innodb_large_prefix已被移除
+key_len的长度计算公式：
+TINYINT 允许NULL = 1 + 1(NULL)TINYINT 不允许NULL = 1SMALLINT 允许为NULL = 2+1(NULL)SMALLINT 不允许为NULL = 2INT 允许为NULL = 4+1(NULL)INT 不允许为NULL = 4DATETIME 允许为NULL = 8 + 1(NULL)DATETIME 不允许为NULL = 8TIMESTAMP 允许为NULL = 4 + 1(NULL)TIMESTAMP 不允许为NULL = 4VARCHAR(N) 变长字段且允许NULL = N * ( character set：utf8=3,gbk=2,latin1=1)+1(NULL)+2(变长字段)VARCHAR(N) 变长字段且不允许NULL = N * ( character set：utf8=3,gbk=2,latin1=1)+2(变长字段)CHAR(N) 固定字段且允许NULL = N * ( character set：utf8=3,gbk=2,latin1=1)+1(NULL)CHAR(N) 固定字段且不允许NULL = N * ( character set：utf8=3,gbk=2,latin1=1)</description>
+    </item>
+    
+  </channel>
+</rss>

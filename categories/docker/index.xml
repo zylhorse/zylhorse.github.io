@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docker on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/docker/</link>
+    <description>Recent content in Docker on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 15 Sep 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/docker/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker问题集锦</title>
+      <link>https://zylhorse.github.io/blog/docker/%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/docker/%E9%97%AE%E9%A2%98/</guid>
+      <description> docker 解决 x509: certificate signed by unknown authority # vim /etc/docker/daemon.json{ &amp;quot;insecure-registries&amp;quot;: [&amp;quot;registry.svc.xxx.cn&amp;quot;]} Macos Docker Network 模式
+Macos不支持host模式，因此需要使用端口映射模式  </description>
+    </item>
+    
+    <item>
+      <title>Docker在linux上部署和配置</title>
+      <link>https://zylhorse.github.io/blog/docker/docker/</link>
+      <pubDate>Tue, 04 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/docker/docker/</guid>
+      <description>Docker Ubuntu安装 下载地址
+查看容器 $ sudo docker ps -a
+查看镜像 $ sudo docker images
+设置容器重启策略 $ docker run xxx --restart
+ no: 默认策略，在容器退出时不重启容器 on-failure: 在容器非正常退出时（退出状态非0），才会重启容器 on-failure:3，在容器非正常退出时重启容器，最多重启3次 always: 在容器退出时总是重启容器 unless-stopped: 在容器退出时总是重启容器，但是不考虑在Docker守护进程启动时就已经停止了的容器   如果创建时未指定 启动策略， 可以通过update命令: docker update &amp;ndash;restart=always xxx
+ 运行容器 $ docker exec -it xxx /bin/bash
+ xxx 容器ID
+ 拷贝本地文件到容器 $ docker cp [option] local container:/dir
+ -L 保持源文件链接
+ 提交镜像 $ docker commit -m=message -a=author containerid imagesname</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>编程范式-函数式编程 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="编程范式-函数式编程">
+<meta itemprop="description" content="函数式编程（Function Programming）  函数式编程将电脑运算看作是函数运算。 函数式编程的基础是λ 演算（ lambda caculus）。函数可以作为输入（参数）输出（返回值）。 函数式编程最古老的例子： 1958年创造出来的LISP。 #特性  函数是&quot;第一公民&quot;（first class） 函数可以作为变量
+”表达式“ not ”语句“  ”表达式“（expression）是运算过程，总有返回值 ”语句“（statement）是操作，无返回值。 函数式编程要求只使用表达式，不使用语句， 每一步运算都有返回值。  无”副作用“（side effect）  ”副作用“：函数内部与外部互动（eg:函数内部修改全局变量），操作外部。 函数式编程强调没有”副作用“，保持独立，所有功能只是返回新值，不做其他行为尤其是不修改外部变量。  不修改&quot;状态&quot;（state)  函数式编程要求使用参数保存状态,状态不能保存在变量中。  引用透明（Referential transparency）  函数运行不依赖外部变量或”状态“，只根据输入参数，任何时候只要参数相同，引用函数所得到的结果总是相同。  闭包（closure capture）  闭包函数： 声明在一个函数中的函数，叫闭包函数 闭包： 闭包函数总是可以访问其所在的外部函数中声明的参数和变量，即使在其外部函数被返回（寿命终结）了之后   问题： 局部变量常驻内存，不被释放造成内存泄漏
+ 高阶函数 接受一个或多个函数作为输入，输出一个函数。
+意义 代码简洁，开发迅速 编码中大量使用函数，减少代码重复。
+更方便的代码管理 每一个函数都是独立单元，有利与单元测试（unit test）和除错（debugging），以及模块化组合。
+易于并发编程 函数不用考虑”死锁“（deadlock），因为修改变量，不用担心被其他线程修改，可以将工作分摊到多个线程，部署”并发编程“（concurrency）。
+代码热升级 因为函数式编程无副作用，只要保证接口不变，内部实现是外部无关的。所以可以在运行状态下直接升级代码，不需要重启。"><meta itemprop="datePublished" content="2015-09-01T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2015-09-01T00:00:00+00:00" />
+<meta itemprop="wordCount" content="49">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="编程范式-函数式编程" />
+<meta property="og:description" content="函数式编程（Function Programming）  函数式编程将电脑运算看作是函数运算。 函数式编程的基础是λ 演算（ lambda caculus）。函数可以作为输入（参数）输出（返回值）。 函数式编程最古老的例子： 1958年创造出来的LISP。 #特性  函数是&quot;第一公民&quot;（first class） 函数可以作为变量
+”表达式“ not ”语句“  ”表达式“（expression）是运算过程，总有返回值 ”语句“（statement）是操作，无返回值。 函数式编程要求只使用表达式，不使用语句， 每一步运算都有返回值。  无”副作用“（side effect）  ”副作用“：函数内部与外部互动（eg:函数内部修改全局变量），操作外部。 函数式编程强调没有”副作用“，保持独立，所有功能只是返回新值，不做其他行为尤其是不修改外部变量。  不修改&quot;状态&quot;（state)  函数式编程要求使用参数保存状态,状态不能保存在变量中。  引用透明（Referential transparency）  函数运行不依赖外部变量或”状态“，只根据输入参数，任何时候只要参数相同，引用函数所得到的结果总是相同。  闭包（closure capture）  闭包函数： 声明在一个函数中的函数，叫闭包函数 闭包： 闭包函数总是可以访问其所在的外部函数中声明的参数和变量，即使在其外部函数被返回（寿命终结）了之后   问题： 局部变量常驻内存，不被释放造成内存泄漏
+ 高阶函数 接受一个或多个函数作为输入，输出一个函数。
+意义 代码简洁，开发迅速 编码中大量使用函数，减少代码重复。
+更方便的代码管理 每一个函数都是独立单元，有利与单元测试（unit test）和除错（debugging），以及模块化组合。
+易于并发编程 函数不用考虑”死锁“（deadlock），因为修改变量，不用担心被其他线程修改，可以将工作分摊到多个线程，部署”并发编程“（concurrency）。
+代码热升级 因为函数式编程无副作用，只要保证接口不变，内部实现是外部无关的。所以可以在运行状态下直接升级代码，不需要重启。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/software-programming/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2015-09-01T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-09-01T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="编程范式-函数式编程"/>
+<meta name="twitter:description" content="函数式编程（Function Programming）  函数式编程将电脑运算看作是函数运算。 函数式编程的基础是λ 演算（ lambda caculus）。函数可以作为输入（参数）输出（返回值）。 函数式编程最古老的例子： 1958年创造出来的LISP。 #特性  函数是&quot;第一公民&quot;（first class） 函数可以作为变量
+”表达式“ not ”语句“  ”表达式“（expression）是运算过程，总有返回值 ”语句“（statement）是操作，无返回值。 函数式编程要求只使用表达式，不使用语句， 每一步运算都有返回值。  无”副作用“（side effect）  ”副作用“：函数内部与外部互动（eg:函数内部修改全局变量），操作外部。 函数式编程强调没有”副作用“，保持独立，所有功能只是返回新值，不做其他行为尤其是不修改外部变量。  不修改&quot;状态&quot;（state)  函数式编程要求使用参数保存状态,状态不能保存在变量中。  引用透明（Referential transparency）  函数运行不依赖外部变量或”状态“，只根据输入参数，任何时候只要参数相同，引用函数所得到的结果总是相同。  闭包（closure capture）  闭包函数： 声明在一个函数中的函数，叫闭包函数 闭包： 闭包函数总是可以访问其所在的外部函数中声明的参数和变量，即使在其外部函数被返回（寿命终结）了之后   问题： 局部变量常驻内存，不被释放造成内存泄漏
+ 高阶函数 接受一个或多个函数作为输入，输出一个函数。
+意义 代码简洁，开发迅速 编码中大量使用函数，减少代码重复。
+更方便的代码管理 每一个函数都是独立单元，有利与单元测试（unit test）和除错（debugging），以及模块化组合。
+易于并发编程 函数不用考虑”死锁“（deadlock），因为修改变量，不用担心被其他线程修改，可以将工作分摊到多个线程，部署”并发编程“（concurrency）。
+代码热升级 因为函数式编程无副作用，只要保证接口不变，内部实现是外部无关的。所以可以在运行状态下直接升级代码，不需要重启。"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/software-programming/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">编程范式-函数式编程</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-09-01 00:00:00 &#43;0000 UTC">2015-09-01</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h1 id="函数式编程function-programming">函数式编程（Function Programming）</h1>
+<ul>
+<li>函数式编程将电脑运算看作是函数运算。 函数式编程的基础是λ 演算（ lambda caculus）。函数可以作为输入（参数）输出（返回值）。</li>
+<li>函数式编程最古老的例子： 1958年创造出来的LISP。
+#特性</li>
+</ul>
+<h2 id="函数是第一公民first-class">函数是&quot;第一公民&quot;（first class）</h2>
+<p>函数可以作为变量</p>
+<h2 id="表达式-not-语句">”表达式“ not ”语句“</h2>
+<ul>
+<li>”表达式“（expression）是运算过程，总有返回值</li>
+<li>”语句“（statement）是操作，无返回值。</li>
+<li>函数式编程要求只使用表达式，不使用语句， 每一步运算都有返回值。</li>
+</ul>
+<h2 id="无副作用side-effect">无”副作用“（side effect）</h2>
+<ul>
+<li>”副作用“：函数内部与外部互动（eg:函数内部修改全局变量），操作外部。</li>
+<li>函数式编程强调没有”副作用“，保持独立，所有功能只是返回新值，不做其他行为尤其是不修改外部变量。</li>
+</ul>
+<h2 id="不修改状态state">不修改&quot;状态&quot;（state)</h2>
+<ul>
+<li>函数式编程要求使用参数保存状态,状态不能保存在变量中。</li>
+</ul>
+<h2 id="引用透明referential-transparency">引用透明（Referential transparency）</h2>
+<ul>
+<li>函数运行不依赖外部变量或”状态“，只根据输入参数，任何时候只要参数相同，引用函数所得到的结果总是相同。</li>
+</ul>
+<h2 id="闭包closure-capture">闭包（closure capture）</h2>
+<ol>
+<li>闭包函数： 声明在一个函数中的函数，叫闭包函数</li>
+<li>闭包： 闭包函数总是可以访问其所在的外部函数中声明的参数和变量，即使在其外部函数被返回（寿命终结）了之后</li>
+</ol>
+<blockquote>
+<p>问题： 局部变量常驻内存，不被释放造成内存泄漏</p>
+</blockquote>
+<h2 id="高阶函数">高阶函数</h2>
+<p>接受一个或多个函数作为输入，输出一个函数。</p>
+<h1 id="意义">意义</h1>
+<h2 id="代码简洁开发迅速">代码简洁，开发迅速</h2>
+<p>编码中大量使用函数，减少代码重复。</p>
+<h2 id="更方便的代码管理">更方便的代码管理</h2>
+<p>每一个函数都是独立单元，有利与单元测试（<code>unit test</code>）和除错（<code>debugging</code>），以及模块化组合。</p>
+<h2 id="易于并发编程">易于并发编程</h2>
+<p>函数不用考虑”死锁“（<code>deadlock</code>），因为修改变量，不用担心被其他线程修改，可以将工作分摊到多个线程，部署”并发编程“（<code>concurrency</code>）。</p>
+<h2 id="代码热升级">代码热升级</h2>
+<p>因为函数式编程无副作用，只要保证接口不变，内部实现是外部无关的。所以可以在运行状态下直接升级代码，不需要重启。</p>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/software-programming/">Software Programming</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#函数是第一公民first-class">函数是&quot;第一公民&quot;（first class）</a></li>
+    <li><a href="#表达式-not-语句">”表达式“ not ”语句“</a></li>
+    <li><a href="#无副作用side-effect">无”副作用“（side effect）</a></li>
+    <li><a href="#不修改状态state">不修改&quot;状态&quot;（state)</a></li>
+    <li><a href="#引用透明referential-transparency">引用透明（Referential transparency）</a></li>
+    <li><a href="#闭包closure-capture">闭包（closure capture）</a></li>
+    <li><a href="#高阶函数">高阶函数</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#代码简洁开发迅速">代码简洁，开发迅速</a></li>
+    <li><a href="#更方便的代码管理">更方便的代码管理</a></li>
+    <li><a href="#易于并发编程">易于并发编程</a></li>
+    <li><a href="#代码热升级">代码热升级</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/" class="button left"><span>Erlang顺序编程错误处理</span></a>
+    
+    
+      <a href="/blog/erlang/erlang%E6%A8%A1%E5%9D%97%E5%92%8C%E5%87%BD%E6%95%B0/" class="button right"><span>Erlang模块和函数</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Software&#32;Programming
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

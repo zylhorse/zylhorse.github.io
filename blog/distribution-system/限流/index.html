@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>服务治理-限流 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="服务治理-限流">
+<meta itemprop="description" content="概念 当接口的访问频率或者并发请求数量超过系统的承受范围时， 需要考虑限流来保证接口的可用性；
+解决方案 通常策略是拒绝多余的访问或者让多余的访问排队等待；
+令牌桶 控制网络上数据的数目， 允许突发流量。系统会以一定的速度向桶里放入令牌， 如果有请求要被处理， 就去桶里面取一块令牌。 当桶里没有令牌可取时， 则拒绝请求。
+import (&quot;sync&quot;&quot;time&quot;)// This implement the token buckettype TokenBucket struct {rate int64 // the number of tokens are putted to bucket per secondcapacity int64 // the capacity of buckettokens int64 // current number of tokens in bucketlastTimestamp int64 // last timestamp of putted tokens to bucket.lock sync.Mutex}func (l *TokenBucket) Allow() bool {l."><meta itemprop="datePublished" content="2020-11-08T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-11-08T00:00:00+00:00" />
+<meta itemprop="wordCount" content="608">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="服务治理-限流" />
+<meta property="og:description" content="概念 当接口的访问频率或者并发请求数量超过系统的承受范围时， 需要考虑限流来保证接口的可用性；
+解决方案 通常策略是拒绝多余的访问或者让多余的访问排队等待；
+令牌桶 控制网络上数据的数目， 允许突发流量。系统会以一定的速度向桶里放入令牌， 如果有请求要被处理， 就去桶里面取一块令牌。 当桶里没有令牌可取时， 则拒绝请求。
+import (&quot;sync&quot;&quot;time&quot;)// This implement the token buckettype TokenBucket struct {rate int64 // the number of tokens are putted to bucket per secondcapacity int64 // the capacity of buckettokens int64 // current number of tokens in bucketlastTimestamp int64 // last timestamp of putted tokens to bucket.lock sync.Mutex}func (l *TokenBucket) Allow() bool {l." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/distribution-system/%E9%99%90%E6%B5%81/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2020-11-08T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-11-08T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="服务治理-限流"/>
+<meta name="twitter:description" content="概念 当接口的访问频率或者并发请求数量超过系统的承受范围时， 需要考虑限流来保证接口的可用性；
+解决方案 通常策略是拒绝多余的访问或者让多余的访问排队等待；
+令牌桶 控制网络上数据的数目， 允许突发流量。系统会以一定的速度向桶里放入令牌， 如果有请求要被处理， 就去桶里面取一块令牌。 当桶里没有令牌可取时， 则拒绝请求。
+import (&quot;sync&quot;&quot;time&quot;)// This implement the token buckettype TokenBucket struct {rate int64 // the number of tokens are putted to bucket per secondcapacity int64 // the capacity of buckettokens int64 // current number of tokens in bucketlastTimestamp int64 // last timestamp of putted tokens to bucket.lock sync.Mutex}func (l *TokenBucket) Allow() bool {l."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/distribution-system/%E9%99%90%E6%B5%81/">服务治理-限流</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2020-11-08 00:00:00 &#43;0000 UTC">2020-11-08</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="概念">概念</h2>
+<p>当接口的访问频率或者并发请求数量超过系统的承受范围时， 需要考虑限流来保证接口的可用性；</p>
+<h2 id="解决方案">解决方案</h2>
+<p>通常策略是拒绝多余的访问或者让多余的访问排队等待；</p>
+<h3 id="令牌桶">令牌桶</h3>
+<p>控制网络上数据的数目， 允许突发流量。系统会以一定的速度向桶里放入令牌， 如果有请求要被处理， 就去桶里面取一块令牌。
+当桶里没有令牌可取时， 则拒绝请求。</p>
+<pre tabindex="0"><code>import (
+	&quot;sync&quot;
+	&quot;time&quot;
+)
+
+// This implement the token bucket
+
+type TokenBucket struct {
+	rate          int64 // the number of tokens are putted to bucket per second
+	capacity      int64 // the capacity of bucket
+	tokens        int64 // current number of tokens in bucket
+	lastTimestamp int64 // last timestamp of putted tokens to bucket.
+
+	lock sync.Mutex
+}
+
+func (l *TokenBucket) Allow() bool {
+	l.lock.Lock()
+	defer l.lock.Unlock()
+
+	// first putting tokens to bucket
+	now := time.Now().Unix()
+	l.tokens = l.tokens + (now-l.lastTimestamp)*l.rate
+	// the number of tokens in bucket can not more than the capacity
+	if l.tokens &gt; l.capacity {
+		l.tokens = l.capacity
+	}
+	l.lastTimestamp = now
+	// 1. Get tokens when there are tokens left in the bucket.
+    // 2. It can not get tokens when the bucket is empty.
+	if l.tokens &gt; 0 {
+		l.tokens--
+		return true
+	} else {
+		return false
+	}
+}
+
+func (l *TokenBucket) Set(r, c int64) {
+	l.rate = r
+	l.capacity = c
+	l.tokens = 0
+	l.lastTimestamp = time.Now().Unix()
+}
+</code></pre><h3 id="redis令牌桶">redis令牌桶</h3>
+<pre tabindex="0"><code>var tokenRateLimit = redis.NewScript(2, `
+	local tokens_key = KEYS[1]
+	local timestamp_key = KEYS[2]
+	--redis.log(redis.LOG_WARNING, &quot;tokens_key &quot; .. tokens_key)
+	
+	local rate = tonumber(ARGV[1])
+	local capacity = tonumber(ARGV[2])
+	local now = tonumber(ARGV[3])
+	local requested = tonumber(ARGV[4])
+	
+	local fill_time = capacity/rate
+	local ttl = math.floor(fill_time*2)
+	
+	--redis.log(redis.LOG_WARNING, &quot;rate &quot; .. ARGV[1])
+	--redis.log(redis.LOG_WARNING, &quot;capacity &quot; .. ARGV[2])
+	--redis.log(redis.LOG_WARNING, &quot;now &quot; .. ARGV[3])
+	--redis.log(redis.LOG_WARNING, &quot;requested &quot; .. ARGV[4])
+	--redis.log(redis.LOG_WARNING, &quot;filltime &quot; .. fill_time)
+	--redis.log(redis.LOG_WARNING, &quot;ttl &quot; .. ttl)
+	
+	local last_tokens = tonumber(redis.call(&quot;get&quot;, tokens_key))
+	if last_tokens == nil then
+	  last_tokens = capacity
+	end
+	--redis.log(redis.LOG_WARNING, &quot;last_tokens &quot; .. last_tokens)
+	
+	local last_refreshed = tonumber(redis.call(&quot;get&quot;, timestamp_key))
+	if last_refreshed == nil then
+	  last_refreshed = 0
+	end
+	--redis.log(redis.LOG_WARNING, &quot;last_refreshed &quot; .. last_refreshed)
+	
+	local delta = math.max(0, now-last_refreshed)
+	local filled_tokens = math.min(capacity, last_tokens+(delta*rate))
+	local allowed = filled_tokens &gt;= requested
+	local new_tokens = filled_tokens
+	local allowed_num = 0
+	if allowed then
+	  new_tokens = filled_tokens - requested
+	  allowed_num = 1
+	end
+	
+	--redis.log(redis.LOG_WARNING, &quot;delta &quot; .. delta)
+	--redis.log(redis.LOG_WARNING, &quot;filled_tokens &quot; .. filled_tokens)
+	--redis.log(redis.LOG_WARNING, &quot;allowed_num &quot; .. allowed_num)
+	--redis.log(redis.LOG_WARNING, &quot;new_tokens &quot; .. new_tokens)
+	
+	if ttl &gt; 0 then
+	  redis.call(&quot;setex&quot;, tokens_key, ttl, new_tokens)
+	  redis.call(&quot;setex&quot;, timestamp_key, ttl, now)
+	end
+	
+	-- return { allowed_num, new_tokens, capacity, filled_tokens, requested, new_tokens }
+	return { allowed_num, new_tokens }
+`)
+
+// params:
+//   1. the key name of token: used for get current number of tokens in bucket
+//   2. the key name of timestamp: used for get last timestamp of putted tokens
+//   3. the rate: 
+//   4. the capacity:
+//   5. now timestamp:
+//   6. the number of request tokens:
+x, err := redis.Int64s(tokenRateLimit.Do(redisPool.Get(), &quot;key:V&quot;, &quot;key:T&quot;, 100, 100, time.Now().Unix(), 1))
+
+</code></pre><h3 id="漏桶leaky-bucket">漏桶（leaky bucket）</h3>
+<p>控制数据注入到网络的速率， 平滑网络中的突发流量。按照一定的速率处理数据请求， 如果漏桶溢出，则超出的请求被舍弃。</p>
+<pre tabindex="0"><code>
+import (
+	&quot;math&quot;
+	&quot;sync&quot;
+	&quot;time&quot;
+)
+
+type LeakyBucket struct {
+	rate          float64 // the speed of stream out from bucket
+	capacity      float64 // the capacity of bucket
+	water         float64 // the current volume of water in bucket
+	lastTimestamp int64   // the last timestamp of stream out from bucket
+
+	lock sync.Mutex
+}
+
+func (l *LeakyBucket) Allow() bool {
+	l.lock.Lock()
+	defer l.lock.Unlock()
+
+	now := time.Now().UnixNano() / 1e6
+	// first stream out from bucket
+	eclipse := float64((now - l.lastTimestamp)) * l.rate / 1000
+	l.water = l.water - eclipse
+	// the volume of water can be empty
+	l.water = math.Max(0, l.water)
+	l.lastTimestamp = now
+	// 1. Stream in when the volume of water less than the capacity of bucket.
+    // 2. It can not stream in when the bucket is full of water
+	if (l.water + 1) &lt; l.capacity {
+		l.water++
+		return true
+	} else {
+		return false
+	}
+}
+
+func (l *LeakyBucket) Set(r, c float64) {
+	l.rate = r
+	l.capacity = c
+	l.water = 0
+	l.lastTimestamp = time.Now().UnixNano() / 1e6
+}
+</code></pre>
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/distribution-system/">Distribution System</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#概念">概念</a></li>
+    <li><a href="#解决方案">解决方案</a>
+      <ul>
+        <li><a href="#令牌桶">令牌桶</a></li>
+        <li><a href="#redis令牌桶">redis令牌桶</a></li>
+        <li><a href="#漏桶leaky-bucket">漏桶（leaky bucket）</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/log-system/docker%E5%AE%89%E8%A3%85nsqbeat/" class="button left"><span>Docker部署和配置nsqbeat</span></a>
+    
+    
+      <a href="/blog/golang/grpc/quick-start/" class="button right"><span>gRPC-Go快速入门</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Distribution&#32;System
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Erlang顺序编程补遗 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Erlang顺序编程补遗">
+<meta itemprop="description" content="apply  内置函数apply(mod,func,[arg1,arg2,arg3,&hellip;,argn])。会将参数arg1,arg2,&hellip;,argn应用到模块mod里的函数func上。它等价于：mod:func(arg1,arg2,&hellip;,argn)。 与直接调用函数的区别在于模块名和函数名可以动态的计算得出。 应当尽量避免使用apply。如果使用apply对函数进行调用，许多分析工具就无法得知发生了什么，一些特定的编译器优化也不能进行。  算术表达式  操作符	描述	参数类型	优先级&#43;X	正数	整数	1-X	负数	整数	1X*Y	X乘以Y	整数	2X/Y	X除以Y，浮点数除法	整数	2bnot X	对X执行按位取反	整数	2X div Y	X除以Y的商，整数	整数	2X rem Y	X除以Y的余数	整数	2X band Y	X和Y位与	整数	2X bor Y	X和Y位或	整数	3X bxor Y	X与Y按位异或	整数	3X bsl N	X向左位移N个算术位	整数	3X bsr N	X向右位移N个算术位	整数	3X &#43; Y	X 加 Y	整数	3X - Y	X 减 Y	整数	3 元数  一个函数的元数(arity)是该函数所拥有的参数数量。在Erlang里，同一个模块里的两个名称相同，元数不同的函数是完全不同的函数。 根据惯例Erlang程序员经常将名称相同、元数不同的函数作为辅助函数使用。我们通常通过不导出辅助函数，来隐藏他们。  模块属性  模块属性的语法是 -AtomTag(&hellip;),它们被用来定义文件的某些属性。 模块属性包括预定义型和用户定义型。 预定义型：   模块属性有着预先定义的含义，必须放置在任何函数定义之前。"><meta itemprop="datePublished" content="2015-09-21T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2015-09-21T00:00:00+00:00" />
+<meta itemprop="wordCount" content="355">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Erlang顺序编程补遗" />
+<meta property="og:description" content="apply  内置函数apply(mod,func,[arg1,arg2,arg3,&hellip;,argn])。会将参数arg1,arg2,&hellip;,argn应用到模块mod里的函数func上。它等价于：mod:func(arg1,arg2,&hellip;,argn)。 与直接调用函数的区别在于模块名和函数名可以动态的计算得出。 应当尽量避免使用apply。如果使用apply对函数进行调用，许多分析工具就无法得知发生了什么，一些特定的编译器优化也不能进行。  算术表达式  操作符	描述	参数类型	优先级&#43;X	正数	整数	1-X	负数	整数	1X*Y	X乘以Y	整数	2X/Y	X除以Y，浮点数除法	整数	2bnot X	对X执行按位取反	整数	2X div Y	X除以Y的商，整数	整数	2X rem Y	X除以Y的余数	整数	2X band Y	X和Y位与	整数	2X bor Y	X和Y位或	整数	3X bxor Y	X与Y按位异或	整数	3X bsl N	X向左位移N个算术位	整数	3X bsr N	X向右位移N个算术位	整数	3X &#43; Y	X 加 Y	整数	3X - Y	X 减 Y	整数	3 元数  一个函数的元数(arity)是该函数所拥有的参数数量。在Erlang里，同一个模块里的两个名称相同，元数不同的函数是完全不同的函数。 根据惯例Erlang程序员经常将名称相同、元数不同的函数作为辅助函数使用。我们通常通过不导出辅助函数，来隐藏他们。  模块属性  模块属性的语法是 -AtomTag(&hellip;),它们被用来定义文件的某些属性。 模块属性包括预定义型和用户定义型。 预定义型：   模块属性有着预先定义的含义，必须放置在任何函数定义之前。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E8%A1%A5%E9%81%97/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2015-09-21T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-09-21T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Erlang顺序编程补遗"/>
+<meta name="twitter:description" content="apply  内置函数apply(mod,func,[arg1,arg2,arg3,&hellip;,argn])。会将参数arg1,arg2,&hellip;,argn应用到模块mod里的函数func上。它等价于：mod:func(arg1,arg2,&hellip;,argn)。 与直接调用函数的区别在于模块名和函数名可以动态的计算得出。 应当尽量避免使用apply。如果使用apply对函数进行调用，许多分析工具就无法得知发生了什么，一些特定的编译器优化也不能进行。  算术表达式  操作符	描述	参数类型	优先级&#43;X	正数	整数	1-X	负数	整数	1X*Y	X乘以Y	整数	2X/Y	X除以Y，浮点数除法	整数	2bnot X	对X执行按位取反	整数	2X div Y	X除以Y的商，整数	整数	2X rem Y	X除以Y的余数	整数	2X band Y	X和Y位与	整数	2X bor Y	X和Y位或	整数	3X bxor Y	X与Y按位异或	整数	3X bsl N	X向左位移N个算术位	整数	3X bsr N	X向右位移N个算术位	整数	3X &#43; Y	X 加 Y	整数	3X - Y	X 减 Y	整数	3 元数  一个函数的元数(arity)是该函数所拥有的参数数量。在Erlang里，同一个模块里的两个名称相同，元数不同的函数是完全不同的函数。 根据惯例Erlang程序员经常将名称相同、元数不同的函数作为辅助函数使用。我们通常通过不导出辅助函数，来隐藏他们。  模块属性  模块属性的语法是 -AtomTag(&hellip;),它们被用来定义文件的某些属性。 模块属性包括预定义型和用户定义型。 预定义型：   模块属性有着预先定义的含义，必须放置在任何函数定义之前。"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E8%A1%A5%E9%81%97/">Erlang顺序编程补遗</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2015-09-21 00:00:00 &#43;0000 UTC">2015-09-21</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h1 id="apply">apply</h1>
+<ul>
+<li>内置函数apply(mod,func,[arg1,arg2,arg3,&hellip;,argn])。会将参数arg1,arg2,&hellip;,argn应用到模块mod里的函数func上。它等价于：mod:func(arg1,arg2,&hellip;,argn)。</li>
+<li>与直接调用函数的区别在于模块名和函数名可以动态的计算得出。</li>
+<li>应当尽量避免使用apply。如果使用apply对函数进行调用，许多分析工具就无法得知发生了什么，一些特定的编译器优化也不能进行。</li>
+</ul>
+<h1 id="算术表达式">算术表达式</h1>
+<pre><code> 操作符	描述	参数类型	优先级
++X	正数	整数	1
+-X	负数	整数	1
+X*Y	X乘以Y	整数	2
+X/Y	X除以Y，浮点数除法	整数	2
+bnot X	对X执行按位取反	整数	2
+X div Y	X除以Y的商，整数	整数	2
+X rem Y	X除以Y的余数	整数	2
+X band Y	X和Y位与	整数	2
+X bor Y	X和Y位或	整数	3
+X bxor Y	X与Y按位异或	整数	3
+X bsl N	X向左位移N个算术位	整数	3
+X bsr N	X向右位移N个算术位	整数	3
+X + Y	X 加 Y	整数	3
+X - Y	X 减 Y	整数	3
+</code></pre>
+<h1 id="元数">元数</h1>
+<ul>
+<li>一个函数的元数(arity)是该函数所拥有的参数数量。在Erlang里，同一个模块里的两个名称相同，元数不同的函数是完全不同的函数。</li>
+<li>根据惯例Erlang程序员经常将名称相同、元数不同的函数作为辅助函数使用。我们通常通过不导出辅助函数，来隐藏他们。</li>
+</ul>
+<h1 id="模块属性">模块属性</h1>
+<ul>
+<li>模块属性的语法是 -AtomTag(&hellip;),它们被用来定义文件的某些属性。</li>
+<li>模块属性包括预定义型和用户定义型。</li>
+<li>预定义型：</li>
+</ul>
+<blockquote>
+<p>模块属性有着预先定义的含义，必须放置在任何函数定义之前。</p>
+</blockquote>
+<ul>
+<li>-module(modname).：模块生命。modname必须是一个原子。此属性必须是文件的第一个属性。如果不这么做，自动代码加载就会失效。</li>
+<li>-import(Mod,[Name1/Arity1,Name2/Arity2],&hellip;).：导入模块属性。import声明导入Mod模块参数为Arity1的函数Name1和参数为Arity2的函数Name2。一旦导入其它模块的函数，则在本模块中调用的时候就无需指定模块名了。</li>
+<li>-export([Name1/Arity1,Name2/Arity2,&hellip;]).：导出当前模块里的Name1/Arity1和Name2/Arity2等函数。函数只有被导出后才能在其它模块被调用。</li>
+<li>-compile(Options).：添加Options到编译器选项列表中。Options可以是单个编译选项，也可以是一个编译器选项列表。</li>
+<li>-vsn(Version).：指定模块的版本号。Version可以是任何字面数据类型。Version值没有特定语法和标识，但可以用于分析程序或者作为说明文档。</li>
+<li>用户定义的模块属性：</li>
+<li>－SomeTag(Value).：SomeTag必须是一个原子，而Value必须是字面数据类型。模块属性的值会被编译进模块，可以在运行时提取。</li>
+<li>提取模块属性信息命令Mod:module_info(X). ：X可以是exports、imports、attributes和compile中的一个，可以返回模块相关的单个属性。</li>
+</ul>
+<blockquote>
+<p>注：调用Mod:module_info(X).方法必须将Mod编译加载到Erlang虚拟机中。也可以使用beam_lib:chunks(Mod.beam,X).可以在不载入代码模块的情况下提取模块里的属性数据。</p>
+</blockquote>
+<h1 id="块表达式">块表达式</h1>
+<ul>
+<li>块表达式用于一下情景：代码某处的Erlang语法要求单个表达式，但我们想使用一个表达式序列。例如在列表推导中[X || &hellip;]，语法要求E是单个表达式，但也许我们想在E里面做不止一件事情。</li>
+</ul>
+<pre tabindex="0"><code>begin
+    Expr1,
+    ...,
+    ExprN
+end
+
+我们可以用块表达式归组表达式序列。begin ... end的值就是最后一个表达式的值。
+</code></pre><h1 id="布尔值">布尔值</h1>
+<pre><code>Erlang没有单独的布尔值类型。不过原子true和false具有特殊含义，可以用来表示布尔值。与此同时，让你的函数名称能反映出它们会返回布尔值会是个好主意。
+</code></pre>
+<h1 id="布尔表达式">布尔表达式</h1>
+<pre><code>not B.     逻辑非
+A and B.    逻辑与
+A or B.    逻辑或
+A xor B.    逻辑异或
+</code></pre>
+<h1 id="字符集">字符集</h1>
+<ul>
+<li>从Erlang的R16B版本开始，Erlang的源码文件都采用UTF-8字符集编码，这之前是ISO-8859-1(Latin-1)字符集。这意味着所有UTF-8打印字符都能在源码文件里面使用，无需任何转义。</li>
+<li>Erlang内部没有字符串数据类型。Erlang使用整数列表表示字符串。用整数列表来表示Unicode字符串是毫无问题的。</li>
+</ul>
+<h1 id="注释">注释</h1>
+<ul>
+<li>Erlang的注释从一个%号开始，一直延伸到行尾。Erlang里面没有块注释。</li>
+</ul>
+<blockquote>
+<p>注：代码中出现双百分号（%%），能够被Erlang模式的Emacs编辑器识别，并启动注释行自动缩进。</p>
+</blockquote>
+<h1 id="动态代码载入">动态代码载入</h1>
+<ul>
+<li>动态代码载入是内建于Erlang核心的最惊人特性之一。</li>
+<li>思路：每当调用SomeMod:SomeFunc(&hellip;)时，调用的总是最新版模块里的函数。哪怕代码在模块里运行时，重新编译该模块也是如此。</li>
+<li>例如modA:loop()里面调用了modB:hook(),如果modB重新编译，则modA:loop()则调用最新编译的模块modB。</li>
+<li>在任一时刻，Erlang允许一个模块的两个版本同时运行：当前版和旧版。重新编译某个模块时，任何运行旧版代码的进程都会被终止。当前版本成为旧版，新编译的版本成为当前版。</li>
+</ul>
+<h1 id="预处理器">预处理器</h1>
+<ul>
+<li>Erlang模块在编译前会自动由Erlang的预处理器进行处理。预处理器会展开源文件里所有的宏，并插入必要的文件。\</li>
+<li>要查看SomeMod.erl模块的预处理结果，直接在shell中执行以下命令：$ erlc -P SomeMod.erl</li>
+</ul>
+<h1 id="转义序列">转义序列</h1>
+<p>在字符串和带引号的原子里使用转义序列来输入任何不可被打印的字符。</p>
+<h1 id="表达式和表达式序列">表达式和表达式序列</h1>
+<ul>
+<li>在Erlang里，任何可以执行并生成一个值的事物都被称为表达式。这意味着catch、if和try&hellip;catch这些是表达式。而记录声明和模块属性这些不能求值，所以他们不是表达式。</li>
+<li>表达式序列：是一系列由逗号分割的表达式。表达式序列的值被定义为序列最后那个表达式的值。</li>
+</ul>
+<h1 id="函数引用">函数引用　</h1>
+<pre><code>fun LocalFunc/Arity
+引用当前模块里参数为Arity的本地函数LocalFunc。
+fun Mod:RemoteFunc/Arity
+引用Mod模块里参数为Arity的外部函数RemoteFunc。
+注：包含模块名的函数引用提供了动态代码升级的切换点。
+</code></pre>
+<h1 id="包含文件">包含文件</h1>
+<ul>
+<li>下面的语法用来包含文件：</li>
+<li>-include(Filename).
+按照erlang惯例，包含文件的扩展名为.hrl。</li>
+</ul>
+<blockquote>
+<p>FileName应当包含一个绝对或相对路径，使预处理器能找到正确文件。</p>
+</blockquote>
+<ul>
+<li>-include_lib(Name).
+包含库的头文件。</li>
+</ul>
+<blockquote>
+<p>包含文件经常有记录的定义，如果许多模块需要共享通用的记录定义，就会把它们放到包含文件里，在由所有需要这些定义的模块包含此文件。</p>
+</blockquote>
+<h1 id="列表操作">列表操作</h1>
+<ul>
+<li>++ 和 &ndash;是用于列表添加和移除的中缀操作符。</li>
+<li>A ++ B使A和B相加。</li>
+<li>A &ndash; B从列表A中移除列表B。移除的意思是B中所有元素都会从A里面移除。如果符号X 在B里面出现了K次，那么A只会移除前K个X。</li>
+</ul>
+<pre tabindex="0"><code>举个例子：
+1&gt;[a,b,c,a,b,a] -- [a,a] .
+[b,c,b,a]
+++也可以用在模式匹配中：
+f(&quot;begin&quot; ++ T) -&gt; ....
+f(&quot;end&quot; ++ T) -&gt; ....
+子句可以扩展成[$b,$e,$g,$i,$n | T]。
+</code></pre><h1 id="宏">宏</h1>
+<ul>
+<li>Erlang的宏以如下方式添加。</li>
+</ul>
+<pre tabindex="0"><code>-define(Constant,Replacement).
+-define(Func(Var1,Var2,...,Var), Replacement).
+</code></pre><ul>
+<li>当Erlang的预处理器epp碰到一个?MacroName形式的表达式时，就会展开这个宏。</li>
+<li>另外一些宏提供了当前模块的一些信息：</li>
+</ul>
+<pre tabindex="0"><code>?FILE展开成当前文件名
+?MODULE展开成当前模块名
+?LINE展开成当前行号
+</code></pre><ul>
+<li>宏控制：</li>
+</ul>
+<pre tabindex="0"><code>-undef(Macro).    取消Macro的宏定义，此后无法调用该宏。
+-ifdef(Macro).    仅当Macro宏定义过，才会执行后面的代码。
+-else.　可用于ifdef或ifndef语句后面。如果条件为否则执行else后面代码。
+-endif.　标记ifdef或ifndef语句的结尾。
+</code></pre><p>注：erl命令行　1&gt;c(mod.erl,{d,debug_flag}). 可以添加编译标志元组。</p>
+<h1 id="模式的匹配操作符">模式的匹配操作符</h1>
+<ul>
+<li>模式匹配操作符可以用在模式的任何位置。</li>
+</ul>
+<pre tabindex="0"><code>func([{tag1,A,B} | T) -&gt;
+    ...,
+    f(...,{tag1,A,B},...),
+    ....
+</code></pre><ul>
+<li>我们在第一行模式匹配了数据类型{tag1,A,B}，在第三行用参数{tag1,A,B}调用了函数f。这么做时，系统会重建数据类型{tag1,A,B}。一种更高效的且不易出错的方法是将参数指派给一个变量Z，然后将它传递给函数f。如下：</li>
+</ul>
+<pre tabindex="0"><code>func([{tag1,A,B} = Z | T) -&gt;
+        ...,
+        f(...,Z,...),
+        ....
+</code></pre><h1 id="整数">整数</h1>
+<ul>
+<li>整数的位数只受限于可用内存。</li>
+<li>传统写法：　１、23423。</li>
+<li>K 进制写法： 2#1011、8#76234、16#abcf23。</li>
+<li>$写法：$C这种写法代表了ASCII字符C的整数代码。</li>
+</ul>
+<h1 id="浮点数">浮点数</h1>
+<p>一个浮点数由五步分组成：一个可选的正负号，一个整数部分，一个小数点，一个分数部分，一个可选的指数部分。</p>
+<blockquote>
+<p>eg: 1.0     3.1415926    -2.3e+6    23.56E-27</p>
+</blockquote>
+<ul>
+<li>解析后的浮点数在系统内部使用IEEE754的64位格式标示。绝对值在10^-323 到10^308范围内的实数可以用Erlang的浮点数表示。</li>
+</ul>
+<h1 id="操作符优先级">操作符优先级</h1>
+<pre tabindex="0"><code>操作符	结合形
+：	
+＃	
+(一元)＋、(一元)-、bnot、not	
+/、*、div、rem、band、and	左结合
++、-、bor、bxor、bsl、bsr、or、xor	左结合
+++、--	右结合
+==、/=、=&lt;、&lt;、&gt;=、&gt;、=:=、=/=	
+andalso	
+orelse	
+=!	右结合
+catch
+</code></pre><h1 id="进程字典">进程字典</h1>
+<ul>
+<li>每个Erlang进程都有一个被称为进程字典（process directory）的私有数据存储区。进程字典是一个关联数组，由若干键和值组成。每个键只有一个值。
+-这个字典可以用下列内置函数进行操作。</li>
+</ul>
+<ol>
+<li>put(Key,Value) -&gt;OldValue，给字典添加一个Key,Value组合。put的值是OldValue，也就是Key之前关联的值，如果之前没有则返回undefined。</li>
+<li>get(Key) -&gt;Value，查找Key的值。如果字典里存在Key，则返回Key对应的Value，不存在则返回undefined。</li>
+<li>get()    返回整个字典</li>
+<li>get_keys(Value)    获取所有值为Value的Key列表。</li>
+<li>erase(Key)，删除Key对应的关联值。</li>
+<li>erase()，删除整个字典。</li>
+</ol>
+<ul>
+<li>进程字典里的变量和命令式编程语言里传统可变变量的行为类似。如果使用进程字典，你的代码就不再是无副作用的了。使用非破坏性变量的好处不复存在，因此少用进程字典。</li>
+<li>如果用进程字典来保存“一次性写入”的变量，不会去改变，　那么将变量写入到进程字典中是可以接受的。</li>
+</ul>
+<h1 id="引用">引用</h1>
+<p>引用是一种全局唯一的Erlang数据类型。由内置函数erlang:make_ref().引用的用途是创建独一无二的标签，把它存放在数据里，并在后面用于比较是否相等。</p>
+<h1 id="短路布尔表达式">短路布尔表达式</h1>
+<ul>
+<li>短路布尔表达式是一种只在必要时才对参数求值的表达式。短路布尔表达式有两种：</li>
+<li>Expr1 orelse Expr2:</li>
+</ul>
+<blockquote>
+<p>它会首先执行Expr1，如果Expr1的执行结果是true，Expr2就不用执行。如果Expr1的结果是false，则会执行Expr2。</p>
+</blockquote>
+<ul>
+<li>Expr1 andelse Expr2:</li>
+</ul>
+<blockquote>
+<p>它会首先执行Expr1,如果Expr1的执行结果是false，Expr2就不用执行。如果Exp1的结果是true，则会执行Expr2。</p>
+</blockquote>
+<ul>
+<li>注：对应的布尔表达式（A or B, A and B）,两边的参数都会被执行，即使表达式的真值只需要第一个表达式的值就能确定，也是如此。</li>
+</ul>
+<h1 id="比较数据类型">比较数据类型</h1>
+<p>-所有数据类型的全排序：</p>
+<blockquote>
+<p>number &lt; atom &lt; reference &lt; fun &lt; port &lt; pid &lt; tuple(and record) &lt; map &lt; list &lt; binary</p>
+</blockquote>
+<ul>
+<li>有了所有数据类型的全排序，意味着可以对任何类型的数据列表进行排序，以及根据键的排序顺序构建高效的数据访问方式。</li>
+<li>所有类型比较操作符(除了=:=和=/=)在参数权威数字时具有以下行为：</li>
+<li>如果一个参数是整数而另一个是浮点数，那么整数会先转换成浮点数，然后再进行比较；</li>
+<li>如果两个参数都是整数或浮点数，则按原样使用，不进行转换。</li>
+<li>注：函数的子句匹配总是意味着精确的模式匹配，所以如果定义了一个fun F=fun(12) -&gt; &hellip; end　，那么试图执行F(12.0)就会出错。</li>
+</ul>
+<h1 id="下划线变量">下划线变量</h1>
+<ul>
+<li>_VarName这种特殊的语法代表一个常规变量，而不是匿名变量。当某个变量在子句里只使用一次时，编译器会生成一个警告，但如果这个变量使用下划线命名，就不会有错误信息。</li>
+<li>下划线变量的两种主要用途：</li>
+<li>命名一个我们不打算使用的变量。例如：相比较open(File,_), open(File,_Mode)的可读性更高。</li>
+<li>用于调试。定义调试用变量，在实际发布代码中注释调试信息后，该变量不在其它地方使用也不会报警高。</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/erlang/">Erlang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents"></nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/erlang/%E6%96%87%E6%9C%AC%E7%BC%96%E7%A8%8B/" class="button left"><span>Erlang文本编程</span></a>
+    
+    
+      <a href="/blog/erlang/erlang%E9%A1%BA%E5%BA%8F%E7%BC%96%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/" class="button right"><span>Erlang顺序编程错误处理</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Erlang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

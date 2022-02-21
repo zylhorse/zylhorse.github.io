@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Protocol Buffer-Go FAQ - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Protocol Buffer-Go FAQ">
+<meta itemprop="description" content="版本  Versions
+ github.com/golang/protobuf和google.golang.org/protobuf有什么区别?
+github.com/golang/protobuf 模块是原始的Go protocol buffer API
+google.golang.org/protobuf 模块是Go protocol buffer API的更新版本, 旨在更加简洁、易用和安全。 更新API的主要特性是支持反射， 以及将面向用户的API与底层实现分离。
+推荐在新代码中使用google.golang.org/protobuf。
+github.com/golang/protobuf的v1.4.0版本及更高版本封装了新的实现，并且允许程序逐步的采用新的API。 例如, github.com/golang/protobuf/ptypes中定义的知名类型在新模块中只是简单的别名。因此， google.golang.org/protobuf/types/known/emptypb和github.com/golang/protobuf/ptypes/empty是可以互换使用的。
+proto1,proto2,proto3有什么区别? 这些都是protocol buffer语言的修订版。 它不同于protobufs的Go 实现。
+ proto3是当前版本。这是该语言最常用的版本。我们鼓励新代码使用proto3。 proto2是旧版本。尽管被proto3取代，但proto2仍然受到完全支持。 proto1是废弃版本。它从未以开源的形式发布。有关proto1的更多信息，请参阅FAQ。  有几种不同的Message类型。我应该用哪个？
+ &ldquo;google.golang.org/protobuf/proto&rdquo;.Message是接口类型， 当前版本的protocol buffer编译器生成的所有message都要实现它。操作任意message的方法，如proto.Marshal或proto.Clone， 接收或返回该值。 &ldquo;google.golang.org/protobuf/reflect/protoreflect&rdquo;.Message 是一个描述message反射视图的接口类型。
+调用proto.Message的ProtoReflect方法，获取protoreflect.Message。 &ldquo;google.golang.org/protobuf/reflect/protoreflect&rdquo;.ProtoMessage 是&quot;google.golang.org/protobuf/proto&quot;.Message的别名。这两种类型是可以互换的。 &ldquo;github.com/golang/protobuf/proto&rdquo;.Message 是由遗留的Go Protocol Buffer API定义的接口类型。所有生成的message都需要实现该接口，但是该接口没有描述期望从这些message中得到的行为。 新代码应该避免使用这个类型。  常见问题  Common problems
+ &ldquo;go install&rdquo;: working directory is not part of a module
+你已经设置环境变量GO111MODULE=on，并且在模块目录之外运行go install命令。
+设置GO111MODULE=auto，或者取消设置该环境变量。
+constant -1 overflows protoimpl."><meta itemprop="datePublished" content="2020-10-28T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-10-28T00:00:00+00:00" />
+<meta itemprop="wordCount" content="187">
+<meta itemprop="keywords" content="Protocol Buffers," /><meta property="og:title" content="Protocol Buffer-Go FAQ" />
+<meta property="og:description" content="版本  Versions
+ github.com/golang/protobuf和google.golang.org/protobuf有什么区别?
+github.com/golang/protobuf 模块是原始的Go protocol buffer API
+google.golang.org/protobuf 模块是Go protocol buffer API的更新版本, 旨在更加简洁、易用和安全。 更新API的主要特性是支持反射， 以及将面向用户的API与底层实现分离。
+推荐在新代码中使用google.golang.org/protobuf。
+github.com/golang/protobuf的v1.4.0版本及更高版本封装了新的实现，并且允许程序逐步的采用新的API。 例如, github.com/golang/protobuf/ptypes中定义的知名类型在新模块中只是简单的别名。因此， google.golang.org/protobuf/types/known/emptypb和github.com/golang/protobuf/ptypes/empty是可以互换使用的。
+proto1,proto2,proto3有什么区别? 这些都是protocol buffer语言的修订版。 它不同于protobufs的Go 实现。
+ proto3是当前版本。这是该语言最常用的版本。我们鼓励新代码使用proto3。 proto2是旧版本。尽管被proto3取代，但proto2仍然受到完全支持。 proto1是废弃版本。它从未以开源的形式发布。有关proto1的更多信息，请参阅FAQ。  有几种不同的Message类型。我应该用哪个？
+ &ldquo;google.golang.org/protobuf/proto&rdquo;.Message是接口类型， 当前版本的protocol buffer编译器生成的所有message都要实现它。操作任意message的方法，如proto.Marshal或proto.Clone， 接收或返回该值。 &ldquo;google.golang.org/protobuf/reflect/protoreflect&rdquo;.Message 是一个描述message反射视图的接口类型。
+调用proto.Message的ProtoReflect方法，获取protoreflect.Message。 &ldquo;google.golang.org/protobuf/reflect/protoreflect&rdquo;.ProtoMessage 是&quot;google.golang.org/protobuf/proto&quot;.Message的别名。这两种类型是可以互换的。 &ldquo;github.com/golang/protobuf/proto&rdquo;.Message 是由遗留的Go Protocol Buffer API定义的接口类型。所有生成的message都需要实现该接口，但是该接口没有描述期望从这些message中得到的行为。 新代码应该避免使用这个类型。  常见问题  Common problems
+ &ldquo;go install&rdquo;: working directory is not part of a module
+你已经设置环境变量GO111MODULE=on，并且在模块目录之外运行go install命令。
+设置GO111MODULE=auto，或者取消设置该环境变量。
+constant -1 overflows protoimpl." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/protocol-buffers/faq/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2020-10-28T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-10-28T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Protocol Buffer-Go FAQ"/>
+<meta name="twitter:description" content="版本  Versions
+ github.com/golang/protobuf和google.golang.org/protobuf有什么区别?
+github.com/golang/protobuf 模块是原始的Go protocol buffer API
+google.golang.org/protobuf 模块是Go protocol buffer API的更新版本, 旨在更加简洁、易用和安全。 更新API的主要特性是支持反射， 以及将面向用户的API与底层实现分离。
+推荐在新代码中使用google.golang.org/protobuf。
+github.com/golang/protobuf的v1.4.0版本及更高版本封装了新的实现，并且允许程序逐步的采用新的API。 例如, github.com/golang/protobuf/ptypes中定义的知名类型在新模块中只是简单的别名。因此， google.golang.org/protobuf/types/known/emptypb和github.com/golang/protobuf/ptypes/empty是可以互换使用的。
+proto1,proto2,proto3有什么区别? 这些都是protocol buffer语言的修订版。 它不同于protobufs的Go 实现。
+ proto3是当前版本。这是该语言最常用的版本。我们鼓励新代码使用proto3。 proto2是旧版本。尽管被proto3取代，但proto2仍然受到完全支持。 proto1是废弃版本。它从未以开源的形式发布。有关proto1的更多信息，请参阅FAQ。  有几种不同的Message类型。我应该用哪个？
+ &ldquo;google.golang.org/protobuf/proto&rdquo;.Message是接口类型， 当前版本的protocol buffer编译器生成的所有message都要实现它。操作任意message的方法，如proto.Marshal或proto.Clone， 接收或返回该值。 &ldquo;google.golang.org/protobuf/reflect/protoreflect&rdquo;.Message 是一个描述message反射视图的接口类型。
+调用proto.Message的ProtoReflect方法，获取protoreflect.Message。 &ldquo;google.golang.org/protobuf/reflect/protoreflect&rdquo;.ProtoMessage 是&quot;google.golang.org/protobuf/proto&quot;.Message的别名。这两种类型是可以互换的。 &ldquo;github.com/golang/protobuf/proto&rdquo;.Message 是由遗留的Go Protocol Buffer API定义的接口类型。所有生成的message都需要实现该接口，但是该接口没有描述期望从这些message中得到的行为。 新代码应该避免使用这个类型。  常见问题  Common problems
+ &ldquo;go install&rdquo;: working directory is not part of a module
+你已经设置环境变量GO111MODULE=on，并且在模块目录之外运行go install命令。
+设置GO111MODULE=auto，或者取消设置该环境变量。
+constant -1 overflows protoimpl."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/protocol-buffers/faq/">Protocol Buffer-Go FAQ</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2020-10-28 00:00:00 &#43;0000 UTC">2020-10-28</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="版本">版本</h2>
+<blockquote>
+<p>Versions</p>
+</blockquote>
+<p><strong>github.com/golang/protobuf</strong>和<strong>google.golang.org/protobuf</strong>有什么区别?</p>
+<p><a href="https://pkg.go.dev/github.com/golang/protobuf?tab=overview">github.com/golang/protobuf</a>
+模块是原始的Go <code>protocol buffer</code> API</p>
+<p><a href="https://pkg.go.dev/google.golang.org/protobuf?tab=overview">google.golang.org/protobuf</a>
+模块是Go <code>protocol buffer</code> API的更新版本, 旨在更加简洁、易用和安全。 更新API的主要特性是支持反射，
+以及将面向用户的API与底层实现分离。</p>
+<p>推荐在新代码中使用<code>google.golang.org/protobuf</code>。</p>
+<p><code>github.com/golang/protobuf</code>的v1.4.0版本及更高版本封装了新的实现，并且允许程序逐步的采用新的API。
+例如, <code>github.com/golang/protobuf/ptypes</code>中定义的知名类型在新模块中只是简单的别名。因此，
+<code>google.golang.org/protobuf/types/known/emptypb</code>和<code>github.com/golang/protobuf/ptypes/empty</code>是可以互换使用的。</p>
+<p><strong>proto1,proto2,proto3有什么区别?</strong>
+这些都是protocol buffer语言的修订版。 它不同于protobufs的Go 实现。</p>
+<ul>
+<li><code>proto3</code>是当前版本。这是该语言最常用的版本。我们鼓励新代码使用proto3。</li>
+<li><code>proto2</code>是旧版本。尽管被proto3取代，但proto2仍然受到完全支持。</li>
+<li><code>proto1</code>是废弃版本。它从未以开源的形式发布。有关proto1的更多信息，请参阅<a href="/blog/data-structure/protocol-buffers/faq#%E6%99%AE%E9%81%8D%E9%97%AE%E9%A2%98">FAQ</a>。</li>
+</ul>
+<p><strong>有几种不同的Message类型。我应该用哪个？</strong></p>
+<ul>
+<li><a href="https://pkg.go.dev/google.golang.org/protobuf/proto#Message">&ldquo;google.golang.org/protobuf/proto&rdquo;.Message</a>是接口类型，
+当前版本的<code>protocol buffer</code>编译器生成的所有<code>message</code>都要实现它。操作任意<code>message</code>的方法，如<code>proto.Marshal</code>或<code>proto.Clone</code>，
+接收或返回该值。</li>
+<li><a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect?tab=doc#Message">&ldquo;google.golang.org/protobuf/reflect/protoreflect&rdquo;.Message</a> 
+是一个描述<code>message</code>反射视图的接口类型。<br>
+调用<code>proto.Message</code>的<code>ProtoReflect</code>方法，获取<code>protoreflect.Message</code>。</li>
+<li><a href="https://pkg.go.dev/google.golang.org/protobuf/reflect/protoreflect?tab=doc#ProtoMessage">&ldquo;google.golang.org/protobuf/reflect/protoreflect&rdquo;.ProtoMessage</a>
+是<code>&quot;google.golang.org/protobuf/proto&quot;.Message</code>的别名。这两种类型是可以互换的。</li>
+<li><a href="https://pkg.go.dev/github.com/golang/protobuf/proto?tab=doc#Message">&ldquo;github.com/golang/protobuf/proto&rdquo;.Message</a> 
+是由遗留的Go <code>Protocol Buffer API</code>定义的接口类型。所有生成的<code>message</code>都需要实现该接口，但是该接口没有描述期望从这些<code>message</code>中得到的行为。
+新代码应该避免使用这个类型。</li>
+</ul>
+<h2 id="常见问题">常见问题</h2>
+<blockquote>
+<p>Common problems</p>
+</blockquote>
+<p><strong>&ldquo;go install&rdquo;: working directory is not part of a module</strong><br>
+你已经设置环境变量<code>GO111MODULE=on</code>，并且在模块目录之外运行<code>go install</code>命令。</p>
+<p>设置<code>GO111MODULE=auto</code>，或者取消设置该环境变量。</p>
+<p><strong>constant -1 overflows protoimpl.EnforceVersion</strong><br>
+你正在使用生成的<code>.pb.go</code>文件，该文件需要更新版本的<code>&quot;google.golang.org/protobuf&quot;</code>模块。更新到一个更新的版本：</p>
+<pre tabindex="0"><code>go get -u google.golang.org/protobuf/proto
+</code></pre><p><strong>undefined: &ldquo;github.com/golang/protobuf/proto&rdquo;.ProtoPackageIsVersion4</strong></p>
+<p>你正在使用生成的<code>.pb.go</code>文件，该文件需要更新版本的<code>&quot;github.com/golang/protobuf&quot;</code>模块。更新到一个更新的版本：</p>
+<pre tabindex="0"><code>go get -u github.com/golang/protobuf/proto
+</code></pre><p><strong>什么是Protocol Buffers命名冲突?</strong><br>
+所有链接到Go库的<code>protocol buffers</code>声明，都插入到全局的注册表中。<br>
+每一个protobuf声明(e.g.,enums,enums值，或messages)都有一个绝对的名称，它是包名和<code>.proto</code>源文件中声明的相对名称的连接(e.g.,
+my.proto.package.MyMessage.NestedMessage)。protobuf假设所有的声明都是唯一的。</p>
+<p>如果链接到Go库的两个protobuf声明有相同的名字，这样就导致命名空间冲突，注册表不可能通过名称正确的解析声明。这取决于使用的是Go protobuf的那个版本，
+这会在初始时panic或者静默的删除冲突或者在运行时导致潜在bug。</p>
+<p><strong>怎样解决Protocol Buffers 命名冲突?</strong><br>
+修复命名空间冲突的最好方法取决于冲突发生的原因。</p>
+<p>常见命名空间冲突发生的原因:</p>
+<ul>
+<li>
+<p>供应商<code>.proto</code>文件。当单个<code>.proto</code>文件生成两个或多个Go 包，并链接到同一个Go 库， 它会在生成Go包的每个protobuf声明上发生冲突。
+通常发生在供应商提供<code>.proto</code>文件，并且从它生成了一个Go包，或者生成的Go包本身是供应商提供的情况下。用户应当避免供应商，
+相反<code>.proto</code>文件应该依赖于一个集中的Go包。</p>
+<ul>
+<li>如果<code>.proto</code>文件为外部所有，并且缺少<code>go_package</code>选项，那么你应该与<code>.proto</code>文件的所有者协调，
+指定一个集中式的Go包，多个用户都可以依赖它。</li>
+</ul>
+</li>
+<li>
+<p>缺少或默认<code>proto</code>包名。如果<code>.proto</code>文件没有指定包名，或者使用带下划线的包名(e.g.,&ldquo;my_service&rdquo;),
+然后，该文件中的声明很可能与全局其他地方的声明发生冲突。我们建议每个<code>.proto</code>文件有一个包名，
+这个包名被指定为全局唯一的(e.g. 例如加上公司名做前缀)。</p>
+<ul>
+<li>警告: 追溯更改<code>.proto</code>文件上的包名，可能导致扩展字段或保存在<code>google.protobuf.any</code>中的<code>message</code>停止正常工作。</li>
+</ul>
+</li>
+</ul>
+<p><strong>为什么protobuf message的reflect.DeepEqual行为异常？</strong><br>
+生成的protocol buffer message类型包含中间态，即使在相同的message之间也可能不同。</p>
+<p>此外<code>reflect.DeepEqual</code>函数不知道protocol buffer message的语义，并报告不存在的差异。例如，<code>nil</code> map 和 长度为0的<code>non-nil</code> map
+语义上是相等的，但是<code>reflect.DeepEqual</code>报告为不相等。</p>
+<p>使用<code>proto.Equal</code>函数来比较<code>message</code>值。</p>
+<p>作为测试，你也可以使用<a href="https://pkg.go.dev/github.com/google/go-cmp/cmp?tab=doc">&ldquo;github.com/google/go-cmp/cmp&rdquo;</a>和
+<a href="https://pkg.go.dev/google.golang.org/protobuf/testing/protocmp#Transform">protocmp.Transform</a>选项。<code>cmp</code>包可以比较任意的数据结构，
+<code>cmp.Diff</code>可以生成值之间差异的可读报告。</p>
+<pre tabindex="0"><code>if diff := cmp.Diff(a, b, protocmp.Transform()); diff != &quot;&quot; {
+  t.Errorf(&quot;unexpected difference:\n%v&quot;, diff)
+}
+</code></pre><h2 id="hyrum定律">Hyrum定律</h2>
+<blockquote>
+<p>Hyrum&rsquo;s Law</p>
+</blockquote>
+<p><strong>什么是Hyrum定律，为什么它会在这个FAQ中？</strong> 
+一个API有大量的使用用户，其在协议中所作的承诺已经无关紧要：系统中所有可观察的行为将被其它人依赖。</p>
+<p>最新版本的Go protocol buffer API的设计目标是尽可能的避免提供未来我们无法保证稳定的可观察行为。 我们的哲学是，
+我们不做出承诺的地方是不稳定的，这好过给人稳定的幻觉， 这种情况只有将来当可能基于错误假设的项目很久了才会改变。</p>
+<p><strong>为什么错误文本一直在变化?</strong>
+依赖于确切的错误文本的测试是脆弱的，并且当错误文本变化时经常中断。为了阻止测试时不安全的使用错误文本，这个模块产生的错误文本故意不稳定。 
+如果您需要确定一个错误是否由<a href="https://pkg.go.dev/mod/google.golang.org/protobuf">protobuf</a>模块产生，我们保证所有的错误都与
+<a href="https://pkg.go.dev/google.golang.org/protobuf/proto?tab=doc#Error">proto.Error</a>匹配，依据<a href="https://pkg.go.dev/errors?tab=doc#Is">errors.Is</a>。</p>
+<p><strong>为什么protojson的输出一直在变化?</strong>
+我们不承诺Go对<a href="/blog/data-structure/protocol-buffers/guide#JSON%E6%98%A0%E5%B0%84">Protocol Buffers的JSON格式</a>实现的长期稳定性。
+该规范只指定了什么是有效的JSON，而没有提供编组器应该如何准确地格式化给定消息的规范。
+为了避免产生输出是稳定的错觉，我们故意引入了一些小的差异，这样字节对字节的比较可能会失败。</p>
+<p>为了获得一定程度的输出稳定性，我们建议通过JSON格式化器运行输出。</p>
+<p><strong>为什么prototext的输出一直在变化?</strong>
+我们对Go文本格式实现的长期稳定性不作任何承诺。protobuf文本格式没有规范规范，我们希望保留将来改进<code>prototext</code>包输出的能力。
+因为我们不承诺包输出的稳定性，所以我们故意引入了不稳定性以阻止用户依赖它。</p>
+<p>为了获得一定的稳定性，我们建议通过<a href="https://github.com/protocolbuffers/txtpbfmt">txtpbfmt</a>程序传递<code>prototext</code>的输出。
+格式化程序可以在Go中使用<a href="https://pkg.go.dev/github.com/protocolbuffers/txtpbfmt/parser?tab=doc#Format">parser.Format</a>直接调用。</p>
+<h2 id="miscellaneous">Miscellaneous</h2>
+<p><strong>怎样使用Protocol Buffer message作为Hash key?</strong>
+您需要规范序列化，其中协议缓冲区消息的封送输出保证随时间稳定。
+不幸的是，目前还不存在规范序列化的规范。你需要自己写，或者想办法避免使用。</p>
+<p><strong>我能为Go Protocol Buffer 的实现添加新的特性吗？?</strong>
+也许吧。我们总是喜欢建议，但我们对添加新东西非常谨慎。参见<a href="/blog/data-structure/protocol-buffers/faq">Protocol Buffers FAQ</a></p>
+<p>Protocol Buffers的Go实现努力与其他语言实现保持一致。因此，我们倾向于避开那些过于专业化的功能。
+go特有的特性阻碍了Protocol Buffers成为语言无关的数据交换格式的目标。</p>
+<p>除非你的想法是针对Go实现的，否则你应该加入<a href="http://groups.google.com/group/protobuf">protobuf讨论组</a>并在那里提出建议。</p>
+<p>如果你有一个Go实现的想法，请在我们的问题跟踪器上提交一个问题: <a href="https://github.com/golang/protobuf/issues">https://github.com/golang/protobuf/issues</a></p>
+<p><strong>我能定制protoc-gen-go生成的代码吗?</strong>
+一般来说,没有。Protocol Buffers是一种语言无关的数据交换格式，自定义的特定实现与此意图背道而驰。</p>
+
+      
+    <h2>参考</h2>
+    <ul>
+        
+            
+                <li><a target="_blank" href="https://developers.google.com/protocol-buffers/docs/reference/go/faq">Protocol Buffer Go Frequently Asked Questions</a></li>
+            
+        
+    </ul>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/protocol-buffers/">Protocol Buffers</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#版本">版本</a></li>
+    <li><a href="#常见问题">常见问题</a></li>
+    <li><a href="#hyrum定律">Hyrum定律</a></li>
+    <li><a href="#miscellaneous">Miscellaneous</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/golang/grpc/quick-start/" class="button left"><span>gRPC-Go快速入门</span></a>
+    
+    
+      <a href="/blog/golang/protocol-buffers/generated/" class="button right"><span>Protocol Buffer-Go代码生成</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

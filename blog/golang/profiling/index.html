@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang代码诊断工具-Profiling - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Golang代码诊断工具-Profiling">
+<meta itemprop="description" content="概述 Profiling对于识别昂贵的和经常调用的代码段非常有用。
+Go 运行时以pprof工具可以识别的格式提供概要数据，这些概要数据可以通过go test测试或引入net/http/pprof时被收集。
+概要数据内容 runtime/pprof包，以pprof visualization tool可以识别的格式生成概要数据
+数据包含以下内容：
+ cpu: 报告程序在消耗CPU周期时将时间花费在何处(与睡眠和等待I/O相反) heap: 报告内存分配; 用来监视当前和历史内存使用情况，并且检查内存泄漏 threadcreate: 报告程序中哪些部分导致创建新的系统线程(OS threads) goroutine: 报告所有goroutine的堆栈跟踪 block: 报告哪些goroutine阻塞等待(包括定时器)。默认关闭该项，使用runtime.SetBlockProfileRate来启用。 mutex: 报告琐竞争。当你认为由于锁竞争导致CPU没有充分利用时，开启该项。 默认关闭该项，使用runtime.SetMutexProfileFraction来启用。  收集概要数据 Benchmarks数据 go test 内置了对Benchmarks进行Profiling的支持。
+以下示例：go test -cpuprofile cpu.prof -memprofile mem.prof -bench .
+ 执行当前目录下的benchmarks并将CPU和memory概要数据写入到文件中：
+ 应用程序数据   生成概要文件
+ var cpuprofile = flag.String(&quot;cpuprofile&quot;, &quot;&quot;, &quot;write cpu profile to `file`&quot;)var memprofile = flag.String(&quot;memprofile&quot;, &quot;&quot;, &quot;write memory profile to `file`&quot;)func main() {flag."><meta itemprop="datePublished" content="2019-10-11T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-10-11T00:00:00+00:00" />
+<meta itemprop="wordCount" content="384">
+<meta itemprop="keywords" content="Diagnostics," /><meta property="og:title" content="Golang代码诊断工具-Profiling" />
+<meta property="og:description" content="概述 Profiling对于识别昂贵的和经常调用的代码段非常有用。
+Go 运行时以pprof工具可以识别的格式提供概要数据，这些概要数据可以通过go test测试或引入net/http/pprof时被收集。
+概要数据内容 runtime/pprof包，以pprof visualization tool可以识别的格式生成概要数据
+数据包含以下内容：
+ cpu: 报告程序在消耗CPU周期时将时间花费在何处(与睡眠和等待I/O相反) heap: 报告内存分配; 用来监视当前和历史内存使用情况，并且检查内存泄漏 threadcreate: 报告程序中哪些部分导致创建新的系统线程(OS threads) goroutine: 报告所有goroutine的堆栈跟踪 block: 报告哪些goroutine阻塞等待(包括定时器)。默认关闭该项，使用runtime.SetBlockProfileRate来启用。 mutex: 报告琐竞争。当你认为由于锁竞争导致CPU没有充分利用时，开启该项。 默认关闭该项，使用runtime.SetMutexProfileFraction来启用。  收集概要数据 Benchmarks数据 go test 内置了对Benchmarks进行Profiling的支持。
+以下示例：go test -cpuprofile cpu.prof -memprofile mem.prof -bench .
+ 执行当前目录下的benchmarks并将CPU和memory概要数据写入到文件中：
+ 应用程序数据   生成概要文件
+ var cpuprofile = flag.String(&quot;cpuprofile&quot;, &quot;&quot;, &quot;write cpu profile to `file`&quot;)var memprofile = flag.String(&quot;memprofile&quot;, &quot;&quot;, &quot;write memory profile to `file`&quot;)func main() {flag." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/profiling/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-10-11T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-10-11T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang代码诊断工具-Profiling"/>
+<meta name="twitter:description" content="概述 Profiling对于识别昂贵的和经常调用的代码段非常有用。
+Go 运行时以pprof工具可以识别的格式提供概要数据，这些概要数据可以通过go test测试或引入net/http/pprof时被收集。
+概要数据内容 runtime/pprof包，以pprof visualization tool可以识别的格式生成概要数据
+数据包含以下内容：
+ cpu: 报告程序在消耗CPU周期时将时间花费在何处(与睡眠和等待I/O相反) heap: 报告内存分配; 用来监视当前和历史内存使用情况，并且检查内存泄漏 threadcreate: 报告程序中哪些部分导致创建新的系统线程(OS threads) goroutine: 报告所有goroutine的堆栈跟踪 block: 报告哪些goroutine阻塞等待(包括定时器)。默认关闭该项，使用runtime.SetBlockProfileRate来启用。 mutex: 报告琐竞争。当你认为由于锁竞争导致CPU没有充分利用时，开启该项。 默认关闭该项，使用runtime.SetMutexProfileFraction来启用。  收集概要数据 Benchmarks数据 go test 内置了对Benchmarks进行Profiling的支持。
+以下示例：go test -cpuprofile cpu.prof -memprofile mem.prof -bench .
+ 执行当前目录下的benchmarks并将CPU和memory概要数据写入到文件中：
+ 应用程序数据   生成概要文件
+ var cpuprofile = flag.String(&quot;cpuprofile&quot;, &quot;&quot;, &quot;write cpu profile to `file`&quot;)var memprofile = flag.String(&quot;memprofile&quot;, &quot;&quot;, &quot;write memory profile to `file`&quot;)func main() {flag."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/profiling/">Golang代码诊断工具-Profiling</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-10-11 00:00:00 &#43;0000 UTC">2019-10-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="概述">概述</h2>
+<p><code>Profiling</code>对于识别昂贵的和经常调用的代码段非常有用。<br>
+<code>Go</code> 运行时以<code>pprof</code>工具可以识别的格式提供概要数据，这些概要数据可以通过<code>go test</code>测试或引入<code>net/http/pprof</code>时被收集。</p>
+<h2 id="概要数据内容">概要数据内容</h2>
+<p><code>runtime/pprof</code>包，以<code>pprof visualization tool</code>可以识别的格式生成概要数据<br>
+数据包含以下内容：</p>
+<ul>
+<li><strong>cpu</strong>: 报告程序在消耗<code>CPU</code>周期时将时间花费在何处(与睡眠和等待I/O相反)</li>
+<li><strong>heap</strong>: 报告内存分配; 用来监视当前和历史内存使用情况，并且检查内存泄漏</li>
+<li><strong>threadcreate</strong>: 报告程序中哪些部分导致创建新的系统线程(OS threads)</li>
+<li><strong>goroutine</strong>: 报告所有<code>goroutine</code>的堆栈跟踪</li>
+<li><strong>block</strong>: 报告哪些<code>goroutine</code>阻塞等待(包括定时器)。默认关闭该项，使用<code>runtime.SetBlockProfileRate</code>来启用。</li>
+<li><strong>mutex</strong>: 报告琐竞争。当你认为由于锁竞争导致CPU没有充分利用时，开启该项。 默认关闭该项，使用<code>runtime.SetMutexProfileFraction</code>来启用。</li>
+</ul>
+<h2 id="收集概要数据">收集概要数据</h2>
+<h3 id="benchmarks数据">Benchmarks数据</h3>
+<p><code>go test</code> 内置了对<a href="/blog/golang/testing#benchmarks%E5%9F%BA%E5%87%86%E6%B5%8B%E8%AF%95">Benchmarks</a>进行<code>Profiling</code>的支持。<br>
+以下示例：<code>go test -cpuprofile cpu.prof -memprofile mem.prof -bench .</code></p>
+<blockquote>
+<p>执行当前目录下的<code>benchmarks</code>并将<code>CPU</code>和<code>memory</code>概要数据写入到文件中：</p>
+</blockquote>
+<h3 id="应用程序数据">应用程序数据</h3>
+<ul>
+<li>
+<p>生成概要文件</p>
+<pre tabindex="0"><code>  var cpuprofile = flag.String(&quot;cpuprofile&quot;, &quot;&quot;, &quot;write cpu profile to `file`&quot;)
+  var memprofile = flag.String(&quot;memprofile&quot;, &quot;&quot;, &quot;write memory profile to `file`&quot;)
+
+  func main() {
+      flag.Parse()
+      if *cpuprofile != &quot;&quot; {
+          f, err := os.Create(*cpuprofile)
+          if err != nil {
+              log.Fatal(&quot;could not create CPU profile: &quot;, err)
+          }
+          defer f.Close() // error handling omitted for example
+          if err := pprof.StartCPUProfile(f); err != nil {
+              log.Fatal(&quot;could not start CPU profile: &quot;, err)
+          }
+          defer pprof.StopCPUProfile()
+      }
+
+      // ... rest of the program ...
+
+      if *memprofile != &quot;&quot; {
+          f, err := os.Create(*memprofile)
+          if err != nil {
+              log.Fatal(&quot;could not create memory profile: &quot;, err)
+          }
+          defer f.Close() // error handling omitted for example
+          runtime.GC() // get up-to-date statistics
+          if err := pprof.WriteHeapProfile(f); err != nil {
+              log.Fatal(&quot;could not write memory profile: &quot;, err)
+          }
+      }
+  }
+</code></pre></li>
+<li>
+<p>启动web服务</p>
+<ul>
+<li>
+<p><code>net/http/pprof</code>包通过启动<code>HTTP server</code>提供<code>Profiling</code>服务支持;</p>
+</li>
+<li>
+<p>导入该包通常会引起HTTP <code>handlers</code>的副作用， <code>pprof</code>的路由地址以<code>/debug/pprof/</code>开始</p>
+</li>
+<li>
+<p>代码注入：</p>
+<pre tabindex="0"><code>import _ &quot;net/http/pprof&quot;
+
+// 如果应用程序没有启动http server，就需要在func main 中启动一个
+go func() {
+    log.Println(http.ListenAndServe(&quot;localhost:6060&quot;, nil))
+}()
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<h2 id="概要数据可视化">概要数据可视化</h2>
+<h3 id="pprof工具">pprof工具</h3>
+<p>Go pprof 是<a href="https://github.com/gperftools/gperftools">Google&rsquo;s pprof C++ profiler</a> 的变体</p>
+<h4 id="交互式控制台">交互式控制台</h4>
+<p>命令格式：<br>
+<code>go tool pprof &lt;可执行文件&gt; &lt;概要数据文件&gt;</code><br>
+(pprof) 参数：</p>
+<ul>
+<li>top5</li>
+<li>top10</li>
+<li>top5 -cum // 根据cum排序</li>
+<li>web // web可视化</li>
+<li>web funxx // 只显示包含特定函数的示例</li>
+<li>list funxx // 输出匹配regexp函数的源代码及性能参数</li>
+</ul>
+<p>字段说明：
+<code>Flat</code>:  表示函数自身CPU消耗时长
+<code>Flat%</code>:  表示函数自身CPU消耗占总CPU百分比
+<code>Sum%</code>:  表示当前函数及其上级调用函数消耗占总CPU百分比
+<code>Cum</code>:  表示函数自身及其内部函数调用CPU消耗时长
+<code>Cum%</code>:  表示函数自身及其内部函数调用CPU消耗占总CPU百分比</p>
+<h4 id="web可视化">web可视化</h4>
+<p>命令格式：</p>
+<ul>
+<li><strong>ALL</strong>: 浏览器打开地址：<code>http://localhost:6060/debug/pprof/</code></li>
+<li><strong>cpu</strong>: <code>$ go tool pprof -http=localhost:5999 http://localhost:6060/debug/pprof/profile?seconds=30</code> // seconds指定采集时间段</li>
+<li><strong>heap</strong>: <code>$ go tool pprof -http=localhost:5999 http://localhost:6060/debug/pprof/heap</code></li>
+<li><strong>block</strong>: <code>$ go tool pprof -http=localhost:5999 http://localhost:6060/debug/pprof/block</code></li>
+<li><strong>mutex</strong>: <code>$ go tool pprof -http=localhost:5999 http://localhost:6060/debug/pprof/mutex</code></li>
+<li><strong>trace</strong>: 参考<a href="/blog/golang/tracing#profile%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2">Profile数据转换</a></li>
+</ul>
+<h3 id="其他工具">其他工具:</h3>
+<ul>
+<li>linux<br>
+<a href="https://perf.wiki.kernel.org/index.php/Tutorial">perf tools</a>是一个基于Linux2.6+系统的分析工具，提供一个简单的命令行接口</li>
+<li>macOS<br>
+<a href="https://help.apple.com/instruments/mac/current/#/dev7b09c84f5">Instruments</a>是一个强大和灵活的性能分析和测试工具， 是Xcode工具集的一部分</li>
+</ul>
+<h2 id="线上服务">线上服务</h2>
+<p>线上<code>Profiling</code>是安全的， 但是会增加额外的开销(e.g. CPU)，应该能看到服务性能降级。</p>
+<blockquote>
+<p>性能损耗可以在服务上线前测量完进行评估。</p>
+</blockquote>
+<p>如果需要对线上服务周期性的进行<code>Profiling</code>，可以对线上服务每Y秒进行X秒的<code>Profiling</code>，将结果保存以供可视化分析。</p>
+<blockquote>
+<p>多项概要数据文件的收集会产生干扰，建议一次只进行一项收集</p>
+</blockquote>
+<h2 id="内存概要分析">内存概要分析</h2>
+<pre tabindex="0"><code>Alloc uint64 //golang语言框架堆空间分配的字节数
+TotalAlloc uint64 //从服务开始运行至今分配器为分配的堆空间总 和，只有增加，释放的时候不减少
+Sys uint64 //服务现在系统使用的内存
+Lookups uint64 //被runtime监视的指针数
+Mallocs uint64 //服务malloc heap objects的次数
+Frees uint64 //服务回收的heap objects的次数
+HeapAlloc uint64 //服务分配的堆内存字节数
+HeapSys uint64 //系统分配的作为运行栈的内存
+HeapIdle uint64 //申请但是未分配的堆内存或者回收了的堆内存（空闲）字节数
+HeapInuse uint64 //正在使用的堆内存字节数
+HeapReleased uint64 //返回给OS的堆内存，类似C/C++中的free。
+HeapObjects uint64 //堆内存块申请的量
+StackInuse uint64 //正在使用的栈字节数
+StackSys uint64 //系统分配的作为运行栈的内存
+MSpanInuse uint64 //用于测试用的结构体使用的字节数
+MSpanSys uint64 //系统为测试用的结构体分配的字节数
+MCacheInuse uint64 //mcache结构体申请的字节数(不会被视为垃圾回收)
+MCacheSys uint64 //操作系统申请的堆空间用于mcache的字节数
+BuckHashSys uint64 //用于剖析桶散列表的堆空间
+GCSys uint64 //垃圾回收标记元信息使用的内存
+OtherSys uint64 //golang系统架构占用的额外空间
+NextGC uint64 //垃圾回收器检视的内存大小
+LastGC uint64 // 垃圾回收器最后一次执行时间。
+PauseTotalNs uint64 // 垃圾回收或者其他信息收集导致服务暂停的次数。
+PauseNs [256]uint64 //一个循环队列，记录最近垃圾回收系统中断的时间
+PauseEnd [256]uint64 //一个循环队列，记录最近垃圾回收系统中断的时间开始点。
+NumForcedGC uint32 //服务调用runtime.GC()强制使用垃圾回收的次数。
+GCCPUFraction float64 //垃圾回收占用服务CPU工作的时间总和。如果有100个goroutine，垃圾回收的时间为1S,那么就占用了100S。
+BySize //内存分配器使用情况
+</code></pre>
+      
+    <h2>参考</h2>
+    <ul>
+        
+            
+                <li><a target="_blank" href="https://golang.org/doc/diagnostics.html#profiling">Diagnostics Profiling</a></li>
+            
+        
+            
+                <li><a target="_blank" href="https://github.com/google/pprof/blob/master/doc/README.md">google pprof</a></li>
+            
+        
+            
+                <li><a target="_blank" href="https://blog.golang.org/pprof">Profiling Go Programs</a></li>
+            
+        
+            
+                <li><a target="_blank" href="https://golang.org/pkg/runtime/pprof/">Package pprof</a></li>
+            
+        
+    </ul>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/diagnostics/">Diagnostics</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#概述">概述</a></li>
+    <li><a href="#概要数据内容">概要数据内容</a></li>
+    <li><a href="#收集概要数据">收集概要数据</a>
+      <ul>
+        <li><a href="#benchmarks数据">Benchmarks数据</a></li>
+        <li><a href="#应用程序数据">应用程序数据</a></li>
+      </ul>
+    </li>
+    <li><a href="#概要数据可视化">概要数据可视化</a>
+      <ul>
+        <li><a href="#pprof工具">pprof工具</a></li>
+        <li><a href="#其他工具">其他工具:</a></li>
+      </ul>
+    </li>
+    <li><a href="#线上服务">线上服务</a></li>
+    <li><a href="#内存概要分析">内存概要分析</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/golang/diagnostics/" class="button left"><span>Golang代码诊断工具-Diagnostics</span></a>
+    
+    
+      <a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" class="button right"><span>分布式事务</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

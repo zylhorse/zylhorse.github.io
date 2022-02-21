@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Oracle数据库安装配置 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Oracle数据库安装配置">
+<meta itemprop="description" content="docker安装 sudo docker pull deepdiver/docker-oracle-xe-11gsudo docker run -d -p 1522:22 -p 1521:1521 --name oracle deepdiver/docker-oracle-xe-11gclient https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html
+ basic sdk sqlplus  链接动态库 #!/bin/bashln /opt/instantclient_11_2/libclntsh.so.11.1 /usr/lib/libclntsh.soln /optinstantclient_11_2/libnnz11.so /usr/lib/libnnz11.soln /opt/instantclient_11_2/libocci.so.11.1 /usr/lib/libocci.soln /opt/instantclient_11_2/libociei.so /usr/lib/libociei.soln /opt/instantclient_11_2/libocijdbc11.so /usr/lib/libocijdbc11.soln /opt/instantclient_11_2/libsqlplusic.so /usr/lib/libsqlplusic.soln /opt/instantclient_11_2/libsqlplus.so /usr/lib/libsqlplus.so添加动态库到系统 echo /opt/instantclient_11_2 &gt;&gt; /etc/ld.so.confldconfig安装 oracle client 下载地址： https://www.oracle.com/database/technologies/112010-win64soft.html
+错误提示  不满足安装条件, oracle 没有配置当前系统的支持   修改stage/cvu/cvu_prereq.xml添加
+  &lt;OPERATING_SYSTEM RELEASE=&quot;6.2&quot;&gt;&lt;VERSION VALUE=&quot;3&quot;/&gt;&lt;ARCHITECTURE VALUE=&quot;64-bit&quot;/&gt;&lt;NAME VALUE=&quot;Windows 10&quot;/&gt;&lt;ENV_VAR_LIST&gt;&lt;ENV_VAR NAME=&quot;PATH&quot; MAX_LENGTH=&quot;1023&quot; /&gt;&lt;/ENV_VAR_LIST&gt;&lt;/OPERATING_SYSTEM&gt;安装plsql developer 软件 下载地址： https://www."><meta itemprop="datePublished" content="2019-07-15T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-07-15T00:00:00+00:00" />
+<meta itemprop="wordCount" content="81">
+<meta itemprop="keywords" content="Oracle," /><meta property="og:title" content="Oracle数据库安装配置" />
+<meta property="og:description" content="docker安装 sudo docker pull deepdiver/docker-oracle-xe-11gsudo docker run -d -p 1522:22 -p 1521:1521 --name oracle deepdiver/docker-oracle-xe-11gclient https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html
+ basic sdk sqlplus  链接动态库 #!/bin/bashln /opt/instantclient_11_2/libclntsh.so.11.1 /usr/lib/libclntsh.soln /optinstantclient_11_2/libnnz11.so /usr/lib/libnnz11.soln /opt/instantclient_11_2/libocci.so.11.1 /usr/lib/libocci.soln /opt/instantclient_11_2/libociei.so /usr/lib/libociei.soln /opt/instantclient_11_2/libocijdbc11.so /usr/lib/libocijdbc11.soln /opt/instantclient_11_2/libsqlplusic.so /usr/lib/libsqlplusic.soln /opt/instantclient_11_2/libsqlplus.so /usr/lib/libsqlplus.so添加动态库到系统 echo /opt/instantclient_11_2 &gt;&gt; /etc/ld.so.confldconfig安装 oracle client 下载地址： https://www.oracle.com/database/technologies/112010-win64soft.html
+错误提示  不满足安装条件, oracle 没有配置当前系统的支持   修改stage/cvu/cvu_prereq.xml添加
+  &lt;OPERATING_SYSTEM RELEASE=&quot;6.2&quot;&gt;&lt;VERSION VALUE=&quot;3&quot;/&gt;&lt;ARCHITECTURE VALUE=&quot;64-bit&quot;/&gt;&lt;NAME VALUE=&quot;Windows 10&quot;/&gt;&lt;ENV_VAR_LIST&gt;&lt;ENV_VAR NAME=&quot;PATH&quot; MAX_LENGTH=&quot;1023&quot; /&gt;&lt;/ENV_VAR_LIST&gt;&lt;/OPERATING_SYSTEM&gt;安装plsql developer 软件 下载地址： https://www." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/database/oracle/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-07-15T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-07-15T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Oracle数据库安装配置"/>
+<meta name="twitter:description" content="docker安装 sudo docker pull deepdiver/docker-oracle-xe-11gsudo docker run -d -p 1522:22 -p 1521:1521 --name oracle deepdiver/docker-oracle-xe-11gclient https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html
+ basic sdk sqlplus  链接动态库 #!/bin/bashln /opt/instantclient_11_2/libclntsh.so.11.1 /usr/lib/libclntsh.soln /optinstantclient_11_2/libnnz11.so /usr/lib/libnnz11.soln /opt/instantclient_11_2/libocci.so.11.1 /usr/lib/libocci.soln /opt/instantclient_11_2/libociei.so /usr/lib/libociei.soln /opt/instantclient_11_2/libocijdbc11.so /usr/lib/libocijdbc11.soln /opt/instantclient_11_2/libsqlplusic.so /usr/lib/libsqlplusic.soln /opt/instantclient_11_2/libsqlplus.so /usr/lib/libsqlplus.so添加动态库到系统 echo /opt/instantclient_11_2 &gt;&gt; /etc/ld.so.confldconfig安装 oracle client 下载地址： https://www.oracle.com/database/technologies/112010-win64soft.html
+错误提示  不满足安装条件, oracle 没有配置当前系统的支持   修改stage/cvu/cvu_prereq.xml添加
+  &lt;OPERATING_SYSTEM RELEASE=&quot;6.2&quot;&gt;&lt;VERSION VALUE=&quot;3&quot;/&gt;&lt;ARCHITECTURE VALUE=&quot;64-bit&quot;/&gt;&lt;NAME VALUE=&quot;Windows 10&quot;/&gt;&lt;ENV_VAR_LIST&gt;&lt;ENV_VAR NAME=&quot;PATH&quot; MAX_LENGTH=&quot;1023&quot; /&gt;&lt;/ENV_VAR_LIST&gt;&lt;/OPERATING_SYSTEM&gt;安装plsql developer 软件 下载地址： https://www."/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/database/oracle/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">Oracle数据库安装配置</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-07-15 00:00:00 &#43;0000 UTC">2019-07-15</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="docker安装">docker安装</h2>
+<pre tabindex="0"><code>sudo docker pull deepdiver/docker-oracle-xe-11g
+sudo docker run -d -p 1522:22 -p 1521:1521 --name oracle deepdiver/docker-oracle-xe-11g
+</code></pre><h2 id="client">client</h2>
+<p><a href="https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html">https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html</a></p>
+<ol>
+<li>basic</li>
+<li>sdk</li>
+<li>sqlplus</li>
+</ol>
+<h3 id="链接动态库">链接动态库</h3>
+<pre tabindex="0"><code>#!/bin/bash
+
+ln /opt/instantclient_11_2/libclntsh.so.11.1 /usr/lib/libclntsh.so
+ln /optinstantclient_11_2/libnnz11.so /usr/lib/libnnz11.so
+ln /opt/instantclient_11_2/libocci.so.11.1 /usr/lib/libocci.so
+ln /opt/instantclient_11_2/libociei.so /usr/lib/libociei.so
+ln /opt/instantclient_11_2/libocijdbc11.so /usr/lib/libocijdbc11.so
+
+ln /opt/instantclient_11_2/libsqlplusic.so /usr/lib/libsqlplusic.so
+ln /opt/instantclient_11_2/libsqlplus.so /usr/lib/libsqlplus.so
+
+</code></pre><h3 id="添加动态库到系统">添加动态库到系统</h3>
+<pre tabindex="0"><code>echo /opt/instantclient_11_2 &gt;&gt; /etc/ld.so.conf
+ldconfig
+</code></pre><h2 id="安装-oracle-client">安装 oracle client</h2>
+<p>下载地址： 
+<a href="https://www.oracle.com/database/technologies/112010-win64soft.html">https://www.oracle.com/database/technologies/112010-win64soft.html</a></p>
+<h3 id="错误提示">错误提示</h3>
+<ol>
+<li>不满足安装条件, oracle 没有配置当前系统的支持</li>
+</ol>
+<blockquote>
+<p>修改stage/cvu/cvu_prereq.xml添加</p>
+</blockquote>
+<pre tabindex="0"><code> &lt;OPERATING_SYSTEM RELEASE=&quot;6.2&quot;&gt;
+             &lt;VERSION VALUE=&quot;3&quot;/&gt;
+             &lt;ARCHITECTURE VALUE=&quot;64-bit&quot;/&gt;
+             &lt;NAME VALUE=&quot;Windows 10&quot;/&gt;
+             &lt;ENV_VAR_LIST&gt;
+                 &lt;ENV_VAR NAME=&quot;PATH&quot; MAX_LENGTH=&quot;1023&quot; /&gt;
+             &lt;/ENV_VAR_LIST&gt;
+         &lt;/OPERATING_SYSTEM&gt;
+</code></pre><h2 id="安装plsql-developer-软件">安装plsql developer 软件</h2>
+<p>下载地址： <a href="https://www.allroundautomations.com/registered/plsqldev.html">https://www.allroundautomations.com/registered/plsqldev.html</a></p>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/database/">Database</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/oracle/">Oracle</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#docker安装">docker安装</a></li>
+    <li><a href="#client">client</a>
+      <ul>
+        <li><a href="#链接动态库">链接动态库</a></li>
+        <li><a href="#添加动态库到系统">添加动态库到系统</a></li>
+      </ul>
+    </li>
+    <li><a href="#安装-oracle-client">安装 oracle client</a>
+      <ul>
+        <li><a href="#错误提示">错误提示</a></li>
+      </ul>
+    </li>
+    <li><a href="#安装plsql-developer-软件">安装plsql developer 软件</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/golang/chan/" class="button left"><span>Golang源码阅读-chan</span></a>
+    
+    
+      <a href="/blog/golang/slice/" class="button right"><span>Golang源码阅读-slice</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Database
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

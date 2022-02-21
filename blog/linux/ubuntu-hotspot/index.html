@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Ubuntu Hotspot配置 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Ubuntu Hotspot配置">
+<meta itemprop="description" content="开启ubuntu下wifi 热点"><meta itemprop="datePublished" content="2018-04-11T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2018-04-11T00:00:00+00:00" />
+<meta itemprop="wordCount" content="622">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Ubuntu Hotspot配置" />
+<meta property="og:description" content="开启ubuntu下wifi 热点" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/linux/ubuntu-hotspot/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2018-04-11T00:00:00+00:00" />
+<meta property="article:modified_time" content="2018-04-11T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ubuntu Hotspot配置"/>
+<meta name="twitter:description" content="开启ubuntu下wifi 热点"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/linux/ubuntu-hotspot/">Ubuntu Hotspot配置</a></h2>
+    
+    
+      <p>开启ubuntu下wifi 热点</p>
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2018-04-11 00:00:00 &#43;0000 UTC">2018-04-11</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            &lt;no value&gt;分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="背景">背景</h2>
+<p>配置瘦客户机，进行自组网，摒弃复杂的网络环境</p>
+<h2 id="环境配置">环境配置</h2>
+<ul>
+<li>
+<p><strong>网卡Master模式</strong></p>
+<ol>
+<li>安装 <code>$ apt install iw</code></li>
+<li>检查 <code>iw list</code></li>
+</ol>
+<pre tabindex="0"><code>Supported interface modes:
+		 * IBSS
+		 * managed //作为客户端接入AP
+		 * AP // 作为无线接入点使用
+		 * AP/VLAN
+		 * monitor
+		 * P2P-client
+		 * P2P-GO
+		 * P2P-device
+</code></pre><blockquote>
+<p>如果显示以上内容，则该网卡支持作为无线AP使用</p>
+</blockquote>
+</li>
+<li>
+<p><strong>Wlan Interface</strong></p>
+<ol>
+<li>查看: <code>ifconfig -a</code>
+<pre tabindex="0"><code>enp2s0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet 172.16.3.173  netmask 255.255.255.0  broadcast 172.16.3.255
+        inet6 fe80::6600:6aff:fe02:755a  prefixlen 64  scopeid 0x20&lt;link&gt;
+        ether 64:00:6a:02:75:5a  txqueuelen 1000  (Ethernet)
+        RX packets 63949  bytes 79546938 (79.5 MB)
+        RX errors 0  dropped 2  overruns 0  frame 0
+        TX packets 45238  bytes 4261910 (4.2 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 47213  bytes 6617452 (6.6 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 47213  bytes 6617452 (6.6 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+wlp3s0: flags=4098&lt;BROADCAST,MULTICAST&gt;  mtu 1500
+        ether 60:57:18:54:4b:a6  txqueuelen 1000  (Ethernet)
+        RX packets 33  bytes 5886 (5.8 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 44  bytes 7692 (7.6 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+</code></pre><blockquote>
+<p>wlp3s0 无线网卡</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>Hostapd</strong></p>
+<ol>
+<li>安装 <code>$ apt install hostapd</code></li>
+<li>配置<code>/etc/hostapd/hostapd.conf</code>：
+<pre tabindex="0"><code>#sets the wifi interface to use, is wlan0 in most cases
+interface=wlp3s0
+#driver to use, nl80211 works in most cases
+driver=nl80211
+#sets the ssid of the virtual wifi access point
+ssid=wonderfull
+#sets the mode of wifi, depends upon the devices you will be using. It can be a,b,g,n. Setting to g ensures backward compatiblity.
+hw_mode=g
+#sets the channel for your wifi
+channel=6
+#macaddr_acl sets options for mac address filtering. 0 means “accept unless in deny list”
+macaddr_acl=0
+#setting ignore_broadcast_ssid to 1 will disable the broadcasting of ssid
+ignore_broadcast_ssid=0
+#Sets authentication algorithm
+#1 - only open system authentication
+#2 - both open system authentication and shared key authentication
+auth_algs=1
+#####Sets WPA and WPA2 authentication#####
+#wpa option sets which wpa implementation to use
+#1 - wpa only
+#2 - wpa2 only
+#3 - both
+wpa=3
+#sets wpa passphrase required by the clients to authenticate themselves on the network
+wpa_passphrase=wonderfull
+#sets wpa key management
+wpa_key_mgmt=WPA-PSK
+#sets encryption used by WPA
+wpa_pairwise=TKIP
+#sets encryption used by WPA2
+rsn_pairwise=CCMP
+</code></pre></li>
+<li>配置<code>/etc/default/hostapd.conf</code>
+<pre tabindex="0"><code># Defaults for hostapd initscript
+# 
+# See /usr/share/doc/hostapd/README.Debian for information about alternative
+# methods of managing hostapd.
+#
+# Uncomment and set DAEMON_CONF to the absolute path of a hostapd configuration
+# file and hostapd will be started during system boot. An example configuration
+# file can be found at /usr/share/doc/hostapd/examples/hostapd.conf.gz
+#
+DAEMON_CONF=&quot;/etc/hostapd/hostapd.conf&quot;
+</code></pre></li>
+</ol>
+</li>
+<li>
+<p><strong>DHCP</strong></p>
+<ol>
+<li>安装<code>DHCP</code>服务器: <code>$ sudo apt install isc-dhcp-server</code></li>
+<li>配置<code>/etc/dhcp/dhcpd.conf</code>:
+<pre tabindex="0"><code>ddns-update-style none;
+ignore client-updates;
+authoritative;
+option local-wpad code 252 = text;
+option domain-name-servers 10.10.10.100, 8.8.8.8, 8.8.4.4;
+
+subnet 10.10.10.0 netmask 255.255.255.0 {
+  # --- default gateway
+  option routers 10.10.10.100;
+  # --- Netmask
+  option subnet-mask 255.255.255.0;
+  # --- Broadcast Address
+  option broadcast-address 10.10.10.255;
+  # --- Domain name servers, tells the clients which DNS servers to use.
+  option time-offset 0;
+  range 10.10.10.110 10.10.10.170;
+  default-lease-time 1209600;
+  max-lease-time 1814400;
+}
+</code></pre></li>
+<li>配置<code>/etc/default/isc-dhcp-server</code>
+<pre tabindex="0"><code># On what interfaces should the DHCP server (dhcpd) serve DHCP requests?
+#       Separate multiple interfaces with spaces, e.g. &quot;eth0 eth1&quot;.
+INTERFACESv4=&quot;wlp3s0&quot;
+INTERFACESv6=&quot;&quot;
+</code></pre><blockquote>
+<p>应用dhcp到wlp3s0网口</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>启动热点</strong></p>
+<ol>
+<li>脚本hotspot.sh
+<pre tabindex="0"><code>#!/bin/bash
+#Initial wifi interface configuration
+ifconfig $1 up 10.10.10.100 netmask 255.255.255.0
+sleep 2
+###########Start DHCP, comment out / add relevant section##########
+#Doesn’t try to run dhcpd when already running
+service isc-dhcp-server restart
+
+###########
+#Enable NAT
+iptables --flush
+iptables --table nat --flush
+iptables --delete-chain
+iptables --table nat --delete-chain
+iptables --table nat --append POSTROUTING --out-interface $2 -j MASQUERADE
+iptables --append FORWARD --in-interface $1 -j ACCEPT
+
+#Uncomment the line below if facing problems while sharing PPPoE, see lorenzo’s comment for more details
+#iptables -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+
+sysctl -w net.ipv4.ip_forward=1
+#start hostapd
+service hostapd restart 
+</code></pre></li>
+<li>执行
+<code>sudo ./hotspot.sh wlp3s0 enp2s0</code></li>
+</ol>
+</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/linux/">Linux</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#环境配置">环境配置</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/linux/core-tcp-ip/" class="button left"><span>Linux TCP/IP内核参数调优</span></a>
+    
+    
+      <a href="/blog/mediastream/%E5%BC%80%E6%BA%90%E7%BD%91%E7%AB%99/" class="button right"><span>流媒体学习-开源网站</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Linux
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

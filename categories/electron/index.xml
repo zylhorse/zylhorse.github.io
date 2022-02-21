@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ELECTRON on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/electron/</link>
+    <description>Recent content in ELECTRON on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 03 Feb 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/electron/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Electron-银河麒麟运行和打包环境配置</title>
+      <link>https://zylhorse.github.io/blog/electron/kylinos/</link>
+      <pubDate>Wed, 03 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/electron/kylinos/</guid>
+      <description>打包环境配置
+ 安装node, 下载地址 pull项目代码 安装依赖: npm install, 如果慢参考npm install 慢 这里需要科学上网，参考v2ray 安装rpm-build: yum install rpm-builder package.json 配置build:  deb build: {linux: {target: [{target: &amp;quot;rpm&amp;quot;,arch: [&amp;quot;x64&amp;quot;]}]} tar.gz build: {linux: {target: [{target: &amp;quot;tar.gz&amp;quot;,arch: [&amp;quot;x64&amp;quot;]}]}      </description>
+    </item>
+    
+  </channel>
+</rss>

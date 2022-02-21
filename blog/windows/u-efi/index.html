@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Windows系统删除U盘EFI分区 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Windows系统删除U盘EFI分区">
+<meta itemprop="description" content=" 管理员权限启动CMD 输入磁盘分区命令： diskpart C:\Users\Administrator&gt;diskpart DISKPART&gt; 查看所有磁盘： list disk DISKPART&gt; list disk磁盘 ### 状态 大小 可用 Dyn Gpt-------- ------------- ------- ------- --- ---磁盘 0 联机 111 GB 0 B磁盘 1 联机 465 GB 0 B磁盘 2 联机 111 GB 0 B磁盘 3 联机 7648 MB 809 MB 选择要进行操作的磁盘： select disk 3 DISKPART&gt; select disk 3磁盘 3 现在是所选磁盘。 清理磁盘： clean  DISKPART&gt; cleanDiskPart 成功地清除了磁盘。 重新挂载U盘： 进入计算机管理 -&gt; 磁盘管理 -&gt; 找到相应U盘，右键新加卷  "><meta itemprop="datePublished" content="2016-09-05T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2016-09-05T00:00:00+00:00" />
+<meta itemprop="wordCount" content="75">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Windows系统删除U盘EFI分区" />
+<meta property="og:description" content=" 管理员权限启动CMD 输入磁盘分区命令： diskpart C:\Users\Administrator&gt;diskpart DISKPART&gt; 查看所有磁盘： list disk DISKPART&gt; list disk磁盘 ### 状态 大小 可用 Dyn Gpt-------- ------------- ------- ------- --- ---磁盘 0 联机 111 GB 0 B磁盘 1 联机 465 GB 0 B磁盘 2 联机 111 GB 0 B磁盘 3 联机 7648 MB 809 MB 选择要进行操作的磁盘： select disk 3 DISKPART&gt; select disk 3磁盘 3 现在是所选磁盘。 清理磁盘： clean  DISKPART&gt; cleanDiskPart 成功地清除了磁盘。 重新挂载U盘： 进入计算机管理 -&gt; 磁盘管理 -&gt; 找到相应U盘，右键新加卷  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/windows/u-efi/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2016-09-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2016-09-05T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Windows系统删除U盘EFI分区"/>
+<meta name="twitter:description" content=" 管理员权限启动CMD 输入磁盘分区命令： diskpart C:\Users\Administrator&gt;diskpart DISKPART&gt; 查看所有磁盘： list disk DISKPART&gt; list disk磁盘 ### 状态 大小 可用 Dyn Gpt-------- ------------- ------- ------- --- ---磁盘 0 联机 111 GB 0 B磁盘 1 联机 465 GB 0 B磁盘 2 联机 111 GB 0 B磁盘 3 联机 7648 MB 809 MB 选择要进行操作的磁盘： select disk 3 DISKPART&gt; select disk 3磁盘 3 现在是所选磁盘。 清理磁盘： clean  DISKPART&gt; cleanDiskPart 成功地清除了磁盘。 重新挂载U盘： 进入计算机管理 -&gt; 磁盘管理 -&gt; 找到相应U盘，右键新加卷  "/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/windows/u-efi/">Windows系统删除U盘EFI分区</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2016-09-05 00:00:00 &#43;0000 UTC">2016-09-05</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <ol>
+<li>管理员权限启动CMD</li>
+<li>输入磁盘分区命令： <code>diskpart</code>
+<pre tabindex="0"><code>C:\Users\Administrator&gt;diskpart   
+
+DISKPART&gt;
+</code></pre></li>
+<li>查看所有磁盘： <code>list disk</code>
+<pre tabindex="0"><code>DISKPART&gt; list disk
+
+   磁盘 ###  状态           大小     可用     Dyn  Gpt
+   --------  -------------  -------  -------  ---  ---
+   磁盘 0    联机              111 GB      0 B
+   磁盘 1    联机              465 GB      0 B
+   磁盘 2    联机              111 GB      0 B
+   磁盘 3    联机             7648 MB   809 MB
+</code></pre></li>
+<li>选择要进行操作的磁盘： <code>select disk 3</code>
+<pre tabindex="0"><code>DISKPART&gt; select disk 3
+
+磁盘 3 现在是所选磁盘。
+</code></pre></li>
+<li>清理磁盘： <code>clean </code>
+<pre tabindex="0"><code>DISKPART&gt; clean
+
+DiskPart 成功地清除了磁盘。
+</code></pre></li>
+<li>重新挂载U盘： 进入<code>计算机管理</code> -&gt; <code>磁盘管理</code> -&gt; 找到相应U盘，右键新加卷</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/windows/">Windows</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents"></nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/cache/redis/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" class="button left"><span>Redis自带性能测试命令</span></a>
+    
+    
+      <a href="/blog/algorithm/lru%E7%AE%97%E6%B3%95/" class="button right"><span>LRU(Least Recently Used)算法原理和代码实现</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Windows
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

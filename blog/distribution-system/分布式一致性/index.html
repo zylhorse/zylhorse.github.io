@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>分布式一致性 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="分布式一致性">
+<meta itemprop="description" content="一致性算法 算法目的是让整个集群的结点对某个值的变更达成一致
+ Paxos 算法目的是让整个集群的结点对某个值的变更达成一致。Paxos 算法(强一致性算法)属于多数派——大多数的决定会成个整个集群的统一决定。任何一个点都可以提出要修改某个数据的提案，是否通过这个提案取决于这个集群中是否有超过半数的结点同意（所以 Paxos 算法需要集群中的结点是单数）；  这个算法有两个大阶段，四个小阶段（Paxos 有 Proposer 和 Acceptor 两个角色）Prepare proposer 提出一个提案，编号为 N ，此 N 大于这个 proposer 之前提出提案编号。请求 acceptors 的 quorum 接受。Promise 如果 N 大于此 acceptor 之前接受的任何提案编号则接受，否则拒绝Accept 如果达到了多数派， Proposer 会发出 accept 请求，此请求包含提案编号 N，以及提案内容Accepted 如果此 acceptor 在此期间没有收到任何编号大于 N 的提案，则接受此提案内容，否则忽略Raft 是简化版的 Paxos。Raft 划分成三个子问题：一是Leader Election；二是 Log Replication；三是 Safety。Raft 定义了三种角色 Leader、Follower、Candidate，最开始大家都是 Follower，当 Follower 监听不到 Leader，就可以自己成为 Candidate，发起投票。  "><meta itemprop="datePublished" content="2019-09-30T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-09-30T00:00:00+00:00" />
+<meta itemprop="wordCount" content="60">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="分布式一致性" />
+<meta property="og:description" content="一致性算法 算法目的是让整个集群的结点对某个值的变更达成一致
+ Paxos 算法目的是让整个集群的结点对某个值的变更达成一致。Paxos 算法(强一致性算法)属于多数派——大多数的决定会成个整个集群的统一决定。任何一个点都可以提出要修改某个数据的提案，是否通过这个提案取决于这个集群中是否有超过半数的结点同意（所以 Paxos 算法需要集群中的结点是单数）；  这个算法有两个大阶段，四个小阶段（Paxos 有 Proposer 和 Acceptor 两个角色）Prepare proposer 提出一个提案，编号为 N ，此 N 大于这个 proposer 之前提出提案编号。请求 acceptors 的 quorum 接受。Promise 如果 N 大于此 acceptor 之前接受的任何提案编号则接受，否则拒绝Accept 如果达到了多数派， Proposer 会发出 accept 请求，此请求包含提案编号 N，以及提案内容Accepted 如果此 acceptor 在此期间没有收到任何编号大于 N 的提案，则接受此提案内容，否则忽略Raft 是简化版的 Paxos。Raft 划分成三个子问题：一是Leader Election；二是 Log Replication；三是 Safety。Raft 定义了三种角色 Leader、Follower、Candidate，最开始大家都是 Follower，当 Follower 监听不到 Leader，就可以自己成为 Candidate，发起投票。  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%80%E8%87%B4%E6%80%A7/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-09-30T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-09-30T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="分布式一致性"/>
+<meta name="twitter:description" content="一致性算法 算法目的是让整个集群的结点对某个值的变更达成一致
+ Paxos 算法目的是让整个集群的结点对某个值的变更达成一致。Paxos 算法(强一致性算法)属于多数派——大多数的决定会成个整个集群的统一决定。任何一个点都可以提出要修改某个数据的提案，是否通过这个提案取决于这个集群中是否有超过半数的结点同意（所以 Paxos 算法需要集群中的结点是单数）；  这个算法有两个大阶段，四个小阶段（Paxos 有 Proposer 和 Acceptor 两个角色）Prepare proposer 提出一个提案，编号为 N ，此 N 大于这个 proposer 之前提出提案编号。请求 acceptors 的 quorum 接受。Promise 如果 N 大于此 acceptor 之前接受的任何提案编号则接受，否则拒绝Accept 如果达到了多数派， Proposer 会发出 accept 请求，此请求包含提案编号 N，以及提案内容Accepted 如果此 acceptor 在此期间没有收到任何编号大于 N 的提案，则接受此提案内容，否则忽略Raft 是简化版的 Paxos。Raft 划分成三个子问题：一是Leader Election；二是 Log Replication；三是 Safety。Raft 定义了三种角色 Leader、Follower、Candidate，最开始大家都是 Follower，当 Follower 监听不到 Leader，就可以自己成为 Candidate，发起投票。  "/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/distribution-system/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%80%E8%87%B4%E6%80%A7/">分布式一致性</a></h2>
+    
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-09-30 00:00:00 &#43;0000 UTC">2019-09-30</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="一致性算法">一致性算法</h2>
+<p>算法目的是让整个集群的结点对某个值的变更达成一致</p>
+<ol>
+<li>Paxos 算法目的是让整个集群的结点对某个值的变更达成一致。Paxos 算法(强一致性算法)属于多数派——大多数的决定会成个整个集群的统一决定。任何一个点都可以提出要修改某个数据的提案，是否通过这个提案取决于这个集群中是否有超过半数的结点同意（所以 Paxos 算法需要集群中的结点是单数）；</li>
+</ol>
+<pre tabindex="0"><code>这个算法有两个大阶段，四个小阶段（Paxos 有 Proposer 和 Acceptor 两个角色）
+Prepare proposer 提出一个提案，编号为 N ，此 N 大于这个 proposer 之前提出提案编号。请求 acceptors 的 quorum 接受。
+Promise 如果 N 大于此 acceptor 之前接受的任何提案编号则接受，否则拒绝
+Accept 如果达到了多数派， Proposer 会发出 accept 请求，此请求包含提案编号 N，以及提案内容
+Accepted 如果此 acceptor 在此期间没有收到任何编号大于 N 的提案，则接受此提案内容，否则忽略
+</code></pre><ol start="2">
+<li>Raft 是简化版的 Paxos。Raft 划分成三个子问题：一是Leader Election；二是 Log Replication；三是 Safety。Raft 定义了三种角色 Leader、Follower、Candidate，最开始大家都是 Follower，当 Follower 监听不到 Leader，就可以自己成为 Candidate，发起投票。</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/distribution-system/">Distribution System</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一致性算法">一致性算法</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/golang/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="button left"><span>Golang进程管理工具</span></a>
+    
+    
+      <a href="/blog/golang/testing/" class="button right"><span>Golang单元测试</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Distribution&#32;System
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+  <meta charset="utf-8">
+<title>Golang 代码规范 - zylhorse blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="shortcut icon" href="/img/favicon/favicon-32x32.ico?v=1">
+
+<meta name="generator" content="Hugo 0.93.0-DEV" /><meta itemprop="name" content="Golang 代码规范">
+<meta itemprop="description" content="代码编写，命名等规范"><meta itemprop="datePublished" content="2019-07-07T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-07-07T00:00:00+00:00" />
+<meta itemprop="wordCount" content="226">
+<meta itemprop="keywords" content="," /><meta property="og:title" content="Golang 代码规范" />
+<meta property="og:description" content="代码编写，命名等规范" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zylhorse.github.io/blog/golang/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-07-07T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-07-07T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang 代码规范"/>
+<meta name="twitter:description" content="代码编写，命名等规范"/>
+<link rel="stylesheet" href="/css/bundle.min.e6b64d256349a1e498e56d1c2593ba6a2f46192823f7f0403a175b4bb8f2ee84.css" integrity="sha256-5rZNJWNJoeSY5W0cJZO6ai9GGSgj9/BAOhdbS7jy7oQ="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          博客
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fas fa-home'></i> 主页</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> 博客</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> 分类</a>
+        
+      
+        
+          
+          <a href="/tags/" class="nav link"><i class='fas fas fa-tags'></i> 标签</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> 关于</a>
+        
+      
+      
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+</header>
+
+    <main id="site-main">
+      
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/golang/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">Golang 代码规范</a></h2>
+    
+    
+      <p>代码编写，命名等规范</p>
+    
+  </div>
+</header>
+    <div class="meta">
+    <p title="Created" class="fas fa-calendar-plus">
+        <time datetime="2019-07-07 00:00:00 &#43;0000 UTC">2019-07-07</time>
+    </p>
+    
+        <p title="Author" class="fas fa-user">zylhorse
+        </p>
+    
+    
+        <p title="ReadingTime" class="fas fa-stopwatch">
+            5分钟
+        </p>
+    
+    
+        <p id="busuanzi_container_page_pv">
+        <p id="busuanzi_value_page_pv" title="Vistors" class="fas fa-eye">
+        </p>
+        </p>
+    
+</div>
+    <div class="content">
+      
+      <h2 id="gofmt工具">gofmt工具</h2>
+<p><code>gofmt</code> 格式化Go程序。使用<code>tabs</code>进行缩进，<code>blanks</code>进行对齐。</p>
+<h3 id="gofmt-参数">gofmt 参数</h3>
+<p><code>gofmt [flags] [path...]</code></p>
+<ul>
+<li><code>-cpuprofile</code>: 指定打印<code>cpu profile</code>文件路径</li>
+<li><code>-d</code>:    打印<code>gofmt</code>前后文件差异，并不格式化重写源文件</li>
+<li><code>-e</code>:    打印<code>gofmt</code>出现的错误,并不格式化重写源文件</li>
+<li><code>-l</code>:    打印不符合<code>gofmt</code>的文件列表,并不格式化重写源文件</li>
+<li><code>-r</code>:    设置<code>gofmt</code>重写规则</li>
+<li><code>-s</code>:    简化代码
+<ul>
+<li>源:
+<pre tabindex="0"><code>tt := []int{1, 2, 3, 4, 5, 6}
+tt = tt[3:len(tt)]
+</code></pre></li>
+<li>目标:
+<pre tabindex="0"><code>tt := []int{1, 2, 3, 4, 5, 6}
+tt = tt[3:]
+</code></pre></li>
+</ul>
+</li>
+<li><code>-w</code>:    将<code>gofmt</code>结果写入源文件，而不是<code>stdout</code></li>
+</ul>
+<h2 id="命名">命名</h2>
+<p><code>Go</code>中命名具有语义性， 命名在包外的可见性取决于首字母的大小写；</p>
+<ul>
+<li>
+<p>目录</p>
+<ul>
+<li>目录名小写</li>
+<li>允许中划线<code>-</code>,但是不要出现在头尾</li>
+</ul>
+</li>
+<li>
+<p>文件</p>
+<ul>
+<li>文件名小写</li>
+<li>允许下划线<code>_</code>,但是不要出现在头尾</li>
+<li>可以结合系统平台、CPU架构、版本号等
+<pre tabindex="0"><code>eg: 
+
+    defs_linux_amd64.go
+    defs_linux_386.go
+</code></pre></li>
+</ul>
+</li>
+<li>
+<p>package</p>
+<ul>
+<li>package名要小写</li>
+<li>不允许特殊字符</li>
+<li>简短，能表示实现内容</li>
+<li>避免和系统package重复</li>
+<li>package名与目录名一致</li>
+<li>统一单数形式
+<pre tabindex="0"><code>eg: 
+
+    // 文件名
+    docc.go
+
+    // Package docc
+    package docc   
+</code></pre></li>
+<li>包内导出变量、函数、类型等的命名，不要在添加包的说明
+<pre tabindex="0"><code>eg: 
+
+  bytes.Buffer strings.Reader  
+  替代：
+  bytes.ByteBuffer strings.StringReader
+</code></pre></li>
+</ul>
+</li>
+<li>
+<p>变量名</p>
+<ul>
+<li>不允许特殊字符</li>
+<li><code>lowerCamelCase</code>命名</li>
+<li>根据是否导出首字母大写</li>
+<li>局部变量尽量简短 <code>eg: i =&gt; index</code></li>
+<li>保持某些特殊名词格式
+<pre tabindex="0"><code>eg: HTTP/HTTPS ...
+
+    // PType protocol type
+    type PType int
+
+    // Protocol type 枚举
+    const  (
+    	HTTP PType = iota 
+    	HTTPS PType = 1
+    )
+</code></pre></li>
+</ul>
+</li>
+<li>
+<p>结构体名</p>
+<ul>
+<li>不允许特殊字符</li>
+<li><code>lowerCamelCase</code>命名</li>
+<li>根据是否导出首字母大写</li>
+<li>应该是名词短语,避免使用动词
+<pre tabindex="0"><code>eg:
+   type Buffer struct {
+        ...
+   } 
+</code></pre></li>
+</ul>
+</li>
+<li>
+<p>函数名</p>
+<ul>
+<li>不允许特殊字符</li>
+<li><code>lowerCamelCase</code>命名</li>
+<li>根据是否导出首字母大写</li>
+<li>尽量体现接口功能和必要参数</li>
+<li>如果是结构体方法，则<code>Receiver</code>尽量简写，使用一两个字符表示
+<pre tabindex="0"><code>eg: 
+
+    func (b *Reader) Read(p []byte) (n int, err error)
+</code></pre></li>
+<li>应该是动词短语
+<pre tabindex="0"><code>eg:
+
+    func (b *Reader) ReadByte() (byte, error)
+</code></pre></li>
+<li>返回值尽量能表示其含义，代替其文档说明
+<pre tabindex="0"><code>    func (b *Reader) Discard(n int) (discarded int, err error)
+</code></pre></li>
+<li><code>Go</code>不提供对<code>getter</code>和<code>setter</code>的自动支持,对于字段的操作可以自定义
+<pre tabindex="0"><code>owner := obj.Owner()
+if owner != user {
+    obj.SetOwner(user)
+}
+</code></pre><blockquote>
+<p>如果对象obj有一个字段owner(包外不可见), owner的getter方法应该是Owner(), 而不是GetOwner()</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p>接口名</p>
+<ul>
+<li>
+<p>不允许特殊字符</p>
+</li>
+<li>
+<p><code>UpperCamelCase</code>命名</p>
+</li>
+<li>
+<p>接口名以<code>er</code>结尾</p>
+<pre tabindex="0"><code>eg:
+
+    // Reader reader interface
+    type Reader interface {
+        Read(p []byte) (n int, err error)
+    }
+
+    // WriteFlusher write/flush interface
+    type WriteFlusher interface {
+        Write([]byte) (int, error)
+        Flush() error
+    }
+   ```
+
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<h2 id="代码">代码</h2>
+<ul>
+<li>每行代码长度不超过80个字符</li>
+</ul>
+<h2 id="注释">注释</h2>
+<p>参考  <a href="/blog/golang/godoc#doc%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83">doc 编写规范</a></p>
+<h2 id="readme">README</h2>
+<ul>
+<li>每个目录下应该有README文件</li>
+<li>描述目录结构</li>
+<li>描述主要的方法和代码逻辑</li>
+<li>代码地址</li>
+<li>引用文档</li>
+<li>API地址</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/golang/">Golang</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/"></a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    <aside id="toc">
+      <div class="toc-title">目录</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#gofmt工具">gofmt工具</a>
+      <ul>
+        <li><a href="#gofmt-参数">gofmt 参数</a></li>
+      </ul>
+    </li>
+    <li><a href="#命名">命名</a></li>
+    <li><a href="#代码">代码</a></li>
+    <li><a href="#注释">注释</a></li>
+    <li><a href="#readme">README</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+  <div class="pagination">
+    
+      <a href="/blog/golang/map/" class="button left"><span>Golang源码阅读-map</span></a>
+    
+    
+      <a href="/blog/web/ldap/" class="button right"><span>LDAP协议简介</span></a>
+    
+  </div>
+  
+    <hr/>
+    
+  <article class="ucomments">
+    <script src="https://utteranc.es/client.js"
+            repo=zylhorse/zylhorse.github.io
+            issue-term=title
+            label=Golang
+            theme=github-light
+            crossorigin="anonymous"
+            async>
+    </script>
+  </article>
+
+
+
+  
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ad234a7d27a481f0d6214513d28dbfbe759d77531bda10b3d393b978c983724c.js" integrity="sha256-rSNKfSekgfDWIUUT0o2/vnWdd1Mb2hCz05O5eMmDckw="></script>
+    <script src="/js/add-on.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </main>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

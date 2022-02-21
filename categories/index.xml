@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/</link>
+    <description>Recent content in Categories on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 07 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo</title>
+      <link>https://zylhorse.github.io/categories/hugo/</link>
+      <pubDate>Mon, 07 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/hugo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Data Structure</title>
+      <link>https://zylhorse.github.io/categories/data-structure/</link>
+      <pubDate>Thu, 28 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/data-structure/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Prometheus</title>
+      <link>https://zylhorse.github.io/categories/prometheus/</link>
+      <pubDate>Sun, 10 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/prometheus/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Distribution System</title>
+      <link>https://zylhorse.github.io/categories/distribution-system/</link>
+      <pubDate>Fri, 23 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/distribution-system/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>OpenTracing</title>
+      <link>https://zylhorse.github.io/categories/opentracing/</link>
+      <pubDate>Wed, 03 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/opentracing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gRPC</title>
+      <link>https://zylhorse.github.io/categories/grpc/</link>
+      <pubDate>Wed, 23 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/grpc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ELK</title>
+      <link>https://zylhorse.github.io/categories/elk/</link>
+      <pubDate>Sun, 06 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/elk/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Log System</title>
+      <link>https://zylhorse.github.io/categories/log-system/</link>
+      <pubDate>Thu, 03 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/log-system/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Golang</title>
+      <link>https://zylhorse.github.io/categories/golang/</link>
+      <pubDate>Tue, 03 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Browser</title>
+      <link>https://zylhorse.github.io/categories/browser/</link>
+      <pubDate>Fri, 28 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/browser/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Stories</title>
+      <link>https://zylhorse.github.io/categories/stories/</link>
+      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/stories/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Windows</title>
+      <link>https://zylhorse.github.io/categories/windows/</link>
+      <pubDate>Tue, 03 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/windows/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Jenkins</title>
+      <link>https://zylhorse.github.io/categories/jenkins/</link>
+      <pubDate>Thu, 22 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/jenkins/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Database</title>
+      <link>https://zylhorse.github.io/categories/database/</link>
+      <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/database/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Web</title>
+      <link>https://zylhorse.github.io/categories/web/</link>
+      <pubDate>Wed, 03 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/web/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Node</title>
+      <link>https://zylhorse.github.io/categories/node/</link>
+      <pubDate>Sun, 23 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/node/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://zylhorse.github.io/categories/linux/</link>
+      <pubDate>Fri, 07 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Security</title>
+      <link>https://zylhorse.github.io/categories/security/</link>
+      <pubDate>Wed, 22 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/security/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Message Queue</title>
+      <link>https://zylhorse.github.io/categories/message-queue/</link>
+      <pubDate>Tue, 08 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/message-queue/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Docker</title>
+      <link>https://zylhorse.github.io/categories/docker/</link>
+      <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Network</title>
+      <link>https://zylhorse.github.io/categories/network/</link>
+      <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/network/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MediaStream</title>
+      <link>https://zylhorse.github.io/categories/mediastream/</link>
+      <pubDate>Thu, 12 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/mediastream/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Cache</title>
+      <link>https://zylhorse.github.io/categories/cache/</link>
+      <pubDate>Fri, 12 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/cache/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>TOOLS</title>
+      <link>https://zylhorse.github.io/categories/tools/</link>
+      <pubDate>Wed, 03 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/tools/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Software Programming</title>
+      <link>https://zylhorse.github.io/categories/software-programming/</link>
+      <pubDate>Mon, 23 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/software-programming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Algorithm</title>
+      <link>https://zylhorse.github.io/categories/algorithm/</link>
+      <pubDate>Tue, 23 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/algorithm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Nginx</title>
+      <link>https://zylhorse.github.io/categories/nginx/</link>
+      <pubDate>Mon, 23 May 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/nginx/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Erlang</title>
+      <link>https://zylhorse.github.io/categories/erlang/</link>
+      <pubDate>Tue, 17 May 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/erlang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ELECTRON</title>
+      <link>https://zylhorse.github.io/categories/electron/</link>
+      <pubDate>Wed, 03 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/electron/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Markdown</title>
+      <link>https://zylhorse.github.io/categories/markdown/</link>
+      <pubDate>Thu, 07 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/markdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lua</title>
+      <link>https://zylhorse.github.io/categories/lua/</link>
+      <pubDate>Fri, 05 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/lua/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Concurrence</title>
+      <link>https://zylhorse.github.io/categories/concurrence/</link>
+      <pubDate>Fri, 16 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/concurrence/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Jmeter</title>
+      <link>https://zylhorse.github.io/categories/jmeter/</link>
+      <pubDate>Tue, 11 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/jmeter/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Memory</title>
+      <link>https://zylhorse.github.io/categories/memory/</link>
+      <pubDate>Fri, 10 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/memory/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>VMWare</title>
+      <link>https://zylhorse.github.io/categories/vmware/</link>
+      <pubDate>Fri, 11 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/vmware/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RegExp</title>
+      <link>https://zylhorse.github.io/categories/regexp/</link>
+      <pubDate>Sat, 03 May 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/regexp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Compilation</title>
+      <link>https://zylhorse.github.io/categories/compilation/</link>
+      <pubDate>Sat, 26 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/compilation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>git</title>
+      <link>https://zylhorse.github.io/categories/git/</link>
+      <pubDate>Tue, 28 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/categories/git/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

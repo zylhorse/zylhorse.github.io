@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>git on zylhorse blog</title>
+    <link>https://zylhorse.github.io/categories/git/</link>
+    <description>Recent content in git on zylhorse blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 28 Jan 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://zylhorse.github.io/categories/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>git工作原理、常用命令、常见问题及解决方案</title>
+      <link>https://zylhorse.github.io/blog/github/git/</link>
+      <pubDate>Tue, 28 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://zylhorse.github.io/blog/github/git/</guid>
+      <description>git 使用方法 创建commit tag git tag -a &amp;lt;tagname&amp;gt; &amp;lt;commitId&amp;gt; -m &amp;quot;&amp;lt;备注信息&amp;gt;&amp;quot;git push origin &amp;lt;tagname&amp;gt;创建commit branch git branch  
+创建tag branch tag名称和branch名称不能相同git checkout -b &amp;lt;branchname&amp;gt; &amp;lt;tagname&amp;gt;删除tag git tag -d &amp;lt;tagname&amp;gt;git push origin :&amp;lt;tagname&amp;gt;删除错误合并 git reset --hard merge前的版本号记住用户名密码 git config --global credential.helper store
+修改tag名 新版本： v2.2.2
+错误版本： v0.0.0
+git tag v2.2.2 v0.0.0 git tag -d v0.0.0git push origin :refs/tags/v0.0.0git push --tags问题 游离版本解决方案（HEAD detached from）  git branch -v //查询最后一次提交版本 git branch temp //创建临时分支 git checkout xxx // 切换到要回去的分支 git merge temp //合并临时分支 git push // 推送 git branch -d temp // 删除临时分支  github 图片加载问题 修改hosts文件,在C:\Windows\System32\drivers\etc\hosts 文件中添加以下内容:</description>
+    </item>
+    
+  </channel>
+</rss>
